@@ -19,8 +19,6 @@ LIBS += ../../bin/plugins/libservicios.so
 SOURCES += tst_bajaclienteserviciotest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-RESOURCES += \
-    BajaClienteServicioTest.qrc
+RESOURCES += BajaClienteServicioTest.qrc
 
-OTHER_FILES += \
-    BajaClienteServicioTest.QSQLITE.sql
+OTHER_FILES += BajaClienteServicioTest.QSQLITE.sql

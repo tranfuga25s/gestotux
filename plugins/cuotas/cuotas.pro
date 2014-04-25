@@ -88,7 +88,7 @@ LIBS += -L../../bin \
         -llibctacte \
         -llibcaja \
         -llibremitos \
-        -lpagos \
+        -llibpagos \
         -llibventas \
         -lcaja \
         -llibdescuentos \
