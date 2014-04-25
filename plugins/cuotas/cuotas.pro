@@ -86,12 +86,12 @@ LIBS += -L../../bin \
         -lutiles \
         -lreporte \
         -llibctacte \
-        -lcaja \
+        -llibcaja \
         -llibremitos \
         -lpagos \
         -llibventas \
         -lcaja \
-        -ldescuentos \
+        -llibdescuentos \
         -lutiles
 
 
