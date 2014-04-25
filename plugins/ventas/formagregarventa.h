@@ -44,20 +44,28 @@ public:
 signals:
         /*!
          * \brief emitirPlanCuota
-         * \params id_cliente Identificador de Cliente
-         * \params total Total del plan
+         * \param id_cliente Identificador de Cliente
+         * \param total Total del plan
          */
         void emitirPlanCuota( int, double, MPlanCuota::TipoComprobante );
         /*!
          * \brief emitirPlanCuotaSetIdFactura
-         * \params id_cliente Identificador del plan de cuota
-         * \params id_factura Identificador de la factura
+         * \param id_cliente Identificador del plan de cuota
+         * \param id_factura Identificador de la factura
          */
         void emitirPlanCuotaSetIdFactura( int, int );
         /*!
          * \brief Actualiza el listado de ventas
          */
         void actualizarListado();
+        /*!
+         * \brief emitir Garantia
+         * \param
+         * \param
+         * \param
+         * \param
+         */
+        void emitirGarantia( int, int, QString, int );
 
 
 public slots:

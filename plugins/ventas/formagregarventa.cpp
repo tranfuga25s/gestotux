@@ -114,21 +114,22 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
 
         // Verifico si la venta a cta corriente esta habilitada
         p->beginGroup( "CtaCte" );
-        if( !p->value( "habilitada" ).toBool() )
+        bool ctacte_habilitada = p->value( "habilitada" ).toBool();
+        if( !ctacte_habilitada )
         {
                 RBContado->setChecked( true );
                 RBCtaCte->setEnabled( false );
         }
         p->endGroup();
         p->beginGroup( "Descuentos" );
-        bool usar = p->value( "usar", false ).toBool();
+        bool usar_descuentos = p->value( "usar", false ).toBool();
         p->endGroup();
         p->endGroup();
         p=0;
         if(  !( ERegistroPlugins::getInstancia()->existePluginExterno( "descuentos" ) ) ) {
             PBAgregarDescuento->setVisible( false );
             PBEliminarDescuento->setVisible( false );
-        } else if( !usar ) {
+        } else if( !usar_descuentos ) {
             PBAgregarDescuento->setEnabled( false );
             PBEliminarDescuento->setEnabled( false );
         }
@@ -137,6 +138,12 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
             RBContado->setVisible( true );
         } else {
             RBContado->setVisible( false );
+        }
+        if(  !ERegistroPlugins::getInstancia()->existePluginExterno( "caja" ) &&
+             !ERegistroPlugins::getInstancia()->existePluginExterno( "cuotas" ) &&
+             !ctacte_habilitada ) {
+            GBFormaPago->setVisible( false );
+            RBOtro->setChecked( true );
         }
 
         DEFecha->setMinimumDate( MFactura::fechaUltimaVenta() );
