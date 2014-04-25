@@ -70,7 +70,7 @@ void ECBProveedor::inicializar()
             pos++;
         }
         if( pos == 0 ) {
-            qWarning( "No hay ningun cliente para cargar!" );
+            qWarning() << "No hay ningun proveedor para cargar!";
             this->lineEdit()->setText( "No hay proveedores cargados..." );
         }
         this->setEnabled( true );
@@ -129,7 +129,7 @@ void ECBProveedor::verificarExiste()
             this->setCurrentIndex( c );
             emit cambioIdProveedor( idProveedorActual() );
         } else {
-            QMessageBox::information( this, "No encontrado", "El cliente o codigo de cliente buscado no existe." );
+            QMessageBox::information( this, "No encontrado", "El proveedor o código de proveedor buscado no existe." );
         }
     }
     return;
