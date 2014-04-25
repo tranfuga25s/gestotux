@@ -2,6 +2,8 @@ GestoTux
 ========
 
 Programa de Gestión Simplificado
+[![Build Status](https://travis-ci.org/tranfuga25s/gestotux.svg?branch=master)](https://travis-ci.org/tranfuga25s/gestotux)
+[![Coverage Status](https://coveralls.io/repos/tranfuga25s/gestotux/badge.png)](https://coveralls.io/r/tranfuga25s/gestotux)
 
 Que es GestoTux
 ---------------
