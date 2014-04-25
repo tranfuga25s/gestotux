@@ -80,6 +80,9 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     if( !ERegistroPlugins::getInstancia()->existePluginExterno( "caja" ) ) {
         RBContado->setEnabled( false );
         RBOtro->setChecked( true );
+        RBContado->setVisible( false );
+        RBOtro->setVisible( false );
+        LFormaPago->setVisible( false );
     }
 }
 
