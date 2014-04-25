@@ -4,7 +4,7 @@
 
 #include "mequipamiento.h"
 
-class EquipamientosTest : public EDatabaseTest
+class EquipamientosTest : public EDatabaseTest, public QObject
 {
     Q_OBJECT
 
@@ -20,13 +20,13 @@ private:
 
 void EquipamientosTest::initTestCase()
 {
-    this->generarTabla( "equipamientos" );
     mequipamiento = new MEquipamiento( this );
 }
 
 void EquipamientosTest::cleanupTestCase()
 {
-    this->limpiarTabla( "equipamientos" );
+    delete mequipamiento;
+    mequipamiento = 0;
 }
 
 void EquipamientosTest::testCargaDatos()
