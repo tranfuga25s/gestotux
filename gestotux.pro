@@ -14,7 +14,8 @@ CONFIG += warn_on \
 DESTDIR = .
 
 OTHER_FILES = tareas-pendientes.txt \
-              README.md
+              README.md \
+              .travis.yml
 
 unix {
   SUBDIRS += test

@@ -1,0 +1,10 @@
+language: cpp
+
+compiler: gcc
+
+install:
+    - sudo apt-get install libqt4-dev qt4-qmake
+
+script:  
+    - qmake gestotux.pro
+    - make
