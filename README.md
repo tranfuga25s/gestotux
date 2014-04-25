@@ -3,11 +3,14 @@ GestoTux
 
 Programa de Gestión Simplificado
 
-==Que es GestoTux==
+Que es GestoTux
+---------------
 
 Es un programa que permite manejar distintos tipos de gestión específica para cada cliente dandole un mejor control sobre su negocio y sus procesos. De cierta manera es un sistema de gestión encapsulado medíante plugins dentro de un programa carcaza.
 
-==Estado actual==
+Estado actual
+-------------
+
 Actualmente se puede elegir entre una base de datos mysql y una base de dato embebida sqlite, lo cual permite mucha flexibilidad.
 Contiene 4 plugins específicos creados a medida de nuestros clientes:
 * HiComp Computación ( versión 0.3 ) - Hace recibos de servicios de internet
@@ -15,6 +18,7 @@ Contiene 4 plugins específicos creados a medida de nuestros clientes:
 * Administración Corrientes S.A. ( versión 0.11 ) - Administración de caravanas.
 * Digifauno ( versión 0.1 ) - Administración de peluquería canina.
 * Jhau-pora ( Version 0.1 ) - Modificaciones para Dietetica.
+
 También posee plugins generales:
 * Ventas
 * Compras
@@ -28,8 +32,11 @@ También posee plugins generales:
 * Cuotas
 * Retroalimentacion
 * Backup Remoto
+ 
+Más información
+---------------
 
-Vease tambien la [Guia_del_Desarrollador].
+Vease tambien la Guia_del_Desarrollador.
 
-*Creacion de plugins*
-Vea como agregar plugins al programa en [creacion_plugins].
+Creacion de plugins
+Vea como agregar plugins al programa en creacion_plugins.
