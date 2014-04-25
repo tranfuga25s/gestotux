@@ -69,3 +69,7 @@ LIBS += -L../../bin \
         -ldescuentos
 
 DISTFILES += ../../bin/reportes/Presupuesto.xml
+
+unix {
+    LIBS += -gcov
+}

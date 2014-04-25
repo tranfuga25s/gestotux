@@ -73,3 +73,8 @@ win32 {
 }
 
 DISTFILES += ../../bin/reportes/Remito.xml
+
+
+unix {
+    LIBS += -gcov
+}

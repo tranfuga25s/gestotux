@@ -42,3 +42,7 @@ RESOURCES += backupremoto.qrc
 win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }
+
+unix {
+    LIBS += -gcov
+}

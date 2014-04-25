@@ -16,9 +16,9 @@ DESTDIR = .
 OTHER_FILES = tareas-pendientes.txt \
               README.md \
               .travis.yml
-
 unix {
   SUBDIRS += test
-  system( generar_pri.sh eliminar )
-  system( generar_doc_usuario.sh )
+  LIBS += -gcov
+  #system( ./generar_pri.sh eliminar )
+  #system( ./generar_doc_usuario.sh )
 }

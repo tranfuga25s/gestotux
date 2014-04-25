@@ -62,3 +62,8 @@ LIBS += -L../../bin \
         -lutiles \
         -lreporte \
         -lordentrabajo
+
+
+unix {
+    LIBS += -gcov
+}

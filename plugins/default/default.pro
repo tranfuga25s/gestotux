@@ -28,3 +28,7 @@ OTHER_FILES += default.QMYSQL.sql \
 DISTFILES += ../../bin/reportes/Factura.xml \
              ../../bin/reportes/Recibo.xml \
              ../../bin/reportes/Presupuesto.xml
+
+unix {
+    LIBS += -gcov
+}

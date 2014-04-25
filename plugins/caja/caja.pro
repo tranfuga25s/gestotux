@@ -71,3 +71,8 @@ win32 {
 
 DISTFILES += ../../bin/reportes/ResumenCaja.xml \
              ../../bin/reportes/ResumenCaja-MySQL.xml
+
+
+unix {
+    LIBS += -gcov
+}

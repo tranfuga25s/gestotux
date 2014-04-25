@@ -18,3 +18,8 @@ SOURCES += mcuentacorriente.cpp \
            mitemcuentacorriente.cpp
 
 INCLUDEPATH += ../../utiles
+
+
+unix {
+    LIBS += -gcov
+}

@@ -76,3 +76,8 @@ LIBS += -L../../bin \
 DISTFILES += ../../bin/reportes/ListadoCtaCteSaldo.xml \
              ../../bin/reportes/ResumenCtaCte.xml \
              ../../bin/reportes/ResumenCtaCte-MySQL.xml
+
+
+unix {
+    LIBS += -gcov
+}

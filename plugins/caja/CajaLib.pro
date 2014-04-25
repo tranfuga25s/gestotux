@@ -22,3 +22,8 @@ SOURCES += mcajas.cpp \
 
 INCLUDEPATH += ../../utiles \
                ../../src
+
+
+unix {
+    LIBS += -gcov
+}

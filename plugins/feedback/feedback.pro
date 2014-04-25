@@ -22,10 +22,13 @@ win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }
 
-HEADERS += \
-    feedbackplugin.h \
-    feedbacksender.h
+unix {
+    LIBS += -gcov
+}
 
-SOURCES += \
-    feedbackplugin.cpp \
-    feedbacksender.cpp
+
+HEADERS += feedbackplugin.h \
+           feedbacksender.h
+
+SOURCES += feedbackplugin.cpp \
+           feedbacksender.cpp

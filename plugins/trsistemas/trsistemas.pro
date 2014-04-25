@@ -37,3 +37,8 @@ LIBS += -L../../bin \
 
 RESOURCES = trsistemas.qrc
 
+
+unix {
+    LIBS += -gcov
+}
+

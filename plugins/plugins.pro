@@ -7,12 +7,12 @@ SUBDIRS +=  CtaCte/CtaCteLib.pro \
             descuentos/DescuentosLib.pro \
             caja \
             gastos \
+            productos \
             compras \
             cuotas \
             remitos \
             ventas \
             proveedor \
-            productos \
             CtaCte \
             pagos \
             presupuesto \

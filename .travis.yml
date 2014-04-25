@@ -3,8 +3,12 @@ language: cpp
 compiler: gcc
 
 install:
-    - sudo apt-get install libqt4-dev qt4-qmake
+- sudo apt-get install libqt4-dev qt4-qmake
+- sudo pip install cpp-coveralls
 
 script:  
     - qmake gestotux.pro
     - make
+
+after_success:
+  - coveralls --exclude lib --exclude tests

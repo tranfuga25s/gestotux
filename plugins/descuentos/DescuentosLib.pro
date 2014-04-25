@@ -22,3 +22,8 @@ SOURCES += mdescuentos.cpp \
 
 INCLUDEPATH += ../../utiles \
                ../../src
+
+
+unix {
+    LIBS += -gcov
+}

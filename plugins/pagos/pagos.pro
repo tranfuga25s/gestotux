@@ -72,3 +72,7 @@ LIBS += -L../../bin \
         -llibventas
 
 DISTFILES += ../../bin/reportes/Recibo.xml
+
+unix {
+    LIBS += -gcov
+}

@@ -60,3 +60,9 @@ LIBS += -L../../bin \
         -lcaja \
 
 DISTFILES += ../../bin/reportes/ListadoGastos.xml
+
+
+unix {
+    LIBS += -gcov
+}
+

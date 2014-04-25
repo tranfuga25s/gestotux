@@ -93,3 +93,8 @@ LIBS += -L../../bin \
         -lcaja \
         -ldescuentos \
         -lutiles
+
+
+unix {
+    LIBS += -gcov
+}

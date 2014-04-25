@@ -59,3 +59,8 @@ LIBS += -L../../bin \
         -lreporte \
         -lproductos \
         -llibcaja
+
+
+unix {
+    LIBS += -gcov
+}

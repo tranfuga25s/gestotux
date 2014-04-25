@@ -19,3 +19,8 @@ HEADERS += informesplugin.h \
 
 INCLUDEPATH += ../../src \
                ../../utiles
+
+
+unix {
+    LIBS += -gcov
+}

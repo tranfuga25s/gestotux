@@ -51,3 +51,7 @@ win32 {
 }
 
 DISTFILES += ../../bin/reportes/ListadoProveedores.xml
+
+unix {
+    LIBS += -gcov
+}

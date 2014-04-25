@@ -61,3 +61,8 @@ OTHER_FILES += email.QMYSQL.sql \
               email.QSQLITE.sql
 
 RESOURCES += email.qrc
+
+
+unix {
+    LIBS += -gcov
+}

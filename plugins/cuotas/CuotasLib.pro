@@ -22,3 +22,8 @@ SOURCES += mplancuota.cpp \
 INCLUDEPATH += ../../utiles \
                ../../src \
                ../pagos
+
+
+unix {
+    LIBS += -gcov
+}
