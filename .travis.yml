@@ -3,16 +3,11 @@ language: cpp
 compiler: gcc
 
 install:
-- sudo apt-get install libqt4-dev qt4-qmake
-- sudo pip install cpp-coveralls
+    - sudo pip install cpp-coveralls
 
 script:  
-    - qmake gestotux.pro
+    - qmake "LIBS += -gcov QMAKE_CXXFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0 QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage -O0" gestotux.pro
     - make
-    - ./test/ProductosTest/tst_productostest
-    - ./test/CancelacionPeriodoServicio/tst_cancelacionperiodoserviciotest
-    - ./test/PeriodoServicioTest/tst_periodoserviciotest
-    - ./test/PreferenciasTest/tst_preferenciastest
 
 after_success:
-  - coveralls --exclude lib --exclude tests
+    - coveralls --exclude lib --exclude tests
