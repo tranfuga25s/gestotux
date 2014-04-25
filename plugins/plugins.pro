@@ -10,15 +10,15 @@ SUBDIRS +=  CtaCte/CtaCteLib.pro \
             gastos \
             productos \
             compras \
-            remitos \
             ventas \
             proveedor \
             CtaCte \
             pagos \
             cuotas \
-            presupuesto \
-            servicios \
             descuentos \
+            presupuesto \
+            remitos \
+            servicios \
             feedback \
             informes/informa.pro \
             informes \
