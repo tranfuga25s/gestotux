@@ -32,7 +32,19 @@ QSqlTableModel( parent )
 void ResumenComprasTotales::setearMetodoTemporal( DivisionTemporal metodo )
 {
     this->_metodo_temporal = metodo;
-    //this->update();
+    this->actualizarDatos();
+    this->select();
+}
+
+/*!
+ * \brief ResumenComprasTotales::data
+ * \param idx
+ * \param role
+ * \return
+ */
+QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
+{
+    return QSqlTableModel::data( idx, role );
 }
 
 /*!

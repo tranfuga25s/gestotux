@@ -23,6 +23,8 @@ public:
     ResumenComprasTotales( QObject *parent = 0 );
     void setearMetodoTemporal( DivisionTemporal metodo );
 
+    QVariant data(const QModelIndex &idx, int role) const;
+
 private:
     void actualizarDatos();
     DivisionTemporal _metodo_temporal;
