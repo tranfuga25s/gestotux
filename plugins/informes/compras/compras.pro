@@ -14,6 +14,7 @@ DESTDIR = ../../../bin/plugins/informes
 INCLUDEPATH += ../../../reporte \
                ../../../utiles \
                ../../../src \
+               ../../../plugins/compras \
                ../.
 
 LIBS += ../../../bin/libutiles.a \
@@ -30,5 +31,4 @@ SOURCES = reportecompras.cpp \
     formresumencomprastotales.cpp \
     resumencomprastotales.cpp
 
-FORMS += \
-    formresumencomprastotales.ui
+FORMS += formresumencomprastotales.ui
