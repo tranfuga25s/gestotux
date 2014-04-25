@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS servidores_email ( "id_server" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "nombre" TEXT NOT NULL, "direccion" TEXT NOT NULL, "puerto" INTEGER, "usuario" TEXT NOT NULL, "pass" TEXT NOT NULL, "de" TEXT NOT NULL, "predeterminado" INTEGER NOT NULL DEFAULT (0), "encriptacion" INTEGER NOT NULL DEFAULT 0, "direccion_origen" TEXT NOT NULL DEFAULT "" );
+CREATE TABLE IF NOT EXISTS emails ( "id_email" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"id_unico" TEXT NOT NULL, "para" TEXT NOT NULL, "cc" TEXT, "bcc" TEXT, "cuerpo" BLOB, "content-type" TEXT );
+INSERT OR IGNORE INTO sqlite_sequence VALUES ( 'servidores_email', '1' );
+INSERT OR IGNORE INTO sqlite_sequence VALUES ( 'emails', '1' );

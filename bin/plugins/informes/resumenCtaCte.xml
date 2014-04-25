@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf8"?>
+<NCReport
+    name="resumencuenta"
+    dataSource="DB"
+    encoding="utf8"
+    pageSize="A4"
+    orientation="P"
+    printerMode="normal"
+    topMargin="20"
+    bottomMargin="20"
+    leftMargin="20"
+    rightMargin="20"
+    defaultFontName=""
+    defaultFontSize="10"
+    backcolor="#FFFFFF"
+    masterAlias="ctacte"
+    >
+    
+<queries>
+    <query alias="ctacte">
+        SELECT numero_cuenta AS NumeroCuenta, razon_social AS RazonSocial, fecha_alta AS FechaAlta, fecha_baja AS FechaBaja, saldo AS Saldo, limite AS Limite FROM ctacte AS cc, clientes AS c WHERE c.id = cc.id_cliente AND numero_cuenta = $P{numero_cuenta};
+    </query>
+    <query alias="detalle">
+        SELECT tipo_op AS TipoOp, numero_comprobante AS NumeroComp, descripcion AS Descripcion, debe AS Debe, haber AS Haber, debe - haber AS Saldo FROM item_ctacte WHERE id_ctacte = $P{numero_cuenta};
+    </query>
+</queries>
+<variables>
+</variables>
+<pageHeader height="56.1731">
+    <label posX="47.218" posY="0.000" width="122.115" height="8.141" fontSize="16" fontWeight="bold" alignmentH="center" richText="true" forecolor="#000000">Resumen de Cuenta</label>
+    <line fromX="47.489" fromY="8.141" toX="169.605" toY="8.141" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <field ftype="sql" type="" posX="48.846" posY="9.769" width="120.487" height="4.885" fontSize="12" richText="true" forecolor="#000000" embedString="Cuenta Corriente: #%1">ctacte.NumeroCuenta</field>
+    <field ftype="sql" type="" posX="48.846" posY="16.282" width="120.487" height="4.885" fontSize="12" fontWeight="bold" richText="true" forecolor="#000000" embedString="Cliente: %1">ctacte.RazonSocial</field>
+    <pixmap posX="0.000" posY="0.000" width="47.489" height="40.705" resource="/home/Esteban/Programas/gestotux/src/imagenes/tr.png"></pixmap>
+    <field ftype="sql" type="date" posX="48.846" posY="22.795" width="120.487" height="4.885" fontSize="12" richText="true" forecolor="#000000" dateFormat="dd/MM/yyyy" embedString="Fecha de Alta: %L1">ctacte.FechaAlta</field>
+    <field ftype="sql" type="" posX="48.846" posY="29.308" width="120.487" height="4.885" fontSize="12" richText="true" forecolor="#000000" embedString="Limite de Credito: $ %L1">ctacte.Limite</field>
+    <field ftype="sql" type="" posX="48.846" posY="35.821" width="120.487" height="4.885" fontSize="12" richText="true" forecolor="#000000" embedString="Saldo a la fecha: $ %L1">ctacte.Saldo</field>
+    <label posX="2.171" posY="43.690" width="166.077" height="4.885" fontSize="12" fontWeight="bold" fontItalic="true" alignmentH="center" wordbreak="true" forecolor="#000000">Detalle de la cuenta</label>
+    <rectangle posX="0.271" posY="48.303" width="169.605" height="6.513" lineWidth="1" lineStyle="solid" lineColor="#000000" fillColor="#FFFFFF" fillStyle="transparent"></rectangle>
+    <label posX="32.021" posY="49.118" width="78.697" height="4.885" alignmentV="center" forecolor="#000000">Detalle</label>
+    <label posX="133.241" posY="49.118" width="16.282" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000">Haber</label>
+    <label posX="114.517" posY="49.118" width="16.282" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000">Debe</label>
+    <label posX="9.226" posY="49.118" width="22.252" height="4.885" alignmentV="center" forecolor="#000000">Num Comp</label>
+    <label posX="151.694" posY="49.118" width="17.096" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000">Saldo</label>
+    <label posX="1.357" posY="49.118" width="6.784" height="4.885" alignmentV="center" forecolor="#000000">Op.</label>
+</pageHeader>
+<pageFooter height="0.271368">
+</pageFooter>
+<groups>
+</groups>
+<detail height="7.59829">
+    <field ftype="sql" type="" posX="0.814" posY="0.543" width="7.327" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000">detalle.TipoOp</field>
+    <field ftype="sql" type="" posX="8.955" posY="0.814" width="22.795" height="4.885" alignmentH="center" forecolor="#000000">detalle.NumeroComp</field>
+    <field ftype="sql" type="" posX="32.564" posY="0.543" width="78.154" height="4.885" alignmentV="center" forecolor="#000000">detalle.descripcion</field>
+    <field ftype="sql" type="numeric" posX="111.803" posY="0.271" width="18.453" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000" numBlankIfZero="true" numDigitNo="2" numDigitPoint="," numFormat="$ %L1">detalle.Debe</field>
+    <field ftype="sql" type="numeric" posX="131.071" posY="0.271" width="18.724" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000" numBlankIfZero="true" numDigitNo="2" numDigitPoint="," numFormat="$ %L1">detalle.Haber</field>
+    <field ftype="sql" type="numeric" posX="150.066" posY="0.271" width="19.538" height="4.885" alignmentH="center" alignmentV="center" forecolor="#000000" numBlankIfZero="true" numDigitNo="2" numDigitPoint="," numFormat="$ %L1">detalle.saldo</field>
+</detail>
+</NCReport>

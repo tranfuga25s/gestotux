@@ -1,0 +1,668 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Listado de Venta con ganancias</title>
+ <name>LVentaGanancia</name>
+ <description>Listado de Venta de productos con calculo de ganancias</description>
+ <parameter default="" active="true" listtype="static" type="string" name="fecha_fin">
+  <description></description>
+ </parameter>
+ <parameter default="" active="true" listtype="static" type="string" name="fecha_inicio">
+  <description></description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <portrait/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>listado</name>
+  <sql>SELECT distinct ifc.texto AS item, 
+       ifc.id_producto AS codigo,             
+       SUM( ifc.cantidad ) AS total_vendido, 
+       ifc.precio_unitario AS precio_venta,
+       p.precio_costo AS precio_compra, 
+       ifc.precio_unitario*SUM( ifc.cantidad ) AS  suma_vendido,
+       ifc.precio_unitario*SUM( ifc.cantidad ) - p.precio_costo*SUM( ifc.cantidad ) AS ganancia
+FROM item_factura AS ifc 
+LEFT JOIN producto AS p ON ifc.id_producto = p.id 
+LEFT JOIN compras_productos AS cp ON ifc.id_producto = cp.id_producto  
+INNER JOIN factura AS f ON ifc.id_factura = f.id_factura 
+WHERE ifc.id_producto IS NOT NULL
+    AND f.fecha BETWEEN &lt;? value("fecha_inicio") ?>  AND &lt;? value("fecha_fin") ?>  
+GROUP BY ifc.texto
+ORDER BY item</sql>
+ </querysource>
+ <querysource>
+  <name>total</name>
+  <sql>SELECT SUM( if.cantidad ) AS cantidad_total, 
+             if.precio_unitario*SUM( if.cantidad ) AS total_vendido,
+             if.precio_unitario*SUM( if.cantidad )-p.precio_costo*SUM( if.cantidad ) AS total_ganancia
+FROM item_factura AS if 
+LEFT JOIN producto AS p ON if.id_producto = p.id 
+INNER JOIN factura AS f ON if.id_factura = f.id_factura 
+WHERE if.id_producto IS NOT NULL
+  AND f.fecha BETWEEN &lt;? value("fecha_inicio") ?> AND &lt;? value("fecha_fin") ?></sql>
+ </querysource>
+ <pghead>
+  <height>81.3224</height>
+  <label>
+   <rect>
+    <x>1</x>
+    <y>3</y>
+    <width>707</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>12</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Listado de ventas y ganancias entre fechas</string>
+  </label>
+  <label>
+   <rect>
+    <x>0.467419</x>
+    <y>34.5633</y>
+    <width>81</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Fecha desde:</string>
+  </label>
+  <label>
+   <rect>
+    <x>195</x>
+    <y>34.4</y>
+    <width>81</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Fecha hasta:</string>
+  </label>
+  <line>
+   <xstart>0</xstart>
+   <ystart>60</ystart>
+   <xend>725.16</xend>
+   <yend>60</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>0</xstart>
+   <ystart>80</ystart>
+   <xend>724</xend>
+   <yend>80</yend>
+   <weight>0</weight>
+  </line>
+  <label>
+   <rect>
+    <x>-0.579</x>
+    <y>58.3</y>
+    <width>54.7</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Código</string>
+  </label>
+  <line>
+   <xstart>56.1927</xstart>
+   <ystart>60.0086</ystart>
+   <xend>56.1089</xend>
+   <yend>79.8171</yend>
+   <weight>0</weight>
+  </line>
+  <label>
+   <rect>
+    <x>61.3371</x>
+    <y>60.0343</y>
+    <width>270.931</width>
+    <height>21.1</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Detalle</string>
+  </label>
+  <line>
+   <xstart>436.209</xstart>
+   <ystart>60.2992</ystart>
+   <xend>436.142</xend>
+   <yend>79.8944</yend>
+   <weight>0</weight>
+  </line>
+  <label>
+   <rect>
+    <x>437.029</x>
+    <y>59.8536</y>
+    <width>34.1</width>
+    <height>21.1</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Cant</string>
+  </label>
+  <label>
+   <rect>
+    <x>662.651</x>
+    <y>63.7622</y>
+    <width>57.2914</width>
+    <height>16.6914</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Ganancia</string>
+  </label>
+  <line>
+   <xstart>663.384</xstart>
+   <ystart>60.0528</ystart>
+   <xend>663.546</xend>
+   <yend>80.1076</yend>
+   <weight>0</weight>
+  </line>
+  <label>
+   <rect>
+    <x>600.507</x>
+    <y>59.5</y>
+    <width>61.7</width>
+    <height>21.1</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Tot Venta</string>
+  </label>
+  <line>
+   <xstart>592.223</xstart>
+   <ystart>60.2992</ystart>
+   <xend>592.386</xend>
+   <yend>80.354</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>532.279</xstart>
+   <ystart>60.2992</ystart>
+   <xend>532.211</xend>
+   <yend>80.1076</yend>
+   <weight>0</weight>
+  </line>
+  <label>
+   <rect>
+    <x>533.663</x>
+    <y>59.8</y>
+    <width>55.1798</width>
+    <height>21.1</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>$ Venta</string>
+  </label>
+  <label>
+   <rect>
+    <x>474</x>
+    <y>59.4</y>
+    <width>57.5593</width>
+    <height>21.1</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>$ Compra</string>
+  </label>
+  <line>
+   <xstart>472.86</xstart>
+   <ystart>60.0528</ystart>
+   <xend>472.774</xend>
+   <yend>80.3109</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>1034.28</xstart>
+   <ystart>117.434</ystart>
+   <xend>1034.44</xend>
+   <yend>137.242</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>1296.95</xstart>
+   <ystart>116.941</ystart>
+   <xend>1297.11</xend>
+   <yend>136.996</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>1154.63</xstart>
+   <ystart>117.434</ystart>
+   <xend>1154.79</xend>
+   <yend>137.488</yend>
+   <weight>0</weight>
+  </line>
+  <field>
+   <rect>
+    <x>82.8548</x>
+    <y>35.4422</y>
+    <width>100</width>
+    <height>24.3265</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Parameter Query</query>
+    <column>fecha_inicio</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>272.518</x>
+    <y>36.315</y>
+    <width>100</width>
+    <height>24.0357</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Parameter Query</query>
+    <column>fecha_fin</column>
+   </data>
+  </field>
+  <line>
+   <xstart>724.897</xstart>
+   <ystart>81.8506</ystart>
+   <xend>724.814</xend>
+   <yend>101.659</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>725.704</xstart>
+   <ystart>60.5169</ystart>
+   <xend>725.866</xend>
+   <yend>80.5717</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>1.19267</xstart>
+   <ystart>60.0086</ystart>
+   <xend>1.10887</xend>
+   <yend>79.8171</yend>
+   <weight>0</weight>
+  </line>
+ </pghead>
+ <section>
+  <name>Listado</name>
+  <detail>
+   <key>
+    <query>listado</query>
+   </key>
+   <height>20.3202</height>
+   <rect>
+    <x>-0.0412397</x>
+    <y>-0.504104</y>
+    <width>725.78</width>
+    <height>20.6341</height>
+   </rect>
+   <field>
+    <rect>
+     <x>0.562</x>
+     <y>0.0582</y>
+     <width>53.2</width>
+     <height>20.1</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>codigo</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>59.1</x>
+     <y>-0.385242</y>
+     <width>375.297</width>
+     <height>20.343</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>item</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>437.524</x>
+     <y>0.0994063</y>
+     <width>32.7395</width>
+     <height>19.5874</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>total_vendido</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>474.285</x>
+     <y>1.51488</y>
+     <width>58.8</width>
+     <height>18.5096</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>precio_compra</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>534.283</x>
+     <y>0.750324</y>
+     <width>58.2542</width>
+     <height>19.6989</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>precio_venta</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>593.701</x>
+     <y>1.28396</y>
+     <width>69.971</width>
+     <height>19.5496</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>suma_vendido</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>664.681</x>
+     <y>0.371101</y>
+     <width>60.8458</width>
+     <height>21.3664</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>listado</query>
+     <column>ganancia</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>19.3111</height>
+  <label>
+   <rect>
+    <x>2.63</x>
+    <y>1.99</y>
+    <width>721</width>
+    <height>15.2</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>7</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <bottom/>
+   <string>Atención: Los precios de compra están tomados al momento de hacer el resumen. No se incluyen articulos vendidos que no tengan una referencia de productos.</string>
+  </label>
+ </pgfoot>
+ <rptfoot>
+  <height>36.2236</height>
+  <rect>
+   <x>438.224</x>
+   <y>1.03294</y>
+   <width>69.0992</width>
+   <height>19.4745</height>
+   <weight>1</weight>
+  </rect>
+  <rect>
+   <x>507.049</x>
+   <y>1.03294</y>
+   <width>109.364</width>
+   <height>19.4745</height>
+   <weight>1</weight>
+  </rect>
+  <rect>
+   <x>616.404</x>
+   <y>1.01254</y>
+   <width>109.364</width>
+   <height>19.4092</height>
+   <weight>1</weight>
+  </rect>
+  <label>
+   <rect>
+    <x>333.18</x>
+    <y>0.713472</y>
+    <width>100</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Totales:</string>
+  </label>
+  <field>
+   <rect>
+    <x>512.434</x>
+    <y>0.812366</y>
+    <width>103</width>
+    <height>16.5664</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>total</query>
+    <column>total_vendido</column>
+   </data>
+   <format>$ %0.2f</format>
+  </field>
+  <label>
+   <rect>
+    <x>615.817</x>
+    <y>20.4351</y>
+    <width>110</width>
+    <height>14.707</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <top/>
+   <string>Ganancia total</string>
+  </label>
+  <field>
+   <rect>
+    <x>621.271</x>
+    <y>0.802366</y>
+    <width>103</width>
+    <height>16.2756</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>total</query>
+    <column>total_ganancia</column>
+   </data>
+   <format>$ %0.2f</format>
+  </field>
+  <label>
+   <rect>
+    <x>511.817</x>
+    <y>20.4482</y>
+    <width>104.781</width>
+    <height>16.5664</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <top/>
+   <string>Venta total</string>
+  </label>
+  <label>
+   <rect>
+    <x>438.159</x>
+    <y>20.1978</y>
+    <width>69.6332</width>
+    <height>15.9847</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <top/>
+   <string>Cantidad</string>
+  </label>
+  <field>
+   <rect>
+    <x>440.292</x>
+    <y>0.586922</y>
+    <width>65.952</width>
+    <height>18.6021</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <data>
+    <query>total</query>
+    <column>cantidad_total</column>
+   </data>
+  </field>
+ </rptfoot>
+</report>

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/gestotux.png</file>
+        <file>imagenes/gestotux32.png</file>
+        <file>imagenes/gestotux64.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>default.QMYSQL.sql</file>
+        <file>default.QSQLITE.sql</file>
+    </qresource>
+</RCC>

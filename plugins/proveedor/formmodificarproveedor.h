@@ -1,0 +1,31 @@
+#ifndef FORMMODIFICARPROVEEDOR_H
+#define FORMMODIFICARPROVEEDOR_H
+
+#include "eventana.h"
+#include "ui_FormProveedorBase.h"
+#include "mproveedor.h"
+#include <QDataWidgetMapper>
+
+/*!
+ * \brief Formulario para modificar un proveedor.
+ *
+ *
+ * \author Esteban Zeller
+ */
+class FormModificarProveedor : public EVentana, private Ui::FormProveedorBase
+{
+    Q_OBJECT
+public:
+    explicit FormModificarProveedor( MProveedor *m, QWidget *parent = 0);
+    void setearItem( const int id );
+
+public slots:
+    void guardar();
+
+private:
+    QDataWidgetMapper *mapa;
+    MProveedor *modelo;
+
+};
+
+#endif // FORMMODIFICARPROVEEDOR_H

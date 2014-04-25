@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="" >
+	<file>imagenes/duenos.png</file>
+	<file>imagenes/resumenes.png</file>
+	<file>imagenes/pelu.gif</file>
+	<file>imagenes/mascotas.gif</file>
+	<file>imagenes/general.png</file>
+	<file>imagenes/restaurar.png</file>
+	<file>imagenes/diario.png</file>
+	<file>imagenes/mensual.png</file>
+	<file>imagenes/icono.png</file>
+	<file>imagenes/semanal.png</file>
+	<file>imagenes/otras.png</file>
+	<file>imagenes/borrar.png</file>
+    </qresource>
+    <qresource prefix="sql">
+	<file>digifauno.QSQLITE.sql</file>
+	<file>digifauno.QMYSQL.sql</file>
+    </qresource>
+</RCC>

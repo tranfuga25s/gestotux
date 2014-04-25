@@ -1,0 +1,561 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Listado de Gastos General</title>
+ <name>ListadoGastos</name>
+ <description>Listado normal de gastos</description>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <landscape/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>gastos</name>
+  <sql>SELECT 	strftime( '%d/%m/%Y', g1.fecha ) as fecha,
+	c.nombre AS categoria,
+	g1.descripcion AS descripcion,
+	g1.costo AS costo,
+	( SELECT SUM(g2.costo) FROM gastos AS g2 WHERE id_gasto &lt;= g1.id_gasto ) AS subtotal
+FROM gastos AS g1, categoria_gastos AS c
+WHERE g1.id_categoria = c.id_categoria_gastos
+ORDER BY g1.fecha ASC;</sql>
+ </querysource>
+ <rpthead>
+  <height>81.5916</height>
+  <image>
+   <rect>
+    <x>2</x>
+    <y>1</y>
+    <width>64</width>
+    <height>62</height>
+   </rect>
+   <mode>stretch</mode>
+   <map format="png">begin 644 internal
+MB5!.1PT*&amp;@H````-24A$4@```$`````]"`8```%JTE]7````!&amp;=!34$``+&amp;/
+M"_QA!0````9B2T=$`/\`_P#_H+VGDP````EP2%ES```-%P``#1&lt;!F#I2@@``
+M``=T24U%!]H)%PXD#$UO&amp;#D``!+(241!5&amp;C>S9M_D&amp;176?&lt;_WW-O]_3MF?U)
+M-KO9#8&amp;$)!A05&amp;(I("IJT*"68D`I?0L!Q1\E%!9$(PD$+2`SP5),%5#OBY0(
+M)90_$"40$R"DWA=\-1!$>%\2DBR)NYMD-_M[=W9Z;O=T]SU?_[BW=^[T]LPN
+MN\%PJGIG9V[?&lt;Y_SG.=\S_?Y/N&lt;"`$\#WIXPH0DVT&amp;Z_V:,_Y/DW!1\\^870
+M;K_Y]4#,\ST!H-V^=$.]AY#GU[\7"%GVM`@0@I.Q1\#T]-R6&amp;/T42??;((%M
+M)!$`8O1!2?&lt;#)(F?:?L7)6'SPZIW-ST]9YM=P,7EXU@,*P?E[3:?M?W'X$TV
+MGZHN_+C@MS71#^WVG&amp;L]_&amp;">W_#E%&lt;,$L/D?I;'\[G@/H1P.'RV-TBGN5I;-
+M'@*>`]JGR@J;UTF\#_BI(.E7)>TM+_JCDK>6%_UAX$LG+&lt;^R.8/[$O.@+=6C
+MMZT86I;-7@NZ&amp;+A#8L'V>;4>9J-4/&lt;@&amp;N*+;+1Z$&amp;\T:+639['>-?&amp;7[@[9_
+M61*2[L^R9$Z:;:[90;=[PP-E!$C`PQ+_>M)%\@59IIFU.D@!NEVG[3:W`3&lt;!
+M-XU"JIJ'+$EN;A>%"QCTX6V&amp;5P.7-0$+/D"[?7CB."M?5-8(\"B$1_/U"P%^
+MDSR_7KV>VDGB\X$=RS?QUTGBIW2[-RC/KU?MYK?EN1K=[O6?G!B!S>;LIC35
+MT0D6/0;:(8UZ\FNUNGM^#/@NP85I^?M,A#T%W`)L`MZ:0/!8!S&lt;&amp;:`'S$?Z$
+M,VDJH6#NL\"+:Z9>$Z/N7%JZOG.Z#I(LF_VHI)?6I@Y)KPB!A>'PJJ_`7&lt;,U
+M`TG2KU;/O=/F]\&amp;QFJ*W9QG??3H+ZJ"Q+T9_J-]/6M44-BK0/+,.)+TJ2;@P
+M36.[%BA-N''M#LH`811E7PO![ZCY6/!^3K,67@2P#7B\FI4MM3!N)LD;IF-,
+MHCT&lt;P(V50]^90MJ`S_0$D*9ST\VF9V)4*P1VK[$NGB_I[NI/-TGQYK0,77&lt;D
+M$&lt;**&amp;TZNG`H?`.ZN?>,\NZGJ%BU5"\]V.8TE/NBWDX2MX.TU8QZP>4.,O"O/
+MAXMIN6LETUE6S(3@-A!M]I=;#'FG&lt;\M!.$B[/3=Z\LX8];FEI1MVL6)QUUH-
+MX@Y(=&amp;R>(=5QP-'FLEZO_VA8Q6&amp;N8&amp;ZKK6>4>YEM^^O5\$*2Z&amp;W3T]GF=%('
+MW2Z-=MO/M[E&amp;THS-0=!^\&amp;=L^N"7`,](TSA8`P^^!WA5`DL!(C`HX.VQO/9&amp;
+MP?8`UQ43.\BRN3>"KY.4`-^P>0VXGR0L=#KJPJ&lt;'Y2KXWYQK$\"Z=7]+4>P:
+MV$Y4]_;D8'RCQ#W`O7D^OP`?,>P]:P.2DGA&lt;:8D@2:[FOXK?0Z#I^LX@&lt;37P
+M+&amp;"0IJT#P^$+.G"GS]:`D&amp;6SKZYB=C1.)/T]\(&lt;V/V5[,_B:E4[3\T$_`'K.
+MU%21G&lt;L4!-#>$>Z,'F`[!QZ+48]VN[N.V_MN';\Q1K?`&amp;]*4)KSB[`WH]?[_
+MG&lt;!2'0`EO4;21T+PX7;[DBCMN+J&amp;L2/:4/YK!)>?O0'VWY#GRH"GEIA&lt;)P/"
+M]DD.6/=4%:PAA`B\X]Q6P7*;2Z:GO3Y&amp;G@H\5=)68-KF&amp;BK@KVCT,IVJO%(1
+M.X"_L?ECB1.]GH_'^)9>ELW>)'%#[7$OM+VWU],^+>/?K&amp;TA+1.@$5\_R^;J
+M?DU8RA\$_AFX*UWI&lt;[`MT"@65NL;6_\`[):\!]2K1G\%Z$W5=U;&lt;;GLGZ%^!
+M@Q*/V3S::-!/EQ.A#4F[?6(S&lt;#GX`M`ZVYFDQ*8O\?YE5PMPU^;_)8EO[W0>
+M.08-X'S!C=>6N\D*XS\N\1#X$_V^OCX&lt;N@&lt;G8K=[L]?P[[4J,;P'_$]GV:PK
+M(")&amp;(_&amp;1&amp;/E&lt;"-R1Y\D12`P_'MOMS\;QV*K`[=W`;39?B]'SP^%&amp;S_U1YC.&lt;
+MX/-HM]_D$B/JF#&amp;^-"?2:RT'Z&amp;@`\5I)]S>;NCL],P,.D^=9:+>[.R1VV:3U
+M":XC:&lt;5%/@4\)ND!\%'0A\I[1BLF7&amp;FSD"9IZRQ"_!UA:BK)0F"#Q#I09CN4
+MV48HP$O`0@@ZL;A(%TX,H1VFIM)6""02FRN.&lt;R#/PV.K&amp;/!RX.F"38*BLOL+
+MAKL,+P#^C2>JU0RXE!!F!*](IZ;\?R0N!2+HW>"_!;J]GA9CU!*\.3[!!EQ#
+MEGW_>DCGU\"=V\!S$O^YN,@1^+,!'#EG`T+)@)Z['9+YTX#>SX'NB%$_UFYK
+M![RI\41X(`%H-*XZ&lt;8:0.R6Y;>M(L^E#@\'5.30,WSQ[#[3;LW\ZZ>$VAVK+
+MBN4,AI\!/Q?T#&amp;G8@MO/>0JN'8%)[5$?D_@KX#7`*SFY3PL0(7">S:59IG7P
+M,SH7`])Q%+-]!^BPQ-W`EVT6RXUEA4*P7>)\\#2\,,#MQ;EXP/49D.A)/AJC
+M=^>Y#O9Z?W%\P@RM![5MMV!&amp;YSH%XQT\=Z4VLKL^-2,STS(Y50(GSBD&amp;4E7D
+MKK:I7`1ZIL33L\R'I=ED,A]`H%`MI+,W8#CTNC35PC+YD&lt;`OMWEY:9R_6#&amp;E
+M4W:_)Z*%?O](#OS[RMS@9$8MT+:2':UX&lt;*.\YNIS3C'P%\[S^$*;>R>/S5.C
+M);K,B$?3&lt;.Z^2&amp;$!.-CO];;^4*O%Y39?D4K%M7I&lt;40N3\0!NA:!,NJD)&lt;E%@
+M4`%)`1^.&lt;%_-P'&lt;'Z"&lt;E^MHP',"-L>IU(_#GA/!X:VI*6R5?!-IN>U,5J.^9
+M3'M7D%DD'0)^PX[W03C2[8;%5LN;0_#_M7U9-:V_`'Y$8O?BXOWS%2,Z3I8]
+M_FMIZD\6A7K`3MN[8J29)/J7E=Q_)8M>*6FRQ?:MH*'$2]OM^%>5;G02R&amp;R_
+M!+@W!!;@^0MIK8,/%R?E@A(#0J`F]9SA_EX^J5'Q_E/F3F*'S>-%00-RA7$&amp;
+MN1QP8C6M8#SVUHC%4;I/+>T;2@PKLN-T)3?Q1'5X0K]?`[YFQP=!1T"NM)O_
+M)2D[-=D!21\']E>?!X$.K*\;P-^!7E&amp;AW(I2RJDIFFUS6.)NFYU)0F%;1&lt;$5
+MX-UCDA:@?P#O!NZV>3`$CN2YC\(G8[JL3,579YG^2-(EX,W@3-)4E6.];\*H
+MAC$RW^MQ!/8.X!'@>2'+],_`S]9BHA&lt;C.>@^\)>Z71^`?H1;(LR3+BO&lt;WUCJ
+M=I^]J]GTWF:3IDW#)E33\;Y5%F'U>6\U9Y\LI+D7C7VK%8*'MDX,AW3@+&lt;-3
+M2@_P^5&amp;D]/M]^OW^LX%K!#NKS/G[:M,"$EFY$[H!:8!W!>@HR[*?MMT>2UH,
+MNE+R/6G*>7!S=V:F61P[MEC8O\&lt;9+:YV>_9V6R^I&amp;0!PW/8"L"2%%/RT2>GX
+MV`Z:-]+P;X.A7RMQ-,^+SAGMI6EZU3W@UR_CB0%:DC9(VEQ!J6J2Q&lt;FE/)8!
+M-,J_>U^,FK>7CH&lt;S,:#;??"A&lt;J1GGFY(^MBX!ZJ?,\#EDM?;B&lt;*9=?@A=[ML
+MLOEJ!50>JR+5"+2/`Q^JUOJOV#PXPJ0:@">`HLT99L&lt;;@&lt;>6AL,+?R1-N0CX
+M/N#9P$;;C;)S=R3RDL2R3V*GY-T2=\:H'1+/*@M/?H&amp;M?9([0&lt;FW2B9>+7AF
+M8V:&amp;F:)@O&lt;2,'9N5N&amp;?P`)1+.M'MQ@4[62JWA6YC9D;3,2K:\6(II"'P&lt;*?3
+MFC]+-G,C,!6@&amp;&lt;KL>0G(@,)EY>B+AD^YQ)?/5_>\`3BO*HXE@OLB?'`M#TQ5
+M^N7%U0VO!Y8$,0F!AD1($A/"*`!$41"+0M%6A&amp;$!&amp;V*Y*6XQ_#5P'G"8[Z0V
+MP0$O`>X8E0U^7O(-H!^J[;BNE9N]S``,Z.Y2`O0]MGI`1W+>[6K)U@`.%O!N
+MP[N`/_Q.&lt;\!V8!]9=M-VT-XSU4&lt;G9)8C3YVHTM[]$OMM#H6@XZ5J%(?P%L/5
+MP*>_&lt;R*@W9[;515,M=I@OQ7=N/+%08E;0'O`NVT>*PJ.]OM)#VX?+J_1)Z&lt;E
+M9:B_;5VS>?6"[&lt;WUK?34`=LKKZ^MI%?IW+2MGP0_*FD#J!$"1;/)8#"XI(#S
+M#?&lt;^>0YHM7Z=$+8N`&lt;GJ@[&lt;K!GV/Q.?!7[;U!8G/V=HC&lt;455[9L08&amp;7Y0=+%
+M51FV50*&amp;EJ:FU!L,SA_"CT3X$C#\;W=`*EWZT^,S66=^%85X#/0ER3GH@,TC
+MDA\!'0`6;&lt;])>@?PLM53$V^3M-'V4%('.!YC[(00^C'V"^CYR8B`M-)A)B3^
+M)\LB$?B*[2700?!.B?N!/;V>C\58+$&amp;@T>`-C89>MD:R"/B"BJULE+P!0KO5
+M&lt;IKGVP)0/!D.",#1Y0+D1.`+ME-)`]M=6PLQ,E\46HQ1_?)(QEN&amp;23)_H!8Q
+MJ[FA92N58M-6"]P((22EO/,TGBP'?+&amp;JOGD5(+/$S]ELJA+>]2%X8Y)X)@2F
+MX.T->$^RM+0IG&amp;Z'L!VD*)>*:``%.PHZP*N>%`>DW>[U#[7;L]&lt;"?S8)`\I3
+M6P+\\Y5+>A`6;"^T6FRV&amp;RVI\R\Q^G?*6IH87U(3A!R-/J4SDM-$SK&lt;5`Z;)
+M\_#G61:W`7\P*NB-.8'1\;4R'2:3='ZM=KLC!+VL=F2HIFHLTPV;QC(HQMJU
+M@G,Y^W&amp;.2V`1^*J[W&lt;'U,6J3[6-UV;Y^FF(UK4AB`_B[E^4W:AFQQGB!5.I/
+M(8!4YA*)X+8G*P(J20J*7F_N1`C:WF['9E'H_9)>7A92UB(\HI(BFO62\.JT
+M652Z-K9EJRJTOCZ4J6,!]*N?/9&lt;U\R\#KS+\:95GGTG[#>"+@BN7RRKDP$'@
+M`L,'@!=,FM(7"7XBA-!H9AGK8O1ZB8ML75ZFAKZ,\C1F*FG1YJCD15N;)5^S
+M%@;8G@=UP#T@E^B4*:>&amp;X((R'/>![H_17Y"\#T(37"0)@Q@9YCF#LBH=(]P9
+ME\]OO15X)TDRES6;7`W\`/CIDK:!?S=&amp;%D)@*-%;7-12*8]WXE@N\"?D^775
+M;S>G$),T)9V>ICD8J!DCK1"&lt;V;0J::PQ8H"V_[$D.JSJ@$DL&lt;_S_8V!IGV3?
+M_B=;?RGY4(PZGB3,%X5[DEXG^:;JP)-74&lt;6NLWU4TM'J2.[>9C,>FY_?LG3*
+MEZOSV=4@M!]\1&amp;*?K8?!!ZH#*C.@2X#G2+[,IBGI6SYD&lt;R;.&amp;M.#!?0E;K'U
+M6LF;;:PUGVI`'ZNDY$>!^\`/0K(OS]-N.BF!65;6V&amp;9KF\VS)5Z\#&amp;@:4^#J
+M)8IO(175J76.M2L/`&amp;H"UXUV$*FL`*P=;6Y7"D_#5EH.H!`DDT6YY:J@JS*%
+M:P!V=JT*CYW@?38#2;V27M.7%*MB7["9EG@NZ,+)98J1(AXF%HH@8@&lt;DCMH^
+M`AI4*?GA:H?K)`G]\K3N=$Q7#QL8A?5JAX56B[?5I8>8@_9+'*&amp;L)NPI#2,O
+MM;RR&amp;%C2;Y(0W+#UC^"-*[=435P?P%U2.`I>!!T%'91\U-8QR?.@8\"1&amp;#F6
+MY^K#ISUV&lt;.V=Y/D@V;(E:78ZV@Q^CJUGV7ZJQ.9R=M2J&lt;H,('MA4TI>.50K0
+M&amp;N$N`T.;#K#?]L.@1[O=X0*DQ4@[EOJ$D(8D(20)6ZODZY*UP`'T"&lt;E+MH](
+MVFW[(4E[RE,?7AP.Z1&lt;%1?EZ1;N`(L*M*Y>`_5;@E3YTZ(I!DNA8EOF>X=!?
+MKP8]5:%^HSPJX"3&amp;DW%H\!!T[>2P'(\2QRK+'":)!Y`,X)8!'!BM6Q4%+HJ3
+MM9&amp;'UW*`Q,!V`>H"A\![;#U4%-[;[ZL#_S&amp;`CZU%A.KMN.&amp;&amp;HBA^J=OI3/7@
+M@F.P.&lt;"42E58@$.2C$[)#[$;%,6PWVZ'%;G`N#/J1&amp;BDIY97!D!+]?K%2"_,
+MLMD;;5Y\FN77E/03MF^52$")Y+1\H&lt;D!OC?`Y@H\WG\Z5?CL6[L]>PRT&lt;96]
+MWC8]B5MM[Y/8"7H`>#1&amp;SY?`&amp;$8L&lt;5T(?-36C]8/LYYVCRR!8F#[XY+NL/W(
+M>4]I+3[ORO/G[_C&lt;(X\718A+?1&lt;Q#H&lt;/__LO;WG@F[OW/Z$.R++9UTKZ0-T!
+MY4G),]WJ?(YS,O[FDPE!Q.BOM]OI6_-\>`)T3/(A6_.]7NPE3Z0#AL.[_J/1
+MN.HJVQ?5$Z,Q8745%*>JAZ_MK.I=DR$HC*)C[%#O*3P%*(;#H@?A?*`1@GLA
+MJ#L8)/V4)[3]('E>O"C+DN?9?$9B^E07Z*Q)D>T'I/!5VSW)QVR>10D6:VZ1
+ME%G6%HG"9CK&amp;,"4Y2+TG%@.J`HO@=2%-U6HVV0"ZT/:O2_JE2G9?]5Q'"*-K
+MHDR8=*_-_1+=&lt;M#J@(]5!QKWEQQ"N>349@OP,DG7V-ZVS%)'M0G=9OL`Z$&amp;(
+MWV@TM.?$"8Y_&amp;QSP2LHZX#N!)$E33S6;RFS6@==+FJERB;;M*9LT!"4E48P:
+M&lt;0%;!5!(],%=(*_XPPF)!8G%Q4662KG>:K5"HTK49H!UDD+U.NV.JKX\`!V5
+M>-R.^YK-&lt;'AAH9=_&amp;QPP:B\%/D'YBN)!P5;!()%(DD1)H^$D!$)EJ*2D.B\O
+M(+H4511MQZ*@Z/&lt;I0(5=%+`NPFV&amp;7&lt;!#U?-^"]BL\C-,RN(M29+02!)&lt;%!0A
+BD`T&amp;](=#Y[`IPM_%_P*,6]IMG5*8]@````!)14Y$KD)@@N(M
+`
+end
+</map>
+  </image>
+  <label>
+   <rect>
+    <x>76</x>
+    <y>-2</y>
+    <width>987</width>
+    <height>51</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>28</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <top/>
+   <string>Listado de Gastos</string>
+  </label>
+  <label>
+   <rect>
+    <x>84</x>
+    <y>37</y>
+    <width>971</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Realizado con gestotux 0.5 beta - Listado provisorio, puede cambiar sin aviso previo o notificacion. Usese de base para los listados personalizados</string>
+  </label>
+  <line>
+   <xstart>65.8748</xstart>
+   <ystart>60.3266</ystart>
+   <xend>65.7347</xend>
+   <yend>78.7591</yend>
+   <weight>2</weight>
+  </line>
+  <label>
+   <rect>
+    <x>5.30165</x>
+    <y>59.569</y>
+    <width>59.9</width>
+    <height>18.6194</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Fecha</string>
+  </label>
+  <label>
+   <rect>
+    <x>68.3922</x>
+    <y>59.1456</y>
+    <width>162</width>
+    <height>19.4544</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Categoria</string>
+  </label>
+  <line>
+   <xstart>254.53</xstart>
+   <ystart>59.8563</ystart>
+   <xend>254.491</xend>
+   <yend>78.2789</yend>
+   <weight>2</weight>
+  </line>
+  <label>
+   <rect>
+    <x>258.948</x>
+    <y>58.6496</y>
+    <width>479.241</width>
+    <height>21.5738</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Descripción</string>
+  </label>
+  <label>
+   <rect>
+    <x>746</x>
+    <y>59.3612</y>
+    <width>151</width>
+    <height>20.766</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Costo</string>
+  </label>
+  <line>
+   <xstart>744.041</xstart>
+   <ystart>59.8427</ystart>
+   <xend>744.204</xend>
+   <yend>79.2936</yend>
+   <weight>2</weight>
+  </line>
+  <line>
+   <xstart>902.069</xstart>
+   <ystart>60.7926</ystart>
+   <xend>901.995</xend>
+   <yend>77.8784</yend>
+   <weight>2</weight>
+  </line>
+  <label>
+   <rect>
+    <x>903</x>
+    <y>59.2651</y>
+    <width>156</width>
+    <height>20.3621</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Sumatoria</string>
+  </label>
+  <line>
+   <xstart>2.0138</xstart>
+   <ystart>79.4432</ystart>
+   <xend>1069.9</xend>
+   <yend>79.3499</yend>
+   <weight>2</weight>
+  </line>
+  <line>
+   <xstart>1.7773</xstart>
+   <ystart>58.6354</ystart>
+   <xend>1069.67</xend>
+   <yend>58.5421</yend>
+   <weight>2</weight>
+  </line>
+  <line>
+   <xstart>1.31014</xstart>
+   <ystart>60.3266</ystart>
+   <xend>1.40654</xend>
+   <yend>79.2321</yend>
+   <weight>2</weight>
+  </line>
+  <line>
+   <xstart>1069.27</xstart>
+   <ystart>61.0291</ystart>
+   <xend>1069.2</xend>
+   <yend>78.1149</yend>
+   <weight>2</weight>
+  </line>
+ </rpthead>
+ <section>
+  <name>gastis</name>
+  <detail>
+   <key>
+    <query>gastos</query>
+   </key>
+   <height>19.9974</height>
+   <field>
+    <rect>
+     <x>68.9</x>
+     <y>-0.581066</y>
+     <width>183</width>
+     <height>17.7311</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>gastos</query>
+     <column>categoria</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>255</x>
+     <y>-0.133299</y>
+     <width>489</width>
+     <height>18.0233</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>gastos</query>
+     <column>descripcion</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>764</x>
+     <y>-0.163299</y>
+     <width>128</width>
+     <height>16.6233</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>gastos</query>
+     <column>costo</column>
+    </data>
+    <format>%10.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>935</x>
+     <y>-0.473299</y>
+     <width>130</width>
+     <height>16.6233</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>gastos</query>
+     <column>subtotal</column>
+    </data>
+    <format>%10.2f</format>
+   </field>
+   <line>
+    <xstart>0.916747</xstart>
+    <ystart>18.0723</ystart>
+    <xend>1069.5</xend>
+    <yend>18.08</yend>
+    <weight>1</weight>
+   </line>
+   <label>
+    <rect>
+     <x>748.384</x>
+     <y>2.09282</y>
+     <width>14.3768</width>
+     <height>16.1146</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>$</string>
+   </label>
+   <label>
+    <rect>
+     <x>906.033</x>
+     <y>2.63069</y>
+     <width>20.8389</width>
+     <height>16.1146</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>$</string>
+   </label>
+   <field>
+    <rect>
+     <x>4.2133</x>
+     <y>1.08865</y>
+     <width>59.9495</width>
+     <height>19.7155</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <top/>
+    <data>
+     <query>gastos</query>
+     <column>fecha</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>31.496</x>
+     <y>17.3412</y>
+     <width>16.401</width>
+     <height>29.4427</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <string>/</string>
+   </label>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>26.4467</height>
+  <field>
+   <rect>
+    <x>4.56</x>
+    <y>1.07952</y>
+    <width>31.6</width>
+    <height>19.4505</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_number</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>43.8</x>
+    <y>2.06728</y>
+    <width>37.7</width>
+    <height>18.0427</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_count</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>312.229</x>
+    <y>1.85628</y>
+    <width>475.907</width>
+    <height>27.8272</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>report_title</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>857.781</x>
+    <y>-0.166599</y>
+    <width>208</width>
+    <height>25.2194</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>system_date</column>
+   </data>
+  </field>
+ </pgfoot>
+</report>

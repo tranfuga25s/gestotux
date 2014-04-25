@@ -1,0 +1,23 @@
+h1 {
+    font-size : 20px;
+    font-weight : bold;
+    text-decoration : underline;
+  }
+
+
+table {
+    border-style: none;
+    page-break-after: always;
+  }
+
+
+p {
+    font-size: small;
+  }
+
+thead {
+    background: #c7c7c7;
+    font-style: italic;
+    align: center;
+  }
+

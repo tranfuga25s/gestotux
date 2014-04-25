@@ -1,0 +1,49 @@
+<ui version="4.0" >
+ <class>FormPrefCaravanas</class>
+ <widget class="QWidget" name="FormPrefCaravanas" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>815</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Categorias Especiales</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
+       <widget class="QLabel" name="label" >
+        <property name="text" >
+         <string>Categorias que no poseear numero de caravanas sino que pediran cantidad de animales. Coloqueles tilde a las que desea usar de esa forma</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>true</bool>
+        </property>
+        <property name="textInteractionFlags" >
+         <set>Qt::NoTextInteraction</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableView" name="TVCategorias" >
+        <property name="locale" >
+         <locale country="UnitedStates" language="Spanish" />
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

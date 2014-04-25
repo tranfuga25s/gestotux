@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/ctacte.png</file>
+        <file>imagenes/ctacte_nueva.png</file>
+        <file>imagenes/resumen_cuenta.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>ctacte.QMYSQL.sql</file>
+        <file>ctacte.QSQLITE.sql</file>
+    </qresource>
+</RCC>

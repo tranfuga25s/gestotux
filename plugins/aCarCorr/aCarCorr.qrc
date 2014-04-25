@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="">
+	<file>imagenes/establecimientos.png</file>
+	<file>imagenes/categoria.png</file>
+	<file>imagenes/caravana.png</file>
+	<file>imagenes/resumenes.png</file>
+   </qresource>
+   <qresource prefix="sql">
+	<file>admincaravanascorrientes.QSQLITE.sql</file>
+	<file>admincaravanascorrientes.QMYSQL.sql</file>
+   </qresource>
+</RCC>

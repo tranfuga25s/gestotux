@@ -1,0 +1,324 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Resumen de Deuda de Cuotas de Clientes</title>
+ <name>DeudasCuotasCliente</name>
+ <description>Resumen de estado de cuotas para un cliente específico</description>
+ <parameter default="1" active="true" listtype="static" type="integer" name="id_cliente">
+  <description></description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <portrait/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>cuotas_total</name>
+  <sql>SELECT strftime( "%m/%Y", c.fecha ) AS mes,
+       SUM( c.total ) AS total
+FROM compras AS c
+GROUP BY strftime( "%m/%Y", c.fecha )</sql>
+ </querysource>
+ <querysource>
+  <name>Cuotas</name>
+  <sql>SELECT SUM( c.total ) AS total
+FROM compras AS c</sql>
+ </querysource>
+ <querysource>
+  <name>DatosCliente</name>
+  <sql>SELECT id AS codigo,
+       razon_social
+FROM clientes
+WHERE id_cliente = &lt;? value("id_cliente"); ?></sql>
+ </querysource>
+ <rpthead>
+  <height>57.0722</height>
+  <label>
+   <rect>
+    <x>7.62</x>
+    <y>3.19</y>
+    <width>717</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>16</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Estado de cuotas</string>
+  </label>
+  <label>
+   <rect>
+    <x>4.49337</x>
+    <y>38.4934</y>
+    <width>49</width>
+    <height>16</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>Cliente:</string>
+  </label>
+  <field>
+   <rect>
+    <x>91.0769</x>
+    <y>36</y>
+    <width>261</width>
+    <height>19</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>DatosCliente</query>
+    <column>razon_social</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>44.2729</x>
+    <y>37.4989</y>
+    <width>43.7639</width>
+    <height>17.4005</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>DatosCliente</query>
+    <column>codigo</column>
+   </data>
+  </field>
+ </rpthead>
+ <pghead>
+  <height>29</height>
+  <label>
+   <rect>
+    <x>6</x>
+    <y>-2</y>
+    <width>716</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>11</size>
+    <weight>bold</weight>
+    <italic/>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Estado de cuotas</string>
+  </label>
+ </pghead>
+ <section>
+  <name>TotalCuotas</name>
+  <detail>
+   <key>
+    <query>cuotas_total</query>
+   </key>
+   <height>51.3813</height>
+   <label>
+    <rect>
+     <x>4.20674</x>
+     <y>15.4125</y>
+     <width>85.3077</width>
+     <height>21.4536</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <string>Plan de cuotas </string>
+   </label>
+   <field>
+    <rect>
+     <x>86.8265</x>
+     <y>13.8928</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>Cuotas</query>
+     <column>id_plan_cuotas</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>208.027</x>
+     <y>7.80979</y>
+     <width>96.4536</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>Estado de pagos:</string>
+   </label>
+   <field>
+    <rect>
+     <x>301.48</x>
+     <y>3.75369</y>
+     <width>32.6181</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>Context Query</query>
+     <column>estado_cuotas</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>339</x>
+     <y>10.3</y>
+     <width>100</width>
+     <height>15.8806</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>Pagadas</string>
+   </label>
+  </detail>
+ </section>
+ <section>
+  <name>Cuotas</name>
+  <group>
+   <name>Plan Cuotas</name>
+   <column>id_plan_cuota</column>
+   <head>
+    <height>100</height>
+   </head>
+   <foot>
+    <height>100</height>
+   </foot>
+  </group>
+  <detail>
+   <key>
+    <query>cuotas_total</query>
+   </key>
+   <height>22.8557</height>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>39.0768</height>
+  <label>
+   <rect>
+    <x>45</x>
+    <y>5.94808</y>
+    <width>24</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>de</string>
+  </label>
+  <field>
+   <rect>
+    <x>-0.85553</x>
+    <y>5.56659</y>
+    <width>46.2257</width>
+    <height>26.237</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_number</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>63.3815</x>
+    <y>8.56659</y>
+    <width>46.2257</width>
+    <height>23.763</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_count</column>
+   </data>
+  </field>
+ </pgfoot>
+ <rptfoot>
+  <height>25</height>
+  <label>
+   <rect>
+    <x>230</x>
+    <y>0</y>
+    <width>491</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <right/>
+   <bottom/>
+   <string>Este resumen es válido hasta su fecha de emisión.</string>
+  </label>
+ </rptfoot>
+</report>

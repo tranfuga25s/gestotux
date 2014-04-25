@@ -1,0 +1,49 @@
+<ui version="4.0" >
+ <class>FormPrefOpcionesBase</class>
+ <widget class="QWidget" name="FormPrefOpcionesBase" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QGroupBox" name="GBMiselaceas" >
+     <property name="title" >
+      <string>Miselaceas</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Cantidad de entradas que se mostraran al seleccionar mascota para ingresar nuevo servicio:</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>true</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="SBLimite" />
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

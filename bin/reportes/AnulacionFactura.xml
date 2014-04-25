@@ -1,0 +1,131 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Cancelacion de Comprobante</title>
+ <name>AnulacionFactura</name>
+ <description>Anulacion de un comprobante</description>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>Letter</size>
+ <portrait/>
+ <topmargin>100</topmargin>
+ <bottommargin>100</bottommargin>
+ <rightmargin>100</rightmargin>
+ <leftmargin>100</leftmargin>
+ <querysource>
+  <name>dump</name>
+  <sql>SELECT 1 AS 1 FROM dual;</sql>
+ </querysource>
+ <section>
+  <name>Sin nombre</name>
+  <detail>
+   <key>
+    <query>dump</query>
+   </key>
+   <height>512</height>
+   <rect>
+    <x>142</x>
+    <y>315</y>
+    <width>417</width>
+    <height>94</height>
+    <weight>3</weight>
+   </rect>
+   <label>
+    <rect>
+     <x>149</x>
+     <y>315</y>
+     <width>403</width>
+     <height>34</height>
+    </rect>
+    <font>
+     <face>Arial Black</face>
+     <size>26</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <string>Anulado</string>
+   </label>
+   <line>
+    <xstart>144.405</xstart>
+    <ystart>350</ystart>
+    <xend>558.865</xend>
+    <yend>350.567</yend>
+    <weight>2</weight>
+   </line>
+   <label>
+    <rect>
+     <x>147</x>
+     <y>353</y>
+     <width>59.7</width>
+     <height>15.9</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>bold</weight>
+    </font>
+    <right/>
+    <top/>
+    <string>Fecha:</string>
+   </label>
+   <label>
+    <rect>
+     <x>149.702</x>
+     <y>367.674</y>
+     <width>56.3</width>
+     <height>17.6</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>bold</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <string>Razon:</string>
+   </label>
+   <text>
+    <rect>
+     <x>210</x>
+     <y>352</y>
+     <width>343</width>
+     <height>16.5</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>Parameter Query</query>
+     <column>fecha</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>209</x>
+     <y>369</y>
+     <width>346.831</width>
+     <height>36.916</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <wordwrap/>
+    <left/>
+    <top/>
+    <data>
+     <query>Parameter Query</query>
+     <column>razon</column>
+    </data>
+   </field>
+  </detail>
+ </section>
+</report>

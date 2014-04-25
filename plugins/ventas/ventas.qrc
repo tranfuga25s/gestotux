@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/ventas.jpg</file>
+        <file>imagenes/factura-nueva.png</file>
+        <file>imagenes/factura.png</file>
+        <file>imagenes/anularfactura.png</file>
+        <file>imagenes/verfacturaanuladas.png</file>
+        <file>imagenes/factura-items.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>ventas.QMYSQL.sql</file>
+        <file>ventas.QSQLITE.sql</file>
+    </qresource>
+</RCC>

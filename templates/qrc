@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="">
+    </qresource>
+    <qresource prefix="sql">
+    </qresource>
+</RCC>

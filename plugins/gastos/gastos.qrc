@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="">
+	<file>imagenes/gasto.jpg</file>
+    </qresource>
+    <qresource prefix="sql">
+	<file>gastos.QMYSQL.sql</file>
+	<file>gastos.QSQLITE.sql</file>
+    </qresource>
+</RCC>

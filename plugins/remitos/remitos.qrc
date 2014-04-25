@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/remito-anular.png</file>
+        <file>imagenes/remito-nuevo.png</file>
+        <file>imagenes/remito.png</file>
+        <file>imagenes/remitoveranulados.png</file>
+        <file>imagenes/pagaremito.png</file>
+        <file>imagenes/remitoveritems.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>remitos.QSQLITE.sql</file>
+        <file>remitos.QMYSQL.sql</file>
+    </qresource>
+</RCC>

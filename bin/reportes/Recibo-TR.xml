@@ -1,0 +1,390 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Recibo para TR Sistemas Informaticos integrados</title>
+ <name>recibo-tr</name>
+ <description>Recibo original/duplicado</description>
+ <parameter default="34" active="true" listtype="static" type="integer" name="id_recibo">
+  <description></description>
+ </parameter>
+ <parameter default="Cincuenta Pesos con treinta centavos" active="true" listtype="static" type="string" name="preciotexto">
+  <description></description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>
+  <width>582</width>
+  <height>825</height>
+ </size>
+ <portrait/>
+ <topmargin>14</topmargin>
+ <bottommargin>14</bottommargin>
+ <rightmargin>0</rightmargin>
+ <leftmargin>0</leftmargin>
+ <querysource>
+  <name>recibo</name>
+  <sql>SELECT r.id_recibo AS numero,
+       LPAD( r.numero, 5, 0 ) AS NumSerie,
+       DATE_FORMAT( r.fecha_pago, "%d/%c/%Y" ) AS fecha,
+       r.texto AS contenido,
+       r.precio AS total,
+       c.calle AS direccion,
+       c.razon_social AS cliente,
+       c.`CUIT/CUIL` AS cuit
+FROM recibos AS r,
+     clientes AS c
+WHERE r.id_recibo = &lt;? value("id_recibo") ?> AND c.id = r.id_cliente;</sql>
+ </querysource>
+ <section>
+  <name>Datos cliente</name>
+  <detail>
+   <key>
+    <query>recibo</query>
+   </key>
+   <height>797.252</height>
+   <text>
+    <rect>
+     <x>558.664</x>
+     <y>21.6514</y>
+     <width>64.364</width>
+     <height>20.3607</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>DejaVu Sans</face>
+     <size>8</size>
+     <weight>bold</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>NumSerie</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>220.047</x>
+     <y>173.598</y>
+     <width>390.701</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>11</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>cliente</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>245.029</x>
+     <y>196.327</y>
+     <width>376.402</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>direccion</column>
+    </data>
+   </field>
+   <text>
+    <rect>
+     <x>563.926</x>
+     <y>50.7262</y>
+     <width>57.4575</width>
+     <height>25.4803</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Bitstream Vera Serif</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>fecha</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>238.655</x>
+     <y>219.15</y>
+     <width>367.504</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>cuit</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>567.711</x>
+     <y>338.729</y>
+     <width>108.318</width>
+     <height>25.3831</height>
+    </rect>
+    <font>
+     <face>Arial Black</face>
+     <size>11</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>total</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>171.029</x>
+     <y>259.888</y>
+     <width>385.541</width>
+     <height>97.4858</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>recibo</query>
+     <column>contenido</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>125.655</x>
+     <y>339.691</y>
+     <width>294.981</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>Parameter Query</query>
+     <column>preciotexto</column>
+    </data>
+   </field>
+   <barcode>
+    <rect>
+     <x>504.216</x>
+     <y>77.1579</y>
+     <width>119.757</width>
+     <height>16.9</height>
+    </rect>
+    <format>128</format>
+    <maxlength>35</maxlength>
+    <center/>
+    <narrowBarWidth>0.01</narrowBarWidth>
+    <data>
+     <query>recibo</query>
+     <column>NumSerie</column>
+    </data>
+   </barcode>
+   <field>
+    <rect>
+     <x>570.02</x>
+     <y>737.561</y>
+     <width>84.8034</width>
+     <height>25.3831</height>
+    </rect>
+    <font>
+     <face>Arial Black</face>
+     <size>11</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>total</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>231.692</x>
+     <y>593.58</y>
+     <width>376.402</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>direccion</column>
+    </data>
+   </field>
+   <text>
+    <rect>
+     <x>565.664</x>
+     <y>423.651</y>
+     <width>64.364</width>
+     <height>20.3607</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>DejaVu Sans</face>
+     <size>8</size>
+     <weight>bold</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>NumSerie</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>146</x>
+     <y>745.206</y>
+     <width>294.981</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>Parameter Query</query>
+     <column>preciotexto</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>206.711</x>
+     <y>570.851</y>
+     <width>390.701</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>11</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>cliente</column>
+    </data>
+   </field>
+   <barcode>
+    <rect>
+     <x>512.487</x>
+     <y>471.532</y>
+     <width>120.392</width>
+     <height>16.9</height>
+    </rect>
+    <format>128</format>
+    <maxlength>35</maxlength>
+    <center/>
+    <narrowBarWidth>0.01</narrowBarWidth>
+    <data>
+     <query>recibo</query>
+     <column>NumSerie</column>
+    </data>
+   </barcode>
+   <text>
+    <rect>
+     <x>571.562</x>
+     <y>449.549</y>
+     <width>57.4575</width>
+     <height>25.4803</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Bitstream Vera Serif</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>fecha</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>225.318</x>
+     <y>616.402</y>
+     <width>367.504</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo</query>
+     <column>cuit</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>175.487</x>
+     <y>663.496</y>
+     <width>385.541</width>
+     <height>61.8968</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>recibo</query>
+     <column>contenido</column>
+    </data>
+   </field>
+  </detail>
+ </section>
+</report>

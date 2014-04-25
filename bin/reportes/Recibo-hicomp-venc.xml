@@ -1,0 +1,492 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Recibo para Hicomp Computacion con Vencimientos</title>
+ <name>recibo-hicomp</name>
+ <description>Recibo original/duplicado</description>
+ <parameter default="12/12/2001" active="true" listtype="static" type="string" name="fecha1">
+  <description></description>
+ </parameter>
+ <parameter default="12/12/2012" active="true" listtype="static" type="string" name="fecha2">
+  <description></description>
+ </parameter>
+ <parameter default="03/12/2012" active="true" listtype="static" type="string" name="fecha3">
+  <description></description>
+ </parameter>
+ <parameter default="13" active="true" listtype="static" type="integer" name="id_recibo">
+  <description></description>
+ </parameter>
+ <parameter default="10" active="true" listtype="static" type="integer" name="recargo1">
+  <description></description>
+ </parameter>
+ <parameter default="22%" active="true" listtype="static" type="string" name="recargo2">
+  <description></description>
+ </parameter>
+ <parameter default="13 %" active="true" listtype="static" type="string" name="recargo3">
+  <description></description>
+ </parameter>
+ <parameter default="10" active="true" listtype="static" type="double" name="total1">
+  <description></description>
+ </parameter>
+ <parameter default="$ 123,45" active="true" listtype="static" type="string" name="total2">
+  <description></description>
+ </parameter>
+ <parameter default="$ 123,45" active="true" listtype="static" type="string" name="total3">
+  <description></description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>
+  <width>579</width>
+  <height>830</height>
+ </size>
+ <portrait/>
+ <topmargin>0</topmargin>
+ <bottommargin>0</bottommargin>
+ <rightmargin>0</rightmargin>
+ <leftmargin>0</leftmargin>
+ <querysource>
+  <name>recibo-hicomp</name>
+  <sql>SELECT r.id_recibo AS numero,
+       substr( '0000000000' || r.serie, -5, 5 ) || '-' || substr( '0000000000' || r.numero, -5, 5 ) AS NumSerie,
+       strftime( '%d  %m  %Y', r.fecha_pago ) AS fecha,
+       r.texto AS contenido,
+       r.precio AS total,
+       c.calle || ' ' || coalesce( c.numero, '  ' ) AS direccion,
+       '#' || substr( '0000000000' || c.id, -5, 5 ) AS codigo,
+       c.razon_social AS cliente,
+       c.`CUIT/CUIL` AS cuit,
+       CASE r.forma_pago WHEN 1 THEN 'X' ELSE ' ' END AS contado,
+       CASE r.forma_pago WHEN 0 THEN 'X' ELSE ' ' END AS ctacte,
+       strftime( '%d/%m/%Y', r.fecha_pago ) AS fecha1,
+       '0%' AS recargo1,
+       r.precio AS total1,
+       strftime( '%d/%m/%Y', date( r.fecha_pago, '+12 days' ) ) AS fecha2,
+       '6,5%' AS recargo2,
+       r.precio*(1+0.065) AS total2,
+       strftime( '%d/%m/%Y', date( r.fecha_pago, '+30 days' ) ) AS fecha3,
+       '13%' AS recargo3,
+       r.precio*(1+0.13) AS total3
+FROM recibos AS r,
+     clientes AS c
+WHERE r.id_recibo = &lt;? value("id_recibo") ?> AND c.id = r.id_cliente;</sql>
+ </querysource>
+ <section>
+  <name>Datos cliente</name>
+  <detail>
+   <key>
+    <query>recibo-hicomp</query>
+   </key>
+   <height>216</height>
+   <text>
+    <rect>
+     <x>431</x>
+     <y>31.8</y>
+     <width>116</width>
+     <height>31.8</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Arial Black</face>
+     <size>11</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>NumSerie</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>106</x>
+     <y>154</y>
+     <width>439</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>14</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>cliente</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>133</x>
+     <y>193</y>
+     <width>405</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>direccion</column>
+    </data>
+   </field>
+   <text>
+    <rect>
+     <x>420</x>
+     <y>58.8</y>
+     <width>128</width>
+     <height>31.2</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Arial Black</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>fecha</column>
+    </data>
+   </text>
+   <barcode>
+    <rect>
+     <x>377</x>
+     <y>106.7</y>
+     <width>176</width>
+     <height>34.9</height>
+    </rect>
+    <format>128</format>
+    <maxlength>35</maxlength>
+    <center/>
+    <narrowBarWidth>0.01</narrowBarWidth>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>NumSerie</column>
+    </data>
+   </barcode>
+  </detail>
+ </section>
+ <section>
+  <name>contenido</name>
+  <detail>
+   <key>
+    <query>recibo-hicomp</query>
+   </key>
+   <height>500</height>
+   <field>
+    <rect>
+     <x>26.557</x>
+     <y>41.4233</y>
+     <width>524</width>
+     <height>420</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <wordwrap/>
+    <left/>
+    <top/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>contenido</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>379</x>
+     <y>11</y>
+     <width>66</width>
+     <height>33</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>contado</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>532</x>
+     <y>13</y>
+     <width>35</width>
+     <height>33</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>ctacte</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>79</x>
+     <y>481.5</y>
+     <width>96</width>
+     <height>28</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>fecha1</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>265</x>
+     <y>480.5</y>
+     <width>94</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>fecha2</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>429.947</x>
+     <y>484.833</y>
+     <width>94</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>fecha3</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>132.071</x>
+     <y>6.64</y>
+     <width>187</width>
+     <height>33</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>codigo</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>24.6571</x>
+     <y>10.5375</y>
+     <width>116</width>
+     <height>24.6</height>
+    </rect>
+    <font>
+     <face>Arial Black</face>
+     <size>9</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <string>Cód Ges. Pers.:</string>
+   </label>
+  </detail>
+ </section>
+ <section>
+  <name>recargos</name>
+  <detail>
+   <key>
+    <query>recibo-hicomp</query>
+   </key>
+   <height>81</height>
+   <field>
+    <rect>
+     <x>69</x>
+     <y>23.5</y>
+     <width>104</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>total1</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>254</x>
+     <y>21.5</y>
+     <width>106</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>total2</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>423.947</x>
+     <y>19.8134</y>
+     <width>106</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>total3</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>70</x>
+     <y>1.5</y>
+     <width>112</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>recargo1</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>256</x>
+     <y>3.5</y>
+     <width>112</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>recargo2</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>420.947</x>
+     <y>3.813</y>
+     <width>112</width>
+     <height>22</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>recargo3</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>391</x>
+     <y>52.36</y>
+     <width>142</width>
+     <height>40</height>
+    </rect>
+    <font>
+     <face>Arial Black</face>
+     <size>14</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>recibo-hicomp</query>
+     <column>total</column>
+    </data>
+    <format>$ %0.2f</format>
+   </field>
+  </detail>
+ </section>
+ <section>
+  <name>total</name>
+  <detail>
+   <key>
+    <query>recibo-hicomp</query>
+   </key>
+   <height>32.9545</height>
+  </detail>
+ </section>
+</report>

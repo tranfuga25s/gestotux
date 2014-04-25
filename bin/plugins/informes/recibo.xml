@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf8"?>
+<NCReport
+    name="unnamed"
+    dataSource="DB"
+    encoding="utf8"
+    pageSize="A4"
+    orientation="P"
+    printerMode="normal"
+    topMargin="20"
+    bottomMargin="20"
+    leftMargin="20"
+    rightMargin="20"
+    defaultFontName=""
+    defaultFontSize="10"
+    backcolor="#FFFFFF"
+    masterAlias="test"
+    >
+    
+<queries>
+    <query alias="test">
+        SELECT * FROM recibos;
+    </query>
+</queries>
+<variables>
+</variables>
+<pageHeader height="50.7457">
+    <label posX="105.833" posY="8.141" width="63.500" height="24.423" fontItalic="true" alignmentH="right" alignmentV="center" wordbreak="true" richText="true" forecolor="#000000">3000 Santa Fe / Argentina
+Tel: + 54 + 342 155 128211
+       + 54 + 342 154 77562
+consulta@bootsystem.com.ar
+www.bscomputacion.com</label>
+    <rectangle posX="122.115" posY="1.628" width="45.861" height="6.784" lineWidth="1" lineStyle="solid" lineColor="#000000" fillColor="#FFFFFF" fillStyle="transparent"></rectangle>
+    <pixmap posX="0.000" posY="0.000" width="66.756" height="27.679" resource="logo.png"></pixmap>
+    <pixmap posX="66.756" posY="0.000" width="22.795" height="14.654" resource=":/imagenes/tiporecibo.png"></pixmap>
+    <label posX="123.744" posY="3.256" width="21.167" height="4.885" fontWeight="bold" wordbreak="true" forecolor="#000000">Recibo Nº</label>
+    <field ftype="sql" type="numeric" posX="143.282" posY="3.256" width="24.423" height="4.885" alignmentH="center" forecolor="#000000" numDigitNo="0">recibo.id_recibo</field>
+    <field ftype="sql" type="" posX="0.000" posY="32.564" width="169.333" height="4.885" fontSize="12" fontWeight="bold" alignmentV="center" wordbreak="true" richText="true" dynamicHeight="true" forecolor="#000000" embedString="<b>Cliente:</b> %1">recibo.cliente</field>
+    <field ftype="sql" type="" posX="0.000" posY="39.077" width="169.333" height="11.397" wordbreak="true" richText="true" forecolor="#000000" embedString="<b>Direccion:</b> %1">recibo.direccion</field>
+</pageHeader>
+<pageFooter height="29.8504">
+    <label posX="0.000" posY="1.628" width="53.731" height="4.885" fontSize="14" fontWeight="bold" alignmentH="center" alignmentV="center" richText="true" forecolor="#000000">DANIEL SEQUEIRA</label>
+    <label posX="3.256" posY="6.513" width="53.731" height="9.769" fontSize="9" fontItalic="true" alignmentV="center" forecolor="#000000">BS COMPUTACION
+www.bscomputacion.com</label>
+    <line fromX="0.000" fromY="19.538" toX="169.605" toY="19.538" lineWidth="2" lineStyle="solid" lineColor="#000000"></line>
+    <label posX="0.000" posY="21.167" width="169.333" height="4.885" fontSize="7" fontItalic="true" alignmentH="center" alignmentV="center" forecolor="#000000">SERVICE TECNICO - VENTAS DE EQUIPOS / INSUMOS - REDES - ADMINISTRACIÓN DE HOSTING - ATENCIÓN A EMPRESAS</label>
+</pageFooter>
+<groups>
+</groups>
+<detail height="50.7457">
+</detail>
+</NCReport>

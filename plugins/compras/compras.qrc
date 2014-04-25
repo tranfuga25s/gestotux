@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/compras.png</file>
+        <file>imagenes/agregar_compras.png</file>
+        <file>imagenes/eliminar_compras.png</file>
+        <file>imagenes/editar_compras.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>compras.QMYSQL.sql</file>
+        <file>compras.QSQLITE.sql</file>
+    </qresource>
+</RCC>

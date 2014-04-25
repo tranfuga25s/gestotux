@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/sql">
+        <file>pagos.QSQLITE.sql</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>imagenes/recibo-nuevo.png</file>
+        <file>imagenes/recibo.png</file>
+        <file>imagenes/recibo-anular.png</file>
+    </qresource>
+</RCC>

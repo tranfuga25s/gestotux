@@ -1,0 +1,174 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Estado de cuotas</title>
+ <name>ResumenCuotas</name>
+ <description>Resumen de estado de cuotas.</description>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <portrait/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>cuotas_total</name>
+  <sql>SELECT strftime( "%m/%Y", c.fecha ) AS mes,
+       SUM( c.total ) AS total
+FROM compras AS c
+GROUP BY strftime( "%m/%Y", c.fecha )</sql>
+ </querysource>
+ <querysource>
+  <name>Cuotas</name>
+  <sql>SELECT SUM( c.total ) AS total
+FROM compras AS c</sql>
+ </querysource>
+ <rpthead>
+  <height>57.0722</height>
+  <label>
+   <rect>
+    <x>7.62</x>
+    <y>3.19</y>
+    <width>717</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>16</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Estado de cuotas</string>
+  </label>
+ </rpthead>
+ <pghead>
+  <height>29</height>
+  <label>
+   <rect>
+    <x>6</x>
+    <y>-2</y>
+    <width>716</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>11</size>
+    <weight>bold</weight>
+    <italic/>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Estado de cuotas</string>
+  </label>
+ </pghead>
+ <section>
+  <name>TotalCuotas</name>
+  <detail>
+   <key>
+    <query>cuotas_total</query>
+   </key>
+   <height>38.9953</height>
+  </detail>
+ </section>
+ <section>
+  <name>Cuotas</name>
+  <group>
+   <name>Plan Cuotas</name>
+   <column>id_plan_cuota</column>
+   <head>
+    <height>100</height>
+   </head>
+   <foot>
+    <height>100</height>
+   </foot>
+  </group>
+  <detail>
+   <key>
+    <query>cuotas_total</query>
+   </key>
+   <height>22.8557</height>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>39.0768</height>
+  <label>
+   <rect>
+    <x>45</x>
+    <y>5.94808</y>
+    <width>24</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>de</string>
+  </label>
+  <field>
+   <rect>
+    <x>-0.85553</x>
+    <y>5.56659</y>
+    <width>46.2257</width>
+    <height>26.237</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_number</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>63.3815</x>
+    <y>8.56659</y>
+    <width>46.2257</width>
+    <height>23.763</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_count</column>
+   </data>
+  </field>
+ </pgfoot>
+ <rptfoot>
+  <height>25</height>
+  <label>
+   <rect>
+    <x>230</x>
+    <y>0</y>
+    <width>491</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <right/>
+   <bottom/>
+   <string>Este resumen es valido hasta su fecha de emisión.</string>
+  </label>
+ </rptfoot>
+</report>

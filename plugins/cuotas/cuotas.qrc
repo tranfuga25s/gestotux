@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/sql">
+        <file>cuotas.QMYSQL.sql</file>
+        <file>cuotas.QSQLITE.sql</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>imagenes/ingresar_pago.png</file>
+        <file>imagenes/cancelar_cuota.png</file>
+        <file>imagenes/cuotas_detalle.png</file>
+        <file>imagenes/simular_cuota.png</file>
+        <file>imagenes/generar_comprobantes_cuotas.png</file>
+        <file>imagenes/adelanto_cuota.png</file>
+        <file>imagenes/resumen_cuotas.png</file>
+    </qresource>
+</RCC>

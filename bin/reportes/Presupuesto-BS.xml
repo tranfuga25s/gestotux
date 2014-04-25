@@ -1,0 +1,304 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Presupuesto predeterminado</title>
+ <name>Presupuesto</name>
+ <description>Presupuesto predeterminado para gestotux</description>
+ <parameter default="1" active="true" listtype="static" type="bool" name="cliente_existe">
+  <description>Identifica si el cliente existe en la base de datos. id_cliente != null.</description>
+ </parameter>
+ <parameter default="13" active="true" listtype="static" type="integer" name="id_presupuesto">
+  <description>Identificador del presupuesto en la tabla presupuestos</description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <portrait/>
+ <topmargin>71</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>65</leftmargin>
+ <querysource>
+  <name>presupuesto</name>
+  <sql>&lt;? if value("cliente_existe")?>
+SELECT c.razon_social AS destinatario,
+       "&lt;? value( "direccion" ) ?>" AS direccion,
+       "Santa Fe" AS localidad,
+       "20-32376172-9" AS cuit,
+       DATE_FORMAT( p.fecha, '%d/%m/%Y' ) AS fecha,
+       p.total As total,
+       CONCAT( CONCAT( LPAD( p.serie, 5, 0 ), '-' ), LPAD( p.numero, 5, 0 ) ) AS NumSerie
+FROM presupuestos AS p, clientes AS c
+WHERE p.id_cliente = c.id AND p.id_presupuesto = &lt;? value( "id_presupuesto" ) ?>;
+&lt;? else ?>
+SELECT p.destinatario AS destinatario,
+       p.direccion AS direccion,
+       " " AS localidad,
+       " " AS cuit,
+       DATE_FORMAT( p.fecha, '%d/%m/%Y' ) AS fecha,
+       p.total As total,
+       CONCAT( CONCAT( LPAD( p.serie, 5, 0 ), '-' ), LPAD( p.numero, 5, 0 ) ) AS NumSerie
+FROM presupuestos AS p
+WHERE p.id_presupuesto = &lt;? value( "id_presupuesto" ) ?>;
+&lt;? endif ?></sql>
+ </querysource>
+ <querysource>
+  <name>items</name>
+  <sql>SELECT cantidad,
+       texto,
+       precio_unitario,
+       cantidad*precio_unitario AS subtotal,
+       id_presupuesto
+FROM item_presupuesto
+WHERE id_presupuesto = &lt;? value( "id_presupuesto" ) ?>
+ORDER BY id_item_presupuesto;</sql>
+ </querysource>
+ <rpthead>
+  <height>314.5</height>
+  <field>
+   <rect>
+    <x>487</x>
+    <y>13</y>
+    <width>198</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>presupuesto</query>
+    <column>NumSerie</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>448</x>
+    <y>71.9</y>
+    <width>198</width>
+    <height>21</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>presupuesto</query>
+    <column>fecha</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>72</x>
+    <y>217</y>
+    <width>333</width>
+    <height>23</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>presupuesto</query>
+    <column>destinatario</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>90</x>
+    <y>250</y>
+    <width>342</width>
+    <height>19</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>presupuesto</query>
+    <column>direccion</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>519</x>
+    <y>215</y>
+    <width>187</width>
+    <height>19</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>presupuesto</query>
+    <column>localidad</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>501</x>
+    <y>249</y>
+    <width>167</width>
+    <height>19</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>presupuesto</query>
+    <column>cuit</column>
+   </data>
+  </field>
+ </rpthead>
+ <section>
+  <name>Detalle</name>
+  <group>
+   <name>Items</name>
+   <column>id_presupuesto</column>
+  </group>
+  <detail>
+   <key>
+    <query>items</query>
+   </key>
+   <height>28</height>
+   <field>
+    <rect>
+     <x>491</x>
+     <y>5.05</y>
+     <width>108</width>
+     <height>20.4</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>items</query>
+     <column>precio_unitario</column>
+    </data>
+    <format>$ %10.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>611</x>
+     <y>4.53</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>items</query>
+     <column>subtotal</column>
+    </data>
+    <format>$ %10.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>3.52</x>
+     <y>1.04</y>
+     <width>35</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>items</query>
+     <column>cantidad</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>45.5</x>
+     <y>2.56</y>
+     <width>442</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>items</query>
+     <column>texto</column>
+    </data>
+   </field>
+  </detail>
+ </section>
+ <rptfoot>
+  <height>57</height>
+  <label>
+   <rect>
+    <x>484</x>
+    <y>-1.78</y>
+    <width>100</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>11</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>TOTAL:</string>
+  </label>
+  <field>
+   <rect>
+    <x>591</x>
+    <y>1.86</y>
+    <width>119</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>presupuesto</query>
+    <column>total</column>
+   </data>
+   <format>$ %10.2f</format>
+  </field>
+ </rptfoot>
+</report>

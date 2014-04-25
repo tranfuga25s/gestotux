@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/caja.png</file>
+        <file>estilo.css</file>
+        <file>imagenes/cierrecaja.png</file>
+        <file>imagenes/cajaingreso.png</file>
+        <file>imagenes/cajaresumen.png</file>
+        <file>imagenes/cajaretiro.png</file>
+        <file>imagenes/retiro.png</file>
+        <file>imagenes/ingreso.png</file>
+        <file>imagenes/cajaestado.png</file>
+        <file>imagenes/cajatransferir.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>caja.QSQLITE.sql</file>
+        <file>caja.QMYSQL.sql</file>
+    </qresource>
+</RCC>

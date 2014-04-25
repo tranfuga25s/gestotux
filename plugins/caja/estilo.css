@@ -1,0 +1,27 @@
+h1 {
+    font-size : 20px;
+    font-weight : bold;
+    text-decoration : underline;
+  }
+
+table {
+    padding: 1px;
+    margin: 2px;
+    border-style: none;
+  }
+
+p {
+    font-size: smaller;
+ }
+
+thead {
+    background-color: #c7c7c7;
+    font-style: italic;
+    font-weight: bold;
+    align: center;
+    valign: middle;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: black;
+  }
+

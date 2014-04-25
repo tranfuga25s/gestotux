@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf8"?>
+<NCReport
+    name="presupuesto"
+    dataSource="DB"
+    encoding="utf8"
+    pageSize="A4"
+    orientation="P"
+    printerMode="high"
+    topMargin="20"
+    bottomMargin="20"
+    leftMargin="20"
+    rightMargin="20"
+    defaultFontName=""
+    defaultFontSize="10"
+    backcolor="#FFFFFF"
+    masterAlias=""
+    >
+    
+<queries>
+    <query alias="presupuesto">
+        SELECT presupuesto.id_presupuesto, presupuesto.total, presupuesto.fecha, presupuesto.kilometraje, presupuesto.id_auto, autos.marca, autos.modelo, autos.ano, autos.color, presupuesto.titulo, presupuesto.contenido, clientes.nombre FROM presupuesto, autos, clientes WHERE id_presupuesto = 1 AND presupuesto.id_auto = autos.patente AND autos.id_dueno = clientes.id;
+    </query>
+</queries>
+<variables>
+</variables>
+<pageHeader height="79.2393">
+    <rectangle posX="0.000" posY="45.590" width="169.333" height="6.784" lineWidth="1" lineStyle="nopen" lineColor="#000000" fillColor="#C0C0C0" fillStyle="filled"></rectangle>
+    <pixmap posX="1.628" posY="1.628" width="34.192" height="21.167" resource="logo.png"></pixmap>
+    <label posX="37.449" posY="3.256" width="128.628" height="9.769" fontSize="20" fontWeight="bold" fontName="Sans Serif" fontUnderline="true" alignmentH="center" alignmentV="center" richText="true" forecolor="#000000">GUSTAVO LIONEL BEDETTI</label>
+    <label posX="43.962" posY="14.654" width="117.231" height="4.885" fontSize="9" alignmentH="center" alignmentV="center" richText="true" forecolor="#000000">- SERVICIO TÉCNICO ELECTROMECANICO - MECANICA GENERAL -</label>
+    <label posX="1.628" posY="22.795" width="167.705" height="16.553" fontSize="9" fontWeight="bold" alignmentH="center" alignmentV="center" wordbreak="true" richText="true" forecolor="#000000">INYECIÓN ELECTRÓNICA ( NAFTA-DIESEL ) - AIRE ACONDICIONADO - CALEFACIÓN - INSTRUMENTAL - LIMPIAPARABRISAS - ARRANQUES - ALTERNADORES - REPARACIÓN DE TABLEROS Y FUSILERAS - CIERRES CENTRALIZADOS - ALARMAS</label>
+    <label posX="1.628" posY="37.449" width="162.821" height="8.141" fontSize="8" fontItalic="true" alignmentH="center" alignmentV="center" wordbreak="true" richText="true" dynamicHeight="true" forecolor="#000000">DIR.: OBISPO BONEO 717 - SANTA FE -- TELEFONO: (0342) 4-609132 -- CELULAR : (0342) 1 54-340 902 -- E-MAIL: gustavobedetti@yahoo.com.ar</label>
+    <line fromX="0.000" fromY="45.590" toX="169.605" toY="45.590" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <field ftype="var" type="" posX="0.271" posY="45.861" width="169.605" height="6.513" alignmentH="center" alignmentV="center" wordbreak="true" forecolor="#000000">titulo</field>
+    <label posX="2.442" posY="54.002" width="16.011" height="4.885" fontWeight="bold" forecolor="#000000">Cliente:</label>
+    <field ftype="sql" type="" posX="18.724" posY="53.731" width="150.066" height="4.885" forecolor="#000000">cliente.razon_social</field>
+    <label posX="2.171" posY="60.244" width="16.282" height="4.885" fontWeight="bold" forecolor="#000000">Patente:</label>
+    <field ftype="sql" type="" posX="18.996" posY="59.972" width="37.177" height="4.885" forecolor="#000000">presupuesto.id_auto</field>
+    <label posX="57.259" posY="59.972" width="24.966" height="5.156" fontWeight="bold" forecolor="#000000">Kilometraje:</label>
+    <field ftype="sql" type="" posX="81.139" posY="59.701" width="37.177" height="4.885" forecolor="#000000" embedString="%1 Km.">presupuesto.kilometraje</field>
+    <label posX="2.714" posY="73.269" width="25.780" height="4.885" fontWeight="bold" forecolor="#000000">Presupuesto:</label>
+    <field ftype="sql" type="" posX="27.408" posY="72.726" width="46.675" height="4.885" forecolor="#000000">presupuesto.id_presupuesto</field>
+    <label posX="120.216" posY="59.701" width="13.568" height="4.885" fontWeight="bold" forecolor="#000000">Marca:</label>
+    <field ftype="sql" type="" posX="133.784" posY="59.972" width="35.006" height="4.885" forecolor="#000000">auto.marca</field>
+    <label posX="76.526" posY="73.812" width="13.297" height="4.885" fontWeight="bold" forecolor="#000000">Fecha:</label>
+    <field ftype="sql" type="" posX="90.637" posY="73.269" width="34.192" height="4.885" forecolor="#000000">presupuesto.fecha</field>
+    <line fromX="18.182" fromY="58.615" toX="168.519" toY="58.615" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="18.996" fromY="64.857" toX="56.173" toY="64.857" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="81.410" fromY="64.314" toX="118.316" toY="64.314" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="134.327" fromY="64.314" toX="167.434" toY="64.314" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <label posX="2.442" posY="65.671" width="16.282" height="4.885" fontWeight="bold" forecolor="#000000">Modelo:</label>
+    <field ftype="sql" type="" posX="19.538" posY="65.942" width="36.635" height="4.885" forecolor="#000000">auto.modelo</field>
+    <label posX="58.073" posY="66.214" width="16.282" height="4.885" fontWeight="bold" forecolor="#000000">Año:</label>
+    <field ftype="sql" type="" posX="69.741" posY="66.214" width="19.810" height="5.156" forecolor="#000000">auto.ano</field>
+    <label posX="93.893" posY="66.756" width="12.754" height="4.885" fontWeight="bold" forecolor="#000000">Color:</label>
+    <field ftype="sql" type="" posX="107.190" posY="66.214" width="60.244" height="4.885" forecolor="#000000">auto.color</field>
+    <line fromX="19.267" fromY="70.827" toX="56.173" toY="70.827" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="70.013" fromY="71.370" toX="89.551" toY="71.370" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="107.190" fromY="71.098" toX="167.434" toY="71.098" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="27.408" fromY="77.340" toX="74.355" toY="77.340" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+    <line fromX="90.637" fromY="78.154" toX="124.829" toY="78.154" lineWidth="1" lineStyle="solid" lineColor="#000000"></line>
+</pageHeader>
+<pageFooter height="14.6538">
+    <field ftype="sql" type="" posX="153.865" posY="8.684" width="16.282" height="4.885" fontSize="8" fontItalic="true" alignmentH="right" forecolor="#000000" embedString="Pagina %1">pageno</field>
+    <field ftype="sql" type="date" posX="1.085" posY="8.412" width="16.282" height="4.885" fontSize="8" forecolor="#000000" embedString="impreso: %1">date</field>
+    <field ftype="sql" type="" posX="22.524" posY="8.412" width="16.282" height="4.885" fontSize="8" forecolor="#000000" embedString="Copia: %1">currentcopy</field>
+    <field ftype="sql" type="" posX="38.806" posY="8.412" width="16.282" height="4.885" fontSize="8" forecolor="#000000" embedString="de %1">numcopies</field>
+    <rectangle posX="0.000" posY="0.271" width="140.568" height="5.699" lineWidth="0" lineStyle="nopen" lineColor="#000000" fillColor="#C0C0C0" fillStyle="filled"></rectangle>
+    <label posX="127.814" posY="0.543" width="12.212" height="4.885" fontWeight="bold" forecolor="#000000">Total:</label>
+    <field ftype="sql" type="numeric" posX="140.297" posY="0.271" width="29.579" height="5.427" forecolor="#000000" numDigitNo="2" numFormat="%L1">presupuesto.total</field>
+</pageFooter>
+<groups>
+</groups>
+<detail height="46.4038">
+    <field ftype="sql" type="" posX="0.543" posY="0.814" width="169.605" height="45.861" richText="true" forecolor="#000000">presupuesto.contenido</field>
+</detail>
+</NCReport>

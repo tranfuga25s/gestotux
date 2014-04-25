@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/icono-jhau-pora.ico</file>
+        <file>imagenes/icono-jhau-pora.png</file>
+    </qresource>
+</RCC>

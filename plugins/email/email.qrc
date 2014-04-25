@@ -1,0 +1,9 @@
+<RCC>
+    <qresource>
+	<file>imagenes/servidor_email.png</file>
+    </qresource>
+    <qresource prefix="sql">
+	<file>email.QSQLITE.sql</file>
+	<file>email.QMYSQL.sql</file>
+    </qresource>
+</RCC>

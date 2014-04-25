@@ -1,0 +1,304 @@
+<ui version="4.0" >
+ <class>FormFiltrosBase</class>
+ <widget class="QWidget" name="FormFiltrosBase" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>495</width>
+    <height>496</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QLabel" name="LTitulo" >
+     <property name="text" >
+      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Obtener informe de caravanas por&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QCheckBox" name="CkBEstablecimiento" >
+       <property name="text" >
+        <string>&amp;Establecimiento</string>
+       </property>
+       <property name="shortcut" >
+        <string>Ctrl+E</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CBEstablecimiento" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QCheckBox" name="CkBCategoria" >
+       <property name="text" >
+        <string>&amp;Categoria</string>
+       </property>
+       <property name="shortcut" >
+        <string>Ctrl+C</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CBCategoria" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QCheckBox" name="CkBTipo" >
+       <property name="text" >
+        <string>&amp;Tipo</string>
+       </property>
+       <property name="shortcut" >
+        <string>Ctrl+T, Ctrl+S</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CBTipo" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Fecha</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QRadioButton" name="RBFechaEspecifica" >
+          <property name="text" >
+           <string>&amp;Fecha Especifica</string>
+          </property>
+          <property name="shortcut" >
+           <string>Ctrl+F</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="DEFechaEspecifica" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="calendarPopup" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QRadioButton" name="RBRangoFechas" >
+          <property name="text" >
+           <string>E&amp;ntre</string>
+          </property>
+          <property name="shortcut" >
+           <string>Ctrl+N</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="DEFechaInicio" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="calendarPopup" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>y</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="DEFechaFin" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="calendarPopup" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QPushButton" name="PBAceptar" >
+       <property name="text" >
+        <string>Ver informe....</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="PBCancelar" >
+       <property name="text" >
+        <string>Cancelar</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>CkBEstablecimiento</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CBEstablecimiento</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>119</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>308</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CkBCategoria</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CBCategoria</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>79</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>484</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CkBTipo</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CBTipo</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>63</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>484</x>
+     <y>327</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RBFechaEspecifica</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>DEFechaEspecifica</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>70</x>
+     <y>377</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>282</x>
+     <y>381</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RBRangoFechas</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>DEFechaInicio</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>99</x>
+     <y>416</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>153</x>
+     <y>416</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RBRangoFechas</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>70</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>255</x>
+     <y>418</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RBRangoFechas</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>DEFechaFin</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>79</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>384</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

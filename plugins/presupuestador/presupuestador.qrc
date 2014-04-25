@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="">
+        <file>imagenes/logo.png</file>
+	<file>imagenes/auto.png</file>
+	<file>imagenes/presupuesto.png</file>
+	<file>imagenes/wrench.gif</file>
+	<file>imagenes/icono.ico</file>
+    </qresource>
+    <qresource prefix="sql">
+	<file>presupuestador.QMYSQL.sql</file>
+	<file>presupuestador.QSQLITE.sql</file>
+    </qresource>
+</RCC>
+

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS "periodo_servicio" ("id_periodo_servicio" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , "id_servicio" INTEGER NOT NULL , "periodo" INTEGER NOT NULL , "ano" INTEGER NOT NULL , "fecha" DATETIME NOT NULL , "fecha_inicio" DATETIME NOT NULL , "fecha_fin" DATETIME NOT NULL );

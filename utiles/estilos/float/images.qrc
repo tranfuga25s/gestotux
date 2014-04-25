@@ -1,0 +1,39 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource> 
+        <file>images/button.png</file>
+        <file>images/button_ns.png</file>
+        <file>images/check.png</file>
+        <file>images/radio.png</file>
+        <!-- Tabs -->
+        <file>images/tab_selected.png</file>
+        <file>images/tab_selectedS.png</file>
+        <file>images/tab_frame.png</file>
+        <!-- Arrows -->
+        <file>images/arrow_l.png</file>
+        <file>images/arrow_r.png</file>
+        <file>images/arrow_u.png</file>
+        <file>images/arrow_d.png</file>
+        <file>images/arrow_lns.png</file>
+        <file>images/arrow_rns.png</file>
+        <file>images/arrow_uns.png</file>
+        <file>images/arrow_dns.png</file>
+        <!-- **** -->
+        <file>images/dock_base.png</file>
+        <file>images/dock_title.png</file>
+        <file>images/box.png</file>
+        <file>images/groupbox.png</file>
+        <file>images/slider.png</file>
+    
+
+        <!-- Standard pixmaps -->
+        <file>standard/DockWidgetCloseButton.png</file>
+        <file>standard/DockNormalButton.png</file>
+        <file>standard/TitleBarCloseButton.png</file>
+        <file>standard/TitleBarMaxButton.png</file>
+        <file>standard/TitleBarNormalButton.png</file>
+        <file>standard/TitleBarMinButton.png</file>
+        <file>standard/TitleBarShadeButton.png</file>
+        <file>standard/TitleBarUnshadeButton.png</file>
+    </qresource>
+</RCC>

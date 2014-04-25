@@ -1,0 +1,262 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Remito para TR Sistemas</title>
+ <name>RemitoTR</name>
+ <description>Remito  para TR Sistemas Informaticos Integrales</description>
+ <parameter default="1" active="true" listtype="static" type="bool" name="cliente_existe">
+  <description>Identifica si el cliente existe en la base de datos. id_cliente != null.</description>
+ </parameter>
+ <parameter default="" active="true" listtype="static" type="string" name="direccion">
+  <description></description>
+ </parameter>
+ <parameter default="2" active="true" listtype="static" type="integer" name="id_remito">
+  <description>Identificador del presupuesto en la tabla presupuestos</description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>
+  <width>582</width>
+  <height>826</height>
+ </size>
+ <portrait/>
+ <topmargin>2</topmargin>
+ <bottommargin>2</bottommargin>
+ <rightmargin>2</rightmargin>
+ <leftmargin>2</leftmargin>
+ <querysource>
+  <name>remito</name>
+  <sql>SELECT strftime("%d/%m/%Y", r.fecha) AS fecha,
+       r.total As total,
+       substr( '0000000000' || r.serie, -5, 5 ) || '-' || substr( '0000000000' || r.numero, -5, 5 ) AS NumSerie
+FROM remito AS r, clientes AS c
+WHERE r.id_cliente = c.id AND r.id_remito = &lt;? value( "id_remito" ) ?>;</sql>
+ </querysource>
+ <querysource>
+  <name>items</name>
+  <sql>SELECT cantidad,
+       texto,
+       precio_unitario,
+       cantidad*precio_unitario AS subtotal,
+       id_remito
+FROM item_remito
+WHERE id_remito = &lt;? value( "id_remito" ) ?>
+ORDER BY id_item_remito;</sql>
+ </querysource>
+ <rpthead>
+  <height>159.67</height>
+  <field>
+   <rect>
+    <x>374.683</x>
+    <y>5.51078</y>
+    <width>198</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>remito</query>
+    <column>NumSerie</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>369.118</x>
+    <y>28.1281</y>
+    <width>198</width>
+    <height>21</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>remito</query>
+    <column>fecha</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>34.9713</x>
+    <y>80.6033</y>
+    <width>521.357</width>
+    <height>23</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>remito</query>
+    <column>cliente</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>96.8207</x>
+    <y>102.179</y>
+    <width>462.732</width>
+    <height>19</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>remito</query>
+    <column>direccion</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>49.7</x>
+    <y>126</y>
+    <width>463</width>
+    <height>19</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>remito</query>
+    <column>ciut</column>
+   </data>
+  </field>
+ </rpthead>
+ <section>
+  <name>Detalle</name>
+  <group>
+   <name>Items</name>
+   <column>id_factura</column>
+   <head>
+    <height>30</height>
+   </head>
+  </group>
+  <detail>
+   <key>
+    <query>items</query>
+   </key>
+   <height>482.091</height>
+   <field>
+    <rect>
+     <x>472.394</x>
+     <y>5.92395</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>items</query>
+     <column>subtotal</column>
+    </data>
+    <format>$ %10.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>56.0331</x>
+     <y>5.19495</y>
+     <width>293.477</width>
+     <height>26.7197</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>items</query>
+     <column>texto</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>356.58</x>
+     <y>7.46527</y>
+     <width>104</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>items</query>
+     <column>precio_unitario</column>
+    </data>
+    <format>$ %10.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>13.3842</x>
+     <y>5.02143</y>
+     <width>35</width>
+     <height>29.4486</height>
+    </rect>
+    <font>
+     <face>Sans Serif</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>items</query>
+     <column>cantidad</column>
+    </data>
+   </field>
+  </detail>
+ </section>
+ <rptfoot>
+  <height>39.512</height>
+  <field>
+   <rect>
+    <x>423.787</x>
+    <y>6.9</y>
+    <width>150</width>
+    <height>21</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>remito</query>
+    <column>total</column>
+   </data>
+   <format>$ %10.2f</format>
+  </field>
+ </rptfoot>
+</report>

@@ -1,0 +1,316 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Credencial de periodista de Club Atletico Union</title>
+ <name>credencial-union</name>
+ <description>descripcion</description>
+ <parameter default="1" active="true" listtype="static" type="integer" name="id_credencial">
+  <description></description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>
+  <width>400</width>
+  <height>300</height>
+ </size>
+ <portrait/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>general</name>
+  <sql>SELECT e.nombre AS equipo,
+       c.nombre AS nombre,
+       c.dni AS DNI,
+       c.medio AS medio,
+       CASE WHEN c.acc1="true" THEN "V" ELSE " " END AS a1,
+       CASE WHEN c.acc2="true" THEN "CP" ELSE " " END AS a2,
+       CASE WHEN c.acc3="true" THEN "C" ELSE " " END AS a3,
+       CASE WHEN c.acc4="true" THEN "T" ELSE " " END AS a4,
+       CASE WHEN c.acc5="true" THEN "P(SO)" ELSE " " END AS a5,
+       CASE WHEN c.acc6="true" THEN "P(SE)" ELSE " " END AS a6
+FROM credenciales AS c, equipos AS e
+WHERE c.equipo_id = e.id_equipo AND c.id_credencial = &lt;? value("id_credencial") ?>;</sql>
+ </querysource>
+ <section>
+  <name>Sin nombre</name>
+  <detail>
+   <key>
+    <query>general</query>
+   </key>
+   <height>192</height>
+   <field>
+    <rect>
+     <x>63</x>
+     <y>16</y>
+     <width>100</width>
+     <height>17</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>equipo</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>8</x>
+     <y>17</y>
+     <width>59</width>
+     <height>15</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>Union vs.</string>
+   </label>
+   <label>
+    <rect>
+     <x>8</x>
+     <y>48</y>
+     <width>47</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>Accesos:</string>
+   </label>
+   <field>
+    <rect>
+     <x>59</x>
+     <y>47</y>
+     <width>19</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>a1</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>84</x>
+     <y>47</y>
+     <width>19</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>a2</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>108</x>
+     <y>49</y>
+     <width>19</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>a3</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>133</x>
+     <y>50</y>
+     <width>19</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>a4</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>162</x>
+     <y>49</y>
+     <width>19</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>a5</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>190</x>
+     <y>50</y>
+     <width>19</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>a6</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>8</x>
+     <y>66</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>Nombre</string>
+   </label>
+   <field>
+    <rect>
+     <x>9</x>
+     <y>86</y>
+     <width>281</width>
+     <height>19</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>nombre</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>7</x>
+     <y>109</y>
+     <width>100</width>
+     <height>14</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>DNI</string>
+   </label>
+   <field>
+    <rect>
+     <x>7</x>
+     <y>130</y>
+     <width>100</width>
+     <height>14</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>dni</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>7</x>
+     <y>153</y>
+     <width>100</width>
+     <height>14</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>Medio:</string>
+   </label>
+   <field>
+    <rect>
+     <x>7</x>
+     <y>170</y>
+     <width>100</width>
+     <height>19</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>general</query>
+     <column>medio</column>
+    </data>
+   </field>
+  </detail>
+ </section>
+</report>

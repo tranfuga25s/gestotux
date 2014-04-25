@@ -1,0 +1,256 @@
+::::::::::::::
+::: Diseño :::
+::::::::::::::
+- Terminar diseños de entidad relación para el conjunto general y cada plugin.
+- Agregar inicialización de reportes en la base de datos Mysql
+ - ¿ Descarga inicial por internet? ¿ Importación inicial desde archivos ?
+ - Agregar capacidad para actualizar los reportes x internet ( caso db local )?
+ - Ver por la creacion de indices en la base de datos Mysql.
+- Ver como agregar descuentos en los presupuestos y facturas ( mproductos totales )
+- Terminar de ajustar todos los formularios predeterminados.
+  - Factura
+  - Recibo
+  - Presupuesto
+- Terminar reporte de baja de adhhesion de servicio.
+
+-- Caja --
+----------
+- Eliminacion de cajas.
+  - ¿Que hacemos con los movimientos de esa caja?
+  - ¿Utilizar eliminación lógica?
+ - Mejorar cartel de caja predeterminada o mostrar lista que permita elegir una y de paso colocarla como predeterminada.
+
+-- Cuotas --
+------------
+- Colocar como forma de pago.
+  - Utilizamos como base la "forma de pago"
+  - Agregar formas de pago en recibos y/o ventas.
+
+-- General --
+-------------
+- Hacer calculos de ubicación de las flechas de la pantalla inicial.
+- Agregar a todos los modelos el metodo estatico siguienteNumero() para obtener el siguiente numero de comprobante.
+
+-- Cuentas corrientes --
+------------------------
+- Implementar metodo de cancelación de operación.
+
+-- Productos --
+---------------
+- Ver como hacer los tickets de precios. Ofrecerlos luego de agregar un producto.
+- Verificar editor personalizado cuando se utlizan todas las combinaciones de propiedades.
+- Generar casos de prueba o probar ingreso y modificación de productos con las distintas combinaciones posibles.
+  - Con cateogiras habilitadas.
+  - Con marcas habilitadas.
+  - Con modelos habilitados.
+  - Con stock habilitado.
+  - Con descripción habilitada.
+
+-- Servicios --
+---------------
+- Colocar el control de recargos en el sistema de chequeo automatico en el inicio.
+
+-- Compras --
+-------------
+
+-- Ventas --
+------------
+- Diseñar sistema para que soporte automaticamente el sistema de cuotas.
+
+-- Gastos --
+------------
+- Sistema de reporte de gastos.
+  - ListadoGastosCategorizados:
+    - Parametros: fecha_inicio, fecha_fin.
+    - Ver como hacer para que tire totales y subtotales x categoría.
+
+-- Presupuestos --
+------------------
+
+-- Email --
+-----------
+- Revisar integración con los demas plugines.
+- Revisar tablas para que estén en utf8.
+- Verificar y redefinir API.
+
+-- Digifauno --
+---------------
+- Generar tablas mysql correctamente.
+  - Generar FK.
+- Reformular sistema de generación de reportes.
+- Generar integración de autofacturación al registrar un corte.
+
+-- BSComputacion --
+-------------------
+- Generar integracion con gitextranet
+- Autopedido de compras?
+- Busqueda de precios con el proveedor.
+  - Definir forma de colocar recargo.
+
+::::::::::::::::::::::::::
+::: Pruebas para hacer :::
+::::::::::::::::::::::::::
+
+- Verificar correcta restauración de un backup. ( no anda ). :(
+- Verificar correcta inizialización de todas las tablas de todos los plugins:
+   - SQLite
+        - Email: ?
+        - Digifauno: ?
+        - Compras: ?
+   - MySql
+        - Email: ?
+        - Digifauno: ?
+        - Compras: ?
+- Verificar el correcto funcionamiento del nuevo formulario de clientes.
+- Probar cierre de caja cuando no hay operaciones mas que el ultimo cierre.
+- Probar agregar gastos y verificar si se guardan en el listado de caja.
+- Probar eliminar un gasto y verificar si se elimina en el listado de caja.
+- Probar eliminar un gasto y verificar si se elimina en el listado de caja y actualiza correctamente el saldo.
+- Verificar sistema de ingreso de proveedores.
+- Verificar sistema de ingreso de categoría de gastos.
+- Verificar que cuando se intente eliminar una caja ponga el cartel correspondiente.
+- Verificar la eliminación "Cascade" en la base de datos cuando se elimina una caja ( o hacer eliminacion logica? ).
+- Agregar mascara en los delegates de cuit-cuil
+- Agregar mascara de solo numeros en los delegates de cuit-cuil.
+
+:::::::::::::::::::::::::
+::: Iconos necesarios :::
+:::::::::::::::::::::::::
+- Recargos
+- Listado de gastos
+- PagarFactura.png
+- VerTodo.png
+- habilitar/deshabilitar producto.
+
+:::::::::::::::::::::::::::
+::: Problemas Generales :::
+:::::::::::::::::::::::::::
+
+- Verificar la forma de las actualizaciones. ( ¿Generar sistema web? )
+- Hacer necesario los backups para continuar con el programa al iniciar.
+- Verificar que el cerrar ventana al estar activado el icono de la bandeja no cierre el programa entero, sino lo minimize.
+
+:::::::::::::
+::: Otros :::
+:::::::::::::
+- Averiguar integración con lectores de codigo de barra.
+Los lectores funcionan como teclados, asi que no deberìan de ser problema si se utilizan con el focus colocado en el lugar correcto.
+Verificar que en los lugares que se desee utilizar sea posible la busqueda mediante codigo.
+
+
+:::::::::::::::::::
+:: Documentacion ::
+:::::::::::::::::::
+- Continuar con el LEL
+- Continuar realizando casos de uso
+- Continuar la documentación de usuario.
+- Verificar la documentación API.
+- Generar diagrama general de tablas.
+
+Versión para SmartPhones/Tablets:
+======= ==== ============
+
+- Pasar las librerias de impresion a un tipo de "Application Server"
+- Pasar los modelos a el GestAppServ
+  - Usar QxtRCPNode?
+
+Ejemplo de Store Procedure en MySQL:
+======= == ===== ========= == ======
+
+SET DELIMITER //;
+CREATE PROCEDURE arreglarazonsocial()
+BEGIN
+  DECLARE listo INT DEFAULT 0;
+  DECLARE nombre, apellido TEXT;
+  DECLARE id INT DEFAULT -1;
+  DECLARE cur CURSOR FOR SELECT c.id FROM clientes AS c;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET listo = 1;
+  OPEN cur;
+  read_loop: LOOP
+     IF listo THEN
+       LEAVE read_loop;
+     END IF;
+     FETCH cur INTO id;
+     SELECT c.nombre FROM clientes AS c WHERE c.id = id INTO nombre;
+     SELECT c.apellido FROM clientes AS c WHERE c.id = id INTO apellido;
+     UPDATE clientes AS c SET c.razon_social = CONCAT( CONCAT( apellido, ',' ), nombre ) WHERE c.id = id;
+  END LOOP;
+  CLOSE cur;
+END
+//
+
+
+Procedimiento utilizado para actualizar todos los nombres de clientes de una version de tabla de datos de clientes a otra.
+
+SET DELIMITER //;
+CREATE PROCEDURE calcularecibos()
+BEGIN
+  DECLARE listo INT DEFAULT 0;
+  DECLARE texto TEXT;
+  DECLARE id INT DEFAULT -1;
+  DECLARE id_cliente INT DEFAULT 0;
+  DECLARE precio DOUBLE DEFAULT 0.0;
+  DECLARE pagado BOOLEAN DEFAULT 0;
+  DECLARE fecha_pago DATETIME;
+  DECLARE cur CURSOR FOR SELECT rt.id_recibo FROM recibos_temp AS rt;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET listo = 1;
+  OPEN cur;
+  read_loop: LOOP
+     IF listo THEN
+       LEAVE read_loop;
+     END IF;
+     FETCH cur INTO id;
+     SELECT rt.id_cliente, rt.fecha_pago, rt.texto, rt.precio, rt.contado FROM recibos_temp AS rt WHERE rt.id_recibo = id INTO  id_cliente, fecha_pago, texto, precio, pagado;
+      INSERT INTO recibos ( id_recibo, id_cliente, fecha_pago, texto, precio, forma_pago, serie, numero )
+                VALUES( id, id_cliente, fecha_pago, texto, precio, pagado, 1, id );
+  END LOOP;
+  CLOSE cur;
+END
+//
+
+Como sacar el numero de comprobante en sqlite:
+
+substr( '0000000000' || p.serie, -5, 5 ) || '-' || substr( '0000000000' || p.numero, -5, 5 ) AS NumSerie
+
+Formato de fecha para sqlite:
+
+strftime("%d/%m/%Y", p.fecha) AS fecha
+
+
+Como realizar la conversion lpda(mysql) -> sqlite
+
+-- the statement below is almost the same as
+-- select lpad(mycolumn,'0',10) from mytable
+
+select substr('0000000000' || mycolumn, -10, 10) from mytable
+
+-- the statement below is almost the same as
+-- select rpad(mycolumn,'0',10) from mytable
+
+select substr(mycolumn || '0000000000', 1, 10) from mytable
+
+Error detectado en los recibos sqlite:
+
+si usamos c.direccion || ' ' || c.numero y numero es nulo, el resultado será nulo.
+
+tenemos que utilizar:
+
+
+
+Para Mysql usamos:
+ CONCAT( CONCAT( LPAD( p.serie, 5, 0 ), '-' ), LPAD( p.numero, 5, 0 ) )
+
+Temas de Jazz:
+===== == =====
+
+Renato Falaschi - Travelling lite
+All I Want Is You - Brian Simpson
+Acustica Alchemy - The Velvet Swing
+Jessy J - True Love
+Boney James - Stop, Look, Lisent
+No Two Ways About It - Jeff Golub
+Euge Groove - Slow Jam
+Duncan Millar - Secret Smile
+Michael Lington - It's Too Late
+The Rippingtons - Bandol
+Paul Jackson Jr. - Easy, Like Sunday Morning

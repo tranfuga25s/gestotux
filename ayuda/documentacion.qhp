@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QtHelpProject version="1.0">
+         <namespace>tranfuga.gestotux.0.5</namespace>
+         <virtualFolder>doc</virtualFolder>
+         <customFilter name="Gestotux 0.5">
+             <filterAttribute>gestotux</filterAttribute>
+             <filterAttribute>0.5</filterAttribute>
+         </customFilter>
+         <filterSection>
+             <filterAttribute>gestotux</filterAttribute>
+             <filterAttribute>0.5</filterAttribute>
+             <toc>
+                 <section id="indice" title="Manual de Gestotux" ref="index.html" >
+                        <section title="Generar y restaurar backups del sistema" ref="backups.html" />
+                        <section title="Actualizar el programa" ref="actualizar.html" />
+                        <section title="Salir del programa" ref="salir.html" />
+                 </section>
+                <section title="Manejo de Plugins" ref="plugins/plugins.html">
+                        <section title="Compras" ref="plugins/compras.html" />
+                        <section title="Gastos" ref="plugins/gastos.html" />
+                        <section title="Servicios" ref="plugins/servicios.html" />
+                        <section title="Proveedores" ref="plugins/proveedores.html" />
+                        <section title="Presupuestos" ref="plugins/presupuestos.html" />
+                        <section title="Ventas" ref="plugins/ventas.html" />
+                        <section title="Pagos" ref="plugins/pagos.html" />
+                        <section title="Caja" ref="plugins/caja.html" />
+                        <section title="Productos" ref="plugins/productos.html" />
+                        <section title="Cuenta Corriente" ref="plugins/ctacte.html" />
+                </section>
+             </toc>
+             <keywords>
+                <keyword name="indice" id="indice" ref="index.html" />
+                <keyword name="hicomp" id="hicomp" ref="clientes/hicomp.html" />
+                <keyword name="pantalla inicio" id="qt_tabwidget_stackedwidget::inicio" ref="index.html" />
+             </keywords>
+             <files>
+                <file>index.html</file>
+                <file>estilo.css</file>
+
+                <file>clientes/bscomputacion.html</file>
+                <file>clientes/hicomp.html</file>
+
+                <file>imagenes/actualizar.png</file>
+                <file>imagenes/backup.png</file>
+                <file>imagenes/backup1.png</file>
+                <file>imagenes/backup2.png</file>
+                <file>imagenes/botonpuntos.png</file>
+                <file>imagenes/caja.png</file>
+                <file>imagenes/logo-0.5.png</file>
+                <file>imagenes/next.png</file>
+                <file>imagenes/salir.png</file>
+
+                <file>plugins/compras.html</file>
+                <file>plugins/gastos.html</file>
+                <file>plugins/servicios.html</file>
+                <file>plugins/proveedores.html</file>
+                <file>plugins/presupuestos.html</file>
+                <file>plugins/ventas.html</file>
+                <file>plugins/pagos.html</file>
+                <file>plugins/caja.html</file>
+                <file>plugins/productos.html</file>
+                <file>plugins/ctacte.html</file>
+
+                <file>actualizar.html</file>
+                <file>backups.html</file>
+                <file>salir.html</file>
+                <file>db.html</file>
+                <file>preferencias.html</file>
+                <file>manejo.html</file>
+                <file>clientes.html</file>
+
+                <file>imagenes/image00.png</file>
+                <file>imagenes/image01.png</file>
+                <file>imagenes/image02.png</file>
+                <file>imagenes/image03.png</file>
+                <file>imagenes/image04.png</file>
+                <file>imagenes/image05.png</file>
+                <file>imagenes/image06.png</file>
+                <file>imagenes/image07.png</file>
+                <file>imagenes/image08.png</file>
+                <file>imagenes/image09.png</file>
+                <file>imagenes/image10.png</file>
+                <file>imagenes/image11.png</file>
+                <file>imagenes/image12.png</file>
+                <file>imagenes/image13.png</file>
+                <file>imagenes/image14.png</file>
+                <file>imagenes/image15.png</file>
+                <file>imagenes/image16.png</file>
+                <file>imagenes/image17.png</file>
+                <file>imagenes/image18.png</file>
+                <file>imagenes/image19.png</file>
+                <file>imagenes/image20.png</file>
+                <file>imagenes/image21.png</file>
+                <file>imagenes/image22.png</file>
+                <file>imagenes/image23.png</file>
+                <file>imagenes/image24.png</file>
+                <file>imagenes/image25.png</file>
+                <file>imagenes/image26.jpg</file>
+                <file>imagenes/image27.png</file>
+                <file>imagenes/image28.png</file>
+                <file>imagenes/image29.png</file>
+                <file>imagenes/image30.png</file>
+                <file>imagenes/image31.png</file>
+                <file>imagenes/image32.png</file>
+                <file>imagenes/image33.png</file>
+                <file>imagenes/image34.png</file>
+                <file>imagenes/image35.png</file>
+                <file>imagenes/image36.png</file>
+                <file>imagenes/image37.png</file>
+                <file>imagenes/image38.png</file>
+                <file>imagenes/image39.png</file>
+                <file>imagenes/image40.png</file>
+                <file>imagenes/image41.png</file>
+                <file>imagenes/image43.png</file>
+                <file>imagenes/image44.png</file>
+                <file>imagenes/image45.png</file>
+                <file>imagenes/image46.png</file>
+                <file>imagenes/image47.png</file>
+                <file>imagenes/image48.png</file>
+                <file>imagenes/image49.png</file>
+                <file>imagenes/image50.png</file>
+                <file>imagenes/image51.png</file>
+                <file>imagenes/image52.png</file>
+                <file>imagenes/image53.png</file>
+                <file>imagenes/image54.png</file>
+                <file>imagenes/image55.png</file>
+                <file>imagenes/image56.png</file>
+                <file>imagenes/image57.png</file>
+                <file>imagenes/image58.png</file>
+                <file>imagenes/image59.png</file>
+                <file>imagenes/image60.png</file>
+                <file>imagenes/image61.png</file>
+                <file>imagenes/image62.png</file>
+                <file>imagenes/image63.png</file>
+                <file>imagenes/image64.png</file>
+                <file>imagenes/image65.png</file>
+                <file>imagenes/image66.png</file>
+                <file>imagenes/image67.png</file>
+                <file>imagenes/image68.png</file>
+                <file>imagenes/image69.png</file>
+                <file>imagenes/image70.png</file>
+                <file>imagenes/image71.png</file>
+             </files>
+     </filterSection>
+</QtHelpProject>

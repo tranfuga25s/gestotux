@@ -1,0 +1,600 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Deuda historica de Cuotas</title>
+ <name>DeudaCuotasHistoricas</name>
+ <description>Listado de todas las deudas historicas de las cuotas.</description>
+ <grid>
+  <snap/>
+  <show/>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <portrait/>
+ <topmargin>26</topmargin>
+ <bottommargin>56</bottommargin>
+ <rightmargin>56</rightmargin>
+ <leftmargin>56</leftmargin>
+ <querysource>
+  <name>general</name>
+  <sql>SELECT ic.monto, 
+       ic.num_cuota,
+       pc.cantidad_cuotas, 
+       strftime( "%d/%m/%Y", ic.fecha_vencimiento ) AS fecha_vencimiento, 
+       pc.entrega_inicial,
+       pc.id_plan_cuota,
+       strftime( "%d/%m/%Y", f.fecha ) AS fecha,
+       pc.total,
+       c.razon_social,
+       ic.id_plan_cuota,
+       ( SELECT SUM(ic2.monto) 
+         FROM item_cuota AS ic2 
+         WHERE ic2.id_plan_cuota = ic.id_plan_cuota 
+           AND ic2.id_item_cuota &lt;= ic.id_item_cuota 
+           AND ic2.fecha_vencimiento &lt; date('now') 
+           AND ic2.fecha_pago IS NULL ) AS deuda 
+FROM item_cuota AS ic
+   INNER JOIN plan_cuota AS pc ON ic.id_plan_cuota = pc.id_plan_cuota 
+   INNER JOIN factura AS f ON pc.id_factura = f.id_factura
+   INNER JOIN clientes AS c ON f.id_cliente = c.id 
+WHERE ic.fecha_pago IS NULL
+    AND ic.fecha_vencimiento &lt; date( 'now' ) 
+    AND pc.tipo_comprobante = 0 
+
+UNION 
+
+SELECT ic.monto, 
+       ic.num_cuota,
+       pc.cantidad_cuotas,
+       strftime( "%d/%m/%Y", ic.fecha_vencimiento ) AS fecha_vencimiento, 
+       pc.entrega_inicial,
+       pc.id_plan_cuota,
+       strftime( "%d/%m/%Y", r.fecha ) AS fecha,
+       pc.total,
+       c.razon_social,
+       ic.id_plan_cuota,
+       ( SELECT SUM(ic2.monto) 
+         FROM item_cuota AS ic2 
+         WHERE ic2.id_plan_cuota = ic.id_plan_cuota 
+           AND ic2.id_item_cuota &lt;= ic.id_item_cuota 
+           AND ic2.fecha_vencimiento &lt; date('now') 
+           AND ic2.fecha_pago IS NULL ) AS deuda 
+FROM item_cuota AS ic
+   INNER JOIN plan_cuota AS pc ON ic.id_plan_cuota = pc.id_plan_cuota 
+   INNER JOIN remito AS r ON pc.id_factura = r.id_remito
+   INNER JOIN clientes AS c ON r.id_cliente = c.id 
+WHERE ic.fecha_pago IS NULL
+    AND ic.fecha_vencimiento &lt; date( 'now' ) 
+    AND pc.tipo_comprobante = 1 
+
+ORDER BY ic.id_plan_cuota, ic.num_cuota</sql>
+ </querysource>
+ <querysource>
+  <name>total</name>
+  <sql>SELECT SUM( ic.monto ) AS total, 
+       COUNT( ic.num_cuota ) AS cantidad,
+       strftime( "%d/%m/%Y", date( 'now' ) ) AS fecha_impresion 
+FROM item_cuota AS ic
+WHERE ic.fecha_pago IS NULL
+  AND ic.fecha_vencimiento &lt; date( 'now' )</sql>
+ </querysource>
+ <rpthead>
+  <height>54</height>
+  <label>
+   <rect>
+    <x>14</x>
+    <y>-1</y>
+    <width>688</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <top/>
+   <string>Resumen historico de cuotas</string>
+  </label>
+  <label>
+   <rect>
+    <x>4</x>
+    <y>24</y>
+    <width>116</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+    <italic/>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Fecha de impresión:</string>
+  </label>
+  <field>
+   <rect>
+    <x>124</x>
+    <y>24</y>
+    <width>128</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>total</query>
+    <column>fecha_impresion</column>
+   </data>
+  </field>
+ </rpthead>
+ <section>
+  <name>Listado</name>
+  <group>
+   <name>Plan de cuota</name>
+   <column>id_plan_cuota</column>
+   <head>
+    <height>75</height>
+    <line>
+     <xstart>6.6</xstart>
+     <ystart>10.2</ystart>
+     <xend>699.6</xend>
+     <yend>10.2</yend>
+     <weight>2</weight>
+    </line>
+    <label>
+     <rect>
+      <x>5.25</x>
+      <y>10.8</y>
+      <width>100</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>bold</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <string>Plan de cuotas:</string>
+    </label>
+    <field>
+     <rect>
+      <x>98.8051</x>
+      <y>11.0181</y>
+      <width>173</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <data>
+      <query>general</query>
+      <column>id_plan_cuota</column>
+     </data>
+    </field>
+    <label>
+     <rect>
+      <x>5.47995</x>
+      <y>34.2</y>
+      <width>46.6</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>bold</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <string>Cliente:</string>
+    </label>
+    <field>
+     <rect>
+      <x>54.2371</x>
+      <y>33.8</y>
+      <width>363</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <data>
+      <query>general</query>
+      <column>razon_social</column>
+     </data>
+    </field>
+    <label>
+     <rect>
+      <x>275</x>
+      <y>10.4</y>
+      <width>100</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>bold</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <string>Total a pagar:</string>
+    </label>
+    <field>
+     <rect>
+      <x>357.823</x>
+      <y>10.63</y>
+      <width>100</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <data>
+      <query>general</query>
+      <column>total</column>
+     </data>
+     <format>$ %0.2f</format>
+    </field>
+    <label>
+     <rect>
+      <x>462</x>
+      <y>10.7</y>
+      <width>124</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>bold</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <string>Fecha de contracción:</string>
+    </label>
+    <field>
+     <rect>
+      <x>586.333</x>
+      <y>11.4721</y>
+      <width>100</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <data>
+      <query>general</query>
+      <column>fecha</column>
+     </data>
+    </field>
+    <line>
+     <xstart>5.61403</xstart>
+     <ystart>54.6898</ystart>
+     <xend>696.614</xend>
+     <yend>54.6898</yend>
+     <weight>0</weight>
+    </line>
+    <label>
+     <rect>
+      <x>7.21</x>
+      <y>57.9</y>
+      <width>49</width>
+      <height>19</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <string>#Cuota</string>
+    </label>
+    <label>
+     <rect>
+      <x>60.1</x>
+      <y>59.5</y>
+      <width>69.3</width>
+      <height>18</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <vcenter/>
+     <string>Monto</string>
+    </label>
+    <label>
+     <rect>
+      <x>133</x>
+      <y>54.8</y>
+      <width>129</width>
+      <height>25</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <hcenter/>
+     <vcenter/>
+     <string>Fecha de Vencimiento</string>
+    </label>
+    <label>
+     <rect>
+      <x>91.2065</x>
+      <y>16.9617</y>
+      <width>14.0536</width>
+      <height>20.9289</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <top/>
+     <string>#</string>
+    </label>
+    <label>
+     <rect>
+      <x>289</x>
+      <y>60.9</y>
+      <width>100</width>
+      <height>19.0965</height>
+     </rect>
+     <font>
+      <face>Times New Roman</face>
+      <size>10</size>
+      <weight>normal</weight>
+     </font>
+     <left/>
+     <top/>
+     <string>Deuda</string>
+    </label>
+   </head>
+   <foot>
+    <height>11.3852</height>
+   </foot>
+  </group>
+  <detail>
+   <key>
+    <query>general</query>
+   </key>
+   <height>27.1848</height>
+   <field>
+    <rect>
+     <x>4</x>
+     <y>2.1352</y>
+     <width>20.3</width>
+     <height>20.5</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>general</query>
+     <column>num_cuota</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>140</x>
+     <y>5</y>
+     <width>126</width>
+     <height>20.4606</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>general</query>
+     <column>fecha_vencimiento</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>24</x>
+     <y>7.1352</y>
+     <width>15.4204</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <string>/</string>
+   </label>
+   <field>
+    <rect>
+     <x>29</x>
+     <y>2.1352</y>
+     <width>20.3</width>
+     <height>20.5</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>general</query>
+     <column>cantidad_cuotas</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>290</x>
+     <y>0</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>general</query>
+     <column>deuda</column>
+    </data>
+    <format>$ %10.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>59</x>
+     <y>2.1352</y>
+     <width>68.1</width>
+     <height>22.7303</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>general</query>
+     <column>monto</column>
+    </data>
+    <format>$ %10.2f</format>
+   </field>
+  </detail>
+ </section>
+ <rptfoot>
+  <height>50.2232</height>
+  <line>
+   <xstart>5.33155</xstart>
+   <ystart>4.38027</ystart>
+   <xend>705.232</xend>
+   <yend>4.89362</yend>
+   <weight>2</weight>
+  </line>
+  <label>
+   <rect>
+    <x>4</x>
+    <y>3.5652</y>
+    <width>100</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Fin del informe</string>
+  </label>
+  <label>
+   <rect>
+    <x>514</x>
+    <y>8.5652</y>
+    <width>100</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Deuda Total:</string>
+  </label>
+  <field>
+   <rect>
+    <x>614</x>
+    <y>8.5652</y>
+    <width>90</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>total</query>
+    <column>total</column>
+   </data>
+   <format>$ %0.2f</format>
+  </field>
+  <label>
+   <rect>
+    <x>514</x>
+    <y>28.5652</y>
+    <width>100</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Cuotas:</string>
+  </label>
+  <field>
+   <rect>
+    <x>619</x>
+    <y>28.5652</y>
+    <width>85</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>total</query>
+    <column>cantidad</column>
+   </data>
+  </field>
+ </rptfoot>
+</report>

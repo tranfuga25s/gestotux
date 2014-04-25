@@ -1,0 +1,425 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Comprobante de baja de servicio</title>
+ <name>BajaServicio</name>
+ <description>Comprobante de baja de servicio predeterminado para gestotux</description>
+ <parameter default="1" active="true" listtype="static" type="bool" name="cliente_existe">
+  <description>Identifica si el cliente existe en la base de datos. id_cliente != null.</description>
+ </parameter>
+ <parameter default="2" active="true" listtype="static" type="integer" name="id_presupuesto">
+  <description>Identificador del presupuesto en la tabla presupuestos</description>
+ </parameter>
+ <grid>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>A4</size>
+ <portrait/>
+ <topmargin>0</topmargin>
+ <bottommargin>0</bottommargin>
+ <rightmargin>0</rightmargin>
+ <leftmargin>0</leftmargin>
+ <rpthead>
+  <height>288.271</height>
+  <image>
+   <rect>
+    <x>119</x>
+    <y>15</y>
+    <width>28</width>
+    <height>25</height>
+   </rect>
+   <mode>stretch</mode>
+   <map format="png">begin 644 internal
+MB5!.1PT*&amp;@H````-24A$4@```"`````?"`8```'Q4?\:````!&amp;=!34$``+&amp;/
+M"_QA!0````9B2T=$`/\`_P#_H+VGDP````EP2%ES```-%P``#1&lt;!F#I2@@``
+M``=T24U%!]H)%PXC-L0B5TP```9_241!5$C'I9=;C%UU%&lt;9_WW^?V]Y`IRV]
+M&amp;5.@#4D)B2:&amp;H(A*)+2-Y45>-!I!(3YH0!(E4:1"$>S,&amp;+%&lt;Z@/&amp;*+4A/H@)
+MH*"-8(5$8T);-93H`Y5KG&amp;*ATT[I=)_;/O_/A[W/S/1"I]:5G.3LRW^M;UV^
+MM=8&amp;`&amp;K,2):-/P70;(Z?!Z#JYO>`.\%'$X!^?^=S]?K:/FA#=?!;,RI"FHZ]
+MG66+/+RA+!M?!!RRC:1#(&lt;]_=;AZ1JN9/*\LNPU8&amp;H&lt;6\WQ:,#JK,\_OQT;@
+MG@UI>LX(&lt;Z0&amp;(+EM4Y,@1E9DV=B#-C&lt;"UVCNVUDV=K'-DY)^:_L!27])9E35
+MOEN+\&lt;((+W*&lt;B2P;=^4"C&lt;::C^0YN^:^$%0:V6`;FR]R@M2JTSO*RU@[\06E
+MZ=@/8_1H"&amp;%20K8MZ2[;FR4^%23%$'1(0N"?`1&lt;`FR7]/$9V:XZ+MO4/B3\"
+MM]H&amp;6#)C,\]S95GV/.BCP/6@-1+K!9"F8Y&lt;#NZ0A!+7!5^9Y=R]T(WR?]Y*0
+M9>,_`.T"^L`#H&amp;MMMVS^EF7-32&amp;,-#B-!-LO5/_K-@5XF80D"5A>KY.>3H'@
+MV\""6IKRG,1EH`ZPJ'SL1V/D/IN#_7XX&amp;.,[19)L\6``K=;X^_K]9+**P?BD
+MQ.)3&amp;.@#MAV`I$R%J"(\!=P4`-KM-\Z/T2/`2O!J&amp;%(B/F)[6;N]L0Y\HCP,
+MDNYJM[M+V^V-3^I4?J7I^$,2MPY9,BL^9+.XK#]A\V7!O&lt;"F4ZA91ZUV54T*
+MC3*@*GJ]H@=W&amp;6Y6H[$R!44`%BY\I.+$YB1)1A.X6YRA!(!>[\!4FHZY7@_]
+M9C,4:=JZ-TW'%IZ)@B3+QOM`5G*[+$7@*HEC]MK=,>XLYD,PI/5OP#=*FJY\
+MOJG1\"7U^OPNE#$5$T6AQVV/5FE&lt;"GI_OW_S?`IFVN"&amp;)/%:X-RR3E",KL,R
+MYN&amp;"KJ8LCXLD/2YIO21L0@EN@GFX`%DV=AEHA^T%P"N@2R7:-M^P_4Q1Z"WP
+MH"CV]6$;K=;8^47AO"BF.LJRT9JM3TIZ83#@G"1A8IC>$R0';K'9!K;$W;8>
+MK,4X&amp;9)DZ;,V),F&lt;HK4-*B0,-,I4>QO(%?`5MD.(\?#`]E[PD&amp;7O5MZUP5^Q
+MO3I&amp;7U@^$N#7@6\"#W4ZG@Z]WK9!NQTN!Y9+K++]HRJMV#K2;K\VT>EL?%.S
+MQ;T?^%V>W_$R?&amp;=P4LUGV=C'07\J&amp;SK;;?9*;)E+3-N[HWWMESZ[9OJ]Z.PA
+MBCF'D#@"&amp;JG^/PRZIW;R\5OI=MUJ-C4*K"W'"_LD[0%V@*=!#X%[R/$TM-VL
+M>KW6E&amp;(".,9!KRCV%?`FM=HU29+4&amp;MWNT&lt;YP$R#/[R!);E>SN?!Z\#V@567[
+MXBW;#P./23K4Z?AHC)-=V&amp;*X#;B?_T>&amp;E;S:YA5)/KD-SM95U2[N!_W:]DN=
+M3C$%]QF.GC6`)$W'U@%[AL:'RX#-BQ*OVEXN*='LV+P2O$*2Z_7D[:+XX#'X
+ML\\60`!N&amp;7:DLK/HL,UVR5MM;HC1BVUOKX!5T=&amp;')7]`\B6-QD@+/G_6$0B2
+M_EW1%&lt;"26^#&lt;YL!@P,%N=]&lt;QX)\SMC'@)M"R=6X(KL%%9P_`CG>"AY[)5@I\
+M5=+32>(C:7I%!_2A8=^UQ1",[5#ND,G9`PCA7U-YWDELOE;VF]ET5H8"^%)7
+M&amp;"O;H0*M&lt;ELX0#F>KWL/,U\X/0M*N1II?2--66S'E1`N`"\!&amp;I(V@E>4WL]V
+MEB'(DJX&amp;-`!^:GLK&lt;*C78VHPJ'6RK!@%W6X[D?0Z\!GP9+^OB6HWVE0/(7VG
+M6F\`VI)ZX)'*CF&lt;+&lt;'ZI)KM*&lt;#[NK,V[DG]IZQD[_J%6WIR6W1K`C(=I^9NY
+M/M%X;OLI8+_$A*U>6="^PM;G9E/E.:#BRU+8"_Y/.34]$0+].8KO#5F6K+!U
+MB&lt;0R8`14MPD25]N^;K;XR"4_&amp;B//VM[9[1;O0@?(U&amp;S6+DP27CDA(CLE_FKS
+MM*V]G&lt;[@&amp;-0'(>QT-0R^#FR*>?ZQ_;!V/[PFN%C24>PITG15!,VML*1&lt;)(+*
+MZ$P:MAH@2&lt;9^7VV@&lt;Z:0KK"]1U*_W>X7"Q;4!WG>]!._V,@9YS7+Q@&lt;V"@'%
+M>/RH.U49#*EM#^O'S`+S#:`)B;^'^4U_>OB54Y/X&lt;8RE_B$+3FV&lt;ET`_`=TN
+MZ3';&lt;&lt;Y*`;#.9DV2A$S_6]O8C!2:::H1VTLD1FQEX&amp;$G&amp;E1?6%/`9+?+D&lt;%@
+GT`^AEK1:/J]&lt;C+2\HO0;-J_^%_Y\4FQ//:J]`````$E%3D2N0F""
+`
+end
+</map>
+  </image>
+  <label>
+   <rect>
+    <x>509</x>
+    <y>21</y>
+    <width>100</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>14</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Fecha:</string>
+  </label>
+  <label>
+   <rect>
+    <x>135</x>
+    <y>17</y>
+    <width>186</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>14</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Gestotux 0.5b</string>
+  </label>
+  <label>
+   <rect>
+    <x>121</x>
+    <y>47</y>
+    <width>220</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>9</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>Programa de gestion simplificada</string>
+  </label>
+  <label>
+   <rect>
+    <x>22</x>
+    <y>118</y>
+    <width>89</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Cliente:</string>
+  </label>
+  <field>
+   <rect>
+    <x>613</x>
+    <y>25.9</y>
+    <width>198</width>
+    <height>21</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>Parameter Query</query>
+    <column>fecha</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>119</x>
+    <y>119</y>
+    <width>668</width>
+    <height>23</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>razon_social</column>
+   </data>
+  </field>
+  <label>
+   <rect>
+    <x>433</x>
+    <y>56</y>
+    <width>347</width>
+    <height>32.1178</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>24</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>Comprobante de Baja de servicio</string>
+  </label>
+  <label>
+   <rect>
+    <x>22</x>
+    <y>141</y>
+    <width>89</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Servicio:</string>
+  </label>
+  <field>
+   <rect>
+    <x>119</x>
+    <y>142</y>
+    <width>694</width>
+    <height>23</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>servicio</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>118</x>
+    <y>99</y>
+    <width>661</width>
+    <height>23</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>nro_cliente</column>
+   </data>
+  </field>
+  <label>
+   <rect>
+    <x>4</x>
+    <y>98</y>
+    <width>107</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Sans Serif</face>
+    <size>12</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Nº de cliente:</string>
+  </label>
+  <label>
+   <rect>
+    <x>31.1</x>
+    <y>179</y>
+    <width>707</width>
+    <height>23.5989</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>Mediante el siguiente comprobante el cliente especificado con su numero y razon social toma conocimiento de que desea</string>
+  </label>
+  <line>
+   <xstart>11</xstart>
+   <ystart>167</ystart>
+   <xend>804.274</xend>
+   <yend>167</yend>
+   <weight>0</weight>
+  </line>
+  <label>
+   <rect>
+    <x>31</x>
+    <y>200</y>
+    <width>707</width>
+    <height>23.6</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>dejar de recibir las prestaciones presentas por el servicio especificado.</string>
+  </label>
+  <label>
+   <rect>
+    <x>31.6</x>
+    <y>220</y>
+    <width>707</width>
+    <height>23.6</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>Siendo que el cliente no posee deudas pendientes con el prestador del servicio, el prestador del servicio se ve notificado</string>
+  </label>
+  <label>
+   <rect>
+    <x>32.2</x>
+    <y>239</y>
+    <width>697</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>de la desicion del cliente de cesar la prestacion del servicio de manera inmediata. Se compromete a no generarle nuevas</string>
+  </label>
+  <label>
+   <rect>
+    <x>32.8</x>
+    <y>260</y>
+    <width>697</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>deudas al cliente y  retener la prestación que estaba brindandose.</string>
+  </label>
+ </rpthead>
+ <rptfoot>
+  <height>88</height>
+  <label>
+   <rect>
+    <x>44.1704</x>
+    <y>50.5411</y>
+    <width>117</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Firma del cliente</string>
+  </label>
+  <label>
+   <rect>
+    <x>282.035</x>
+    <y>50.3764</y>
+    <width>117</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Aclaracion y DNI</string>
+  </label>
+  <label>
+   <rect>
+    <x>573.612</x>
+    <y>48.8353</y>
+    <width>117</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Firma del prestador</string>
+  </label>
+  <line>
+   <xstart>52.6717</xstart>
+   <ystart>52.6717</ystart>
+   <xend>152.672</xend>
+   <yend>52.6717</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>284.712</xstart>
+   <ystart>51.96</ystart>
+   <xend>384.712</xend>
+   <yend>51.96</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>580.813</xstart>
+   <ystart>52.6717</ystart>
+   <xend>680.813</xend>
+   <yend>52.6717</yend>
+   <weight>0</weight>
+  </line>
+ </rptfoot>
+</report>

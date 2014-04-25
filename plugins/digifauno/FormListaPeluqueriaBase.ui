@@ -1,0 +1,104 @@
+<ui version="4.0" >
+ <class>FormListadoPeluqueriaBase</class>
+ <widget class="QWidget" name="FormListadoPeluqueriaBase" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>602</width>
+    <height>522</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QSplitter" name="splitter" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QWidget" name="layoutWidget" >
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QGroupBox" name="GBDatos" >
+         <property name="title" >
+          <string>Servicios de peluqueria</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QTableView" name="TVPeluqueria" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="GBFiltrado" >
+         <property name="title" >
+          <string>Filtrado</string>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QCheckBox" name="ChBMascota" >
+              <property name="text" >
+               <string>Mascota</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="CBMascota" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QCheckBox" name="ChBFecha" >
+              <property name="text" >
+               <string>Fecha</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="DEFecha" >
+              <property name="accelerated" >
+               <bool>true</bool>
+              </property>
+              <property name="calendarPopup" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>GBFiltrado</tabstop>
+  <tabstop>ChBMascota</tabstop>
+  <tabstop>CBMascota</tabstop>
+  <tabstop>ChBFecha</tabstop>
+  <tabstop>DEFecha</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

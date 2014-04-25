@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="dibujo.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient2525">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2527" />
+      <stop
+         style="stop-color:#5c547f;stop-opacity:1"
+         offset="1"
+         id="stop2529" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2509"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2525"
+       id="linearGradient2531"
+       x1="-115.15739"
+       y1="144.50502"
+       x2="166.67516"
+       y2="144.50505"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.2438968,0,0,0.51619,-117.03772,168.40284)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2525"
+       id="linearGradient2563"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.3052985,-119.03763,242.0443)"
+       x1="-115.15739"
+       y1="144.50502"
+       x2="202.13408"
+       y2="144.50508" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="345.19103"
+     inkscape:cy="851.80941"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1018"
+     inkscape:window-height="681"
+     inkscape:window-x="0"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:url(#linearGradient2531);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-opacity:1"
+       id="rect2443"
+       width="221.24922"
+       height="42.032619"
+       x="-116.34087"
+       y="221.97861"
+       rx="1.6299872"
+       ry="3.6416247"
+       inkscape:export-filename="/home/Esteban/Trabajo/la criolla/fondo_grande.png"
+       inkscape:export-xdpi="182"
+       inkscape:export-ydpi="182" />
+    <image
+       y="5.3621955"
+       x="4.2857275"
+       id="image2511"
+       height="94"
+       width="900"
+       sodipodi:absref="/home/Esteban/Trabajo/la criolla/headertausta.gif"
+       xlink:href="/home/Esteban/Trabajo/la criolla/headertausta.gif" />
+    <g
+       id="g2569"
+       inkscape:export-filename="/home/Esteban/Trabajo/la criolla/fondo_cargo.png"
+       inkscape:export-xdpi="66.55954"
+       inkscape:export-ydpi="66.55954"
+       transform="matrix(0.6319394,0,0,1,-42.761445,0)">
+      <rect
+         ry="2.1538241"
+         rx="6.6831012"
+         y="277.26703"
+         x="-112.13987"
+         height="24.86002"
+         width="907.14288"
+         id="rect2565"
+         style="opacity:1;fill:#999999;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-opacity:1" />
+      <rect
+         ry="2.1538241"
+         rx="6.6831012"
+         y="273.73148"
+         x="-116.18048"
+         height="24.86002"
+         width="907.14288"
+         id="rect2561"
+         style="opacity:1;fill:url(#linearGradient2563);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

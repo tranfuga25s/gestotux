@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/cancelar_orden_trabajo.png</file>
+        <file>imagenes/crear_orden_trabajo.png</file>
+        <file>imagenes/detalle_orden_trabajo.png</file>
+        <file>imagenes/orden_trabajo.png</file>
+        <file>imagenes/tecnico.png</file>
+        <file>imagenes/baja_equipamiento.png</file>
+        <file>imagenes/equipamiento.png</file>
+        <file>imagenes/equipamiento_agregar.png</file>
+        <file>imagenes/equipamiento_eliminar.png</file>
+        <file>imagenes/equipamiento_editar.png</file>
+    </qresource>
+    <qresource prefix="/sql">
+        <file>ordentrabajo.QMYSQL.sql</file>
+        <file>ordentrabajo.QSQLITE.sql</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,28 @@
+<RCC>
+  <qresource>
+    <file>imagenes/textjustify.png</file>
+    <file>imagenes/textright.png</file>
+    <file>imagenes/textsubscript.png</file>
+    <file>imagenes/textitalic.png</file>
+    <file>imagenes/textunder.png</file>
+    <file>imagenes/textcenter.png</file>
+    <file>imagenes/textbold.png</file>
+    <file>imagenes/textleft.png</file>
+    <file>imagenes/textsuperscript.png</file>
+    <file>imagenes/insertimage.png</file>
+
+     <file>imagenes/app.png</file>
+     <file>imagenes/close.png</file>
+     <file>imagenes/firstpage.png</file>
+     <file>imagenes/gotopage.png</file>
+     <file>imagenes/lastpage.png</file>
+     <file>imagenes/newwindow.png</file>
+     <file>imagenes/nextpage.png</file>
+     <file>imagenes/openfile.png</file>
+     <file>imagenes/prevpage.png</file>
+     <file>imagenes/print.png</file>
+     <file>imagenes/printpreview.png</file>
+     <file>imagenes/zoom_minus.png</file>
+     <file>imagenes/zoom_plus.png</file>
+  </qresource>
+</RCC>

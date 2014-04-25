@@ -1,0 +1,101 @@
+
+
+h1 {
+    color : blue;
+    font : caption;
+    font-size : 20px;
+    font-weight : bolder;
+    text-align : center;
+  }
+
+
+.explicacion {
+    font-size : 12px;
+    font-style : italic;
+    font-weight : normal;
+  }
+
+
+table {
+    border-bottom-color : black;
+    border-bottom-style : solid;
+    border-bottom-width : 1px;
+    border-left-color : black;
+    border-left-style : solid;
+    border-left-width : 1px;
+    border-right-color : black;
+    border-right-style : solid;
+    border-right-width : 1px;
+    border-spacing : 0;
+    border-top-color : black;
+    border-top-style : solid;
+    border-top-width : 1px;
+    vertical-align : middle;
+    width : 100%;
+  }
+
+
+th {
+    background-color : #b2b2b2;
+  }
+
+
+.moneda {
+    text-align : center;
+    width : 30%;
+  }
+
+
+.monedasubtotal {
+    background-color : #f7f7f7;
+    border-top-style : solid;
+    border-top-width : 1px;
+    text-align : center;
+    width : 30%;
+  }
+
+
+.cantidad {
+    text-align : center;
+    width : 10%;
+  }
+
+
+.especial {
+    background-color : #fbfbfb;
+    border-bottom-color : black;
+    border-bottom-style : solid;
+    border-bottom-width : 1px;
+    font-style : italic;
+    text-align : center;
+    text-transform : uppercase;
+  }
+
+
+.subtotal {
+    font-style : italic;
+    text-align : right;
+  }
+
+
+.subtotalgeneral {
+    background-color : #b4b4b4;
+    border-top-color : lightgreen;
+    border-top-style : double;
+    border-top-width : 2px;
+    font-weight : bold;
+    text-align : right;
+  }
+
+
+.monedafinal {
+    background-color : #f7f7f7;
+    border-bottom-style : solid;
+    border-left-style : solid;
+    border-right-style : solid;
+    border-top-style : solid;
+    font-style : italic;
+    text-align : center;
+    width : 30%;
+  }
+
