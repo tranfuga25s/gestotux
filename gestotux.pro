@@ -13,7 +13,8 @@ CONFIG += warn_on \
 
 DESTDIR = .
 
-OTHER_FILES = tareas-pendientes.txt
+OTHER_FILES = tareas-pendientes.txt \
+              README.md
 
 unix {
   SUBDIRS += test
