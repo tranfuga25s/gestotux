@@ -9,9 +9,20 @@
 #include "mcompra.h"
 
 ResumenComprasTotales::ResumenComprasTotales(QObject *parent) :
-QStandardItemModel(parent)
+QSqlTableModel( parent )
 {
     _metodo_temporal = PorMes;
+    setTable( "resumen_compra" );
+    setHeaderData( 0, Qt::Horizontal, "Cantidad Total" );
+    setHeaderData( 1, Qt::Horizontal, "Fecha" );
+    setHeaderData( 2, Qt::Horizontal, "Mes" );
+    setHeaderData( 3, Qt::Horizontal, "Año" );
+    setHeaderData( 4, Qt::Horizontal, "Total" );
+    setHeaderData( 5, Qt::Horizontal, "Proveedor" );
+    setHeaderData( 6, Qt::Horizontal, "Contado" );
+    this->removeColumn( this->fieldIndex( "id_proveedor" ) );
+    this->removeColumn( this->fieldIndex( "contado" ) );
+    this->removeColumn( this->fieldIndex( "fecha" ) );
 }
 
 /*!
@@ -41,16 +52,4 @@ void ResumenComprasTotales::actualizarDatos()
     } else if( _metodo_temporal == ResumenComprasTotales::PorAno ) {
         groupBy = " GROUP BY YEAR( fecha ) ";
     }
-
-    QSqlQuery cola;
-    if( !cola.exec( QString( "SELECT * FROM resumen_compra GROUP BY %1" ).arg( groupBy ) ) ) {
-            qWarning() << "No se pudieron cargar los datos necesarios!";
-            qDebug() << cola.lastError().text();
-            qDebug() << cola.lastQuery();
-            return;
-    }
-    // Cargo los datos nuevos
-    /*while( cola.next() ) {
-
-    }*/
 }

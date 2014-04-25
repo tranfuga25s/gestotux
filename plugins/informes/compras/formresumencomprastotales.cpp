@@ -19,7 +19,8 @@ EVentana(parent)
     connect( ActCambiarDivisionTemporal, SIGNAL( triggered() ), this, SLOT( cambiarDivisionTemporal() ) );
 
     _modelo = new ResumenComprasTotales( this );
-    TVArbol->setModel( _modelo );
+    TVCompras->setModel( _modelo );
+    _modelo->select();
 
     this->addAction( ActCambiarDivisionTemporal );
     this->addAction( new EActCerrar( this ) );

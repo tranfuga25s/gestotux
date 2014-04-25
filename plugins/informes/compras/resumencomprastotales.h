@@ -1,13 +1,13 @@
 #ifndef RESUMENCOMPRASTOTALES_H
 #define RESUMENCOMPRASTOTALES_H
 
-#include <QStandardItemModel>
-#include <QSqlQueryModel>
+#include <QSqlTableModel>
 
 /*!
  * \brief The ResumenComprasTotales class
+ * Modelo para mostrar los totales de compras por fecha
  */
-class ResumenComprasTotales : public QStandardItemModel
+class ResumenComprasTotales : public QSqlTableModel
 {
     Q_OBJECT
 
@@ -25,8 +25,6 @@ public:
 
 private:
     void actualizarDatos();
-
-    QStandardItem *padre;
     DivisionTemporal _metodo_temporal;
 };
 
