@@ -11,4 +11,4 @@ script:
     - make
 
 after_success:
-    - coveralls --exclude lib --exclude tests
+    - coveralls --exclude-pattern ".*automoc\.cpp" --exclude-pattern ".*\.moc" --exclude-pattern "/opt/.*" --exclude-pattern "/usr/.*" --exclude-pattern ".*moc_.*" --exclude-pattern ".*ui_.*" --exclude-pattern ".*qrc_.*" --exclude lib --exclude tests

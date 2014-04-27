@@ -2,14 +2,15 @@
 #define FORMRESUMENCOMPRASPROVEEDOR_H
 
 #include "ui_formresumencomprasproveedor.h"
+#include "eventana.h"
 class ResumenComprasProveedor;
 
-class FormResumenComprasProveedor : public QWidget, private Ui::FormResumenComprasProveedor
+class FormResumenComprasProveedor : public EVentana, private Ui::FormResumenComprasProveedor
 {
     Q_OBJECT
     
 public:
-    explicit FormResumenComprasProveedor(QWidget *parent = 0);
+    FormResumenComprasProveedor(QWidget *parent = 0);
     
 protected:
     void changeEvent(QEvent *e);

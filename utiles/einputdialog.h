@@ -1,0 +1,66 @@
+#ifndef EINPUTDIALOG_H
+#define EINPUTDIALOG_H
+
+#include <QDoubleSpinBox>
+#include <QKeyEvent>
+#include <QInputDialog>
+#include <QDebug>
+#include <QApplication>
+
+class EInputDialogDoubleSpinBox : public QDoubleSpinBox
+{
+    Q_OBJECT
+
+public:
+    EInputDialogDoubleSpinBox(QWidget *parent = 0)
+        : QDoubleSpinBox(parent) {
+        connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(notifyTextChanged()));
+        connect(this, SIGNAL(editingFinished()), this, SLOT(notifyTextChanged()));
+    }
+
+signals:
+    void textChanged(bool);
+
+private slots:
+    void notifyTextChanged() { emit textChanged(hasAcceptableInput()); }
+
+private:
+    void keyPressEvent(QKeyEvent *event) {
+        if ( (event->key() == Qt::Key_Return ||
+              event->key() == Qt::Key_Enter)   &&
+             !hasAcceptableInput() ) {
+#ifndef QT_NO_PROPERTIES
+            setProperty("value", property("value"));
+#endif
+        } else if( (event->key() == Qt::Key_Period
+                    && event->modifiers().testFlag( Qt::KeypadModifier )  ) ) {
+            // Convierto el ingreso en una coma
+            event->accept();
+            qDebug() << "Evento capturado!!";
+            QKeyEvent *evento = new QKeyEvent( QEvent::KeyPress, Qt::Key_Comma, Qt::NoModifier, ",", false, 0 );
+            QApplication::sendEvent( this, evento );
+        } else {
+            QDoubleSpinBox::keyPressEvent(event);
+        }
+        notifyTextChanged();
+    }
+
+    void mousePressEvent(QMouseEvent *event) {
+        QDoubleSpinBox::mousePressEvent(event);
+        notifyTextChanged();
+    }
+
+};
+
+class EInputDialog : private QInputDialog
+{
+    Q_OBJECT
+public:
+    EInputDialog( QWidget *parent = 0 );
+
+    static double getDouble(QWidget *parent, const QString &title, const QString &label, double value = 0,
+                                double minValue = -2147483647, double maxValue = 2147483647,
+                                int decimals = 1, bool *ok = 0, Qt::WindowFlags flags = 0);
+};
+
+#endif // EINPUTDIALOG_H

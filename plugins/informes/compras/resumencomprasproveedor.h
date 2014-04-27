@@ -15,7 +15,7 @@ public:
 
 
 public slots:
-    void cambioProveedor( int id_proveedor );
+    void cambiarProveedor( int id_proveedor );
 
 private:
     QString _filtro;
