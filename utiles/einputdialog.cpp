@@ -3,6 +3,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QHBoxLayout>
+#include <QDialogButtonBox>
 
 EInputDialog::EInputDialog(QWidget *parent) :
 QInputDialog(parent)
@@ -28,7 +29,17 @@ double EInputDialog::getDouble(QWidget *parent, const QString &title, const QStr
     layout->addWidget( _label );
     layout->addWidget( spin );
 
-    dialogo.setLayout( layout );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox( parent );
+    buttonBox->setOrientation( Qt::Horizontal );
+    buttonBox->addButton( QDialogButtonBox::Ok );
+    buttonBox->addButton( QDialogButtonBox::Cancel );
+    dialogo.connect( buttonBox, SIGNAL( accepted() ), SLOT( accept() ) );
+    dialogo.connect( buttonBox, SIGNAL( rejected() ), SLOT( reject() ) );
+
+    QVBoxLayout *layout2 = new QVBoxLayout();
+    layout2->addItem( layout );
+    layout2->addWidget( buttonBox );
+    dialogo.setLayout( layout2 );
 
     int ret = dialogo.exec();
     if (ok)

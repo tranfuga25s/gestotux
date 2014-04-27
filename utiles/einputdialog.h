@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QDebug>
 #include <QApplication>
+#include <QDialogButtonBox>
 
 class EInputDialogDoubleSpinBox : public QDoubleSpinBox
 {
@@ -35,10 +36,9 @@ private:
         } else if( (event->key() == Qt::Key_Period
                     && event->modifiers().testFlag( Qt::KeypadModifier )  ) ) {
             // Convierto el ingreso en una coma
+            QLocale locale;
+            this->lineEdit()->setText( this->lineEdit()->text().split( "," ).first().replace( ",", "" ).append( locale.decimalPoint() ) );
             event->accept();
-            qDebug() << "Evento capturado!!";
-            QKeyEvent *evento = new QKeyEvent( QEvent::KeyPress, Qt::Key_Comma, Qt::NoModifier, ",", false, 0 );
-            QApplication::sendEvent( this, evento );
         } else {
             QDoubleSpinBox::keyPressEvent(event);
         }

@@ -15,8 +15,7 @@ DESTDIR = .
 
 OTHER_FILES = tareas-pendientes.txt \
               README.md \
-              .travis.yml \
-              .coveralls.yml
+              .travis.yml
 unix {
   SUBDIRS += test
   #system( ./generar_pri.sh eliminar )
