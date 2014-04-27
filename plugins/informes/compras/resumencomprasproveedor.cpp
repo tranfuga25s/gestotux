@@ -95,6 +95,21 @@ QVariant ResumenComprasProveedor::data(const QModelIndex &idx, int role) const
     }
 }
 
+/**
+ * @brief ResumenComprasProveedor::cambioProveedor
+ * @param id_proveedor
+ */
+void ResumenComprasProveedor::cambioProveedor(int id_proveedor)
+{
+    if( id_proveedor > 0 ) {
+        _filtro.clear();
+        _filtro.append( QString( " WHERE id_proveedor = %1" ).arg( id_proveedor ) );
+        actualizarDatos();
+    }
+    this->setFilter( _filtro );
+    this->select();
+}
+
 /*!
  * \brief ResumenComprasProveedor::actualizarDatos
  */
@@ -102,16 +117,17 @@ void ResumenComprasProveedor::actualizarDatos()
 {
     QString groupBy;
     groupBy.clear();
+    groupBy.append( "GROUP BY id_proveedor" );
     if( _metodo_temporal == SinDivision ) {
         // No separo nada
     } else if( _metodo_temporal == PorMes ||
                _metodo_temporal == PorBimestre ||
                _metodo_temporal == PorCuatrimestre ||
                _metodo_temporal == PorSeximestre ) {
-        groupBy = " GROUP BY MONTH( fecha ), YEAR( fecha ) ";
+        groupBy = ", mes, ano ";
     } else if( _metodo_temporal == PorAno ) {
-        groupBy = " GROUP BY YEAR( fecha ) ";
+        groupBy = ", ano ";
     }
-    this->setFilter( groupBy );
+    _filtro.append( groupBy );
 }
 

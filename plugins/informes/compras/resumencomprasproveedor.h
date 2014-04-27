@@ -11,9 +11,14 @@ public:
     ResumenComprasProveedor( QObject *parent = 0 );
     void setearMetodoTemporal( DivisionTemporal metodo );
 
-    QVariant data(const QModelIndex &idx, int role) const;
+    QVariant data( const QModelIndex &idx, int role ) const;
+
+
+public slots:
+    void cambioProveedor( int id_proveedor );
 
 private:
+    QString _filtro;
     void actualizarDatos();
     DivisionTemporal _metodo_temporal;
        

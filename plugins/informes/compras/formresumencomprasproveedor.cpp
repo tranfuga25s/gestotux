@@ -1,6 +1,7 @@
 #include "formresumencomprasproveedor.h"
 
 #include "resumencomprasproveedor.h"
+#include "eactcerrar.h"
 
 FormResumenComprasProveedor::FormResumenComprasProveedor(QWidget *parent) :
     QWidget(parent)
@@ -12,9 +13,12 @@ FormResumenComprasProveedor::FormResumenComprasProveedor(QWidget *parent) :
     _modelo = new ResumenComprasProveedor( this );
     TVResumen->setModel( _modelo );
     _modelo->select();
+    TVResumen->hideColumn( _modelo->fieldIndex( "id_proveedor" ) );
+    TVResumen->hideColumn( _modelo->fieldIndex( "contado" ) );
 
     connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), _modelo, SLOT( cambiarProveedor( int ) ) );
 
+    this->addAction( new EActCerrar( this ) );
 }
 
 void FormResumenComprasProveedor::changeEvent(QEvent *e)
