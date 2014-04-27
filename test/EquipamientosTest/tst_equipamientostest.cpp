@@ -4,13 +4,18 @@
 
 #include "mequipamiento.h"
 
-class EquipamientosTest : public EDatabaseTest, public QObject
+class EquipamientosTest : public QObject, public EDatabaseTest
 {
     Q_OBJECT
+
+public:
+    EquipamientosTest();
 
 private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
+    void init();
+    void cleanup();
     void testCargaDatos();
     void testCargaDatos_data();
 
@@ -18,16 +23,26 @@ private:
     MEquipamiento *mequipamiento;
 };
 
-void EquipamientosTest::initTestCase()
+
+EquipamientosTest::EquipamientosTest()
 {
+    this->tablas << "equipamientos";
+}
+
+void EquipamientosTest::init() { EDatabaseTest::iniciarTablas(); }
+
+void EquipamientosTest::initTestCase() {
+    EDatabaseTest::generarTablas();
     mequipamiento = new MEquipamiento( this );
 }
 
-void EquipamientosTest::cleanupTestCase()
-{
+void EquipamientosTest::cleanupTestCase() {
+    EDatabaseTest::borrarTablas();
     delete mequipamiento;
     mequipamiento = 0;
 }
+
+void EquipamientosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
 
 void EquipamientosTest::testCargaDatos()
 {
@@ -59,6 +74,6 @@ void EquipamientosTest::testCargaDatos_data()
     QTest::newRow("Fila correcta") <<  0 << "Descripcion 1" << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << true;*/
 }
 
-QTEST_APPLESS_MAIN(EquipamientosTest)
+QTEST_MAIN(EquipamientosTest)
 
 #include "tst_equipamientostest.moc"

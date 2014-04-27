@@ -4,7 +4,7 @@ SUBDIRS +=  ProductosTest \
             PeriodoServicioTest \
             #BajaClienteServicioTest \
             PreferenciasTest \
-            #EquipamientosTest \
+            EquipamientosTest \
             CancelacionPeriodoServicio
 
 OTHER_FILES += sql/dependences.ini \
@@ -12,4 +12,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/servicios.sql \
                sql/QSQLITE/categorias_productos.sql \
                sql/QSQLITE/periodo_servicio.sql \
-               sql/QSQLITE/cobro_servicio_periodo.sql
+               sql/QSQLITE/cobro_servicio_periodo.sql \
+               sql/QSQLITE/provincias.sql \
+               sql/QSQLITE/equipamientos.sql
