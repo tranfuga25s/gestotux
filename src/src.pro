@@ -113,3 +113,7 @@ OTHER_FILES += gestotux.ts \
 exists( cliente.pri ) {
     include( cliente.pri )
 }
+
+exists( ../travis.pri ) {
+    include( travis.pri )
+}

@@ -60,7 +60,6 @@ LIBS += -L../../bin \
         -lproductos \
         -llibcaja
 
-
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

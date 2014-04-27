@@ -12,13 +12,6 @@ SOURCES += l4ustyle2.cpp misc.cpp
 
 DESTDIR = ../../../bin/styles
 
-linux-g++ {
-    UI_DIR = ui
-    MOC_DIR = moc
-    OBJECTS_DIR = obj
-}
-win32 {
-    MOC_DIR = win/moc
-    UI_DIR = win/ui
-    OBJECTS_DIR = win/objeto
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

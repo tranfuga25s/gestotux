@@ -29,6 +29,6 @@ DISTFILES += ../../bin/reportes/Factura.xml \
              ../../bin/reportes/Recibo.xml \
              ../../bin/reportes/Presupuesto.xml
 
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

@@ -77,7 +77,6 @@ DISTFILES += ../../bin/reportes/ListadoCtaCteSaldo.xml \
              ../../bin/reportes/ResumenCtaCte.xml \
              ../../bin/reportes/ResumenCtaCte-MySQL.xml
 
-
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

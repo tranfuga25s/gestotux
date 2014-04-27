@@ -32,3 +32,7 @@ SOURCES = reportecompras.cpp \
     resumencomprastotales.cpp
 
 FORMS += formresumencomprastotales.ui
+
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
+}

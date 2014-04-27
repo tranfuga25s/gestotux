@@ -4,10 +4,12 @@ compiler: gcc
 
 install:
     - sudo pip install cpp-coveralls
+    - cp bin/travis.pri travis.pri
 
 script:  
     - qmake gestotux.pro
     - make
+    - ls -l -R
 
 after_success:
     - coveralls --exclude lib --exclude tests
