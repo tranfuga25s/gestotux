@@ -133,7 +133,6 @@ EDatabaseTest::~EDatabaseTest() {}
 void EDatabaseTest::generarTablas()
 {
     foreach( QString t, this->tablas ) {
-        qDebug() << "Buscando tabla " << t;
         this->generarTabla( t );
     }
 }
@@ -165,20 +164,23 @@ void EDatabaseTest::buscarDepenencias( QString nombre )
 {
     // Verifico a ver si existen las dependencias
     QList<QString> lista = mapa.value( nombre );
-    foreach( QString tabla, lista ) {
-        /// @todo Ver dependencias circulares!
-        if( tablas.contains( tabla ) ) {
-            if( this->_dependencias.contains( tabla ) ) {
-                this->_dependencias.insert( tabla, this->_dependencias.value( tabla ) + 1 );
+    if( lista.size() > 0 ) {
+        foreach( QString tabla, lista ) {
+            /// @todo Ver dependencias circulares!
+            if( tablas.contains( tabla ) ) {
+                if( this->_dependencias.contains( tabla ) ) {
+                    this->_dependencias.insert( tabla, this->_dependencias.value( tabla ) + 1 );
+                } else {
+                    this->_dependencias.insert( tabla, 1 );
+                }
+                continue;
             } else {
-                this->_dependencias.insert( tabla, 1 );
+                this->buscarDepenencias( tabla );
             }
-
-            continue;
-        } else {
-            this->buscarDepenencias( tabla );
         }
     }
+    qDebug() << "Insertado " << nombre;
+    this->_dependencias.insert( nombre, 1 );
 }
 
 /**
@@ -217,6 +219,7 @@ void EDatabaseTest::borrarTabla( QString nombre )
 void EDatabaseTest::iniciarTablas()
 {
     // Busco las tablas en el orden correcto
+    qDebug() << this->_dependencias;
     this->_inverso_depenencias.clear();
     QMapIterator<QString, int> it(this->_dependencias);
     while (it.hasNext())

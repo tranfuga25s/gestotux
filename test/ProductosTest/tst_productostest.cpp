@@ -31,23 +31,13 @@ ProductosTest::ProductosTest()
     this->tablas << "categorias_productos" << "productos";
 }
 
-void ProductosTest::init() {
-    EDatabaseTest::generarTablas();
-}
+void ProductosTest::init() { EDatabaseTest::iniciarTablas(); }
 
-void ProductosTest::initTestCase()
-{
-    EDatabaseTest::iniciarTablas();
-}
+void ProductosTest::initTestCase() { EDatabaseTest::generarTablas(); }
 
-void ProductosTest::cleanupTestCase()
-{
-    EDatabaseTest::vaciarTablas();
-}
+void ProductosTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
 
-void ProductosTest::cleanup() {
-    EDatabaseTest::borrarTablas();
-}
+void ProductosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
 
 void ProductosTest::testCodigoRepetido()
 {
