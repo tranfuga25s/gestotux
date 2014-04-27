@@ -53,7 +53,11 @@ void EquipamientosTest::testCargaDatos()
     QFETCH( QString, num_serie );
     QFETCH( QString, observaciones );
     QFETCH( bool, resultado );
-    QCOMPARE( resultado, mequipamiento->agregarEquipamiento( id_cliente, descripcion, marca, modelo, num_serie, observaciones ) );
+    if( resultado == true ) {
+        QVERIFY2( mequipamiento->agregarEquipamiento( id_cliente, descripcion, marca, modelo, num_serie, observaciones ), "Falla fatal" );
+    } else if( resultado == false ) {
+        QCOMPARE( false, mequipamiento->agregarEquipamiento( id_cliente, descripcion, marca, modelo, num_serie, observaciones ) );
+    }
 }
 
 void EquipamientosTest::testCargaDatos_data()
@@ -67,7 +71,7 @@ void EquipamientosTest::testCargaDatos_data()
     QTest::addColumn<bool>("resultado");
     // Fila correcta
     QTest::newRow("Fila correcta") <<  0 << "Descripcion 1" << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << true;
-    QTest::newRow("Fila descripcion vacía") <<  0 << QString() << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << true;
+    QTest::newRow("Fila descripcion vacía") <<  0 << QString() << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << false;
     /*QTest::newRow("Fila correcta") <<  0 << "Descripcion 1" << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << true;
     QTest::newRow("Fila correcta") <<  0 << "Descripcion 1" << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << true;
     QTest::newRow("Fila correcta") <<  0 << "Descripcion 1" << "Marca 1" << "Modelo" << "NumSerie1" << "Observaciones1" << true;

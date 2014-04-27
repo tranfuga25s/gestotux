@@ -305,9 +305,9 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
             qDebug() << "No se pudo generar la tabla -" << nombre << "-. No se encontro el archivo: " << path->filePath( nombre + ".sql" );
         }
 
-    } else {
+    } /*else {
         qDebug() << "No se generó la tabla tabla -> " << nombre << " <- Ya existe";
-    }
+    }*/
 }
 
 #endif // EDATABASETEST_H
