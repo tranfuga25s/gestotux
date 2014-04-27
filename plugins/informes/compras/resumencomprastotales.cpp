@@ -64,4 +64,5 @@ void ResumenComprasTotales::actualizarDatos()
     } else if( _metodo_temporal == ResumenComprasTotales::PorAno ) {
         groupBy = " GROUP BY YEAR( fecha ) ";
     }
+    this->setFilter( groupBy );
 }

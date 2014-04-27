@@ -70,6 +70,6 @@ LIBS += -L../../bin \
 
 DISTFILES += ../../bin/reportes/Presupuesto.xml
 
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

@@ -63,7 +63,6 @@ LIBS += -L../../bin \
         -lreporte \
         -lordentrabajo
 
-
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

@@ -61,8 +61,6 @@ LIBS += -L../../bin \
 
 DISTFILES += ../../bin/reportes/ListadoGastos.xml
 
-
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }
-

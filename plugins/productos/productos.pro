@@ -65,6 +65,6 @@ win32 {
 DISTFILES += ../../bin/reportes/ListadoProductosPrecio.xml \
              ../../bin/reportes/ListadoProductosStock.xml
 
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

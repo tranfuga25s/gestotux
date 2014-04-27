@@ -62,7 +62,6 @@ OTHER_FILES += email.QMYSQL.sql \
 
 RESOURCES += email.qrc
 
-
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

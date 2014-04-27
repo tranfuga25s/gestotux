@@ -73,6 +73,6 @@ LIBS += -L../../bin \
 
 DISTFILES += ../../bin/reportes/Recibo.xml
 
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

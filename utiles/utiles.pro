@@ -81,7 +81,3 @@ TRANSLATIONS += utiles.ts
 
 INCLUDEPATH += ../src \
                ../reporte
-
-exists( ../travis.pri ) {
-    include( ../travis.pri )
-}

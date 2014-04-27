@@ -9,7 +9,7 @@ install:
 script:  
     - qmake gestotux.pro
     - make
-    - ls -l -R
+    - ./test/ProductosTest/tst_productostest
 
 after_success:
     - coveralls --exclude lib --exclude tests

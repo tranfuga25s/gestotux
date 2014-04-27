@@ -113,7 +113,6 @@ DISTFILES += ../../bin/reportes/baja-servicio.xml \
              ../../bin/reportes/ListaDeudoresServicio.xml \
              ../../bin/reportes/ListaDeudoresServicioHC.xml
 
-
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

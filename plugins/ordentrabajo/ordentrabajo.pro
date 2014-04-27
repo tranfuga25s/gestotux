@@ -102,6 +102,6 @@ win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }
 
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }

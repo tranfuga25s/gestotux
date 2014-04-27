@@ -94,7 +94,6 @@ LIBS += -L../../bin \
         -llibdescuentos \
         -lutiles
 
-
-unix {
-    LIBS += -gcov
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
 }
