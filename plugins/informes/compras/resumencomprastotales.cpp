@@ -14,14 +14,14 @@ QSqlTableModel( parent )
     _metodo_temporal = PorMes;
     setTable( "resumen_compra" );
     setHeaderData( 0, Qt::Horizontal, "Cantidad Total" );
-    setHeaderData( 1, Qt::Horizontal, "Fecha" );
+    setHeaderData( 1, Qt::Horizontal, QString::fromUtf8( "Fecha última" ) );
     setHeaderData( 2, Qt::Horizontal, "Mes" );
     setHeaderData( 3, Qt::Horizontal, QString::fromUtf8( "Año" ) );
     setHeaderData( 4, Qt::Horizontal, "Total" );
     setHeaderData( 5, Qt::Horizontal, "Proveedor" );
     setHeaderData( 6, Qt::Horizontal, "Contado" );
-    this->removeColumn( this->fieldIndex( "id_proveedor" ) );
-    /*this->removeColumn( this->fieldIndex( "contado" ) );
+    /*this->removeColumn( this->fieldIndex( "id_proveedor" ) );
+    this->removeColumn( this->fieldIndex( "contado" ) );
     this->removeColumn( this->fieldIndex( "fecha" ) );*/
 }
 
@@ -62,6 +62,22 @@ QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
                 }
                 case 4: {
                     return QString( "$ %L1" ).arg( QSqlTableModel::data( idx, role ).toDouble(), 10, 'f', 2 );
+                    break;
+                }
+                default: {
+                    return QSqlTableModel::data( idx, role );
+                    break;
+                }
+            }
+            break;
+        }
+        case Qt::TextAlignmentRole: {
+            switch( idx.column() ) {
+                case 0:
+                case 1:
+                case 2:
+                case 3: {
+                    return int( Qt::AlignCenter | Qt::AlignVCenter );
                     break;
                 }
                 default: {

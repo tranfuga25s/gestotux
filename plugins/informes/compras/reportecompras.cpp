@@ -27,6 +27,8 @@ QString ReporteCompras::nombre() const
  */
 bool ReporteCompras::inicializar()
 {
+    Q_INIT_RESOURCE( resumencompras );
+
     ActResumenComprasTotales = new QAction( this );
     ActResumenComprasTotales->setText( "Totales" );
     ActResumenComprasTotales->setStatusTip( "Muestra un resumen total de compras" );
@@ -85,6 +87,14 @@ void ReporteCompras::resumenComprasPorProducto()
         rep->hacerPDF( ParameterList(), QString( "Deudas Cuotas del mes %1-%2" ).arg( mes ).arg( QDate::currentDate().toString( "yyyy" ) ) );
         delete rep;
     }
+}
+
+/**
+ * @brief ReporteCompras::seCierraGestotux
+ */
+void ReporteCompras::seCierraGestotux()
+{
+    Q_CLEANUP_RESOURCE( resumencompras );
 }
 
 /*!

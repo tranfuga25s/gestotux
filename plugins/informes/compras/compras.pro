@@ -36,3 +36,6 @@ FORMS += formresumencomprastotales.ui
 exists( ../../../travis.pri ) {
     include( ../../../travis.pri )
 }
+
+RESOURCES += \
+    resumencompras.qrc

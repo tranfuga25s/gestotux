@@ -10,8 +10,9 @@ script:
     - qmake gestotux.pro
     - make
     - cd test/ProductosTest
-    - ls ../../bin/plugins -1
     - ./tst_productostest
+    - cd ../PreferenciasTest
+    - ./tst_preferenciastest
 
 after_success:
     - coveralls --exclude lib --exclude tests

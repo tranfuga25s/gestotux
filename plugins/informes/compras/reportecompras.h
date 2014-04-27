@@ -19,7 +19,7 @@ protected slots:
     void resumenComprasTotales();
     void resumenComprasPorProveedor();
     void resumenComprasPorProducto();
-    void seCierraGestotux() {}
+    void seCierraGestotux();
 
 signals:
     void agregarVentana( QWidget * );

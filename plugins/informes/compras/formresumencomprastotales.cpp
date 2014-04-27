@@ -16,11 +16,16 @@ EVentana(parent)
     ActCambiarDivisionTemporal = new QAction( this );
     ActCambiarDivisionTemporal->setText( QString::fromUtf8( "Período" ) );
     ActCambiarDivisionTemporal->setStatusTip( "Cambia el periodo en el cual se calculan los totales" );
+    ActCambiarDivisionTemporal->setIcon( QIcon( ":/imagenes/periodo.png" ) );
     connect( ActCambiarDivisionTemporal, SIGNAL( triggered() ), this, SLOT( cambiarDivisionTemporal() ) );
 
     _modelo = new ResumenComprasTotales( this );
     TVCompras->setModel( _modelo );
     _modelo->select();
+    TVCompras->hideColumn( _modelo->fieldIndex( "id_proveedor" ) );
+    TVCompras->hideColumn( _modelo->fieldIndex( "contado" ) );
+    TVCompras->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    TVCompras->setSortingEnabled( true );
 
     this->addAction( ActCambiarDivisionTemporal );
     this->addAction( new EActCerrar( this ) );
