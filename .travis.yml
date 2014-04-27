@@ -4,6 +4,7 @@ compiler: gcc
 
 install:
     - sudo pip install cpp-coveralls
+    - sudo apt-get install libqt4-sql-sqlite
     - cp bin/travis.pri travis.pri
     - "export DISPLAY=:99.0"
     - "sh -e /etc/init.d/xvfb start"

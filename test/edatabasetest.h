@@ -224,7 +224,7 @@ void EDatabaseTest::iniciarTablas()
         it.next();
         this->_inverso_depenencias.insert( it.value(), it.key() ); // Intercambio clave y valor y quedan ordenados porque QMap ordena automaticamente
     }
-    qDebug() << this->_inverso_depenencias;
+    //qDebug() << this->_inverso_depenencias;
     foreach( QString t, this->_inverso_depenencias ) {
         this->iniciarTabla( t );
     }
@@ -246,7 +246,6 @@ void EDatabaseTest::vaciarTablas()
  */
 void EDatabaseTest::vaciarTabla( QString nombre )
 {
-    qDebug() << _lista_tablas << nombre;
     if( _lista_tablas.contains( nombre ) ) {
         QSqlQuery cola;
         cola.exec( "TRUNCATE TABLE " + nombre + ";" );
