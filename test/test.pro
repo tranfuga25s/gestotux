@@ -14,4 +14,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/periodo_servicio.sql \
                sql/QSQLITE/cobro_servicio_periodo.sql \
                sql/QSQLITE/provincias.sql \
-               sql/QSQLITE/equipamientos.sql
+               sql/QSQLITE/equipamientos.sql \
+               sql/QSQLITE/paises.sql \
+               sql/QSQLITE/escado_fiscal.sql

@@ -179,7 +179,6 @@ void EDatabaseTest::buscarDepenencias( QString nombre )
             }
         }
     }
-    qDebug() << "Insertado " << nombre;
     this->_dependencias.insert( nombre, 1 );
 }
 
@@ -219,15 +218,14 @@ void EDatabaseTest::borrarTabla( QString nombre )
 void EDatabaseTest::iniciarTablas()
 {
     // Busco las tablas en el orden correcto
-    qDebug() << this->_dependencias;
     this->_inverso_depenencias.clear();
     QMapIterator<QString, int> it(this->_dependencias);
+    it.toFront();
     while (it.hasNext())
     {
         it.next();
-        this->_inverso_depenencias.insert( it.value(), it.key() ); // Intercambio clave y valor y quedan ordenados porque QMap ordena automaticamente
+        this->_inverso_depenencias.insertMulti( it.value(), it.key() ); // Intercambio clave y valor y quedan ordenados porque QMap ordena automaticamente
     }
-    //qDebug() << this->_inverso_depenencias;
     foreach( QString t, this->_inverso_depenencias ) {
         this->iniciarTabla( t );
     }
