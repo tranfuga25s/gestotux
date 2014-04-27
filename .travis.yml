@@ -9,6 +9,8 @@ install:
 script:  
     - qmake gestotux.pro
     - make
+    - cd test/ProductosTest
+    - ls ../../bin/ -1
     - ./test/ProductosTest/tst_productostest
 
 after_success:

@@ -43,6 +43,8 @@ bool Compras::verificarTablas( QStringList tablas )
  { qWarning( "Error al buscar la tabla compras" ); return false; }
  if( !tablas.contains( "compras_productos" ) )
  { qWarning( "Error al buscar la tabla compras_productos" ); return false; }
+ if( !tablas.contains( "resumen_compra" ) )
+ { qWarning( "Error al buscar la tabla resumen_compra" ); return false; }
  return true;
 }
 

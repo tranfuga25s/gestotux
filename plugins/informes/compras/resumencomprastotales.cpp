@@ -16,13 +16,13 @@ QSqlTableModel( parent )
     setHeaderData( 0, Qt::Horizontal, "Cantidad Total" );
     setHeaderData( 1, Qt::Horizontal, "Fecha" );
     setHeaderData( 2, Qt::Horizontal, "Mes" );
-    setHeaderData( 3, Qt::Horizontal, "Año" );
+    setHeaderData( 3, Qt::Horizontal, QString::fromUtf8( "Año" ) );
     setHeaderData( 4, Qt::Horizontal, "Total" );
     setHeaderData( 5, Qt::Horizontal, "Proveedor" );
     setHeaderData( 6, Qt::Horizontal, "Contado" );
     this->removeColumn( this->fieldIndex( "id_proveedor" ) );
     this->removeColumn( this->fieldIndex( "contado" ) );
-    this->removeColumn( this->fieldIndex( "fecha" ) );
+    /*this->removeColumn( this->fieldIndex( "fecha" ) );*/
 }
 
 /*!
