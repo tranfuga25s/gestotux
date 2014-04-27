@@ -21,8 +21,8 @@ QSqlTableModel( parent )
     setHeaderData( 5, Qt::Horizontal, "Proveedor" );
     setHeaderData( 6, Qt::Horizontal, "Contado" );
     this->removeColumn( this->fieldIndex( "id_proveedor" ) );
-    this->removeColumn( this->fieldIndex( "contado" ) );
-    /*this->removeColumn( this->fieldIndex( "fecha" ) );*/
+    /*this->removeColumn( this->fieldIndex( "contado" ) );
+    this->removeColumn( this->fieldIndex( "fecha" ) );*/
 }
 
 /*!
@@ -44,7 +44,38 @@ void ResumenComprasTotales::setearMetodoTemporal( DivisionTemporal metodo )
  */
 QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
 {
-    return QSqlTableModel::data( idx, role );
+    switch( role ) {
+        case Qt::DisplayRole: {
+            switch( idx.column() ) {
+                case 0: {
+                    return QSqlTableModel::data( idx, role ).toInt();
+                    break;
+                }
+                case 1: {
+                    return QSqlTableModel::data( idx, role ).toDate().toString( Qt::SystemLocaleShortDate );
+                    break;
+                }
+                case 2: {
+                    // Lo convierto al mes que corresponde
+                    return QDate::longMonthName( QSqlTableModel::data( idx, role ).toInt() );
+                    break;
+                }
+                case 4: {
+                    return QString( "$ %L1" ).arg( QSqlTableModel::data( idx, role ).toDouble(), 10, 'f', 2 );
+                    break;
+                }
+                default: {
+                    return QSqlTableModel::data( idx, role );
+                    break;
+                }
+            }
+            break;
+        }
+        default: {
+            return QSqlTableModel::data( idx, role );
+            break;
+        }
+    }
 }
 
 /*!
