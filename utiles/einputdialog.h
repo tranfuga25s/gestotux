@@ -58,7 +58,7 @@ class EInputDialog : private QInputDialog
 public:
     EInputDialog( QWidget *parent = 0 );
 
-    static double getDouble(QWidget *parent, const QString &title, const QString &label, double value = 0,
+    static double getImporte(QWidget *parent, const QString &title, const QString &label, double value = 0,
                                 double minValue = -2147483647, double maxValue = 2147483647,
                                 int decimals = 1, bool *ok = 0, Qt::WindowFlags flags = 0);
 };

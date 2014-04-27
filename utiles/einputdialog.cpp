@@ -9,7 +9,7 @@ EInputDialog::EInputDialog(QWidget *parent) :
 QInputDialog(parent)
 {}
 
-double EInputDialog::getDouble(QWidget *parent, const QString &title, const QString &label,
+double EInputDialog::getImporte(QWidget *parent, const QString &title, const QString &label,
                                double value, double min, double max, int decimals, bool *ok,
                                Qt::WindowFlags flags)
 {
