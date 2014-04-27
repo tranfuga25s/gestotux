@@ -9,10 +9,8 @@ install:
 script:  
     - qmake gestotux.pro
     - make
-    - cd test/ProductosTest
-    - ./tst_productostest
-    - cd ../PreferenciasTest
-    - ./tst_preferenciastest
+    - cd ../PeriodoServicioTest
+    - ./tst_periodoserviciotest
 
 after_success:
     - coveralls --exclude lib --exclude tests

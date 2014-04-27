@@ -25,13 +25,19 @@ PRE_TARGETDEPS += ../../../bin/libreporte.a \
 
 HEADERS = reportecompras.h \
     formresumencomprastotales.h \
-    resumencomprastotales.h
+    resumencomprastotales.h \
+    resumencomprasproveedor.h \
+    TiposPeriodos.h \
+    formresumencomprasproveedor.h
 
 SOURCES = reportecompras.cpp \
     formresumencomprastotales.cpp \
-    resumencomprastotales.cpp
+    resumencomprastotales.cpp \
+    resumencomprasproveedor.cpp \
+    formresumencomprasproveedor.cpp
 
-FORMS += formresumencomprastotales.ui
+FORMS += formresumencomprastotales.ui \
+    formresumencomprasproveedor.ui
 
 exists( ../../../travis.pri ) {
     include( ../../../travis.pri )

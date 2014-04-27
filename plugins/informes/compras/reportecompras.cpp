@@ -2,6 +2,7 @@
 #include "EReporte.h"
 
 #include "formresumencomprastotales.h"
+#include "formresumencomprasproveedor.h"
 
 #include <QDate>
 #include <QMessageBox>
@@ -97,25 +98,14 @@ void ReporteCompras::seCierraGestotux()
     Q_CLEANUP_RESOURCE( resumencompras );
 }
 
+
 /*!
  * \brief ReporteCompras::resumenComprasPorProveedor
  * Muestra el resumen de compras realizadas por proveedor
  */
 void ReporteCompras::resumenComprasPorProveedor()
 {
-    QMessageBox::information( 0, "Error", "No implementado" );
-    return;
-    /// @TODO: Implementar reporte de deuda segun cliente
-    EReporte *rep = new EReporte( 0 );
-    int id_cliente = 1;
-    ParameterList lista;
-    lista.append( "id_cliente", id_cliente );
-    rep->especial( "deudascuotascliente", lista );
-    /*rep->hacerPDF( ParameterList(),
-                   QString( "Deudas de Cuotas de %2 Al %1" )
-                   .arg( QDate::currentDate().toString( Qt::LocaleDate ) )
-                   .arg( MClientes::getRazonSocial( id_cliente ) ) ); */
-    delete rep;
+    emit agregarVentana( new FormResumenComprasProveedor() );
 }
 
 Q_EXPORT_PLUGIN2( reportecompras, ReporteCompras )

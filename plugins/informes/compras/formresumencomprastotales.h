@@ -23,7 +23,7 @@ private slots:
 
 private:
     QAction *ActCambiarDivisionTemporal;
-    ResumenComprasTotales::DivisionTemporal _metodo_temporal;
+    DivisionTemporal _metodo_temporal;
     ResumenComprasTotales *_modelo;
 
 };

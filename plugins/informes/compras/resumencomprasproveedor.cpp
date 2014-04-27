@@ -1,4 +1,4 @@
-#include "resumencomprastotales.h"
+#include "resumencomprasproveedor.h"
 
 #include <QDate>
 #include <QSqlQuery>
@@ -8,7 +8,7 @@
 
 #include "mcompra.h"
 
-ResumenComprasTotales::ResumenComprasTotales(QObject *parent) :
+ResumenComprasProveedor::ResumenComprasProveedor(QObject *parent) :
 QSqlTableModel( parent )
 {
     _metodo_temporal = PorMes;
@@ -23,10 +23,10 @@ QSqlTableModel( parent )
 }
 
 /*!
- * \brief ResumenComprasTotales::setearMetodoTemporal
+ * \brief ResumenComprasProveedor::setearMetodoTemporal
  * \param metodo
  */
-void ResumenComprasTotales::setearMetodoTemporal( DivisionTemporal metodo )
+void ResumenComprasProveedor::setearMetodoTemporal( DivisionTemporal metodo )
 {
     this->_metodo_temporal = metodo;
     this->actualizarDatos();
@@ -34,12 +34,12 @@ void ResumenComprasTotales::setearMetodoTemporal( DivisionTemporal metodo )
 }
 
 /*!
- * \brief ResumenComprasTotales::data
+ * \brief ResumenComprasProveedor::data
  * \param idx
  * \param role
  * \return
  */
-QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
+QVariant ResumenComprasProveedor::data(const QModelIndex &idx, int role) const
 {
     switch( role ) {
         case Qt::DisplayRole: {
@@ -96,9 +96,9 @@ QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
 }
 
 /*!
- * \brief ResumenComprasTotales::actualizarDatos
+ * \brief ResumenComprasProveedor::actualizarDatos
  */
-void ResumenComprasTotales::actualizarDatos()
+void ResumenComprasProveedor::actualizarDatos()
 {
     QString groupBy;
     groupBy.clear();
@@ -114,3 +114,4 @@ void ResumenComprasTotales::actualizarDatos()
     }
     this->setFilter( groupBy );
 }
+

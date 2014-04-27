@@ -1,4 +1,5 @@
 #include "formresumencomprastotales.h"
+#include "TiposPeriodos.h"
 
 #include "eactcerrar.h"
 
@@ -11,7 +12,7 @@ EVentana(parent)
     this->setObjectName( "resumen_compras_totales" );
     this->setWindowTitle( "Total de compras" );
 
-    _metodo_temporal = ResumenComprasTotales::PorMes;
+    _metodo_temporal = PorMes;
 
     ActCambiarDivisionTemporal = new QAction( this );
     ActCambiarDivisionTemporal->setText( QString::fromUtf8( "Período" ) );
@@ -73,19 +74,19 @@ void FormResumenComprasTotales::changeEvent(QEvent *e)
 void FormResumenComprasTotales::cambioDivisionTemporal( const QString &texto )
 {
     if( texto == "Completo" ) {
-        _metodo_temporal = ResumenComprasTotales::SinDivision;
+        _metodo_temporal = SinDivision;
     } else if( texto == "Mensual" ) {
-        _metodo_temporal = ResumenComprasTotales::PorMes;
+        _metodo_temporal = PorMes;
     } else if( texto == "Bimestral" ) {
-        _metodo_temporal = ResumenComprasTotales::PorBimestre;
+        _metodo_temporal = PorBimestre;
     } else if( texto == "Cuatrimestral" ) {
-        _metodo_temporal = ResumenComprasTotales::PorCuatrimestre;
+        _metodo_temporal = PorCuatrimestre;
     } else if( texto == "Semestral" ) {
-        _metodo_temporal = ResumenComprasTotales::PorSeximestre;
+        _metodo_temporal = PorSeximestre;
     } else if( texto == "Anual" ) {
-        _metodo_temporal = ResumenComprasTotales::PorAno;
+        _metodo_temporal = PorAno;
     } else {
-        _metodo_temporal = ResumenComprasTotales::PorMes;
+        _metodo_temporal = PorMes;
     }
-    _modelo->setearMetodoTemporal( (ResumenComprasTotales::DivisionTemporal) this->_metodo_temporal );
+    _modelo->setearMetodoTemporal( (DivisionTemporal) this->_metodo_temporal );
 }
