@@ -133,6 +133,7 @@ EDatabaseTest::~EDatabaseTest() {}
 void EDatabaseTest::generarTablas()
 {
     foreach( QString t, this->tablas ) {
+        qDebug() << "Buscando tabla " << t;
         this->generarTabla( t );
     }
 }

@@ -4,8 +4,9 @@
 #include <QSqlQuery>
 
 #include "mproductos.h"
+#include "../edatabasetest.h"
 
-class ProductosTest : public QObject
+class ProductosTest : public QObject, private EDatabaseTest
 {
     Q_OBJECT
     
@@ -13,8 +14,10 @@ public:
     ProductosTest();
     
 private Q_SLOTS:
+    void init();
     void initTestCase();
     void cleanupTestCase();
+    void cleanup();
     void testCodigoRepetido();
     void testCodigoRepetido_data();
 
@@ -25,19 +28,25 @@ private:
 
 ProductosTest::ProductosTest()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE" );
-    db.setDatabaseName( "gestotux.test.database" );
-    mp = new MProductos( 0 );
+    this->tablas << "categorias_productos" << "productos";
+}
+
+void ProductosTest::init() {
+    EDatabaseTest::generarTablas();
 }
 
 void ProductosTest::initTestCase()
-{}
+{
+    EDatabaseTest::iniciarTablas();
+}
 
 void ProductosTest::cleanupTestCase()
 {
-    QSqlQuery cola;
-    cola.exec( "DELETE * FROM productos");
-    delete mp;
+    EDatabaseTest::vaciarTablas();
+}
+
+void ProductosTest::cleanup() {
+    EDatabaseTest::borrarTablas();
 }
 
 void ProductosTest::testCodigoRepetido()
@@ -51,8 +60,8 @@ void ProductosTest::testCodigoRepetido()
     QFETCH( QString, descripcion );
     QFETCH( QString, modelo );
     QFETCH( QString, marca );
-    QEXPECT_FAIL("repetido", "Fallo la inserción de producto con codigo repetido", Continue );
-    QVERIFY2( true == mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ), "Falló aqui!" );
+    QFETCH( bool, resultado );
+    QCOMPARE( resultado, mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) );
 }
 
 void ProductosTest::testCodigoRepetido_data()
@@ -66,10 +75,11 @@ void ProductosTest::testCodigoRepetido_data()
     QTest::addColumn<QString>("descripcion");
     QTest::addColumn<QString>("marca");
     QTest::addColumn<QString>("modelo");
-    QTest::newRow("original") << "1" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1";
-    QTest::newRow("repetido") << "1" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1";
+    QTest::addColumn<bool>("resultado");
+    QTest::newRow("original") << "1" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1" << true;
+    QTest::newRow("repetido") << "1" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1" << false;
 }
 
-QTEST_APPLESS_MAIN(ProductosTest)
+QTEST_MAIN(ProductosTest)
 
 #include "tst_productostest.moc"
