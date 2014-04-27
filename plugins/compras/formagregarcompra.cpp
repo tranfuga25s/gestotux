@@ -30,6 +30,7 @@
 #include "mproductos.h"
 #include "formagregarproducto.h"
 #include "preferencias.h"
+#include "einputdialog.h"
 
 #include <QMessageBox>
 #include <QTableView>
@@ -200,7 +201,7 @@ void FormAgregarCompra::guardar()
              p->endGroup();p->endGroup(); p = 0;
              double precio_calculado = precio_anterior * ( 1 + ganancia );
              bool ok = false;
-             double precio_venta = QInputDialog::getDouble( this,
+             double precio_venta = EInputDialog::getImporte( this,
                                                             "Nuevo precio de venta",
                                                             QString( "Ingrese el nuevo precio de venta para %1:" ).arg( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() ),
                                                             precio_calculado,

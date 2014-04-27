@@ -99,7 +99,7 @@ QVariant ResumenComprasProveedor::data(const QModelIndex &idx, int role) const
  * @brief ResumenComprasProveedor::cambioProveedor
  * @param id_proveedor
  */
-void ResumenComprasProveedor::cambioProveedor(int id_proveedor)
+void ResumenComprasProveedor::cambiarProveedor(int id_proveedor)
 {
     if( id_proveedor > 0 ) {
         _filtro.clear();

@@ -4,7 +4,7 @@
 #include "eactcerrar.h"
 
 FormResumenComprasProveedor::FormResumenComprasProveedor(QWidget *parent) :
-    QWidget(parent)
+    EVentana(parent)
 {
     setupUi(this);
     setObjectName("resumen_compras_proveedor");

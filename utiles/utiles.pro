@@ -30,7 +30,8 @@ HEADERS += eactcerrar.h \
            ecbproveedor.h \
            ecbtabla.h \
            eddescuento.h \
-    util.h
+    util.h \
+    einputdialog.h
 SOURCES += eactcerrar.cpp \
            eactimprimir.cpp \
            eventana.cpp \
@@ -60,7 +61,8 @@ SOURCES += eactcerrar.cpp \
            ecbproveedor.cpp \
            ecbtabla.cpp \
            eddescuento.cpp \
-    util.cpp
+    util.cpp \
+    einputdialog.cpp
 
 QT += sql \
       xml

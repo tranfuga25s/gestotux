@@ -23,6 +23,7 @@
 #include "dsino.h"
 #include "EReporte.h"
 #include "formresumenctacte.h"
+#include "einputdialog.h"
 
 #include <QTableView>
 #include <QAction>
@@ -213,7 +214,7 @@ void VCuentaCorriente::modificarLimite()
  double limite_anterior = crmodelo->data( crmodelo->index( indice.row(), crmodelo->fieldIndex( "limite" ) ), Qt::EditRole ).toDouble();
  QString id_ctacte = crmodelo->data( crmodelo->index( indice.row(), crmodelo->fieldIndex( "numero_cuenta" ) ), Qt::EditRole ).toString();
  bool ok = false;
- double limite_nuevo = QInputDialog::getDouble( this, "Ingrese el limite maximo", QString::fromUtf8("Límite máximo de credito:"), limite_anterior, 0.0, 1000000.0, 3, &ok );
+ double limite_nuevo = EInputDialog::getImporte( this, "Ingrese el limite maximo", QString::fromUtf8("Límite máximo de credito:"), limite_anterior, 0.0, 1000000.0, 3, &ok );
  if( ok )
  {
   //Verifico que no sean el mismo

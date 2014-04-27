@@ -696,6 +696,7 @@ double MProductosTotales::buscarPrecioVenta( int id_producto )
 }
 
 #include <QInputDialog>
+#include "einputdialog.h"
 void MProductosTotales::agregarNuevoProducto( int cantidad, int Id )
 {
   // Veo si existe y lo agrego a la lista si no existe....
@@ -704,7 +705,7 @@ void MProductosTotales::agregarNuevoProducto( int cantidad, int Id )
 
   if( Id <= -1 ) {
       // Pido el precio si fue agregado especificamente
-      precio_unitario = QInputDialog::getDouble( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
+      precio_unitario = EInputDialog::getImporte( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
   } else {
 
       if( this->_buscarPrecio ) {
@@ -716,7 +717,7 @@ void MProductosTotales::agregarNuevoProducto( int cantidad, int Id )
           ok = true;
       } else {
           // Como no busca el precio, inserto el dialogo
-          precio_unitario = QInputDialog::getDouble( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
+          precio_unitario = EInputDialog::getImporte( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
       }
 
       // Es un producto valido
