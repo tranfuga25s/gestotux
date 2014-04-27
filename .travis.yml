@@ -5,10 +5,14 @@ compiler: gcc
 install:
     - sudo pip install cpp-coveralls
     - cp bin/travis.pri travis.pri
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
 
 script:  
     - qmake gestotux.pro
     - make
+    - cd test/PreferenciasTest
+    - ./tst_preferenciastest
 
 after_success:
-    - coveralls --exclude lib --exclude tests
+    - coveralls --exclude-pattern ".*automoc\.cpp" --exclude-pattern ".*\.moc" --exclude-pattern "/opt/.*" --exclude-pattern "/usr/.*" --exclude-pattern ".*moc_.*" --exclude-pattern ".*ui_.*" --exclude-pattern ".*qrc_.*" --exclude lib --exclude tests
