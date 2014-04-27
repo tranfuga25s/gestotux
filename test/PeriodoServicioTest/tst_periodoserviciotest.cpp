@@ -9,7 +9,9 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-class PeriodoServicioTest : public QObject
+#include "../edatabasetest.h"
+
+class PeriodoServicioTest : public QObject, public EDatabaseTest
 {
     Q_OBJECT
     
@@ -19,6 +21,8 @@ public:
 private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
+    void init();
+    void cleanup();
     void testCalcularPeriodo();
     void testCalcularPeriodo_data();
     void testRevisarPeriodo();
@@ -30,27 +34,16 @@ private:
 
 PeriodoServicioTest::PeriodoServicioTest()
 {
+    this->tablas << "periodo_servicio";
 }
 
-void PeriodoServicioTest::initTestCase()
-{
-    QSqlDatabase DB = QSqlDatabase::addDatabase("QSQLITE");
-    DB.setDatabaseName( "../../bin/gestotux.database" );
-    if( !DB.open() )
-    {
-        qDebug( "Ultimo error: " + DB.lastError().text().toLocal8Bit() );
-        abort();
-    } else {
-        qDebug( "Base de datos SQLite abierta correctamente" );
-    }
-}
+void PeriodoServicioTest::init() { EDatabaseTest::iniciarTablas(); }
 
-void PeriodoServicioTest::cleanupTestCase()
-{
-    delete mp;
-    QSqlDatabase::database().close();
-    QSqlDatabase::removeDatabase( QSqlDatabase::defaultConnection );
-}
+void PeriodoServicioTest::initTestCase() { EDatabaseTest::generarTablas(); }
+
+void PeriodoServicioTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+
+void PeriodoServicioTest::cleanup() { EDatabaseTest::vaciarTablas(); }
 
 void PeriodoServicioTest::testCalcularPeriodo()
 {
