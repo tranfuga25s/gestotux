@@ -51,7 +51,11 @@ void ProductosTest::testCodigoRepetido()
     QFETCH( QString, modelo );
     QFETCH( QString, marca );
     QFETCH( bool, resultado );
-    QCOMPARE( resultado, mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) );
+    if( resultado ) {
+        QVERIFY( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) > 0 );
+    } else {
+        QCOMPARE( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ), false );
+    }
 }
 
 void ProductosTest::testCodigoRepetido_data()
@@ -66,8 +70,8 @@ void ProductosTest::testCodigoRepetido_data()
     QTest::addColumn<QString>("marca");
     QTest::addColumn<QString>("modelo");
     QTest::addColumn<bool>("resultado");
-    QTest::newRow("original") << "1" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1" << true;
-    QTest::newRow("repetido") << "1" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1" << false;
+    QTest::newRow("original") << "3" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1" << true;
+    QTest::newRow("repetido") << "3" << "test1" << 1.0 << 1.1 << 1 << 0 << "descripcion1" << "marca1" << "modelo1" << false;
 }
 
 QTEST_MAIN(ProductosTest)
