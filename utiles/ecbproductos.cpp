@@ -67,7 +67,15 @@ void ECBProductos::inicializar()
         tcola.append( " stock > 0 " );
     }
     if( _id_proveedor > 0 ) {
-        //tcola.append( " id IN ( " ? " )" );
+        tcola.append( QString( " id IN ( "
+                               "  SELECT DISTINT( id_productos ) "
+                               "  FROM compras_productos "
+                               "  WHERE id_compra IN ( "
+                               "      SELECT id_compra "
+                               "      FROM compra "
+                               "      WHERE id_proveedor = %1"
+                               "  )"
+                               " )" ).arg( _id_proveedor ) );
     }
     tcola.append( " ORDER BY nombre ASC" );
     if( cola.exec( tcola ) ) {
