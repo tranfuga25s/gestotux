@@ -67,12 +67,16 @@ void ECBProductos::inicializar()
         tcola.append( " stock > 0 " );
     }
     if( _id_proveedor > 0 ) {
+        if( !_mostrar_sin_stock || !_mostrar_deshabilitados
+                || ( !_mostrar_sin_stock && !_mostrar_deshabilitados ) ) {
+            tcola.append( " AND " );
+        }
         tcola.append( QString( " id IN ( "
-                               "  SELECT DISTINT( id_productos ) "
-                               "  FROM compras_productos "
-                               "  WHERE id_compra IN ( "
-                               "      SELECT id_compra "
-                               "      FROM compra "
+                               "  SELECT DISTINCT( id_producto ) "
+                               "  FROM compras_productos  "
+                               "  WHERE id_compra IN (    "
+                               "      SELECT id_compra    "
+                               "      FROM compras        "
                                "      WHERE id_proveedor = %1"
                                "  )"
                                " )" ).arg( _id_proveedor ) );

@@ -2,8 +2,11 @@
 #include <QtTest/QtTest>
 #include <QtCore/QCoreApplication>
 
+#include <QSqlRecord>
+
 #include "../edatabasetest.h"
 #include "mproveedor.h"
+#include "ecbproductos.h"
 
 class ECBProductosTest : public QObject, private EDatabaseTest
 {
@@ -23,7 +26,10 @@ private Q_SLOTS:
 
 ECBProductosTest::ECBProductosTest()
 {
-    this->tablas << "productos" << "proveedor" << "compras";
+    this->tablas << "productos"
+                 << "proveedor"
+                 << "compras"
+                 << "compras_productos";
 }
 
 void ECBProductosTest::init() { EDatabaseTest::iniciarTablas(); }
@@ -38,21 +44,21 @@ void ECBProductosTest::testFiltroProveedor()
 {
     QFETCH( int, id_proveedor );
     QFETCH( int, conteo );
-    QVERIFY2(true, "Failure");
+
+    ECBProductos *ecb = new ECBProductos();
+    ecb->filtrarPorProveedor( id_proveedor );
+    int conteo_real = ecb->count();
+    delete ecb;
+
+    QCOMPARE( conteo_real, conteo );
 }
 
 void ECBProductosTest::testFiltroProveedor_data()
 {
     QTest::addColumn<int>("id_proveedor");
     QTest::addColumn<int>("conteo");
-    MProveedor *mp = new MProveedor( 0 );
-    mp->select();
-    qDebug() << "Cantidad de proveedores: " << mp->rowCount();
-    for( int i=0; i<mp->rowCount(); i++ ) {
-        int id_proveedor = mp->data( mp->index( i, 0 ), Qt::DisplayRole ).toInt();
-        QTest::newRow( QString::number( i ).toAscii() ) << id_proveedor << 1;
-    }
-    delete mp;
+    QTest::newRow("Proveedor 1") << 1 << 2;
+    QTest::newRow("Proveedor 2") << 2 << 2;
 }
 
 QTEST_MAIN(ECBProductosTest)

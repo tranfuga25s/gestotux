@@ -18,4 +18,5 @@ HEADERS += ../edatabasetest.h
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproveedor.so
+LIBS += ../../bin/plugins/libproveedor.so \
+        ../../bin/libutiles.a
