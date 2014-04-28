@@ -38,6 +38,8 @@ public:
     bool mostrarSinStock() { return _mostrar_sin_stock; }
     void setearMostrarSinStock( bool estado );
 
+    void filtrarPorProveedor( const int id_proveedor );
+
 protected slots:
     void inicializar();
 
@@ -55,6 +57,7 @@ private:
     int _min;
     bool _mostrar_deshabilitados;
     bool _mostrar_sin_stock;
+    int _id_proveedor;
 };
 
 #endif // ECBPRODUCTOS_H

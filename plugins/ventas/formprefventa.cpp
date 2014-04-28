@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
 #include "formprefventa.h"
 
 #include "preferencias.h"
@@ -44,6 +43,7 @@ void FormPrefVenta::cargar()
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Ventas" );
  this->CkBBusquedaPrecio->setChecked( p->value( "buscarPrecio", false ).toBool() );
+ this->CkBFiltrarProveedor->setChecked( p->value( "filtrarProveedor", false ).toBool() );
  p->endGroup();
  p->endGroup();
  p=0;
@@ -66,6 +66,7 @@ void FormPrefVenta::guardar()
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Ventas" );
  p->setValue( "buscarPrecio", this->CkBBusquedaPrecio->isChecked() );
+ p->setValue( "filtrarProveedor", this->CkBFiltrarProveedor->isChecked() );
  p->endGroup();
  p->endGroup();
  p=0;

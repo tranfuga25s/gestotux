@@ -1,21 +1,22 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2013-03-15T09:38:56
+# Project created by QtCreator 2014-04-28T08:49:13
 #
 #-------------------------------------------------
 
 QT       += sql testlib
-TARGET = tst_productostest
+TARGET = tst_ecbproductostest
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-SOURCES += tst_productostest.cpp
+SOURCES += tst_ecbproductostest.cpp
 HEADERS += ../edatabasetest.h
 
-INCLUDEPATH += ../../plugins/productos \
+INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproductos.so
+LIBS += ../../bin/plugins/libproveedor.so \
+        ../../bin/libutiles.a

@@ -79,6 +79,7 @@ protected slots:
         void eliminarTodo();
         void agregarDescuento();
         void eliminarDescuento();
+        void cambioProveedor( int id_proveedor );
 
 private:
         MProductosTotales *mcp;

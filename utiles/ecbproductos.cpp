@@ -28,6 +28,7 @@ ECBProductos::ECBProductos( QWidget *parent ) :
     this->_min = -1;
     this->_mostrar_deshabilitados = false;
     this->_mostrar_sin_stock = false;
+    this->_id_proveedor = -1;
 
     QTimer timer;
     timer.singleShot( 900, this, SLOT( inicializar() ) );
@@ -64,6 +65,21 @@ void ECBProductos::inicializar()
     }
     if( !_mostrar_sin_stock ) {
         tcola.append( " stock > 0 " );
+    }
+    if( _id_proveedor > 0 ) {
+        if( !_mostrar_sin_stock || !_mostrar_deshabilitados
+                || ( !_mostrar_sin_stock && !_mostrar_deshabilitados ) ) {
+            tcola.append( " AND " );
+        }
+        tcola.append( QString( " id IN ( "
+                               "  SELECT DISTINCT( id_producto ) "
+                               "  FROM compras_productos  "
+                               "  WHERE id_compra IN (    "
+                               "      SELECT id_compra    "
+                               "      FROM compras        "
+                               "      WHERE id_proveedor = %1"
+                               "  )"
+                               " )" ).arg( _id_proveedor ) );
     }
     tcola.append( " ORDER BY nombre ASC" );
     if( cola.exec( tcola ) ) {
@@ -202,6 +218,17 @@ void ECBProductos::setearMostrarSinStock( bool estado )
 {
     if( _mostrar_sin_stock != estado ) {
         _mostrar_sin_stock = estado;
+        inicializar();
+    }
+}
+
+/*!
+ *
+ */
+void ECBProductos::filtrarPorProveedor( const int id_proveedor )
+{
+    if( id_proveedor > 0 ) {
+       this->_id_proveedor = id_proveedor;
         inicializar();
     }
 }
