@@ -36,6 +36,12 @@ public:
     void vaciarTablas();
 
 private  Q_SLOTS:
+    /*
+     * initTestCase() will be called before the first testfunction is executed.
+     * cleanupTestCase() will be called after the last testfunction was executed.
+     * init() will be called before each testfunction is executed.
+     * cleanup() will be called after every testfunction.
+     */
     void init();
     void initTestCase();
     void cleanupTestCase();
