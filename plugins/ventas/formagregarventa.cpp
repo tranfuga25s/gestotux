@@ -124,6 +124,13 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         p->beginGroup( "Descuentos" );
         bool usar_descuentos = p->value( "usar", false ).toBool();
         p->endGroup();
+        p->beginGroup("Ventas");
+        if( p->value("filtrarProveedor").toBool() ) {
+            connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), this, SLOT( cambioProveedor( int ) ) );
+        } else {
+            CBProveedor->setVisible( false );
+        }
+        p->endGroup();
         p->endGroup();
         p=0;
         if(  !( ERegistroPlugins::getInstancia()->existePluginExterno( "descuentos" ) ) ) {
@@ -274,6 +281,16 @@ void FormAgregarVenta::eliminarDescuento()
     } else {
         QMessageBox::information( this, "No descuento", "El item elegido no es un descuento" );
         return;
+    }
+}
+
+/*!
+ * Slot llamado cada vez que se cambia el proveedor en el combobox
+ */
+void FormAgregarVenta::cambioProveedor( int id_proveedor )
+{
+    if( id_proveedor > 0 ) {
+        CBProducto->filtrarPorProveedor( id_proveedor );
     }
 }
 

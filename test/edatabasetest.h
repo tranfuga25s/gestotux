@@ -35,6 +35,12 @@ public:
     void iniciarTablas();
     void vaciarTablas();
 
+private  Q_SLOTS:
+    void init();
+    void initTestCase();
+    void cleanupTestCase();
+    void cleanup();
+
 protected:
     QStringList tablas;
 
@@ -76,7 +82,7 @@ EDatabaseTest::EDatabaseTest()
 {
     if( QSqlDatabase::isDriverAvailable( "QSQLITE" ) )
     {
-        qDebug() << "Usando base de datos: " << QCoreApplication::applicationDirPath().append( QDir::separator() ).append( "test.database" );
+     qDebug() << "Usando base de datos: " << QCoreApplication::applicationDirPath().append( QDir::separator() ).append( "test.database" );
      QFile *base = new QFile( QCoreApplication::applicationDirPath().append( QDir::separator() ).append( "test.database" ).toLocal8Bit() );
      if( !base->open( QIODevice::ReadOnly ) )
      {
@@ -107,7 +113,9 @@ EDatabaseTest::EDatabaseTest()
     QDir path( QCoreApplication::applicationDirPath() );
     path.cdUp();
     if( !path.cd( "sql" ) ) {
+        qDebug() << path.path();
         qFatal( "No se puede entrar al directorio sql!" );
+
     }
     QSettings dep( path.filePath( "dependences.ini" ), QSettings::IniFormat );
     if( dep.status() != QSettings::NoError ) {
@@ -309,5 +317,14 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
         qDebug() << "No se generó la tabla tabla -> " << nombre << " <- Ya existe";
     }*/
 }
+
+
+void EDatabaseTest::init() { EDatabaseTest::iniciarTablas(); }
+
+void EDatabaseTest::initTestCase() { EDatabaseTest::generarTablas(); }
+
+void EDatabaseTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+
+void EDatabaseTest::cleanup() { EDatabaseTest::vaciarTablas(); }
 
 #endif // EDATABASETEST_H

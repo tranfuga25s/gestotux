@@ -114,6 +114,9 @@
          <widget class="EDSBPrecio" name="DSBCant"/>
         </item>
         <item>
+         <widget class="ECBProveedor" name="CBProveedor"/>
+        </item>
+        <item>
          <widget class="ECBProductos" name="CBProducto">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -281,6 +284,11 @@
    <class>EDSBPrecio</class>
    <extends>QDoubleSpinBox</extends>
    <header>edsbprecio.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ECBProveedor</class>
+   <extends>QComboBox</extends>
+   <header>ecbproveedor.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
