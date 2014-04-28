@@ -51,7 +51,11 @@ void ProductosTest::testCodigoRepetido()
     QFETCH( QString, modelo );
     QFETCH( QString, marca );
     QFETCH( bool, resultado );
-    QCOMPARE( resultado, mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) );
+    if( resultado ) {
+        QVERIFY( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) > 0 );
+    } else {
+        QCOMPARE( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ), false );
+    }
 }
 
 void ProductosTest::testCodigoRepetido_data()
