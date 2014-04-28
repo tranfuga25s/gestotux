@@ -5,19 +5,17 @@
 #-------------------------------------------------
 
 QT       += sql testlib
-
-QT       -= gui
-
 TARGET = tst_productostest
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-
-
-SOURCES += tst_productostest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-INCLUDEPATH += ../../plugins/productos
+SOURCES += tst_productostest.cpp
+HEADERS += ../edatabasetest.h
+
+INCLUDEPATH += ../../plugins/productos \
+               ../../utiles
 
 LIBS += ../../bin/plugins/libproductos.so

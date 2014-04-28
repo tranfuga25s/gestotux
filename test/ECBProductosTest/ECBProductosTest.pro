@@ -10,7 +10,12 @@ CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
+DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += tst_ecbproductostest.cpp
-HEADER  += ../edatabasetest.h
-DEFINES += SRCDIR=\\\"$$PWD/\\\"
+HEADERS += ../edatabasetest.h
+
+INCLUDEPATH += ../../plugins/proveedor \
+               ../../utiles
+
+LIBS += ../../bin/plugins/libproveedor.so

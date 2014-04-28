@@ -3,6 +3,7 @@
 #include <QtCore/QCoreApplication>
 
 #include "../edatabasetest.h"
+#include "mproveedor.h"
 
 class ECBProductosTest : public QObject, private EDatabaseTest
 {
@@ -44,7 +45,14 @@ void ECBProductosTest::testFiltroProveedor_data()
 {
     QTest::addColumn<int>("id_proveedor");
     QTest::addColumn<int>("conteo");
-    QTest::newRow("0") << 1 << 1;
+    MProveedor *mp = new MProveedor( 0 );
+    mp->select();
+    qDebug() << "Cantidad de proveedores: " << mp->rowCount();
+    for( int i=0; i<mp->rowCount(); i++ ) {
+        int id_proveedor = mp->data( mp->index( i, 0 ), Qt::DisplayRole ).toInt();
+        QTest::newRow( QString::number( i ).toAscii() ) << id_proveedor << 1;
+    }
+    delete mp;
 }
 
 QTEST_MAIN(ECBProductosTest)
