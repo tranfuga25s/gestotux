@@ -25,3 +25,6 @@ QMAKE_LFLAGS += -Wl,-rpath,../../bin/plugins
 
 SOURCES += tst_periodoserviciotest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}

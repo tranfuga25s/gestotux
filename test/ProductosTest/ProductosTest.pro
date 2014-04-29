@@ -19,3 +19,7 @@ INCLUDEPATH += ../../plugins/productos \
                ../../utiles
 
 LIBS += ../../bin/plugins/libproductos.so
+
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}

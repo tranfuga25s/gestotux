@@ -25,3 +25,6 @@ SOURCES += tst_preferenciastest.cpp \
 FORMS = ../../src/ForPrefDb.ui
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}
