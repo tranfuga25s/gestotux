@@ -114,7 +114,14 @@
          <widget class="EDSBPrecio" name="DSBCant"/>
         </item>
         <item>
-         <widget class="ECBProveedor" name="CBProveedor"/>
+         <widget class="ECBProveedor" name="CBProveedor">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="ECBProductos" name="CBProducto">
