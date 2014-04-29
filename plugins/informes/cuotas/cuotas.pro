@@ -27,3 +27,7 @@ HEADERS += \
 
 SOURCES += \
     reportescuotas.cpp
+
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
+}

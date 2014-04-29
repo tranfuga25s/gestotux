@@ -20,6 +20,6 @@ HEADERS += informesplugin.h \
 INCLUDEPATH += ../../src \
                ../../utiles
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

@@ -25,3 +25,7 @@ PRE_TARGETDEPS += ../../../bin/libreporte.a \
 HEADERS += balancegeneral.h
 
 SOURCES += balancegeneral.cpp
+
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
+}

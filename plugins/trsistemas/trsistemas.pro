@@ -37,6 +37,6 @@ LIBS += -L../../bin \
 
 RESOURCES = trsistemas.qrc
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

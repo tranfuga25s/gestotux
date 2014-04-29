@@ -22,8 +22,6 @@ INCLUDEPATH += ../../utiles \
                ../CtaCte \
                ../caja \
                ../descuentos
-
-
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

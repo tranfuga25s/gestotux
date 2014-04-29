@@ -115,5 +115,5 @@ exists( cliente.pri ) {
 }
 
 exists( ../travis.pri ) {
-    include( travis.pri )
+    include( ../travis.pri )
 }

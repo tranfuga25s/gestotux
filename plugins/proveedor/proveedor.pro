@@ -52,6 +52,6 @@ win32 {
 
 DISTFILES += ../../bin/reportes/ListadoProveedores.xml
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

@@ -65,6 +65,6 @@ win32 {
 DISTFILES += ../../bin/reportes/ListadoProductosPrecio.xml \
              ../../bin/reportes/ListadoProductosStock.xml
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }
