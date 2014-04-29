@@ -35,7 +35,8 @@ SOURCES += mcompra.cpp \
            compras.cpp \
            mcompraproducto.cpp \
            FormActualizarPrecios.cpp \
-           vlistacompra.cpp
+           vlistacompra.cpp \
+           ../productos/FormAgregarProducto.cpp
 
 HEADERS += formagregarcompra.h \
            mcompra.h \
@@ -44,6 +45,8 @@ HEADERS += formagregarcompra.h \
            mcompraproducto.h \
            FormActualizarPrecios.h \
            vlistacompra.h \
+           ../productos/FormAgregarProducto.h \
+           ../productos/ecbcategoriasproductos.h
 
 OTHER_FILES += compras.QMYSQL.sql \
                compras.QSQLITE.sql
@@ -52,12 +55,12 @@ win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }
 QMAKE_LFLAGS += -Wl,-rpath,./plugins
+QMAKE_LFLAGS += -Wl,-rpath,./.
 
 LIBS += -L../../bin \
         -L../../bin/plugins \
         -lutiles \
         -lreporte \
-        -lproductos \
         -llibcaja
 
 exists( ../../travis.pri ) {

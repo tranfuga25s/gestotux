@@ -13,7 +13,7 @@ CONFIG += dll \
 QT += sql \
       xml
 
-TARGET = jhau-pora
+TARGET = ajhau-pora
 
 DESTDIR = ../../bin/plugins/
 

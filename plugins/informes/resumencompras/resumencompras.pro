@@ -7,7 +7,7 @@ CONFIG += dll \
 QT += sql \
       xml
 
-TARGET = compras
+TARGET = resumencompras
 
 DESTDIR = ../../../bin/plugins/informes
 
