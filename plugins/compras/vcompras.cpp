@@ -126,7 +126,7 @@ void VCompras::eliminar()
         // Busco los datos de la compra
         int id_compra = this->rmodelo->data( this->rmodelo->index( indice.row(), 0 ), Qt::EditRole ).toInt();
         if( mc->eliminarCompra( id_compra ) ) {
-            mensaje.append( QString::fromUtf8("\n Compra nº") ).append( id_compra ).append( " eliminada." );
+            mensaje.append( QString::fromUtf8("\n Compra nº") ).append( QString::number( id_compra ) ).append( " eliminada." );
             rmodelo->select();
         } else {
             mensaje.append( "\n <b> no se pudo eliminar la compra " ).append( id_compra ).append( " correctamente." );
