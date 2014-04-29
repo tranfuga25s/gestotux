@@ -21,3 +21,7 @@ OTHER_FILES += ../sql/QSQLITE/servicios.sql \
     ../sql/QSQLITE/periodo_servicio.sql \
     ../sql/QSQLITE/cobro_periodo_servicio.sql \
     ../sql/QSQLITE/recibo.sql
+
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}

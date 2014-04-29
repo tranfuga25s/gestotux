@@ -94,6 +94,6 @@ LIBS += -L../../bin \
         -llibdescuentos \
         -lutiles
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

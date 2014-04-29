@@ -19,6 +19,6 @@ SOURCES += mpagos.cpp
 
 INCLUDEPATH += ../../utiles \
                ../../src
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

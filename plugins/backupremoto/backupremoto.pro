@@ -43,6 +43,6 @@ win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

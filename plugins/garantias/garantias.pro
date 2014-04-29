@@ -63,6 +63,6 @@ LIBS += -L../../bin \
         -lreporte \
         -lordentrabajo
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

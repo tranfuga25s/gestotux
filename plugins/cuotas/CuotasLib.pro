@@ -23,7 +23,6 @@ INCLUDEPATH += ../../utiles \
                ../../src \
                ../pagos
 
-
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

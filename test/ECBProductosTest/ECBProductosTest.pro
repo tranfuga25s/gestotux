@@ -20,3 +20,7 @@ INCLUDEPATH += ../../plugins/proveedor \
 
 LIBS += ../../bin/plugins/libproveedor.so \
         ../../bin/libutiles.a
+
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}

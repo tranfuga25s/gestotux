@@ -36,3 +36,7 @@ SOURCES += gananciaventa.cpp \
            formrangofechas.cpp
 
 FORMS += FormRangoFechasBase.ui
+
+exists( ../../../travis.pri ) {
+    include( ../../../travis.pri )
+}

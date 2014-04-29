@@ -70,6 +70,6 @@ LIBS += -L../../bin \
 
 DISTFILES += ../../bin/reportes/Presupuesto.xml
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

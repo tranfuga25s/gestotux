@@ -24,3 +24,6 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 LIBS += ../../bin/libutiles.a \
         ../../bin/plugins/libordentrabajo.so
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}
