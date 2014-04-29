@@ -75,7 +75,7 @@ void ECBProductos::inicializar()
                                "  SELECT DISTINCT( id_producto ) "
                                "  FROM compras_productos  "
                                "  WHERE id_compra IN (    "
-                               "      SELECT id_compra    "
+                               "      SELECT id           "
                                "      FROM compras        "
                                "      WHERE id_proveedor = %1"
                                "  )"

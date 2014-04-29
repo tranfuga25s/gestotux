@@ -14,6 +14,7 @@ class ECBProductosTest : public QObject, private EDatabaseTest
     
 public:
     ECBProductosTest();
+    ~ECBProductosTest();
     
 private Q_SLOTS:
     void init();
@@ -22,6 +23,9 @@ private Q_SLOTS:
     void cleanup();
     void testFiltroProveedor();
     void testFiltroProveedor_data();
+
+private:
+     ECBProductos *ecb;
 };
 
 ECBProductosTest::ECBProductosTest()
@@ -30,25 +34,28 @@ ECBProductosTest::ECBProductosTest()
                  << "proveedor"
                  << "compras"
                  << "compras_productos";
+    ecb = new ECBProductos();
+}
+
+ECBProductosTest::~ECBProductosTest() {
+    delete ecb;
 }
 
 void ECBProductosTest::init() { EDatabaseTest::iniciarTablas(); }
 
 void ECBProductosTest::initTestCase() { EDatabaseTest::generarTablas(); }
 
-void ECBProductosTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void ECBProductosTest::cleanupTestCase() {} //EDatabaseTest::borrarTablas(); }
 
-void ECBProductosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void ECBProductosTest::cleanup() {} //EDatabaseTest::vaciarTablas(); }
 
 void ECBProductosTest::testFiltroProveedor()
 {
     QFETCH( int, id_proveedor );
     QFETCH( int, conteo );
 
-    ECBProductos *ecb = new ECBProductos();
     ecb->filtrarPorProveedor( id_proveedor );
     int conteo_real = ecb->count();
-    delete ecb;
 
     QCOMPARE( conteo_real, conteo );
 }
@@ -57,8 +64,8 @@ void ECBProductosTest::testFiltroProveedor_data()
 {
     QTest::addColumn<int>("id_proveedor");
     QTest::addColumn<int>("conteo");
-    QTest::newRow("Proveedor 1") << 1 << 2;
-    QTest::newRow("Proveedor 2") << 2 << 2;
+    QTest::newRow("Proveedor 1") << 1 << 1;
+    QTest::newRow("Proveedor 2") << 2 << 1;
 }
 
 QTEST_MAIN(ECBProductosTest)
