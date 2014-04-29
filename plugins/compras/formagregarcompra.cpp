@@ -160,6 +160,7 @@ void FormAgregarCompra::guardar()
             }
             case QMessageBox::Ok:
             case QMessageBox::Yes:
+            case 0:
             {
                  // Agrego el producto
                 FormAgregarProducto *f = new FormAgregarProducto();
