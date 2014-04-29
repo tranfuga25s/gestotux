@@ -76,7 +76,7 @@ QVariant MProductos::data( const QModelIndex& item, int role ) const
                                 { return "No"; }
                                 break;
                         }
-                        case 7:
+                        case 8:
                         {
                             return QString::number( QSqlRelationalTableModel::data( item, role ).toDouble(), 'f', 2 );
                             break;
