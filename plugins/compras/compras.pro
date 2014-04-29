@@ -36,7 +36,7 @@ SOURCES += mcompra.cpp \
            mcompraproducto.cpp \
            FormActualizarPrecios.cpp \
            vlistacompra.cpp \
-           ../productos/FormAgregarProducto.cpp
+           ../productos/formagregarproducto.cpp
 
 HEADERS += formagregarcompra.h \
            mcompra.h \
@@ -45,7 +45,7 @@ HEADERS += formagregarcompra.h \
            mcompraproducto.h \
            FormActualizarPrecios.h \
            vlistacompra.h \
-           ../productos/FormAgregarProducto.h \
+           ../productos/formagregarproducto.h \
            ../productos/ecbcategoriasproductos.h
 
 OTHER_FILES += compras.QMYSQL.sql \

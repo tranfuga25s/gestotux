@@ -279,7 +279,7 @@ QToolBar* gestotux::barraAcciones()
 
 /*!
     \fn gestotux::crearReloj()
-    Crea el reloj digital si esta configurado y coloca la publicidad de ser necesario.
+    Crea el reloj digital si esta configurado
  */
 void gestotux::crearReloj()
 {
