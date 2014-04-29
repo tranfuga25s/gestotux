@@ -82,8 +82,13 @@ void ECBProductos::inicializar()
                                " )" ).arg( _id_proveedor ) );
     }
     tcola.append( " ORDER BY nombre ASC" );
+    qDebug() << tcola;
     if( cola.exec( tcola ) ) {
         int pos = 0;
+        this->clear();
+        this->_mapa_pos_codigo->clear();
+        this->_mapa_id_nombre->clear();
+        this->_mapa_pos_ids->clear();
         while( cola.next() ) {
             // Pos = currentIndex();
             // id_producto = _mapa_pos_ids
