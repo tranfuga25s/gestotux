@@ -75,6 +75,6 @@ win32 {
 DISTFILES += ../../bin/reportes/AnulacionFactura.xml \
              ../../bin/reportes/Factura.xml
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

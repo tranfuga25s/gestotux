@@ -19,7 +19,6 @@ SOURCES += mcuentacorriente.cpp \
 
 INCLUDEPATH += ../../utiles
 
-
-unix {
-    LIBS += -gcov
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

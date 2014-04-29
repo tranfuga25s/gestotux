@@ -62,6 +62,6 @@ OTHER_FILES += email.QMYSQL.sql \
 
 RESOURCES += email.qrc
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }

@@ -73,6 +73,6 @@ LIBS += -L../../bin \
 
 DISTFILES += ../../bin/reportes/Recibo.xml
 
-exists( ../../../travis.pri ) {
-    include( ../../../travis.pri )
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
 }
