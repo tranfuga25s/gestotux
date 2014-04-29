@@ -117,14 +117,14 @@ void visorResumen::renderizarCabecera()
  f.setFontPointSize( 8 );
  celda.firstCursorPosition().setCharFormat( f );
  celda.firstCursorPosition().setBlockFormat( centrado );
- celda.firstCursorPosition().insertText( "- SERVICIO TÉCNICO ELECTROMECANICO - MECANICA GENERAL -" );
+ celda.firstCursorPosition().insertText( "- SERVICIO TÃ‰CNICO ELECTROMECANICO - MECANICA GENERAL -" );
 
  cursor->movePosition( QTextCursor::End );
  fb = cursor->blockFormat();
  fb.setAlignment( Qt::AlignHCenter );
  cursor->setCharFormat( f );
  cursor->setBlockFormat( fb );
- cursor->insertText( "INYECIÓN ELECTRÓNICA ( NAFTA-DIESEL )  - AIRE ACONDICIONADO - CALEFACIÓN  - INSTRUMENTAL - LIMPIAPARABRISAS - ARRANQUES - ALTERNADORES - REPARACIÓN DE TABLEROS Y FUSILERAS - CIERRES CENTRALIZADOS - ALARMAS" );
+ cursor->insertText( "INYECIÃ“N ELECTRÃ“NICA ( NAFTA-DIESEL )  - AIRE ACONDICIONADO - CALEFACIÃ“N  - INSTRUMENTAL - LIMPIAPARABRISAS - ARRANQUES - ALTERNADORES - REPARACIÃ“N DE TABLEROS Y FUSILERAS - CIERRES CENTRALIZADOS - ALARMAS" );
  cursor->insertBlock();
 
  f.setFontWeight( QFont::Normal );

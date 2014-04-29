@@ -23,7 +23,7 @@
 #include <QSqlQueryModel>
 
 /**
- * \brief Modelo de selección de cliente x nombre y apellido para comboboxs
+ * \brief Modelo de selecciÃ³n de cliente x nombre y apellido para comboboxs
  *
  *	@author Esteban Zeller <juiraze@yahoo.com.ar>
  */

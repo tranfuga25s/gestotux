@@ -28,7 +28,7 @@ namespace Ui {
 }
 
 /*!
- * @brief Clase para mostrar información sobre los plugins y sus versiones
+ * @brief Clase para mostrar informaciÃ³n sobre los plugins y sus versiones
  *
  * Formulario para mostrar en la ayuda, los distintos componentes cargados en el programa, sus versiones y sus ultimas actualizaciones.
  * @author Esteban Zeller <tranfuga25s@gmail.com>

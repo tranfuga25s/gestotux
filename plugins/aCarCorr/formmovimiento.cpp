@@ -189,7 +189,7 @@ FormMovimiento::FormMovimiento(QWidget* parent, Qt::WFlags fl, int accion )
 
 	connect( CBCategoria, SIGNAL( currentIndexChanged( QString ) ), this, SLOT( habilitarCantidadAnimales( QString ) ) );
 
-//Tema de dueños opcionales
+//Tema de dueÃ±os opcionales
 #ifndef GESTOTUX_CARAVANAS_TIENEN_DUENOS
 PBDueno->setVisible( false );
 #endif
@@ -233,7 +233,7 @@ void FormMovimiento::eliminarCaravana()
   return;
  }
 
- if( QMessageBox::question( this, "¿Esta seguro?", "¿Esta seguro que desea eliminar este/os numero/s de caravanas?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+ if( QMessageBox::question( this, "Â¿Esta seguro?", "Â¿Esta seguro que desea eliminar este/os numero/s de caravanas?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
  {
   QModelIndex index;
   foreach( index, indexes )
@@ -511,10 +511,10 @@ void FormMovimiento::cargarDesdeArchivo()
 	}
 	d->setLabelText( "Verificando codigos" );
 #ifdef GESTOTUX_CARAVANAS_TIENEN_DUENOS
-	// Busco la lista de dueños
+	// Busco la lista de dueÃ±os
 	MDuenos *duenos = new MDuenos( this );
 	bool ok;
-	QString dueno = QInputDialog::getItem(this, "Elija el dueño",tr("Elija el dueño"), duenos->getLista(), 0, false, &ok );
+	QString dueno = QInputDialog::getItem(this, "Elija el dueÃ±o",tr("Elija el dueÃ±o"), duenos->getLista(), 0, false, &ok );
 	if( ok )
 	{
 		d->setRange( 0, caravanas.size() );

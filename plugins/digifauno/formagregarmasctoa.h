@@ -30,7 +30,7 @@ class MRazas;
 /*!
  * 	\brief Formulario para agregar mascotas
  *
- *	Formulario que permite agregar una mascota e incluso agregar un dueño si es necesario
+ *	Formulario que permite agregar una mascota e incluso agregar un dueÃ±o si es necesario
  *	@author Esteban Zeller <juiraze@yahoo.com.ar>
  */
 class FormAgregarMascota : public EVentana, private Ui::FormAgregarMascotaBase
@@ -43,7 +43,7 @@ public:
 
 protected:
    /*!
-    * Modelo para dueños
+    * Modelo para dueÃ±os
     */
     MDueno *modeloDueno;
    /*!

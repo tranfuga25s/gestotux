@@ -47,7 +47,7 @@ QVariant MDueno::data(const QModelIndex& idx, int role) const
 {
  if( !idx.isValid() )
  {
-   qDebug( QString( "Indice invalido Dueños: col=%1, row=%2, role=%3").arg( idx.column() ).arg( idx.row() ).arg( role ).toLocal8Bit() );
+   qDebug( QString( "Indice invalido DueÃ±os: col=%1, row=%2, role=%3").arg( idx.column() ).arg( idx.row() ).arg( role ).toLocal8Bit() );
    return( QVariant() );
  }
  switch( role )

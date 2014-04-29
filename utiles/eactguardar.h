@@ -23,9 +23,9 @@
 #include <QAction>
 
 /**
- * \brief Clase de acción guardar encapsulada
+ * \brief Clase de acciÃ³n guardar encapsulada
  *
- * Clase que prefabrica la acción guardar
+ * Clase que prefabrica la acciÃ³n guardar
  *
  * @author Esteban Zeller <juiraze@yahoo.com.ar>
  */

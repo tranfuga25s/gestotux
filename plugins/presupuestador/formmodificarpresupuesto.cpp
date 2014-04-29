@@ -169,7 +169,7 @@ void FormModificarPresupuesto::guardar()
   if( modelo->submitAll() )
   {
 	  QMessageBox mensaje;
-	  mensaje.setText( QString( "El presupuesto se guardo correctamente con el numero %1.\n\n ¿Que desea hacer a continuacion?" ).arg( indice ) );
+	  mensaje.setText( QString( "El presupuesto se guardo correctamente con el numero %1.\n\n Â¿Que desea hacer a continuacion?" ).arg( indice ) );
 
 	  QPushButton *Bimprimir = mensaje.addButton( tr( "Imprimir" ), QMessageBox::ResetRole );
 	  Bimprimir->setIcon( QIcon( ":/imagenes/imprimir.png" ) );

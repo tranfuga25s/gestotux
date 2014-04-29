@@ -25,11 +25,11 @@ MAuto::MAuto(QObject *parent)
  setTable( "autos" );
  setHeaderData( 1, Qt::Horizontal, tr( "#ID" ) );
  setHeaderData( 1, Qt::Horizontal, tr( "Patente" ) );
- setHeaderData( 2, Qt::Horizontal, tr( "Dueño" ) );
+ setHeaderData( 2, Qt::Horizontal, tr( "DueÃ±o" ) );
  setRelation( 2, QSqlRelation( "clientes", "id", "nombre" ) );
  setHeaderData( 3, Qt::Horizontal, tr( "Marca" ) );
  setHeaderData( 4, Qt::Horizontal, tr( "Modelo" ) );
- setHeaderData( 5, Qt::Horizontal, tr( "Año" ) );
+ setHeaderData( 5, Qt::Horizontal, tr( "AÃ±o" ) );
  setHeaderData( 6, Qt::Horizontal, tr( "Color" ) );
  setHeaderData( 7, Qt::Horizontal, tr( "Modificado" ) );
  setHeaderData( 8, Qt::Horizontal, tr( "Creado" ) );

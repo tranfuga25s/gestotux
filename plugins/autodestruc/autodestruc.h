@@ -30,7 +30,7 @@ class QPushButton;
 /**
  * \brief Plugin de autodestruccion
  *
- * Plugin que permite mediante una combinación de teclas, destruir el programa y los datos para que no queden rastros de el
+ * Plugin que permite mediante una combinaciÃ³n de teclas, destruir el programa y los datos para que no queden rastros de el
  *
  *	@author Esteban Zeller <juiraze@yahoo.com.ar>
  */

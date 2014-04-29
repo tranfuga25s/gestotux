@@ -23,7 +23,7 @@
 #include <QSqlTableModel>
 
 /**
-Modelo que maneja los datos de un dueño
+Modelo que maneja los datos de un dueÃ±o
 
 	@author Esteban Zeller <juiraze@yahoo.com.ar>
 */

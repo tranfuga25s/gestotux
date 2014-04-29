@@ -32,7 +32,7 @@ EInformeImpresora::EInformeImpresora()
  { this->setOrientation( QPrinter::Landscape ); }
  else
  { this->setOrientation( QPrinter::Portrait ); }
- // Tamaño
+ // TamaÃ±o
  switch( p->value( "tam", -1 ).toInt() )
  {
 	case QPrinter::A1:
@@ -79,7 +79,7 @@ EInformeImpresora::EInformeImpresora()
 	{this->setPaperSize( QPrinter::C5E );break;}
 	case QPrinter::Comm10E:
 	{this->setPaperSize( QPrinter::Comm10E );break;}
-	///@todo Terminar de poner los tamaños de hoja que faltan
+	///@todo Terminar de poner los tamaÃ±os de hoja que faltan
 	default:
 	{
 		this->setPaperSize( QPrinter::A4 );
@@ -124,7 +124,7 @@ void EInformeImpresora::guardar()
  {
   p->setValue( "orientacion", QPrinter::Landscape );
  }
- // Tamaño
+ // TamaÃ±o
  p->setValue( "tam", paperSize() );
  qWarning( QString( "tam: %1" ).arg( paperSize() ).toLocal8Bit() );
  switch( this->pageSize() )
@@ -173,11 +173,11 @@ void EInformeImpresora::guardar()
 	{p->setValue( "tam", QPrinter::C5E );break;}
 	case QPrinter::Comm10E:
 	{p->setValue( "tam", QPrinter::Comm10E );break;}
-	///@todo Terminar de poner los tamaños de hoja que faltan
+	///@todo Terminar de poner los tamaÃ±os de hoja que faltan
 	default:
 	{
 		p->setValue( "tam", QPrinter::A4 );
-		qWarning( "guardando con el tamaño x default" );
+		qWarning( "guardando con el tamaÃ±o x default" );
 		break;
 	}
  }

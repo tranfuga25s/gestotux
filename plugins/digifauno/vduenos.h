@@ -27,7 +27,7 @@ class QCheckBox;
 class QFrame;
 
 /**
-Ve la lista de los dueños
+Ve la lista de los dueÃ±os
 
 	@author Esteban Zeller <juiraze@yahoo.com.ar>
 */

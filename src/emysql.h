@@ -26,7 +26,7 @@
 #include <QSqlDatabase>
 
 /*!
- * \brief Clase que maneja la conección mysql
+ * \brief Clase que maneja la coneccion mysql
  *
  */
 class EMysql : public QDialog, private Ui::EMysqlBase

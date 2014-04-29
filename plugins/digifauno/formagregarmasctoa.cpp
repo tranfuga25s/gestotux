@@ -51,7 +51,7 @@ FormAgregarMascota::FormAgregarMascota( QWidget* parent )
 	this->addAction( new EActGuardar( this ) );
 	PBAgregar->setIcon( QIcon( ":/imagenes/add.png" ) );
 	PBAgregar->setShortcut( QKeySequence( "Crtl+a" ) );
-	// Conecto las se�ales
+	// Conecto las seï¿½ales
 	connect( PBAgregar,  SIGNAL( clicked() ), this, SLOT( agregarDueno() ) );
 	// Pongo a editar el nombre
 	LENombre->setCursorPosition( 0 );
@@ -86,7 +86,7 @@ void FormAgregarMascota::guardar()
  }
  if( TVDueno->selectionModel()->selectedRows() == QModelIndexList() )
  {
-  QMessageBox::warning( this, "Seleccione un due�o", "Por favor, Seleccione uno de los due�os existentes o utilice el boton agregar due�o para agregar uno nuevo." );
+  QMessageBox::warning( this, "Seleccione un dueño", "Por favor, Seleccione uno de los dueños existentes o utilice el boton agregar dueño para agregar uno nuevo." );
   return;
  }
  MMascota *modelo = new MMascota( this );
@@ -129,13 +129,13 @@ void FormAgregarMascota::cancelar()
 
 /*!
     \fn FormAgregarMascota::agregarDueno()
-	Agrega un nuevo due�o a la vista
+	Agrega un nuevo dueño a la vista
  */
 void FormAgregarMascota::agregarDueno()
 {
  if( !modeloDueno->insertRecord( -1, modeloDueno->record() ) )
  {
-//   qDebug( "Error al insertar registro en los due�os" );
+//   qDebug( "Error al insertar registro en los dueños" );
   return;
  }
  else

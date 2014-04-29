@@ -29,7 +29,7 @@ MMascota::MMascota( QObject *parent )
 {
  setTable( "mascota" );
  setHeaderData( 0, Qt::Horizontal, "#ID" );
- setHeaderData( 1, Qt::Horizontal, "Dueño" );
+ setHeaderData( 1, Qt::Horizontal, "DueÃ±o" );
    setRelation( 1, QSqlRelation( "dueno", "id", "apellido" ) );
  setHeaderData( 2, Qt::Horizontal, "Nombre" );
  setHeaderData( 3, Qt::Horizontal, "Raza" );
@@ -46,7 +46,7 @@ QVariant MMascota::data(const QModelIndex& item, int role) const
 {
   if( !item.isValid() )
  {
-   qDebug( QString( "Indice invalido Dueños: col=%1, row=%2, role=%3").arg( item.column() ).arg( item.row() ).arg( role ).toLocal8Bit() );
+   qDebug( QString( "Indice invalido DueÃ±os: col=%1, row=%2, role=%3").arg( item.column() ).arg( item.row() ).arg( role ).toLocal8Bit() );
    return( QVariant() );
  }
  switch( role )

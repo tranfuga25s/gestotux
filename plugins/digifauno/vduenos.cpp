@@ -40,7 +40,7 @@ VDuenos::VDuenos( QWidget *parent )
 {
  setObjectName( "duenos" );
  setWindowIcon( QIcon( ":/imagenes/duenos.png" ) );
- setWindowTitle( "Listado de Dueños" );
+ setWindowTitle( "Listado de DueÃ±os" );
  modelo = new MDueno( this );
  vista->setModel( modelo );
  vista->hideColumn( 0 ); // oculta el ID
@@ -126,7 +126,7 @@ void VDuenos::eliminar()
   {
    if( cola.record().value( 0 ).toInt() > 0 )
    {
-    QMessageBox::warning( this, "No se puede eliminar", "No se puede eliminar este dueño, ya que tiene mascotas asociadas.\n Si desea eliminarlo cambie de dueño a las mascotas o eliminelas e intentelo nuevamente" );
+    QMessageBox::warning( this, "No se puede eliminar", "No se puede eliminar este dueÃ±o, ya que tiene mascotas asociadas.\n Si desea eliminarlo cambie de dueÃ±o a las mascotas o eliminelas e intentelo nuevamente" );
     return;
    }
    else

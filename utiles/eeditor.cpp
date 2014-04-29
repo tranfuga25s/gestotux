@@ -227,7 +227,7 @@ RichTextEditorToolBar::RichTextEditorToolBar( RichTextEditor *editor,
 
     m_align_left_action = createCheckableAction(
             QIcon( ":/imagenes/textleft.png"),
-            tr("Alineaci髇 izquierda"), editor, 0, alignment_group);
+            tr("Alineaci贸n izquierda"), editor, 0, alignment_group);
     addAction(m_align_left_action);
 
     m_align_center_action = createCheckableAction(
@@ -237,7 +237,7 @@ RichTextEditorToolBar::RichTextEditorToolBar( RichTextEditor *editor,
 
     m_align_right_action = createCheckableAction(
             QIcon( ":/imagenes/textright.png"),
-            tr("Alineaci髇 derecha"), editor, 0, alignment_group);
+            tr("Alineaci贸n derecha"), editor, 0, alignment_group);
     addAction(m_align_right_action);
 
     m_align_justify_action = createCheckableAction(
@@ -434,7 +434,7 @@ void EEditor::setText(const QString &text)
 /*!
     \fn EEditor::contenido( Qt::TextFormat format ) const
         Devuelve el contenido del editor en el formato elegido
-        @param format Formato de devoluci髇 ( Qt::TextFormat )
+        @param format Formato de devoluci贸n ( Qt::TextFormat )
         @return Texto del editor
  */
 QString EEditor::contenido(Qt::TextFormat format) const
@@ -444,7 +444,7 @@ QString EEditor::contenido(Qt::TextFormat format) const
 
 /*!
     \fn RichTextEditor::focusInEvent( QFocusEvent *event )
-    Muestra la barra de edici髇 cuando entra en foco
+    Muestra la barra de edici贸n cuando entra en foco
  */
 void RichTextEditor::focusInEvent( QFocusEvent *event )
 {
@@ -455,7 +455,7 @@ void RichTextEditor::focusInEvent( QFocusEvent *event )
 
 /*!
     \fn RichTextEditor::focusOutEvent( QFocusEvent *event )
-    Oculta la barra de edici髇 cuando se sale de foco
+    Oculta la barra de edici贸n cuando se sale de foco
  */
 void RichTextEditor::focusOutEvent( QFocusEvent *event )
 {

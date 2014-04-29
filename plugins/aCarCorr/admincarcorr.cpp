@@ -112,7 +112,7 @@ bool AdminCarCorr::inicializar()
   QDate fecha = preferencias::getInstancia()->value( "fechas_informes", QDate() ).toDate();
   if( !fecha.isValid() || fecha.daysTo( QDate::currentDate() ) > 29 )
   {
-    qWarning( "Error de validación de licencia. Su tiempo de prueba ha expirado" );
+    qWarning( "Error de validaciÃ³n de licencia. Su tiempo de prueba ha expirado" );
     return false;
   }
   else

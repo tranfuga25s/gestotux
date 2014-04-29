@@ -391,7 +391,7 @@ void EMovimiento::setFecha ( const QDate& theValue )
 
 /*!
     \fn EMovimiento::guardar( QProgressDialog *dialogo )
-	Guarda los datos que existan en la variables de la clase a la base de datos y actualiza las caravanas y sus dueños.
+	Guarda los datos que existan en la variables de la clase a la base de datos y actualiza las caravanas y sus dueÃ±os.
 	@param dialogo Dialogo para indicar el avance de la operacion
  */
 int EMovimiento::guardar( QProgressDialog *dialogo )
@@ -492,11 +492,11 @@ int EMovimiento::guardar( QProgressDialog *dialogo )
 					return -3;
 				}
 			#ifdef GESTOTUX_CARAVANAS_TIENEN_DUENOS
-				/// Asociar el dueño!
+				/// Asociar el dueÃ±o!
 				estado = aduenarCaravana( id_caravana, 0, fecha, false );
 				if( !estado )
 				{
-					qDebug( "Error al asociar el dueño" );
+					qDebug( "Error al asociar el dueÃ±o" );
 					deshacerCambiosDb();
 					return -3;
 				}
@@ -552,11 +552,11 @@ int EMovimiento::guardar( QProgressDialog *dialogo )
 							return -3;
 						}
 					#ifdef GESTOTUX_CARAVANAS_TIENEN_DUENOS
-						/// Asociar el dueño!
+						/// Asociar el dueÃ±o!
 						estado = aduenarCaravana( id_caravana, 0, fecha, false );
 						if( !estado )
 						{
-							qDebug( "Error al asociar el dueño" );
+							qDebug( "Error al asociar el dueÃ±o" );
 							deshacerCambiosDb();
 							return -3;
 						}
@@ -768,9 +768,9 @@ bool EMovimiento::guardarCaravana( QString codigo )
 
 /*!
     \fn EMovimiento::asociarCaravana( int id_caravana )
-	Genera la asociación en la base de datos para una caravana con el tri de este movimiento.
+	Genera la asociaciÃ³n en la base de datos para una caravana con el tri de este movimiento.
 	@param id_caravana Numero de caravana ( id de registro )
-	@return Verdadero si fue exitosa la asociación
+	@return Verdadero si fue exitosa la asociaciÃ³n
  */
 bool EMovimiento::asociarCaravana( int id_caravana )
 {
@@ -814,11 +814,11 @@ bool EMovimiento::cargarCaravanas()
 
 /*!
     \fn EMovimiento::aduenarCaravana( int id_caravana, int id_cliente, QDate fecha, bool cambiar_dueno )
-	Funcion que asocia una caravana con un dueño en una fecha especifica
+	Funcion que asocia una caravana con un dueÃ±o en una fecha especifica
 	@param id_caravana Id de registro de la caravana
 	@param id_cliente Id del registro del cliente
 	@param fecha Fecha de la asociacion
-	@param cambiar_dueno Permite el cambio de dueño modificando el registro
+	@param cambiar_dueno Permite el cambio de dueÃ±o modificando el registro
 	@return verdadero si la operacion se llevo a cabo o falso si no
  */
 bool EMovimiento::aduenarCaravana( int id_caravana, int id_cliente, QDate fecha, bool cambiar_dueno )
@@ -832,48 +832,48 @@ bool EMovimiento::aduenarCaravana( int id_caravana, int id_cliente, QDate fecha,
   {
    if( colas.record().value(0).toInt() > 0 )
    {
-    // Tiene un dueño anterior
+    // Tiene un dueÃ±o anterior
     if( cambiar_dueno )
     {
 	// pongo fecha de fin en el anterior
 	if( colas.exec( QString( "UPDATE INTO car_carv_duenos SET fecha_fin = '%1' WHERE id_caravana = ( SELECT id_caravana FROM car_caravanas WHERE codigo = '%1' )' AND id_cliente = '%3'" ).arg( id_caravana ).arg( id_cliente ).arg( fecha.toString( Qt::ISODate ) ) ) )
 	{
-		qDebug( "Escrito fin de duenño anterior correcto." );
-		// Escribo el dueño nuevo
+		qDebug( "Escrito fin de duenÃ±o anterior correcto." );
+		// Escribo el dueÃ±o nuevo
 		return aduenarCaravana( id_caravana, id_cliente, fecha, false );
 	}
 	else
 	{
-		qWarning( QString( "Error al actualizar dueño de caravana.escritura del anterior.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
+		qWarning( QString( "Error al actualizar dueÃ±o de caravana.escritura del anterior.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
 		return false;
 	}
     }
     else
     {
-     qWarning( "No se cambio el dueño de la caravana!" );
+     qWarning( "No se cambio el dueÃ±o de la caravana!" );
      return false;
     }
    }
   }
   else
   {
-    qWarning( QString( "Error al next en buscar dueño de caravana.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
+    qWarning( QString( "Error al next en buscar dueÃ±o de caravana.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
     return false;
   }
  }
  else
  {
-  qWarning( QString( "Error al buscar dueño de caravana.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
+  qWarning( QString( "Error al buscar dueÃ±o de caravana.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
   return false;
  }
- // Escribo el dueño nuevo
+ // Escribo el dueÃ±o nuevo
  if( colas.exec( QString( "INSERT INTO car_carv_duenos( id_caravana, id_cliente, fecha_inicio, fecha_fin ) VALUES ( '%1', '%2', '%3', null )" ).arg( id_caravana ).arg( id_cliente ).arg( fecha.toString( Qt::ISODate ) ) ) )
  {
   return true;
  }
  else
  {
-  qWarning( QString( "Error al insertar dueño de caravana.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
+  qWarning( QString( "Error al insertar dueÃ±o de caravana.\n Error: %1\n cola: %2" ).arg( colas.lastError().text() ).arg( colas.lastQuery() ).toLocal8Bit() );
   return false;
  }
 }

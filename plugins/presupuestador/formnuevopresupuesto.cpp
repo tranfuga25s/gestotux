@@ -148,7 +148,7 @@ void FormNuevoPresupuesto::agregar()
     // obtengo el numero de presupuesto
 	  int num_presupuesto = presupuesto->query().lastInsertId().toInt();
 	  QMessageBox mensaje;
-	  mensaje.setText( QString( "El presupuesto se guardo correctamente con el numero %1.\n\n ¿Que desea hacer a continuacion?" ).arg( num_presupuesto ) );
+	  mensaje.setText( QString( "El presupuesto se guardo correctamente con el numero %1.\n\n Â¿Que desea hacer a continuacion?" ).arg( num_presupuesto ) );
 
 	  QPushButton *Bimprimir = mensaje.addButton( tr( "Imprimir" ), QMessageBox::ResetRole );
 	  Bimprimir->setIcon( QIcon( ":/imagenes/imprimir.png" ) );

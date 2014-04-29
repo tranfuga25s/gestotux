@@ -138,7 +138,7 @@ bool ERenderizadorInforme::hacerCabecera( QString tri )
 	nombre de la empresa arriba en grande centrado
 	abajo
 	centrado un poquito mas chico
-	nombre del sistema (Sistema de  gestion de trazabilidad) Administracion Corrientes S.A nombre de la empresa
+	nombre del sistema (Sistema de  gestion de trazabilidad) Administracion Corrientes S.A nombre de la empresa
 	Nro de Tri
 	Fecha
 	Categoria

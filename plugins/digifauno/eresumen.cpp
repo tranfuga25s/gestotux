@@ -105,7 +105,7 @@ EResumen::EResumen( QWidget *parent, tipo que )
 
     QLabel *Lano = new QLabel(groupBox);
     Lano->setObjectName(QString::fromUtf8("lano"));
-    Lano->setText( tr( "Año:" ) );
+    Lano->setText( tr( "AÃ±o:" ) );
     horizontalLayout_2->addWidget(Lano);
 
     SBAno = new QSpinBox(groupBox);
@@ -125,7 +125,7 @@ EResumen::EResumen( QWidget *parent, tipo que )
   {
    QHBoxLayout *layout = new QHBoxLayout( this );
    QLabel *etiqueta = new QLabel( this );
-   etiqueta->setText( QString( "Año:" ) );
+   etiqueta->setText( QString( "AÃ±o:" ) );
    seleccion = new QSpinBox( this );
    seleccion->setRange( 0, QDate::currentDate().year() );
    seleccion->setSingleStep( 1 );
@@ -226,7 +226,7 @@ void EResumen::generarResumen()
   }
   case mensual:
   {
-   resumen->setTitulo( QString( "Resumen para el mes de %1 del año %2" ).arg( CBMes->currentText() ).arg( QDate::currentDate().year() ) );
+   resumen->setTitulo( QString( "Resumen para el mes de %1 del aÃ±o %2" ).arg( CBMes->currentText() ).arg( QDate::currentDate().year() ) );
    resumen->setDescripcion( QString( "Resumen detallado de entradas,salidas y gastos para el mes de %1 de %2" ).arg( CBMes->currentText() ).arg( QDate::currentDate().year() ) );
    primero.setDate( SBAno->value(), CBMes->currentIndex(), 1 );
    ultimo.setDate( SBAno->value(),  CBMes->currentIndex(), primero.daysInMonth() );
@@ -235,8 +235,8 @@ void EResumen::generarResumen()
   }
   case anual:
   {
-   resumen->setTitulo( QString( "Resumen del año %1" ).arg( seleccion->value() ) );
-   resumen->setDescripcion( QString( "Resumen detallado de entradas,salidas y gastos para el año %1" ).arg( seleccion->value() ) );
+   resumen->setTitulo( QString( "Resumen del aÃ±o %1" ).arg( seleccion->value() ) );
+   resumen->setDescripcion( QString( "Resumen detallado de entradas,salidas y gastos para el aÃ±o %1" ).arg( seleccion->value() ) );
    primero.setDate( seleccion->value(), 1, 1 );
    ultimo.setDate( seleccion->value(), 12, 31 );
    resumen->renderizar( primero, ultimo );

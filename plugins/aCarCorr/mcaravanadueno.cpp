@@ -26,7 +26,7 @@ MCaravanaDueno::MCaravanaDueno(QObject *parent)
  setHeaderData( 0, Qt::Horizontal, "#ID" );
  setHeaderData( 1, Qt::Horizontal, "Codigo de Caravana" );
 #ifdef GESTOTUX_CARAVANAS_TIENEN_DUENOS
- setHeaderData( 2, Qt::Horizontal, "Dueño" );
+ setHeaderData( 2, Qt::Horizontal, "DueÃ±o" );
 #endif
 }
 
@@ -72,7 +72,7 @@ bool MCaravanaDueno::setData( const QModelIndex& index, const QVariant& value, i
 		break;
 	}
 #ifdef GESTOTUX_CARAVANAS_TIENEN_DUENOS
-	//Dueño
+	//DueÃ±o
 //#warning "Edicion de columna de dueno"
 	case 2:
 	{
@@ -244,9 +244,9 @@ QStringList MCaravanaDueno::listaCaravanas()
 
 /*!
     \fn MCaravanaDueno::verificarAgregar( const QString &codigo, const QString &dueno )
-	Verifica si existe el codigo de caravana y el dueño y si no existe lo agrega a la lista
+	Verifica si existe el codigo de caravana y el dueÃ±o y si no existe lo agrega a la lista
 	@param codigo Codigo de la caravana
-	@param dueno Dueño de la caravana
+	@param dueno DueÃ±o de la caravana
 	@return verdadero si fue exitoso
  */
 bool MCaravanaDueno::verificarAgregar( const QString &codigo, const QString &dueno )
@@ -267,9 +267,9 @@ bool MCaravanaDueno::verificarAgregar( const QString &codigo, const QString &due
 
 /*!
     \fn MCaravanaDueno::verificarAgregar( const QStringList &listado, const QString &dueno )
-	Verifica si existe la lista de caravanas con el dueño especificado
+	Verifica si existe la lista de caravanas con el dueÃ±o especificado
 	@param listado Lista de strings con los codigos de caravanas
-	@param dueno Dueño de las caravanas
+	@param dueno DueÃ±o de las caravanas
 	@return verdadero si se agregaron todas, falso si se agregaron solo algunas
  */
 bool MCaravanaDueno::verificarAgregar( const QStringList &listado, const QString &dueno )
@@ -299,8 +299,8 @@ void MCaravanaDueno::setDuenosTodos( const QString &dueno )
 /*!
     \fn MCaravanaDueno:::headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const
 	Devuelve las cabeceras de las columnas usadas por el modelo
-	@param section numero de sección
-	@param orientation orientación de la seccion
+	@param section numero de secciÃ³n
+	@param orientation orientaciÃ³n de la seccion
 	@param role Rol que se desea usar
 	@return QVariant con el dato
  */
@@ -328,7 +328,7 @@ QVariant MCaravanaDueno::headerData( int section, Qt::Orientation orientation, i
 	{
 		if( role == Qt::DisplayRole )
 		{
-			return "Dueño";
+			return "DueÃ±o";
 		}
 		else
 		{
@@ -356,7 +356,7 @@ QVariant MCaravanaDueno::headerData( int section, Qt::Orientation orientation, i
 #include <QSqlRecord>
 /*!
     \fn MCaravanaDueno::cargarCaravanasTri( int id_tri )
-	Metodo que carga cada caravana que corresponde al tri en su propia estructura y le coloca el dueño correspondiente
+	Metodo que carga cada caravana que corresponde al tri en su propia estructura y le coloca el dueÃ±o correspondiente
  */
 bool MCaravanaDueno::cargarCaravanasTri( int id_tri )
 {
@@ -367,7 +367,7 @@ bool MCaravanaDueno::cargarCaravanasTri( int id_tri )
  {
   while( cola.next() )
   {
-   // por cada caravana busco el codigo y su dueño
+   // por cada caravana busco el codigo y su dueÃ±o
    QSqlQuery cola1;
    if( cola1.exec( QString( "SELECT codigo FROM car_caravana WHERE id_caravana = '%1'" ).arg( cola.record().value(0).toInt() ) ) )
    {
@@ -399,7 +399,7 @@ bool MCaravanaDueno::cargarCaravanasTri( int id_tri )
 		}
 		else
 		{
-			qWarning( "Error al ejecutar la cola de nombre de dueño en MCaravanaDueno" );
+			qWarning( "Error al ejecutar la cola de nombre de dueÃ±o en MCaravanaDueno" );
 		}
 #endif
 	}
