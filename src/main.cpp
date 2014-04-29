@@ -278,13 +278,14 @@ int main(int argc, char *argv[])
       QLocale::setDefault( locale );
       splash.showMessage( "Cargando Traduccion" );
       // Cargo las traducciones
-      QTranslator tran;
       QDir *directorio = new QDir( QCoreApplication::applicationDirPath() );
       directorio->cd( "traducciones" );
-      if( tran.load( directorio->absoluteFilePath( "qt_es" ) ) )
-      { app.installTranslator(&tran); } else  { qDebug( "Fallo al cargar la traduccion de qt" ); }
-      if( tran.load( directorio->absoluteFilePath( "ncreport_es" ) ) )
-      { QCoreApplication::instance()->installTranslator(&tran); } else { qDebug( "Fallo al cargar la traduccion del reporte" ); }
+      QTranslator tran_qt;
+      if( tran_qt.load( directorio->absoluteFilePath( "qt_es" ) ) )
+      { app.installTranslator(&tran_qt); } else { qDebug( "Fallo al cargar la traduccion de qt" ); }
+      QTranslator tran_nc;
+      if( tran_nc.load( directorio->absoluteFilePath( "ncreport_es" ) ) )
+      { QCoreApplication::instance()->installTranslator(&tran_nc); } else { qDebug( "Fallo al cargar la traduccion del reporte" ); }
       delete directorio;
       directorio = 0;
       splash.showMessage( "Cargando Base de datos" );

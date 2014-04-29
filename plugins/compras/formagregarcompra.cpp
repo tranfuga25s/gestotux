@@ -150,8 +150,7 @@ void FormAgregarCompra::guardar()
                 ret = QMessageBox::question( this,
                                              QString::fromUtf8( "¿Agregar?" ),
                                              QString::fromUtf8( "Desea agregar el producto %1?" ).arg( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() ),
-                                             QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No | QMessageBox::NoToAll,
-                                             QMessageBox::Yes );
+                                             "Si", "No" );
          switch( ret ) {
             case QMessageBox::YesToAll:
             {
@@ -159,6 +158,7 @@ void FormAgregarCompra::guardar()
                 // No pongo break para que agrege el producto
                 parar = true;
             }
+            case QMessageBox::Ok:
             case QMessageBox::Yes:
             {
                  // Agrego el producto
