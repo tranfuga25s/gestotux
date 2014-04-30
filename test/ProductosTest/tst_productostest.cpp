@@ -40,7 +40,7 @@ private:
  */
 ProductosTest::ProductosTest()
 {
-    this->tablas << "categorias_productos" << "productos";
+    this->tablas << "categorias_productos" << "productos" << "compras" << "compras_productos";
 }
 
 void ProductosTest::init() { EDatabaseTest::iniciarTablas(); }
