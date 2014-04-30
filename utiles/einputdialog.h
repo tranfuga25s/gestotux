@@ -37,6 +37,11 @@ private:
                     && event->modifiers().testFlag( Qt::KeypadModifier )  ) ) {
             // Convierto el ingreso en una coma
             QLocale locale;
+            int pos_cursor = this->lineEdit()->cursorPosition();
+            int pos_coma = this->lineEdit()->text().indexOf( "," );
+            if( pos_coma != -1 && pos_cursor < pos_coma ) {
+                this->lineEdit()->setText( this->lineEdit()->text().remove( pos_cursor, abs( pos_coma-pos_cursor ) ) );
+            }
             this->lineEdit()->setText( this->lineEdit()->text().split( "," ).first().replace( ",", "" ).append( locale.decimalPoint() ) );
             event->accept();
         } else {
