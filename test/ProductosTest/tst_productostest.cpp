@@ -26,6 +26,9 @@ private Q_SLOTS:
     void testIdsSegunCategoriaInvalida();
     void testListadoCategorias();
     void testListadoCategorias_data();
+    void testIdsSegunProveedor();
+    void testIdsSegunProveedor_data();
+    void testIdsSegunProveedorInvalida();
 
 private:
     MProductos *mp;
@@ -126,7 +129,6 @@ void ProductosTest::testIdsSegunCategoriaInvalida()
  */
 void ProductosTest::testListadoCategorias()
 {
-    QFETCH( int, id_categoria );
     QFETCH( QString, texto );
     QStringList lista = MCategorias::getListado();
     QVERIFY2( lista.contains( texto ), "Categoria no encontrada" );
@@ -137,12 +139,41 @@ void ProductosTest::testListadoCategorias()
  */
 void ProductosTest::testListadoCategorias_data()
 {
-    QTest::addColumn<int>("id_categoria");
     QTest::addColumn<QString>("texto");
-    QTest::newRow("Inicial") << 0 << "0 ~ Sin Categoria";
-    QTest::newRow("Arte") << 1 << "1 ~ Arte";
+    QTest::newRow("Inicial") << "0 ~ Sin Categoria";
+    QTest::newRow("Arte") << "1 ~ Arte";
 }
 
+/*!
+ * \brief ProductosTest::testIdsSegunProveedor
+ */
+void ProductosTest::testIdsSegunProveedor()
+{
+    QFETCH( int, id_proveedor );
+    QFETCH( int, id_producto );
+    QVector<int> list = MProductos::idsSegunProveedor( id_proveedor );
+    QVERIFY2( list.contains( id_producto ), "Producto no encontrado" );
+}
+
+/*!
+ * \brief ProductosTest::testIdsSegunProveedor_data
+ */
+void ProductosTest::testIdsSegunProveedor_data()
+{
+    QTest::addColumn<int>("id_proveedor");
+    QTest::addColumn<int>("id_producto");
+    QTest::newRow("Proveedor 1") << 1 << 1;
+    QTest::newRow("Proveedor 2") << 2 << 2;
+}
+
+/*!
+ * \brief ProductosTest::testIdsSegunProveedorInvalida
+ */
+void ProductosTest::testIdsSegunProveedorInvalida()
+{
+    QVector<int> list = MProductos::idsSegunProveedor( -1 );
+    QVERIFY2( list.empty(), "Productos con id nulo no están permitidos" );
+}
 
 QTEST_MAIN(ProductosTest)
 

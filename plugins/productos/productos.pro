@@ -20,8 +20,9 @@ SOURCES += mcategorias.cpp \
            formprefproductos.cpp \
            formagregarproducto.cpp \
            formmodificarproducto.cpp \
-    dremarcadormasivo.cpp \
-    mtempproductoremarcar.cpp
+           dremarcadormasivo.cpp \
+           mtempproductoremarcar.cpp \
+           ../proveedor/mproveedor.cpp
 HEADERS += mcategorias.h \
            mproductos.h \
            vcategorias.h \
@@ -31,9 +32,10 @@ HEADERS += mcategorias.h \
            formprefproductos.h \
            formagregarproducto.h \
            formmodificarproducto.h \
-    ecbcategoriasproductos.h \
-    dremarcadormasivo.h \
-    mtempproductoremarcar.h
+           ecbcategoriasproductos.h \
+           dremarcadormasivo.h \
+           mtempproductoremarcar.h \
+           ../proveedor/mproveedor.h
 
 LIBS += ../../bin/libutiles.a \
         ../../bin/libreporte.a

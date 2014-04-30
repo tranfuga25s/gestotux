@@ -624,6 +624,41 @@ QVector<int> MProductos::idsSegunCategoria(const int id_categoria)
     return retorno;
 }
 
+/*!
+ * \brief MProductos::idsSegunProveedor
+ * Devuelve el listado de todos los productos que pertenecen a un proveedor especifica
+ * \param id_categoria Identificador de proveedor
+ * \return QVector<int> con el listado - Si no hay ningun producto estará vacio
+ */
+QVector<int> MProductos::idsSegunProveedor( const int id_proveedor )
+{
+    QVector<int> retorno;
+    retorno.clear();
+    if( id_proveedor <= 0 ) {
+        return retorno;
+    }
+    QSqlQuery cola;
+    if( cola.exec( QString( "SELECT id FROM producto  "
+                            " WHERE id IN (  "
+                            " SELECT DISTINCT( id_producto ) "
+                            "  FROM compras_productos  "
+                            "  WHERE id_compra IN (    "
+                            "      SELECT id           "
+                            "      FROM compras        "
+                            "      WHERE id_proveedor = %1"
+                            "  )"
+                            " ) " ).arg( id_proveedor ) ) ) {
+        while( cola.next() ) {
+            retorno.append( cola.record().value(0).toInt() );
+        }
+    } else {
+        qDebug() << "Error al ejecutar la cola de averiguacione de Ids de productos de un proveedor";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    }
+    return retorno;
+}
+
 /**
  * @brief MProductos::tieneDatosRelacionados
  * Verifica que algún producto tenga datos relacionados

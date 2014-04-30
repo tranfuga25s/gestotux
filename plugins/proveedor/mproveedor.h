@@ -21,22 +21,26 @@
 #define MPROVEEDOR_H
 
 #include <QSqlTableModel>
+#include <QStringList>
 
 /**
-Modelo para mantener los datos de los proveedores
-
-	@author Esteban Zeller <juiraze@yahoo.com.ar>
-*/
+ * Modelo para mantener los datos de los proveedores
+ *
+ *	@author Esteban Zeller <juiraze@yahoo.com.ar>
+ */
 class MProveedor : public QSqlTableModel
 {
-Q_OBJECT
-public:
-    MProveedor( QObject *parent = 0 );
-    QVariant data(const QModelIndex& idx, int role) const;
-    static bool tieneDatosRelacionados( const int id_proveedor );
-    static bool existenProveedores();
-    static bool existeProveedor( QString razon_social );
-    static bool existeCuitCuil( QString cuit );
+    Q_OBJECT
+
+    public:
+        MProveedor( QObject *parent = 0 );
+        QVariant data(const QModelIndex& idx, int role) const;
+        static bool tieneDatosRelacionados( const int id_proveedor );
+        static bool existenProveedores();
+        static bool existeProveedor( QString razon_social );
+        static bool existeCuitCuil( QString cuit );
+
+        static QStringList getListado();
 };
 
 #endif

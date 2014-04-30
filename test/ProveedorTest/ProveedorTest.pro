@@ -1,22 +1,22 @@
 #-------------------------------------------------
-# Test para productos
+# Testeo para proveedores
 #-------------------------------------------------
 
 QT       += sql testlib
-TARGET = tst_productostest
+
+TARGET = tst_proveedortest
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
+
+SOURCES += tst_proveedortest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-SOURCES += tst_productostest.cpp
-HEADERS += ../edatabasetest.h
-
-INCLUDEPATH += ../../plugins/productos \
+INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproductos.so
+LIBS += ../../bin/plugins/libproveedor.so
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

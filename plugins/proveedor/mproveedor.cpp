@@ -231,3 +231,25 @@ bool MProveedor::existeCuitCuil( QString cuit )
     }
     return false;
 }
+
+/*!
+ * \brief MProveedor::getListado
+ * \return
+ */
+QStringList MProveedor::getListado()
+{
+    QStringList retorno;
+    QSqlQuery cola;
+    if( cola.exec( "SELECT id, nombre FROM proveedor" ) ) {
+        while( cola.next() ) {
+            retorno.append( QString( "%1 ~ %2" )
+                            .arg( cola.record().value(0).toInt() )
+                            .arg( cola.record().value(1).toString() ) );
+        }
+    } else {
+        qWarning()  << "Error de ejecucion de cola";
+        qDebug() << "Error al hacer exec en la cola de listado de categorias.";
+        qDebug() << cola.lastError().text();
+    }
+    return retorno;
+}

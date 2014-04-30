@@ -5,6 +5,7 @@
 
 #include "mcategorias.h"
 #include "mproductos.h"
+#include "../proveedor/mproveedor.h"
 #include "preferencias.h"
 
 DRemarcadorMasivo::DRemarcadorMasivo(QWidget *parent) :
@@ -168,8 +169,19 @@ void DRemarcadorMasivo::agregarTodos()
  */
 void DRemarcadorMasivo::agregarProveedor()
 {
-    /// @TODO: Implementar agregado de productos x proveedor
-    qWarning( "Todavía no implementado!" );
+    bool ok = false;
+    QStringList lista_proveedores = MProveedor::getListado();
+    QString item = QInputDialog::getItem( this,
+                                          QString::fromUtf8( "Elija un proveedor" ),
+                                          QString::fromUtf8( "Proveedor:" ),
+                                          lista_proveedores,
+                                          0, false, &ok );
+    if( ok && !item.isEmpty() && !item.isNull() ) {
+        QVector<int> lista = MProductos::idsSegunProveedor( item.split( "~" ).first().toInt() );
+        foreach( int id_producto, lista ) {
+            modelo->agregarProducto( id_producto );
+        }
+    }
 }
 
 /*!

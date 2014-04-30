@@ -45,9 +45,9 @@ void ECBProductosTest::init() { EDatabaseTest::iniciarTablas(); }
 
 void ECBProductosTest::initTestCase() { EDatabaseTest::generarTablas(); }
 
-void ECBProductosTest::cleanupTestCase() {} //EDatabaseTest::borrarTablas(); }
+void ECBProductosTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
 
-void ECBProductosTest::cleanup() {} //EDatabaseTest::vaciarTablas(); }
+void ECBProductosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
 
 void ECBProductosTest::testFiltroProveedor()
 {

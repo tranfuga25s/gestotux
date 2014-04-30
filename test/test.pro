@@ -6,7 +6,9 @@ SUBDIRS +=  ProductosTest \
             PreferenciasTest \
             EquipamientosTest \
             CancelacionPeriodoServicio \
-    ECBProductosTest
+    ECBProductosTest \
+    ComprasTest \
+    ProveedorTest
 
 OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/productos.sql \

@@ -63,6 +63,7 @@ public:
     static bool remarcarPorcentaje( const int id_producto, double porcentaje );
 
     static QVector<int> idsSegunCategoria( const int id_categoria );
+    static QVector<int> idsSegunProveedor( const int id_proveedor );
 
     bool habilitar( const QModelIndex idx );
     bool deshabilitar( const QModelIndex idx );
