@@ -467,41 +467,49 @@ bool MFactura::anularFactura( const int id_factura, QString razon, QDateTime fec
             // Segun lo que sea la forma de pago actuo
             switch( forma_pago ) {
                 case MFactura::Contado: {
-                    // Genero la operación de caja que contraarreste
-                    MMovimientosCaja *n = new MMovimientosCaja(0);
-                    if( ! n->agregarMovimiento( MCajas::cajaPredeterminada(),
-                                                QString( "Cancelacion de la factura %1" ).arg( num.aCadena() ),
-                                                QString(),
-                                                total ) ) {
-                        qDebug( "MFactura::anularFactura::No se pudo agregar el movimiento de caja" );
-                        delete n;
-                        QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
-                        return false;
-                    }
-                    delete n;
-                    break;
-                }
-                case MFactura::CuentaCorriente: {
-                    // Genero la entrada para contraarrestar
-                    QString num_cuenta = MCuentaCorriente::obtenerNumeroCuentaCorriente( id_cliente );
-                    if( num_cuenta == QString::number( MCuentaCorriente::ErrorClienteInvalido ) ) {
-                        qDebug( "Error, el cliente es invalido" );
-                        QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
-                        return false;
-                    } else if( num_cuenta == QString::number( MCuentaCorriente::ErrorNumeroCuenta ) ) {
-                        qDebug( "El cliente no posee cuenta corriente" );
-                    } else {
-                        if( ! MItemCuentaCorriente::agregarOperacion( num_cuenta,
-                                                                      num.aCadena(),
-                                                                      id_factura,
-                                                                      MItemCuentaCorriente::AnulacionFactura,
-                                                                      fechahora.date(),
-                                                                      QString::fromUtf8( "Anulación de la factura %1" ).arg( num.aCadena() ),
-                                                                      (-1.0) * total ) ) {
-                            qDebug( "MFactura::anularFactura::No se pudo agregar el movimiento de cuenta corriente" );
+                    if( ERegistroPlugins::getInstancia()->existePluginExterno( "caja" ) ) {
+                        // Genero la operación de caja que contraarreste
+                        MMovimientosCaja *n = new MMovimientosCaja(0);
+                        if( ! n->agregarMovimiento( MCajas::cajaPredeterminada(),
+                                                    QString( "Cancelacion de la factura %1" ).arg( num.aCadena() ),
+                                                    QString(),
+                                                    total ) ) {
+                            qDebug( "MFactura::anularFactura::No se pudo agregar el movimiento de caja" );
+                            delete n;
                             QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
                             return false;
                         }
+                        delete n;
+                    } else {
+                        qDebug() << "La factura era a contado pero no está cargado el plugin -> se jode";
+                    }
+                    break;
+                }
+                case MFactura::CuentaCorriente: {
+                    if( ERegistroPlugins::getInstancia()->existePluginExterno( "ctacte" ) ) {
+                        // Genero la entrada para contraarrestar
+                        QString num_cuenta = MCuentaCorriente::obtenerNumeroCuentaCorriente( id_cliente );
+                        if( num_cuenta == QString::number( MCuentaCorriente::ErrorClienteInvalido ) ) {
+                            qDebug( "Error, el cliente es invalido" );
+                            QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
+                            return false;
+                        } else if( num_cuenta == QString::number( MCuentaCorriente::ErrorNumeroCuenta ) ) {
+                            qDebug( "El cliente no posee cuenta corriente" );
+                        } else {
+                            if( ! MItemCuentaCorriente::agregarOperacion( num_cuenta,
+                                                                          num.aCadena(),
+                                                                          id_factura,
+                                                                          MItemCuentaCorriente::AnulacionFactura,
+                                                                          fechahora.date(),
+                                                                          QString::fromUtf8( "Anulación de la factura %1" ).arg( num.aCadena() ),
+                                                                          (-1.0) * total ) ) {
+                                qDebug( "MFactura::anularFactura::No se pudo agregar el movimiento de cuenta corriente" );
+                                QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
+                                return false;
+                            }
+                        }
+                    } else {
+                        qDebug() << "La factura era a cuenta corriente pero no está cargado y no s descuenta de la cuenta corriente.";
                     }
                     break;
                 }
