@@ -153,6 +153,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="PBAgregarProveedor">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="PBAgregarCategoria">
           <property name="text">
            <string>PushButton</string>
@@ -254,7 +261,7 @@
   <customwidget>
    <class>ECBProductos</class>
    <extends>QComboBox</extends>
-   <header location="global">ecbproductos.h</header>
+   <header>ecbproductos.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -23,6 +23,7 @@ protected slots:
   void agregarProducto();
   void agregarCategoria();
   void agregarTodos();
+  void agregarProveedor();
   void eliminarProducto();
   void eliminarTodos();
   void accept();

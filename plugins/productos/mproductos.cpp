@@ -598,6 +598,32 @@ bool MProductos::remarcarPorcentaje( const int id_producto, double porcentaje )
     return actualizarPrecioVenta( id_producto, precio_nuevo );
 }
 
+/*!
+ * \brief MProductos::idsSegunCategoria
+ * Devuelve el listado de todos los productos que pertenecen a una categoria especifica
+ * \param id_categoria Identificador de categoria
+ * \return QVector<int> con el listado - Si no hay ningun producto estará vacio
+ */
+QVector<int> MProductos::idsSegunCategoria(const int id_categoria)
+{
+    QVector<int> retorno;
+    retorno.clear();
+    if( id_categoria < 0 ) {
+        return retorno;
+    }
+    QSqlQuery cola;
+    if( cola.exec( QString( "SELECT id FROM producto WHERE id_categoria = %1" ).arg( id_categoria ) ) ) {
+        while( cola.next() ) {
+            retorno.append( cola.record().value(0).toInt() );
+        }
+    } else {
+        qDebug() << "Error al ejecutar la cola de averiguacione de Ids de productos de una categoria";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    }
+    return retorno;
+}
+
 /**
  * @brief MProductos::tieneDatosRelacionados
  * Verifica que algún producto tenga datos relacionados

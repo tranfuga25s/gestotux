@@ -2,6 +2,8 @@
 
 #include <QMessageBox>
 #include <QInputDialog>
+
+#include "mproductos.h"
 #include "preferencias.h"
 
 DRemarcadorMasivo::DRemarcadorMasivo(QWidget *parent) :
@@ -29,18 +31,24 @@ QDialog( parent )
   connect( PBAgregar, SIGNAL( clicked() ), this, SLOT( agregarProducto() ) );
   connect( PBAgregarTodos, SIGNAL( clicked() ), this, SLOT( agregarTodos() ) );
   connect( PBAgregarCategoria, SIGNAL( clicked() ), this, SLOT( agregarCategoria() ) );
+  connect( PBAgregarProveedor, SIGNAL( clicked() ), this, SLOT( agregarProveedor() ) );
   connect( PBEliminar, SIGNAL( clicked() ), this, SLOT( eliminarProducto() ) );
   connect( PBEliminarTodos, SIGNAL( clicked() ), this, SLOT( eliminarTodos() ) );
 
   PBAgregar->setIcon( QIcon( ":/imagenes/add.png" ) );
   PBAgregarTodos->setIcon( QIcon( ":/imagenes/add.png") );
   PBAgregarTodos->setText( "Agregar todos" );
+
   PBEliminar->setIcon( QIcon( ":/imagenes/eliminar.png" ) );
   PBEliminarTodos->setIcon( QIcon( ":/imagenes/eliminar.png" ) );
   PBEliminar->setText( "Eliminar producto" );
   PBEliminarTodos->setText( "Eliminar todos" );
+
   PBAgregarCategoria->setText( "Categoria" );
   PBAgregarCategoria->setIcon( QIcon( ":/imagenes/add.png" ) );
+
+  PBAgregarProveedor->setText( "Proveedor" );
+  PBAgregarProveedor->setIcon( QIcon( ":/imagenes/add.png" ) );
 
   // Pongo como predeterminado el porcentaje
   RBPorcentaje->setChecked( true );
@@ -129,8 +137,11 @@ void DRemarcadorMasivo::agregarProducto()
  */
 void DRemarcadorMasivo::agregarCategoria()
 {
-    /// @TODO: Implementar agregado de productos x categoría
-    qWarning( "Todavía no implementado!" );
+    int id_categoria = 0;
+    QVector<int> lista = MProductos::idsSegunCategoria( id_categoria );
+    foreach( int id_producto, lista ) {
+        modelo->agregarProducto( id_producto );
+    }
 }
 
 /*!
@@ -141,6 +152,15 @@ void DRemarcadorMasivo::agregarTodos()
     foreach( int id_producto, *(CBProductos->getListaIDs()) ) {
         modelo->agregarProducto( id_producto );
     }
+}
+
+/*!
+ * \brief DRemarcadorMasivo::agregarProveedor
+ */
+void DRemarcadorMasivo::agregarProveedor()
+{
+    /// @TODO: Implementar agregado de productos x proveedor
+    qWarning( "Todavía no implementado!" );
 }
 
 /*!
