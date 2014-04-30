@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
+#include "mcategorias.h"
 #include "mproductos.h"
 #include "preferencias.h"
 
@@ -137,10 +138,18 @@ void DRemarcadorMasivo::agregarProducto()
  */
 void DRemarcadorMasivo::agregarCategoria()
 {
-    int id_categoria = 0;
-    QVector<int> lista = MProductos::idsSegunCategoria( id_categoria );
-    foreach( int id_producto, lista ) {
-        modelo->agregarProducto( id_producto );
+    bool ok = false;
+    QStringList lista_categorias = MCategorias::getListado();
+    QString item = QInputDialog::getItem( this,
+                                          QString::fromUtf8( "Elija una categoría" ),
+                                          QString::fromUtf8( "Categoría:" ),
+                                          lista_categorias,
+                                          0, false, &ok );
+    if( ok && !item.isEmpty() && !item.isNull() ) {
+        QVector<int> lista = MProductos::idsSegunCategoria( item.split( "~" ).first().toInt() );
+        foreach( int id_producto, lista ) {
+            modelo->agregarProducto( id_producto );
+        }
     }
 }
 

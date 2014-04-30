@@ -3,6 +3,7 @@
 
 #include <QSqlQuery>
 
+#include "mcategorias.h"
 #include "mproductos.h"
 #include "../edatabasetest.h"
 
@@ -23,6 +24,8 @@ private Q_SLOTS:
     void testIdsSegunCategoria();
     void testIdsSegunCategoria_data();
     void testIdsSegunCategoriaInvalida();
+    void testListadoCategorias();
+    void testListadoCategorias_data();
 
 private:
     MProductos *mp;
@@ -94,7 +97,6 @@ void ProductosTest::testIdsSegunCategoria()
     QFETCH( int, id_categoria );
     QFETCH( int, id_producto );
     QVector<int> list = MProductos::idsSegunCategoria( id_categoria );
-    qDebug() << list << " product: " << id_producto;
     QVERIFY2( list.contains( id_producto ), "Producto no encontrado" );
 }
 
@@ -118,6 +120,29 @@ void ProductosTest::testIdsSegunCategoriaInvalida()
     QVector<int> list = MProductos::idsSegunCategoria( -1 );
     QVERIFY2( list.empty(), "Productos con id nulo no están permitidos" );
 }
+
+/*!
+ * \brief ProductosTest::testListadoCategorias
+ */
+void ProductosTest::testListadoCategorias()
+{
+    QFETCH( int, id_categoria );
+    QFETCH( QString, texto );
+    QStringList lista = MCategorias::getListado();
+    QVERIFY2( lista.contains( texto ), "Categoria no encontrada" );
+}
+
+/*!
+ * \brief ProductosTest::testListadoCategorias_data
+ */
+void ProductosTest::testListadoCategorias_data()
+{
+    QTest::addColumn<int>("id_categoria");
+    QTest::addColumn<QString>("texto");
+    QTest::newRow("Inicial") << 0 << "0 ~ Sin Categoria";
+    QTest::newRow("Arte") << 1 << "1 ~ Arte";
+}
+
 
 QTEST_MAIN(ProductosTest)
 

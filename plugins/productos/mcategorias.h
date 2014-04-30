@@ -21,18 +21,19 @@
 #define MCATEGORIAS_H
 
 #include <QSqlTableModel>
+#include <QStringList>
 
 /**
-Modelo que maneja las categorias
-
-	@author Esteban Zeller <juiraze@yahoo.com.ar>
-*/
+ * Modelo que maneja las categorias de productos
+ * @author Esteban Zeller <juiraze@yahoo.com.ar>
+ */
 class MCategorias : public QSqlTableModel
 {
-Q_OBJECT
-public:
-    MCategorias(QObject *parent = 0);
-    static bool buscarRepetido( const QString nombre );
+    Q_OBJECT
+    public:
+        MCategorias(QObject *parent = 0);
+        static bool buscarRepetido( const QString nombre );
+        static QStringList getListado();
 };
 
 #endif

@@ -24,6 +24,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QDebug>
 
 MCategorias::MCategorias(QObject *parent)
  : QSqlTableModel(parent)
@@ -65,4 +66,27 @@ bool MCategorias::buscarRepetido(const QString nombre)
       return false;
   }
   return false;
+}
+
+/*!
+ * \brief MCategorias::getListado
+ * Obtiene el listado de categorías para un QInputDialog::getItem()
+ * \return Listado de categorías
+ */
+QStringList MCategorias::getListado()
+{
+    QStringList retorno;
+    QSqlQuery cola;
+    if( cola.exec( "SELECT id, nombre FROM categoria_producto" ) ) {
+        while( cola.next() ) {
+            retorno.append( QString( "%1 ~ %2" )
+                            .arg( cola.record().value(0).toInt() )
+                            .arg( cola.record().value(1).toString() ) );
+        }
+    } else {
+        qWarning()  << "Error de ejecucion de cola";
+        qDebug() << "Error al hacer exec en la cola de listado de categorias.";
+        qDebug() << cola.lastError().text();
+    }
+    return retorno;
 }
