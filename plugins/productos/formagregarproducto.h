@@ -20,6 +20,7 @@ class FormAgregarProducto : public QDialog, private Ui::FormProductoBase
         void setearNombre( const QString nombre );
         void setearStockInicial( const int cantidad );
         void setearNumeroAnterior( const int id_anterior ) { _id_anterior = id_anterior; }
+        void setearDesdeCompra( bool estado );
 
     public slots:
         void accept();

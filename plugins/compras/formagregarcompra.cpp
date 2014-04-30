@@ -165,9 +165,11 @@ void FormAgregarCompra::guardar()
                  // Agrego el producto
                 FormAgregarProducto *f = new FormAgregarProducto();
                 f->setearNombre( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() );
-                f->setearStockInicial( mcp->data( mcp->index( i, 0 ), Qt::EditRole ).toInt() );
+                //f->setearStockInicial( mcp->data( mcp->index( i, 0 ), Qt::EditRole ).toInt() );
+                f->setearStockInicial( 0 );
                 f->setearPrecioCosto( mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() );
                 f->setearNumeroAnterior( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
+                f->setearDesdeCompra( true );
                 connect( f, SIGNAL( agregarProducto( int, int ) ), this, SLOT( arreglarProductoAgregado( int, int ) ) );
                 emit agregarVentana( f );
                 parar = true;

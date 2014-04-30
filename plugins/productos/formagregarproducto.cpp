@@ -157,6 +157,23 @@ void FormAgregarProducto::setearStockInicial( const int cantidad )
 { this->SBStock->setValue( cantidad ); }
 
 /*!
+ * \brief FormAgregarProducto::setearDesdeCompra
+ * \param estado
+ */
+void FormAgregarProducto::setearDesdeCompra( bool estado )
+{
+    if( estado ) {
+        _stock = false;
+        LStock->setVisible( false );
+        SBStock->setVisible( false );
+    } else {
+        _stock = true;
+        LStock->setVisible( true );
+        SBStock->setVisible( true );
+    }
+}
+
+/*!
  * \fn FormAgregarProducto::setearPrecioCosto( const double cantidad )
  * Coloca como predeterminado el precio de costo del producto
  * \param cantidad precio de compra del producto a agregar
