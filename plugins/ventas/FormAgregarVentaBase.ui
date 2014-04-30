@@ -111,9 +111,6 @@
       <item>
        <layout class="QHBoxLayout" name="hl4">
         <item>
-         <widget class="EDSBPrecio" name="DSBCant"/>
-        </item>
-        <item>
          <widget class="ECBProveedor" name="CBProveedor">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -138,6 +135,9 @@
            <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="EDSBPrecio" name="DSBCant"/>
         </item>
         <item>
          <widget class="QPushButton" name="PBAgregarProducto">
@@ -278,26 +278,45 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ECBClientes</class>
-   <extends>QComboBox</extends>
-   <header>ecbclientes.h</header>
-  </customwidget>
-  <customwidget>
    <class>ECBProductos</class>
    <extends>QComboBox</extends>
    <header>ecbproductos.h</header>
-  </customwidget>
-  <customwidget>
-   <class>EDSBPrecio</class>
-   <extends>QDoubleSpinBox</extends>
-   <header>edsbprecio.h</header>
   </customwidget>
   <customwidget>
    <class>ECBProveedor</class>
    <extends>QComboBox</extends>
    <header>ecbproveedor.h</header>
   </customwidget>
+  <customwidget>
+   <class>ECBClientes</class>
+   <extends>QComboBox</extends>
+   <header>ecbclientes.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EDSBPrecio</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>edsbprecio.h</header>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>DEFecha</tabstop>
+  <tabstop>CBCliente</tabstop>
+  <tabstop>LEDireccion</tabstop>
+  <tabstop>CBProveedor</tabstop>
+  <tabstop>CBProducto</tabstop>
+  <tabstop>DSBCant</tabstop>
+  <tabstop>PBAgregarProducto</tabstop>
+  <tabstop>TVProductos</tabstop>
+  <tabstop>PBAgregarDescuento</tabstop>
+  <tabstop>PBEliminarDescuento</tabstop>
+  <tabstop>PBEliminar</tabstop>
+  <tabstop>PBEliminarTodo</tabstop>
+  <tabstop>RBCuotas</tabstop>
+  <tabstop>RBContado</tabstop>
+  <tabstop>RBCtaCte</tabstop>
+  <tabstop>RBOtro</tabstop>
+  <tabstop>PTEObservaciones</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
