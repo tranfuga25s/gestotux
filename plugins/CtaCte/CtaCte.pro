@@ -71,7 +71,10 @@ LIBS += -L../../bin \
         -L../../bin/plugins \
         -lutiles \
         -lreporte \
-        -lcaja
+        -llibpagos \
+        -llibcaja \
+        -llibventas \
+        -llibdescuentos
 
 DISTFILES += ../../bin/reportes/ListadoCtaCteSaldo.xml \
              ../../bin/reportes/ResumenCtaCte.xml \
