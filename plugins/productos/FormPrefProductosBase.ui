@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>516</width>
-    <height>409</height>
+    <height>505</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,13 @@
        <widget class="QCheckBox" name="CkBMarcas">
         <property name="text">
          <string>Utilizar Marcas</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="CkBMarcaProveedor">
+        <property name="text">
+         <string>Utilizar el nombre del  proveedor como marca</string>
         </property>
        </widget>
       </item>
@@ -180,12 +187,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>153</y>
+     <x>125</x>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
-     <x>163</x>
-     <y>232</y>
+     <x>190</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>
@@ -196,12 +203,28 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>156</y>
+     <x>271</x>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
-     <x>288</x>
-     <y>220</y>
+     <x>496</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CkBMarcas</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CkBMarcaProveedor</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>121</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>98</y>
     </hint>
    </hints>
   </connection>
