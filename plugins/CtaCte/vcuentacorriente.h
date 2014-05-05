@@ -47,7 +47,7 @@ signals:
 protected slots:
     void modificarLimite();
     void darBaja();
-    void verResumen();
+    void verResumen( QModelIndex indice = QModelIndex() );
     void mostrarDeudoras( bool estado );
     void verSuspendidas( bool estado );
     void suspenderDesuspender();

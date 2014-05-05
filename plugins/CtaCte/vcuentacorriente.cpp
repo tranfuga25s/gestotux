@@ -51,6 +51,7 @@ VCuentaCorriente::VCuentaCorriente(QWidget *parent)
  vista->horizontalHeader()->setMinimumSectionSize( 60 );
  vista->setSortingEnabled( true );
  connect( crmodelo, SIGNAL( dataChanged( QModelIndex, QModelIndex ) ), vista, SLOT( dataChanged( QModelIndex, QModelIndex ) ) );
+ connect( vista, SIGNAL( doubleClicked( QModelIndex ) ), this, SLOT( verResumen( QModelIndex ) ) );
  modelo = 0;
  rmodelo = crmodelo;
 
@@ -254,14 +255,16 @@ void VCuentaCorriente::darBaja()
     \fn VCuentaCorriente::verResumen()
     Muestra el resumen de cuenta de la cuenta corriente seleccionada.
  */
-void VCuentaCorriente::verResumen()
+void VCuentaCorriente::verResumen( QModelIndex indice )
 {
- if( vista->selectionModel()->selectedRows().isEmpty() )
- {
-     QMessageBox::warning( this, "Error", "Elija una cuenta corriente para ver su resumen", QMessageBox::Ok );
-     return;
+ if( !indice.isValid() ) {
+     if( vista->selectionModel()->selectedRows().isEmpty() )
+     {
+         QMessageBox::warning( this, "Error", "Elija una cuenta corriente para ver su resumen", QMessageBox::Ok );
+         return;
+     }
+     indice = vista->selectionModel()->selectedRows().first();
  }
- QModelIndex indice = vista->selectionModel()->selectedRows().first();
  //Obtengo el numero de cuenta
  QString numero_cuenta = indice.model()->data( indice.model()->index( indice.row(), crmodelo->fieldIndex( "numero_cuenta" ) ), Qt::EditRole ).toString();
  FormResumenCtaCte *form = new FormResumenCtaCte( this );
