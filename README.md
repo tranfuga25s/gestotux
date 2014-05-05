@@ -2,6 +2,7 @@ GestoTux
 ========
 
 Programa de Gestión Simplificado
+
 [![Build Status](https://travis-ci.org/tranfuga25s/gestotux.svg?branch=master)](https://travis-ci.org/tranfuga25s/gestotux)
 [![Coverage Status](https://coveralls.io/repos/tranfuga25s/gestotux/badge.png)](https://coveralls.io/r/tranfuga25s/gestotux)
 
@@ -15,7 +16,7 @@ Estado actual
 
 Actualmente se puede elegir entre una base de datos mysql y una base de dato embebida sqlite, lo cual permite mucha flexibilidad.
 Contiene 4 plugins específicos creados a medida de nuestros clientes:
-* HiComp Computación ( versión 0.3 ) - Hace recibos de servicios de internet
+* HiComp Computación ( versión 0.53 ) - Hace recibos de servicios de internet
 * Presupuestador ( versión 0.2 ) - Programa para hacer presupuestos para un taller mecánico.
 * Administración Corrientes S.A. ( versión 0.11 ) - Administración de caravanas.
 * Digifauno ( versión 0.1 ) - Administración de peluquería canina.

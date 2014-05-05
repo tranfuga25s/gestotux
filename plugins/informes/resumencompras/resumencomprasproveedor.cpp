@@ -24,7 +24,8 @@ QSqlTableModel( parent )
 
 /*!
  * \brief ResumenComprasProveedor::setearMetodoTemporal
- * \param metodo
+ * Permite cambiar el metodo de división temporal elegido
+ * \param metodo Metodo de división temporal elegido
  */
 void ResumenComprasProveedor::setearMetodoTemporal( DivisionTemporal metodo )
 {
@@ -97,7 +98,8 @@ QVariant ResumenComprasProveedor::data(const QModelIndex &idx, int role) const
 
 /**
  * @brief ResumenComprasProveedor::cambioProveedor
- * @param id_proveedor
+ * Permite filtrar los elementos según un proveedor elegido
+ * @param id_proveedor ID del proveedor
  */
 void ResumenComprasProveedor::cambiarProveedor(int id_proveedor)
 {
@@ -112,6 +114,7 @@ void ResumenComprasProveedor::cambiarProveedor(int id_proveedor)
 
 /*!
  * \brief ResumenComprasProveedor::actualizarDatos
+ * Actualiza la consulta para que agrupe según el modelo indicado
  */
 void ResumenComprasProveedor::actualizarDatos()
 {
