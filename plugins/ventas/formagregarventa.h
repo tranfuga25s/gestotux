@@ -32,7 +32,7 @@ class MProductosTotales;
  * Clase que permite agregar una nueva venta al sistema
  * \author Esteban Zeller
  */
-class FormAgregarVenta : public EVentana, private Ui::FormAgregarVentaBase
+class FormAgregarVenta : public EVentana, public Ui::FormAgregarVentaBase
 {
 Q_OBJECT
 public:

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS item_factura ( "id_item_factura" INTEGER PRIMARY KEY autoincrement, "id_factura" INTEGER NOT NULL, "cantidad" DOUBLE NOT NULL, "texto" TEXT NOT NULL, "precio_unitario" DOUBLE NOT NULL, "id_producto" INTEGER NULL );

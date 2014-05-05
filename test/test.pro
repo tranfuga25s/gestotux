@@ -23,4 +23,7 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/escado_fiscal.sql \
                sql/QSQLITE/compras.sql \
                sql/QSQLITE/compras_productos.sql \
-    sql/QSQLITE/proveedor.sql
+               sql/QSQLITE/proveedor.sql \
+               sql/QSQLITE/factura.sql \
+               sql/QSQLITE/item_factura.sql \
+               sql/QSQLITE/clientes.sql

@@ -21,7 +21,9 @@ private Q_SLOTS:
 
 VentasTest::VentasTest()
 {
-    this->tablas << "factura" << "item_factura";
+    this->tablas << "clientes"
+                 << "factura"
+                 << "item_factura";
 }
 
 void VentasTest::init() { EDatabaseTest::iniciarTablas(); }
@@ -32,9 +34,29 @@ void VentasTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
 
 void VentasTest::cleanup() { EDatabaseTest::vaciarTablas(); }
 
+#include "preferencias.h"
+#include "formagregarventa.h"
 void VentasTest::testPreferenciaConsumidorFinalPredeterminado()
 {
-    QVERIFY2(true, "Failure");
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Ventas" );
+    p->setValue( "siempre_cf", true );
+    p->endGroup();
+
+    FormAgregarVenta *fav = new FormAgregarVenta();
+    QVERIFY( fav->CBCliente->idClienteActual() == 0 );
+    QVERIFY( fav->CBCliente->currentText() == "Consumidor Final" );
+    delete fav;
+    fav = 0;
+
+    p->beginGroup( "Ventas" );
+    p->setValue( "siempre_cf", false );
+    p->endGroup();
+
+    fav = new FormAgregarVenta();
+    QVERIFY( fav->CBCliente->idClienteActual() == 0 );
+    QVERIFY( fav->CBCliente->currentText() == "" );
+    delete fav;
 }
 
 QTEST_MAIN(VentasTest)
