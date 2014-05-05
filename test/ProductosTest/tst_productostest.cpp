@@ -216,7 +216,7 @@ void ProductosTest::testAutocompletadoMarcaProveedor_data()
     QTest::addColumn<QString>("proveedor");
     QTest::addColumn<double>("precio");
     QTest::addColumn<double>("stock");
-    QTest::newRow("Proveedor1") << "mc1" << "Proveedor 1" << 10.4 << 2;
+    QTest::newRow("Proveedor1") << "mc1" << "Proveedor 1" << 10.4 << 2.0;
 }
 
 QTEST_MAIN(ProductosTest)
