@@ -28,7 +28,7 @@ public:
     void generarTabla( QString nombre );
     void iniciarTabla( QString nombre );
     void vaciarTabla( QString nombre );
-    void borrarTabla( QString nombre );
+    void borrarTabla(QString nombre , bool inicializacion = false);
 
     void generarTablas();
     void borrarTablas();
@@ -112,6 +112,9 @@ EDatabaseTest::EDatabaseTest()
       }
      } else {
         qFatal( "No se puede encontrar el driver de SQLITE" );
+    }
+    foreach( QString tabla, QSqlDatabase::database().tables() ) {
+        this->borrarTabla( tabla, true );
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -214,9 +217,9 @@ void EDatabaseTest::borrarTablas()
  * \brief EDatabaseTest::borrarTabla
  * \param nombre
  */
-void EDatabaseTest::borrarTabla( QString nombre )
+void EDatabaseTest::borrarTabla( QString nombre, bool inicializacion )
 {
-    if( _lista_tablas.contains( nombre ) ) {
+    if( _lista_tablas.contains( nombre ) || inicializacion ) {
         QSqlQuery cola;
         if( cola.exec( "DROP TABLE " + nombre ) ) {
             _lista_tablas.removeAll( nombre );
