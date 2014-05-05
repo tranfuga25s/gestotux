@@ -78,8 +78,11 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         p->beginGroup( "Preferencias" );
         p->beginGroup( "Ventas" );
         if( p->value( "buscarPrecio", true ).toBool() )
-            mcp->buscarPrecios( true );
+        { mcp->buscarPrecios( true ); }
+        if( p->value( "siempre_cf", false ).toBool() )
+        { CBCliente->setearId( 0 ); }
         p->endGroup();
+
 
         TVProductos->setModel( mcp );
         TVProductos->setItemDelegate( new DProductosTotales( TVProductos ) );

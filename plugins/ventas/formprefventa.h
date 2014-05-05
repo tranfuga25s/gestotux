@@ -32,7 +32,7 @@
  *
  * \author Esteban Zeller
  */
-class FormPrefVenta : public QWidget, public FormPrefHijo, private Ui::FormPrefVentaBase
+class FormPrefVenta : public QWidget, public FormPrefHijo, public Ui::FormPrefVentaBase
 {
     Q_OBJECT
 public:

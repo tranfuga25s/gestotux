@@ -44,6 +44,7 @@ void FormPrefVenta::cargar()
  p->beginGroup( "Ventas" );
  this->CkBBusquedaPrecio->setChecked( p->value( "buscarPrecio", false ).toBool() );
  this->CkBFiltrarProveedor->setChecked( p->value( "filtrarProveedor", false ).toBool() );
+ this->CkBConsumidorFinal->setChecked( p->value( "siempre_cf", false ).toBool() );
  p->endGroup();
  p->endGroup();
  p=0;
@@ -67,6 +68,7 @@ void FormPrefVenta::guardar()
  p->beginGroup( "Ventas" );
  p->setValue( "buscarPrecio", this->CkBBusquedaPrecio->isChecked() );
  p->setValue( "filtrarProveedor", this->CkBFiltrarProveedor->isChecked() );
+ p->setValue( "siempre_cf", this->CkBConsumidorFinal->isChecked() );
  p->endGroup();
  p->endGroup();
  p=0;

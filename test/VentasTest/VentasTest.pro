@@ -13,7 +13,8 @@ TEMPLATE = app
 SOURCES += tst_ventastest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-FORMS += ../../plugins/ventas/FormAgregarVentaBase.ui
+FORMS += ../../plugins/ventas/FormAgregarVentaBase.ui \
+         ../../plugins/ventas/FormPrefVentaBase.ui
 
 INCLUDEPATH += ../../plugins/ventas \
                ../../utiles

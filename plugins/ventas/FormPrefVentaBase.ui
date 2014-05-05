@@ -27,6 +27,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="CkBConsumidorFinal">
+        <property name="text">
+         <string>Siempre elegir &quot;Comsumidor Final&quot; como cliente</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
