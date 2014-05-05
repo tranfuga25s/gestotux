@@ -177,15 +177,34 @@ void ProductosTest::testIdsSegunProveedorInvalida()
     QVERIFY2( list.empty(), "Productos con id nulo no están permitidos" );
 }
 
+#include "preferencias.h"
+#include "formagregarproducto.h"
 /*!
  * \brief ProductosTest::testAutocompletadoMarcaProveedor
  */
 void ProductosTest::testAutocompletadoMarcaProveedor()
 {
-/*    QFETCH( int, id_proveedor );
-    QFETCH( int, id_producto );
-    QVector<int> list = MProductos::idsSegunProveedor( id_proveedor );
-    QVERIFY2( list.contains( id_producto ), "Producto no encontrado" );*/
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "marca_proveedor", true );
+    p->endGroup();
+    p->endGroup();
+    p=0;
+
+    FormAgregarProducto *fap = new FormAgregarProducto();
+    QFETCH( QString, nombre_producto );
+    QFETCH( QString, proveedor );
+    QFETCH( double, precio );
+    QFETCH( double, stock );
+    fap->setearDesdeCompra( true );
+    fap->setearNombre( nombre_producto );
+    fap->setearStockInicial( stock );
+    fap->setearPrecioCosto( precio );
+    fap->setearProveedor( proveedor );
+
+    QVERIFY( fap->LEMarca->text() == proveedor );
+
 }
 
 /*!
@@ -193,10 +212,11 @@ void ProductosTest::testAutocompletadoMarcaProveedor()
  */
 void ProductosTest::testAutocompletadoMarcaProveedor_data()
 {
-    /*QTest::addColumn<int>("id_proveedor");
-    QTest::addColumn<int>("id_producto");
-    QTest::newRow("Proveedor 1") << 1 << 1;
-    QTest::newRow("Proveedor 2") << 2 << 2;*/
+    QTest::addColumn<QString>("nombre_producto");
+    QTest::addColumn<QString>("proveedor");
+    QTest::addColumn<double>("precio");
+    QTest::addColumn<double>("stock");
+    QTest::newRow("Proveedor1") << "mc1" << "Proveedor 1" << 10.4 << 2;
 }
 
 QTEST_MAIN(ProductosTest)

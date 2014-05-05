@@ -11,7 +11,7 @@
  * Clase que permite agregar un nuevo producto
  * \author Esteban Zeller
  */
-class FormAgregarProducto : public QDialog, private Ui::FormProductoBase
+class FormAgregarProducto : public QDialog, public Ui::FormProductoBase
 {
     Q_OBJECT
     public:
