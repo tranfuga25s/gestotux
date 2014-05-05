@@ -29,6 +29,8 @@ private Q_SLOTS:
     void testIdsSegunProveedor();
     void testIdsSegunProveedor_data();
     void testIdsSegunProveedorInvalida();
+    void testAutocompletadoMarcaProveedor();
+    void testAutocompletadoMarcaProveedor_data();
 
 private:
     MProductos *mp;
@@ -173,6 +175,28 @@ void ProductosTest::testIdsSegunProveedorInvalida()
 {
     QVector<int> list = MProductos::idsSegunProveedor( -1 );
     QVERIFY2( list.empty(), "Productos con id nulo no están permitidos" );
+}
+
+/*!
+ * \brief ProductosTest::testAutocompletadoMarcaProveedor
+ */
+void ProductosTest::testAutocompletadoMarcaProveedor()
+{
+/*    QFETCH( int, id_proveedor );
+    QFETCH( int, id_producto );
+    QVector<int> list = MProductos::idsSegunProveedor( id_proveedor );
+    QVERIFY2( list.contains( id_producto ), "Producto no encontrado" );*/
+}
+
+/*!
+ * \brief ProductosTest::testAutocompletadoMarcaProveedor_data
+ */
+void ProductosTest::testAutocompletadoMarcaProveedor_data()
+{
+    /*QTest::addColumn<int>("id_proveedor");
+    QTest::addColumn<int>("id_producto");
+    QTest::newRow("Proveedor 1") << 1 << 1;
+    QTest::newRow("Proveedor 2") << 2 << 2;*/
 }
 
 QTEST_MAIN(ProductosTest)
