@@ -174,6 +174,17 @@ void FormAgregarProducto::setearDesdeCompra( bool estado )
 }
 
 /*!
+ *
+ */
+void FormAgregarProducto::setearProveedor( QString proveedor )
+{
+    this->_nombre_proveedor = proveedor;
+    if( preferencias::getInstancia()->value( "Preferencias/Productos/marca_proveedor" ).toBool() ) {
+        this->LEMarca->setText( proveedor );
+    }
+}
+
+/*!
  * \fn FormAgregarProducto::setearPrecioCosto( const double cantidad )
  * Coloca como predeterminado el precio de costo del producto
  * \param cantidad precio de compra del producto a agregar

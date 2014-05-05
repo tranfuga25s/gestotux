@@ -11,7 +11,7 @@
  * Clase que permite agregar un nuevo producto
  * \author Esteban Zeller
  */
-class FormAgregarProducto : public QDialog, private Ui::FormProductoBase
+class FormAgregarProducto : public QDialog, public Ui::FormProductoBase
 {
     Q_OBJECT
     public:
@@ -21,6 +21,7 @@ class FormAgregarProducto : public QDialog, private Ui::FormProductoBase
         void setearStockInicial( const int cantidad );
         void setearNumeroAnterior( const int id_anterior ) { _id_anterior = id_anterior; }
         void setearDesdeCompra( bool estado );
+        void setearProveedor( QString proveedor );
 
     public slots:
         void accept();
@@ -35,6 +36,7 @@ class FormAgregarProducto : public QDialog, private Ui::FormProductoBase
         bool _descripcion;
         bool _stock;
         bool _modelo;
+        QString _nombre_proveedor;
         int _id_anterior;
 
     signals:

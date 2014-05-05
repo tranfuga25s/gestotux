@@ -44,6 +44,7 @@ void FormPrefProductos::cargar()
  p->beginGroup( "Productos");
  CkBCategorias->setChecked( p->value( "categorias", false ).toBool() );
  CkBMarcas->setChecked( p->value( "marcas", false ).toBool() );
+ CkBMarcaProveedor->setChecked( p->value( "marca_proveedor", false ).toBool() );
  CkBDescripcion->setChecked( p->value( "descripcion", false ).toBool() );
  GBStock->setChecked( p->value( "stock", false ).toBool() );
  CkBCosto->setChecked( p->value( "mostrar-costo", true ).toBool() );
@@ -78,6 +79,7 @@ void FormPrefProductos::guardar()
  p->beginGroup( "Productos" );
  p->setValue( "categorias",CkBCategorias->isChecked() );
  p->setValue( "marcas", CkBMarcas->isChecked() );
+ p->setValue( "marca_proveedor", CkBMarcaProveedor->isChecked() );
  p->setValue( "descripcion",CkBDescripcion->isChecked() );
  p->setValue( "stock", GBStock->isChecked() );
  p->setValue( "mostrar-costo", CkBCosto->isChecked() );
