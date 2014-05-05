@@ -170,6 +170,7 @@ void FormAgregarCompra::guardar()
                 f->setearPrecioCosto( mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() );
                 f->setearNumeroAnterior( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
                 f->setearDesdeCompra( true );
+                f->setearProveedor( CBProveedor->currentText() );
                 connect( f, SIGNAL( agregarProducto( int, int ) ), this, SLOT( arreglarProductoAgregado( int, int ) ) );
                 emit agregarVentana( f );
                 parar = true;
