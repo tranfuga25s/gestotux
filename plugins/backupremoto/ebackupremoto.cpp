@@ -349,7 +349,7 @@ void EBackupRemoto::respuestaInicio( QNetworkReply *resp ) {
         }
         QVariantMap mapa = Json::parse( cont, ok ).toMap();
         if( !ok ) {
-            QMessageBox::warning( this, "Error", "Error de interpretación de los datos descargados. Intente nuevamente." );
+            QMessageBox::warning( this, "Error", QString::fromUtf8( "Error de interpretación de los datos descargados. Intente nuevamente." ) );
             _continuar = false;
             return;
         }
@@ -373,6 +373,9 @@ void EBackupRemoto::respuestaInicio( QNetworkReply *resp ) {
     }
 }
 
+/*!
+ *
+ */
 void EBackupRemoto::respuestaFin( QNetworkReply *resp ) {
     if( resp->error() != QNetworkReply::NoError ) {
         QMessageBox::warning( this, "Error", resp->errorString().toLocal8Bit() );
@@ -387,7 +390,7 @@ void EBackupRemoto::respuestaFin( QNetworkReply *resp ) {
         }
         QVariantMap mapa = Json::parse( cont, ok ).toMap();
         if( !ok ) {
-            QMessageBox::warning( this, "Error", "Error de interpretación de los datos descargados. Intente nuevamente." );
+            QMessageBox::warning( this, "Error", QString::fromUtf8( "Error de interpretación de los datos descargados. Intente nuevamente." ) );
             _continuar = false;
             return;
         }

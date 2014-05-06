@@ -22,7 +22,11 @@ FormPrefBackupRemoto::FormPrefBackupRemoto(QWidget *parent, Qt::WFlags fl )
 
     connect( GBUsar, SIGNAL( toggled( bool ) ), GBHost, SLOT( setChecked( bool ) ) );
 
+    connect( LENumeroCliente, SIGNAL( editingFinished() ), this, SLOT( verificarDatosValidos() ) );
+    connect( LEContra, SIGNAL( editingFinished() ), this, SLOT( verificarDatosValidos() ) );
+
     GBDatos->setEnabled( false );
+    PBVerificar->setEnabled( false );
 }
 
 /*!
@@ -69,6 +73,7 @@ void FormPrefBackupRemoto::cargar()
     p->endGroup();
     delete p;
     p=0;
+    verificarDatosValidos();
 }
 
 void FormPrefBackupRemoto::cargarDatos()
@@ -85,6 +90,25 @@ void FormPrefBackupRemoto::cargarDatos()
   QNetworkRequest req( url );
   req.setHeader( QNetworkRequest::ContentTypeHeader, "application/octet-stream" );
   manager->post( req, url.encodedQuery() );
+}
+
+/*!
+ * Slot que verifique que se carge algún dato en la entrada de numero de usuario y contraseña para habilitar el botón
+ */
+void FormPrefBackupRemoto::verificarDatosValidos()
+{
+    bool habilitar = false;
+    if( !LENumeroCliente->text().isEmpty() ) {
+        habilitar = true;
+    } else {
+        habilitar = false;
+    }
+    if( !LEContra->text().isEmpty() ) {
+        habilitar = true;
+    } else {
+        habilitar = false;
+    }
+    PBVerificar->setEnabled( habilitar );
 }
 
 

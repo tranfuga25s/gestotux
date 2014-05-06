@@ -22,6 +22,7 @@ public slots:
 private slots:
     void respuesta( QNetworkReply * );
     void cargarDatos();
+    void verificarDatosValidos();
 
 private:
     QNetworkAccessManager *manager;
