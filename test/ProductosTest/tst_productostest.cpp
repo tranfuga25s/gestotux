@@ -31,6 +31,8 @@ private Q_SLOTS:
     void testIdsSegunProveedorInvalida();
     void testAutocompletadoMarcaProveedor();
     void testAutocompletadoMarcaProveedor_data();
+    void testCategoriaRepetida();
+    void testCategoriaRepetida_data();
 
 private:
     MProductos *mp;
@@ -217,6 +219,28 @@ void ProductosTest::testAutocompletadoMarcaProveedor_data()
     QTest::addColumn<double>("precio");
     QTest::addColumn<double>("stock");
     QTest::newRow("Proveedor1") << "mc1" << "Proveedor 1" << 10.4 << 2.0;
+}
+
+#include "mcategorias.h"
+/*!
+ * \brief ProductosTest::testCategoriaRepetida
+ */
+void ProductosTest::testCategoriaRepetida()
+{
+    QFETCH( QString, nombre );
+    QFETCH( bool, devolucion );
+    QVERIFY2( devolucion == MCategorias::buscarRepetido( nombre ), QString( "La categoria %1 ya existe!" ).arg( nombre ).toLocal8Bit() );
+}
+
+/*!
+ * \brief ProductosTest::testCategoriaRepetida_data
+ */
+void ProductosTest::testCategoriaRepetida_data()
+{
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<bool>("devolucion");
+    QTest::newRow("Nuevo") << "NuevaCategoria" << false;
+    QTest::newRow("Repetida") << "Arte" << true;
 }
 
 QTEST_MAIN(ProductosTest)

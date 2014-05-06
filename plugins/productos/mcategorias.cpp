@@ -44,26 +44,21 @@ MCategorias::MCategorias(QObject *parent)
  */
 bool MCategorias::buscarRepetido(const QString nombre)
 {
-  return false;
   QSqlQuery cola;
   if( cola.exec( QString( "SELECT count(nombre) FROM categoria_producto WHERE nombre LIKE '%1'" ).arg( nombre ) ) ) {
       if( cola.next() ) {
-          if( cola.record().value(0).toInt() > 1 ) {
-              return false;
-          } else {
+          if( cola.record().value(0).toInt() >= 1 ) {
               return true;
           }
       } else {
           qWarning( "Error al hacer next" );
-          qDebug( "Error al hacer next en la cola de averiguación de si existe una categoría ya." );
-          qDebug( cola.lastError().text().toLocal8Bit() );
-          return false;
+          qDebug() << "Error al hacer next en la cola de averiguación de si existe una categoría ya.";
+          qDebug() << cola.lastError().text();
       }
   } else {
       qWarning( "Error de ejecucion de cola" );
-      qDebug( "Error al hacer exec en la cola de averiguacion de si existe una cateogria ya." );
-      qDebug( cola.lastError().text().toLocal8Bit() );
-      return false;
+      qDebug() << "Error al hacer exec en la cola de averiguacion de si existe una cateogria ya.";
+      qDebug() << cola.lastError().text();
   }
   return false;
 }
