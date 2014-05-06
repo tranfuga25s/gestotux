@@ -514,6 +514,12 @@ bool MFactura::anularFactura( const int id_factura, QString razon, QDateTime fec
                     break;
                 }
             }
+            // Cancelo los elementos de la factura
+            if( !MItemFactura::anularItemsFactura( id_factura ) ) {
+                qDebug() << "No se pudo anular los elementos de la factura";
+                QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
+                return false;
+            }
             // cancelo la factura
             cola.prepare( QString( "UPDATE factura SET anulada = :anulada, razon = :razon, fecha_cancelada = :fechahora WHERE id_factura = %1 " ).arg( id_factura ) );
             cola.bindValue( ":anulada", true );
