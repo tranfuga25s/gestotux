@@ -111,8 +111,12 @@ void VentasTest::testAnulacionFacturaDescensoStock()
     QVector<double> cantidad_productos;
     cantidad_productos.clear();
     do {
-        ids_productos.append( cola.record().value(0).toInt() );
-        cantidad_productos.append( cola.record().value(1).toDouble() );
+        int id_producto = cola.record().value(0).toInt();
+        QVERIFY2( id_producto != 0, "Id de producto incorrecto" );
+        double cantidad = cola.record().value(1).toDouble();
+        QVERIFY2( cantidad != 0.0, "Cantidad incorrecta" );
+        ids_productos.append( id_producto );
+        cantidad_productos.append( cantidad );
     } while( cola.next() );
     QVERIFY2( ids_productos.count() > 0, "No hay items cargados en la lista de productos" );
     QVERIFY2( cantidad_productos.count() > 0, "No hay items cargados en la lista de cantidades vendidas" );
