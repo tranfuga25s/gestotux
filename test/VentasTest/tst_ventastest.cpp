@@ -121,10 +121,20 @@ void VentasTest::testAnulacionFacturaDescensoStock()
     QVERIFY2( ids_productos.count() > 0, "No hay items cargados en la lista de productos" );
     QVERIFY2( cantidad_productos.count() > 0, "No hay items cargados en la lista de cantidades vendidas" );
 
+    // Habilito el stock actual
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "stock",  true );
+    p->endGroup();
+    p->endGroup();
+    p=0;
     // Busco el stock actual
     QVector<double> stock_actual; stock_actual.clear();
     foreach( int id_producto, ids_productos ) {
-        stock_actual.append( MProductos::stock( id_producto ) );
+        double stock = MProductos::stock( id_producto );
+        QVERIFY2( stock != 0.0, "Error de stock" );
+        stock_actual.append( stock );
     }
     QVERIFY2( stock_actual.count() > 0, "No se cargó ningun item de stock" );
 
@@ -134,7 +144,7 @@ void VentasTest::testAnulacionFacturaDescensoStock()
     // Controlo nuevamente el stock
     int i = 0;
     foreach( int id_producto, ids_productos ) {
-        QVERIFY2( stock_actual.at(i) - cantidad_productos.at(i) == MProductos::stock( id_producto ),
+        QVERIFY2( ( stock_actual.at(i) - cantidad_productos.at(i) ) == MProductos::stock( id_producto ),
                   QString( "No coincide el stock del producto %1: anterior: %2, nuevo: %3, diferencia esperada: -%4" )
                   .arg( id_producto ).arg( stock_actual.at(i) ).arg( MProductos::stock( id_producto ) ).arg( cantidad_productos.at(i) )
                   .toLocal8Bit() );
