@@ -49,6 +49,7 @@ protected slots:
     void agregarProducto();
     void eliminarProducto();
     void arreglarProductoAgregado( int anterior, int nuevo );
+    void cambioProveedor( int id_proveedor );
 };
 
 #endif

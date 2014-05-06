@@ -44,9 +44,9 @@
 FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
 : EVentana( parent ), Ui::FormAgregarCompraBase()
 {
-	setupUi(this);
-	setObjectName( "agregar_compra" );
-	setWindowTitle( "Agregar nueva compra" );
+    setupUi(this);
+    setObjectName( "agregar_compra" );
+    setWindowTitle( "Agregar nueva compra" );
     setWindowIcon( QIcon( ":/imagenes/agregar_compras.png" ) );
 
     if( m == 0 ) {
@@ -85,6 +85,19 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
         RBOtro->setVisible( false );
         LFormaPago->setVisible( false );
     }
+
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Ventas" );
+    if( p->value("filtrarProveedor").toBool() ) {
+        connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), this, SLOT( cambioProveedor( int ) ) );
+    } else {
+        CBProveedor->setVisible( false );
+    }
+    p->endGroup();
+    p->endGroup();
+    p=0;
 }
 
 
@@ -325,5 +338,16 @@ void FormAgregarCompra::arreglarProductoAgregado( int anterior, int nuevo )
         if( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() == anterior ) {
             mcp->setData( mcp->index( i, 1 ), nuevo, Qt::EditRole );
         }
+    }
+}
+
+/*!
+ * \brief FormAgregarCompra::cambioProveedor
+ * \param id_proveedor
+ */
+void FormAgregarCompra::cambioProveedor(int id_proveedor)
+{
+    if( id_proveedor > 0 ) {
+        CBProducto->filtrarPorProveedor( id_proveedor );
     }
 }
