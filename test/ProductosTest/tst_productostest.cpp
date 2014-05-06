@@ -33,6 +33,7 @@ private Q_SLOTS:
     void testAutocompletadoMarcaProveedor_data();
     void testCategoriaRepetida();
     void testCategoriaRepetida_data();
+    void testOcultarCodigo();
 
 private:
     MProductos *mp;
@@ -241,6 +242,34 @@ void ProductosTest::testCategoriaRepetida_data()
     QTest::addColumn<bool>("devolucion");
     QTest::newRow("Nuevo") << "NuevaCategoria" << false;
     QTest::newRow("Repetida") << "Arte" << true;
+}
+
+#include "formprefproductos.h"
+/*!
+ * \brief ProductosTest::testOcultarCodigo
+ */
+void ProductosTest::testOcultarCodigo()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "ocultar_codigo", true );
+    p->endGroup();
+    p->endGroup();
+    p=0;
+
+    FormPrefProductos *fpp = new FormPrefProductos();
+    QVERIFY( fpp->CkBOcultarCodigo->isChecked() == true );
+    delete fpp;
+
+    FormAgregarProducto *fap = new FormAgregarProducto();
+    QVERIFY( fap->LECodigo->isVisible() == false );
+    delete fap;
+
+    // Intento guardar un producto con codigo nulo
+    MProductos *mp = new MProductos();
+    QVERIFY( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1, "", "", "" ) > 0 );
+    delete mp;
 }
 
 QTEST_MAIN(ProductosTest)

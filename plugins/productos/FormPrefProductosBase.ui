@@ -58,6 +58,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="CkBOcultarCodigo">
+        <property name="text">
+         <string>Ocultar codigo de producto</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
