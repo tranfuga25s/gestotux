@@ -8,6 +8,16 @@
 
 #include "mcompra.h"
 
+/*
+ * SELECT COUNT( id ) as cantidad,
+ *        MAX( fecha ) as fecha,
+ *        strftime("%m" , max( fecha ) ) as mes,
+ *        strftime( "%Y", MAX( fecha ) ) as ano,
+ *        SUM( total ) as total,
+ *        id_proveedor,
+ *        contado
+ * FROM compras
+ */
 ResumenComprasProveedor::ResumenComprasProveedor(QObject *parent) :
 QSqlTableModel( parent )
 {
@@ -110,6 +120,7 @@ void ResumenComprasProveedor::cambiarProveedor(int id_proveedor)
     }
     this->setFilter( _filtro );
     this->select();
+    qDebug() << this->filter();
 }
 
 /*!
@@ -120,16 +131,16 @@ void ResumenComprasProveedor::actualizarDatos()
 {
     QString groupBy;
     groupBy.clear();
-    groupBy.append( "GROUP BY id_proveedor" );
+    groupBy.append( " GROUP BY id_proveedor" );
     if( _metodo_temporal == SinDivision ) {
         // No separo nada
     } else if( _metodo_temporal == PorMes ||
                _metodo_temporal == PorBimestre ||
                _metodo_temporal == PorCuatrimestre ||
                _metodo_temporal == PorSeximestre ) {
-        groupBy = ", mes, ano ";
+        groupBy.append( ", mes, ano " );
     } else if( _metodo_temporal == PorAno ) {
-        groupBy = ", ano ";
+        groupBy.append( ", ano " );
     }
     _filtro.append( groupBy );
 }
