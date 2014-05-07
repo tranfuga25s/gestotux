@@ -281,8 +281,22 @@ bool MProductos::agregarProducto(const QString codigo, const QString nombre, con
     bool pmodelo = p->value( "modelo", false ).toBool();
     bool pcategorias = p->value( "categorias", false ).toBool();
     bool pstock = p->value( "stock", false ).toBool();
+    bool ocodigo = p->value( "ocultar_codigo", false ).toBool();
     p->endGroup(); p->endGroup(); p=0;
-    cola.bindValue( ":codigo", codigo );
+    if( ocodigo && codigo.isEmpty() ) {
+        // busco el ultimo ID y le sumo un valor
+        QSqlQuery cola2;
+        if( !cola2.exec( "SELECT MAX( id ) FROM producto;" ) ) {
+
+        }
+        if( cola2.next() ) {
+            cola.bindValue( ":codigo", cola2.record().value(0).toInt() + 1 );
+        } else {
+            cola.bindValue( ":codigo", 1 );
+        }
+    } else {
+        cola.bindValue( ":codigo", codigo );
+    }
     cola.bindValue( ":nombre", nombre );
     if( descripcion == "" || pdescripcion  )
     { cola.bindValue( ":descripcion", QVariant() ); }

@@ -12,7 +12,8 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += tst_productostest.cpp
 HEADERS += ../edatabasetest.h
-FORMS += ../../plugins/productos/formproductobase.ui
+FORMS += ../../plugins/productos/formproductobase.ui \
+         ../../plugins/productos/FormPrefProductosBase.ui
 
 INCLUDEPATH += ../../plugins/productos \
                ../../utiles

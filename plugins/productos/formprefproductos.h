@@ -31,7 +31,7 @@
  *
  * \author Esteban Zeller
  */
-class FormPrefProductos : public QWidget, public FormPrefHijo, private Ui::FormPrefProductosBase
+class FormPrefProductos : public QWidget, public FormPrefHijo, public Ui::FormPrefProductosBase
 {
 Q_OBJECT
 public:

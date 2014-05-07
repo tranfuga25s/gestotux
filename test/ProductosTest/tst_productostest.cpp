@@ -33,6 +33,7 @@ private Q_SLOTS:
     void testAutocompletadoMarcaProveedor_data();
     void testCategoriaRepetida();
     void testCategoriaRepetida_data();
+    void testOcultarCodigo();
 
 private:
     MProductos *mp;
@@ -241,6 +242,46 @@ void ProductosTest::testCategoriaRepetida_data()
     QTest::addColumn<bool>("devolucion");
     QTest::newRow("Nuevo") << "NuevaCategoria" << false;
     QTest::newRow("Repetida") << "Arte" << true;
+}
+
+#include "formprefproductos.h"
+#include "vproductos.h"
+#include <QTableView>
+/*!
+ * \brief ProductosTest::testOcultarCodigo
+ */
+void ProductosTest::testOcultarCodigo()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "ocultar_codigo", true );
+    p->endGroup();
+    p->endGroup();
+    p=0;
+
+    // En las preferencias se debe respetar
+    FormPrefProductos *fpp = new FormPrefProductos();
+    fpp->cargar();
+    QVERIFY2( fpp->CkBOcultarCodigo->isChecked() == true, "Falta respetar las preferencias" );
+    delete fpp;
+
+    // En la vista de productos no se tiene qu ever el codigo
+    FormAgregarProducto *fap = new FormAgregarProducto();
+    QVERIFY2( fap->LECodigo->isVisible() == false, "Campo de codigo visible en vista de productos" );
+    delete fap;
+
+    MProductos *mp = new MProductos();
+
+    // En la lista de productos no se debe ver la columna
+    VProductos *vp = new VProductos();
+    QVERIFY2( vp->vista->isColumnHidden( mp->fieldIndex( "codigo" ) ), "La columna de codigo no debería de estar visible" );
+    delete vp;
+
+    // Intento guardar un producto con codigo nulo
+    QVERIFY2( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1, "", "", "" ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
+
+    delete mp;
 }
 
 QTEST_MAIN(ProductosTest)
