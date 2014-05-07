@@ -22,9 +22,6 @@ EVentana(parent)
 
     _modelo = new ResumenComprasTotales( this );
     TVCompras->setModel( _modelo );
-    _modelo->select();
-    TVCompras->hideColumn( _modelo->fieldIndex( "id_proveedor" ) );
-    TVCompras->hideColumn( _modelo->fieldIndex( "contado" ) );
     TVCompras->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     TVCompras->setSortingEnabled( true );
 

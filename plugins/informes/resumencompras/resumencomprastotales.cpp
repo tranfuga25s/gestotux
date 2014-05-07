@@ -9,10 +9,12 @@
 #include "mcompra.h"
 
 ResumenComprasTotales::ResumenComprasTotales(QObject *parent) :
-QSqlTableModel( parent )
+QSqlQueryModel( parent )
 {
     _metodo_temporal = PorMes;
-    setTable( "resumen_compra" );
+    consultas.insert( "QSQLITE", "SELECT COUNT( id ) as cantidad, MAX( fecha ) as fecha, strftime( \"%m\" , fecha ) as mes, strftime( \"%Y\", fecha ) as ano, SUM( total ) as total, id_proveedor FROM compras " );
+    //consultas.insert( "QMYSQL", "SELECT COUNT( id ) as cantidad, MAX( fecha ) as fecha, strftime( \"%m\" , fecha ) as mes, strftime( \"%Y\", fecha ) as ano, SUM( total ) as total, id_proveedor FROM compras " );
+    setQuery( consultas.value( QSqlDatabase::database().driverName() ) );
     setHeaderData( 0, Qt::Horizontal, "Cantidad Total" );
     setHeaderData( 1, Qt::Horizontal, QString::fromUtf8( "Fecha última" ) );
     setHeaderData( 2, Qt::Horizontal, "Mes" );
@@ -30,7 +32,6 @@ void ResumenComprasTotales::setearMetodoTemporal( DivisionTemporal metodo )
 {
     this->_metodo_temporal = metodo;
     this->actualizarDatos();
-    this->select();
 }
 
 /*!
@@ -45,24 +46,24 @@ QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
         case Qt::DisplayRole: {
             switch( idx.column() ) {
                 case 0: {
-                    return QSqlTableModel::data( idx, role ).toInt();
+                    return QSqlQueryModel::data( idx, role ).toInt();
                     break;
                 }
                 case 1: {
-                    return QSqlTableModel::data( idx, role ).toDate().toString( Qt::SystemLocaleShortDate );
+                    return QSqlQueryModel::data( idx, role ).toDate().toString( Qt::SystemLocaleShortDate );
                     break;
                 }
                 case 2: {
                     // Lo convierto al mes que corresponde
-                    return QDate::longMonthName( QSqlTableModel::data( idx, role ).toInt() );
+                    return QDate::longMonthName( QSqlQueryModel::data( idx, role ).toInt() );
                     break;
                 }
                 case 4: {
-                    return QString( "$ %L1" ).arg( QSqlTableModel::data( idx, role ).toDouble(), 10, 'f', 2 );
+                    return QString( "$ %L1" ).arg( QSqlQueryModel::data( idx, role ).toDouble(), 10, 'f', 2 );
                     break;
                 }
                 default: {
-                    return QSqlTableModel::data( idx, role );
+                    return QSqlQueryModel::data( idx, role );
                     break;
                 }
             }
@@ -82,14 +83,14 @@ QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
                     break;
                 }
                 default: {
-                    return QSqlTableModel::data( idx, role );
+                    return QSqlQueryModel::data( idx, role );
                     break;
                 }
             }
             break;
         }
         default: {
-            return QSqlTableModel::data( idx, role );
+            return QSqlQueryModel::data( idx, role );
             break;
         }
     }
@@ -108,9 +109,13 @@ void ResumenComprasTotales::actualizarDatos()
                _metodo_temporal == PorBimestre ||
                _metodo_temporal == PorCuatrimestre ||
                _metodo_temporal == PorSeximestre ) {
-        groupBy = " GROUP BY MONTH( fecha ), YEAR( fecha ) ";
+        groupBy = " GROUP BY 3, 4 ";
     } else if( _metodo_temporal == PorAno ) {
-        groupBy = " GROUP BY YEAR( fecha ) ";
+        groupBy = " GROUP BY 4 ";
     }
-    this->setFilter( groupBy );
+    qDebug() << consultas.value( QSqlDatabase::database().driverName() ) + groupBy;
+    setQuery( consultas.value( QSqlDatabase::database().driverName() ) + groupBy );
+    if( this->lastError().isValid() ) {
+        qDebug() << "Error al ejecutar la cola de resumen: " << this->query().lastQuery();
+    }
 }
