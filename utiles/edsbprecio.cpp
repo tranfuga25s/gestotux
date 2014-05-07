@@ -38,12 +38,12 @@ EDSBPrecio::EDSBPrecio(QWidget *parent)
  */
 void EDSBPrecio::keyPressEvent( QKeyEvent * event )
 {
+    qDebug() << event->key();
  if( event->key() == Qt::Key_Period
   && event->modifiers().testFlag( Qt::KeypadModifier ) )
  {
      // Convierto el ingreso en una coma
      QLocale locale;
-     abort();
      int pos_cursor = this->lineEdit()->cursorPosition();
      int pos_coma = this->lineEdit()->text().indexOf( "," );
      if( pos_coma != -1 && pos_cursor < pos_coma ) {

@@ -71,7 +71,7 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     mcp->setearTipoPrecioBuscar( MProductosTotales::Costo );
     TVLista->setModel( mcp );
     TVLista->setAlternatingRowColors( true );
-    TVLista->setItemDelegateForColumn( 1, new DProductosTotales( TVLista ) );
+    TVLista->setItemDelegate( new DProductosTotales( TVLista ) );
     TVLista->setSelectionBehavior( QAbstractItemView::SelectRows );
     TVLista->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
 
