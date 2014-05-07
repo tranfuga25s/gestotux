@@ -144,8 +144,8 @@ void VentasTest::testAnulacionFacturaDescensoStock()
     // Controlo nuevamente el stock
     int i = 0;
     foreach( int id_producto, ids_productos ) {
-        QVERIFY2( ( stock_actual.at(i) - cantidad_productos.at(i) ) == MProductos::stock( id_producto ),
-                  QString( "No coincide el stock del producto %1: anterior: %2, nuevo: %3, diferencia esperada: -%4" )
+        QVERIFY2( ( stock_actual.at(i) + cantidad_productos.at(i) ) == MProductos::stock( id_producto ),
+                  QString( "No coincide el stock del producto %1: anterior: %2, nuevo: %3, diferencia esperada: %4" )
                   .arg( id_producto ).arg( stock_actual.at(i) ).arg( MProductos::stock( id_producto ) ).arg( cantidad_productos.at(i) )
                   .toLocal8Bit() );
         i++;

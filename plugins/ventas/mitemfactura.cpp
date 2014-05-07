@@ -123,7 +123,8 @@ bool MItemFactura::anularItemsFactura( const int id_factura )
     while( cola.next() ) {
         int id_producto = cola.record().value(0).toInt();
         int cantidad = cola.record().value(1).toDouble();
-        if( !MProductos::modificarStock( id_producto, (-1.0)*cantidad ) ) {
+        // Se coloca la cantidad comprada porque hay que aumentar el stock - issue #70
+        if( !MProductos::modificarStock( id_producto, cantidad ) ) {
             qDebug() << "Error al actualizar el stock del producto " << id_producto;
             return false;
         }
