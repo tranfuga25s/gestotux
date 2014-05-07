@@ -24,6 +24,13 @@ FormAgregarProducto::FormAgregarProducto(QWidget *parent) :
         // Cargo las cateogrías que haya
         _categorias = true;
     }
+    /////////////
+    // Veo si está oculto el codigo del producto
+    if( preferencias::getInstancia()->value( "Preferencias/Productos/ocultar_codigo" ).toBool() )
+    {
+      this->LCodigo->setVisible( false );
+      this->LECodigo->setVisible( false );
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Solicito la descripcion si esta habilitado
     if( ! preferencias::getInstancia()->value( "Preferencias/Productos/descripcion" ).toBool() )

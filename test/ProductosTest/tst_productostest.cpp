@@ -268,7 +268,9 @@ void ProductosTest::testOcultarCodigo()
 
     // En la vista de productos no se tiene qu ever el codigo
     FormAgregarProducto *fap = new FormAgregarProducto();
-    QVERIFY2( fap->LECodigo->isVisible() == false, "Campo de codigo visible en vista de productos" );
+    fap->show();
+    QVERIFY2( !fap->LECodigo->isVisible() , "Campo de codigo visible en vista de productos" );
+    QVERIFY2( !fap->LCodigo->isVisible(), "Etiqueta de codigo visible en vista de productos" );
     delete fap;
 
     MProductos *mp = new MProductos();
