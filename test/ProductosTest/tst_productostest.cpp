@@ -262,6 +262,7 @@ void ProductosTest::testOcultarCodigo()
 
     // En las preferencias se debe respetar
     FormPrefProductos *fpp = new FormPrefProductos();
+    fpp->cargar();
     QVERIFY2( fpp->CkBOcultarCodigo->isChecked() == true, "Falta respetar las preferencias" );
     delete fpp;
 
@@ -270,14 +271,16 @@ void ProductosTest::testOcultarCodigo()
     QVERIFY2( fap->LECodigo->isVisible() == false, "Campo de codigo visible en vista de productos" );
     delete fap;
 
-    // Intento guardar un producto con codigo nulo
     MProductos *mp = new MProductos();
-    QVERIFY2( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1, "", "", "" ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
 
     // En la lista de productos no se debe ver la columna
     VProductos *vp = new VProductos();
     QVERIFY2( vp->vista->isColumnHidden( mp->fieldIndex( "codigo" ) ), "La columna de codigo no debería de estar visible" );
     delete vp;
+
+    // Intento guardar un producto con codigo nulo
+    QVERIFY2( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1, "", "", "" ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
+
     delete mp;
 }
 
