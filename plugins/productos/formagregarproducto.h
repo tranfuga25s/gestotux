@@ -36,6 +36,7 @@ class FormAgregarProducto : public QDialog, public Ui::FormProductoBase
         bool _descripcion;
         bool _stock;
         bool _modelo;
+        bool _codigo_oculto;
         QString _nombre_proveedor;
         int _id_anterior;
 

@@ -30,7 +30,8 @@ FormAgregarProducto::FormAgregarProducto(QWidget *parent) :
     {
       this->LCodigo->setVisible( false );
       this->LECodigo->setVisible( false );
-    }
+      _codigo_oculto = true;
+    } else { _codigo_oculto = false; }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Solicito la descripcion si esta habilitado
     if( ! preferencias::getInstancia()->value( "Preferencias/Productos/descripcion" ).toBool() )
@@ -78,7 +79,7 @@ void FormAgregarProducto::cambioPrecioCosto( double precio ) {
 
 void FormAgregarProducto::accept() {
     // Verificaciones de estado correcto
-    if( this->LECodigo->text().isEmpty() ) {
+    if( this->LECodigo->text().isEmpty() && !_codigo_oculto ) {
         QMessageBox::warning( this, "Error", QString::fromUtf8("El código del producto no puede ser nulo. Por favor, ingrese un código para el producto" ) );
         return;
     }
