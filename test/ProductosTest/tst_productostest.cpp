@@ -294,15 +294,23 @@ void ProductosTest::testOcultarCodigo()
 void ProductosTest::testCategoriaEnAltaProducto()
 {
     // Habilito el uso de las categorías en el sistema
-    preferencias::getInstancia()->setValue( "Preferencias/Productos/categorias", true );
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "categorias", true );
+    p->inicio();
+    p=0;
+
+    int id_categoria = 1;
 
     MProductos *mp = new MProductos();
 
-    int id_producto = mp->agregarProducto( "Codigo1", "Test", 10.0, 12.0, 1, 2 );
-    int id_categoria = 2;
+    int id_producto = mp->agregarProducto( "Codigo1", "Test", 10.0, 12.0, 1, id_categoria );
 
     QVector<int> lista = mp->idsSegunCategoria( id_categoria );
-
+    QVERIFY2( lista.size() != 0, "La lista de productos de la cateogría esta vacia" );
+    qDebug() << lista;
     QVERIFY2( lista.contains( id_producto ), "El Producto no se dio de alta en la categoria asignada" );
 
 }

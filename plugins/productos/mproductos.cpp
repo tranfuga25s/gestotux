@@ -302,32 +302,37 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
     { cola.bindValue( ":descripcion", QVariant() ); }
     else
     { cola.bindValue( ":descripcion", descripcion ); }
+
     if( marca == "" || pmarcas  )
     { cola.bindValue( ":marca", QVariant() ); }
     else
     { cola.bindValue( ":marca", marca ); }
+
     if( modelo == "" || pmodelo )
     { cola.bindValue( ":modelo", QVariant() ); }
     else
     { cola.bindValue( ":modelo", modelo); }
-    if( categoria == -1 || pcategorias )
+
+    if( categoria == -1 || !pcategorias )
     { cola.bindValue( ":categoria", 0 ); } // Evita el problema con mostrar cuando hay una relacion
     else
     { cola.bindValue( ":categoria", categoria ); }
+
     if( stock ==  0 || !pstock ) {
         cola.bindValue( ":stock", QVariant() );
     } else {
         cola.bindValue( ":stock", stock );
     }
+
     if( costo == 0.0 ) {
         cola.bindValue( ":precio_costo", QVariant() );
     } else {
         cola.bindValue( ":precio_costo", costo );
     }
+
     cola.bindValue( ":precio_venta", venta );
     cola.bindValue( ":habilitado", true );
     if( cola.exec() ) {
-        qDebug( "Producto agregado correctamente" );
         return cola.lastInsertId().toInt();
     } else {
         qWarning( "Error al intentar insertar el producto." );
