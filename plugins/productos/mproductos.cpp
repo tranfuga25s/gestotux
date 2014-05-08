@@ -266,11 +266,11 @@ bool MProductos::modificarStock( const int id_producto, const double cantidad )
  * \param modelo Modelo del producto
  * \returns Verdadero si se pudo ingresar correctamente el producto a la base de datos, falso en caso contrario.
  */
-bool MProductos::agregarProducto(const QString codigo, const QString nombre, const double costo, const double venta, int stock, int categoria, QString descripcion, QString marca, QString modelo) {
+int MProductos::agregarProducto(const QString codigo, const QString nombre, const double costo, const double venta, int stock, int categoria, QString descripcion, QString marca, QString modelo) {
     QSqlQuery cola;
     if( !cola.prepare( "INSERT INTO producto ( codigo, nombre, precio_costo, precio_venta, stock, id_categoria, descripcion, marca, modelo, habilitado ) VALUES( :codigo, :nombre, :precio_costo, :precio_venta, :stock, :categoria, :descripcion, :marca, :modelo, :habilitado )" ) ) {
         qDebug() <<  cola.lastError().text();
-        return false;
+        return -1;
     }
     preferencias *p = preferencias::getInstancia();
     p->inicio();
@@ -328,12 +328,12 @@ bool MProductos::agregarProducto(const QString codigo, const QString nombre, con
     cola.bindValue( ":habilitado", true );
     if( cola.exec() ) {
         qDebug( "Producto agregado correctamente" );
-     return true;
+        return cola.lastInsertId().toInt();
     } else {
-      qWarning( "Error al intentar insertar el producto." );
-      qDebug() << cola.lastError().text();
-      qDebug() << cola.lastQuery();
-      return false;
+        qWarning( "Error al intentar insertar el producto." );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+        return -1;
     }
 }
 

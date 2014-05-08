@@ -124,7 +124,7 @@ void FormAgregarProducto::accept() {
         return;
     }
     // Todos los datos pasaron bien luego de este punto
-    if( m->agregarProducto(
+    int id_producto = m->agregarProducto(
                 this->LECodigo->text(),
                 this->LENombre->text(),
                 this->DSBCosto->value(),
@@ -133,10 +133,15 @@ void FormAgregarProducto::accept() {
                 //this->CBCategoria->idActual(),
                 this->LEDescripcion->text(),
                 this->LEMarca->text(),
-                this->LEModelo->text() ) ) {
+                this->LEModelo->text() );
+    if( id_producto > 0 ) {
         QMessageBox::information( this, "Correcto", QString::fromUtf8( "El producto se agregó correctamente" ) );
         if( _id_anterior < 0 ) {
-            emit agregarProducto( _id_anterior,  m->idProductoPorCodigo( LECodigo->text() )  );
+            if( _codigo_oculto ) {
+                emit agregarProducto( _id_anterior, id_producto );
+            } else {
+                emit agregarProducto( _id_anterior, id_producto );
+            }
         }
         QDialog::accept();
         delete m;
