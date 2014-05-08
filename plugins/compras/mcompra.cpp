@@ -187,16 +187,21 @@ QVariant MCompra::data(const QModelIndex &index, int role ) const
 	{
 		switch( index.column() )
 		{
-			case 3:
-            {
-                return QString( "$ %L1" ).arg( QSqlRelationalTableModel::data( index, role ).toDouble(), 10, 'f', 2 );
-				break;
-			}
-			default:
-			{
-				return QSqlRelationalTableModel::data( index, role );
-				break;
-			}
+                    case 2:
+                    {
+                        return QSqlRelationalTableModel::data( index, role ).toDate().toString( Qt::SystemLocaleShortDate );
+                        break;
+                    }
+                    case 3:
+                    {
+                        return QString( "$ %L1" ).arg( QSqlRelationalTableModel::data( index, role ).toDouble(), 10, 'f', 2 );
+                        break;
+                    }
+                    default:
+                    {
+                        return QSqlRelationalTableModel::data( index, role );
+                        break;
+                    }
 		}
 		break;
 	}
