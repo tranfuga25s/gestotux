@@ -129,8 +129,8 @@ void FormAgregarProducto::accept() {
                 this->LENombre->text(),
                 this->DSBCosto->value(),
                 this->DSBVenta->value(),
-                this->SBStock->value(), 0,
-                //this->CBCategoria->idActual(),
+                this->SBStock->value(),
+                this->CBCategoria->idActual(),
                 this->LEDescripcion->text(),
                 this->LEMarca->text(),
                 this->LEModelo->text() );

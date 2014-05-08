@@ -506,7 +506,7 @@ bool MProductos::existeCodigo( const QString codigo )
 {
     if( codigo.isNull() || codigo.isEmpty() ) {  return false;  }
     QSqlQuery cola;
-    if( cola.exec( QString( "SELECT COUNT(id) FROM producto WHERE codigo = %1" ).arg( codigo ) ) ) {
+    if( cola.exec( QString( "SELECT COUNT(id) FROM producto WHERE codigo = '%1'" ).arg( codigo ) ) ) {
         cola.next();
         if( cola.record().value(0).toInt() > 0 ) {
             return true;
