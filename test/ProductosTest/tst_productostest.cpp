@@ -34,6 +34,7 @@ private Q_SLOTS:
     void testCategoriaRepetida();
     void testCategoriaRepetida_data();
     void testOcultarCodigo();
+    void testCategoriaEnAltaProducto();
 
 private:
     MProductos *mp;
@@ -284,6 +285,34 @@ void ProductosTest::testOcultarCodigo()
     QVERIFY2( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1, "", "", "" ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
 
     delete mp;
+}
+
+/*!
+ * \brief ProductosTest::testCategoriaEnAltaProducto
+ * Test para verificar ticket issue #73
+ */
+void ProductosTest::testCategoriaEnAltaProducto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "categorias", true );
+    p->inicio();
+    p=0;
+
+    int id_categoria = 1;
+
+    MProductos *mp = new MProductos();
+
+    int id_producto = mp->agregarProducto( "Codigo1", "Test", 10.0, 12.0, 1, id_categoria );
+
+    QVector<int> lista = mp->idsSegunCategoria( id_categoria );
+    QVERIFY2( lista.size() != 0, "La lista de productos de la cateogría esta vacia" );
+    qDebug() << lista;
+    QVERIFY2( lista.contains( id_producto ), "El Producto no se dio de alta en la categoria asignada" );
+
 }
 
 QTEST_MAIN(ProductosTest)
