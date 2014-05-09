@@ -69,7 +69,6 @@ VProductos::VProductos(QWidget *parent)
  { vista->hideColumn( rmodelo->fieldIndex( "precio_costo" ) ); } else { vista->showColumn( rmodelo->fieldIndex( "precio_costo" ) ); }
  if( p->value( "ocultar_codigo", false ).toBool() )
  { vista->hideColumn( rmodelo->fieldIndex( "codigo" ) ); }
-
  vista->resizeColumnsToContents();
  vista->verticalHeader()->setResizeMode( QHeaderView::ResizeToContents );
  vista->horizontalHeader()->setResizeMode( rmodelo->fieldIndex( "nombre" ), QHeaderView::ResizeToContents );
