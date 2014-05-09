@@ -37,18 +37,22 @@ MProductos::MProductos(QObject *parent)
  {
   setRelation( 1, QSqlRelation( "categoria_producto", "id", "nombre" ) );
  }
- p->endGroup();
- p->endGroup();
- p=0;
  setHeaderData( 2, Qt::Horizontal, QString::fromUtf8( "#Código" ) );
  setHeaderData( 3, Qt::Horizontal, "Nombre" );
  setHeaderData( 4, Qt::Horizontal, "Precio de Costo" );
  setHeaderData( 5, Qt::Horizontal, "Precio de venta" );
  setHeaderData( 6, Qt::Horizontal, "Descripcion" );
- setHeaderData( 7, Qt::Horizontal, "Marca" );
+ if( p->value( "marca_proveedor", false ).toBool() ) {
+     setHeaderData( 7, Qt::Horizontal, "Proveedor" );
+ } else {
+    setHeaderData( 7, Qt::Horizontal, "Marca" );
+ }
  setHeaderData( 8, Qt::Horizontal, "Stock" );
  setHeaderData( 9, Qt::Horizontal, "Habilitado" );
  setSort( 0, Qt::AscendingOrder );
+ p->endGroup();
+ p->endGroup();
+ p=0;
 }
 
 

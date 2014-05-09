@@ -183,6 +183,9 @@ void ProductosTest::testIdsSegunProveedorInvalida()
 
 #include "preferencias.h"
 #include "formagregarproducto.h"
+#include "vproductos.h"
+#include <QHeaderView>
+#include <QTableView>
 /*!
  * \brief ProductosTest::testAutocompletadoMarcaProveedor
  */
@@ -208,6 +211,12 @@ void ProductosTest::testAutocompletadoMarcaProveedor()
     fap->setearProveedor( proveedor );
 
     QVERIFY( fap->LEMarca->text() == proveedor );
+    delete fap;
+
+    VProductos *vp = new VProductos();
+    QCOMPARE( vp->vista->model()->headerData( qobject_cast<QSqlTableModel*>(vp->vista->model())->fieldIndex( "marca" ), Qt::Horizontal, Qt::DisplayRole ).toString(),
+              QString("Proveedor") );
+    delete vp;
 
 }
 
@@ -310,7 +319,6 @@ void ProductosTest::testCategoriaEnAltaProducto()
 
     QVector<int> lista = mp->idsSegunCategoria( id_categoria );
     QVERIFY2( lista.size() != 0, "La lista de productos de la cateogría esta vacia" );
-    qDebug() << lista;
     QVERIFY2( lista.contains( id_producto ), "El Producto no se dio de alta en la categoria asignada" );
 
 }
