@@ -144,7 +144,11 @@ VProductos::VProductos(QWidget *parent)
  ActVerCosto->setChecked( p->value( "mostrar-costo", true ).toBool() );
  connect( ActVerCosto, SIGNAL( toggled( bool ) ), this, SLOT( mostrarOcultarCosto( bool ) ) );
 
- addAction( ActVerCosto );
+ if( p->value( "mostrar-costo", true ).toBool() ) {
+    addAction( ActVerCosto );
+ } else {
+     ActVerCosto->setVisible( false );
+ }
  addAction( ActVerTodos );
  addAction( ActCerrar );
 

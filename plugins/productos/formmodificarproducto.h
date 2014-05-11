@@ -14,7 +14,7 @@
  *
  * \author Esteban Zeller
  */
-class FormModificarProducto : public QDialog, private Ui::FormProductoBase
+class FormModificarProducto : public QDialog, public Ui::FormProductoBase
 {
     Q_OBJECT
 public:

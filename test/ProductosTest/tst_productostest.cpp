@@ -31,10 +31,12 @@ private Q_SLOTS:
     void testIdsSegunProveedorInvalida();
     void testAutocompletadoMarcaProveedor();
     void testAutocompletadoMarcaProveedor_data();
+    void testMarcaProveedor();
     void testCategoriaRepetida();
     void testCategoriaRepetida_data();
     void testOcultarCodigo();
     void testCategoriaEnAltaProducto();
+    void testOcultarCosto();
 
 private:
     MProductos *mp;
@@ -183,6 +185,7 @@ void ProductosTest::testIdsSegunProveedorInvalida()
 
 #include "preferencias.h"
 #include "formagregarproducto.h"
+#include "formmodificarproducto.h"
 #include "vproductos.h"
 #include <QHeaderView>
 #include <QTableView>
@@ -213,10 +216,6 @@ void ProductosTest::testAutocompletadoMarcaProveedor()
     QVERIFY( fap->LEMarca->text() == proveedor );
     delete fap;
 
-    VProductos *vp = new VProductos();
-    QCOMPARE( vp->vista->model()->headerData( qobject_cast<QSqlTableModel*>(vp->vista->model())->fieldIndex( "marca" ), Qt::Horizontal, Qt::DisplayRole ).toString(),
-              QString("Proveedor") );
-    delete vp;
 
 }
 
@@ -230,6 +229,32 @@ void ProductosTest::testAutocompletadoMarcaProveedor_data()
     QTest::addColumn<double>("precio");
     QTest::addColumn<double>("stock");
     QTest::newRow("Proveedor1") << "mc1" << "Proveedor 1" << 10.4 << 2.0;
+}
+
+void ProductosTest::testMarcaProveedor()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "marca_proveedor", true );
+    p->endGroup();
+    p->endGroup();
+    p=0;
+
+    VProductos *vp = new VProductos();
+    QCOMPARE( vp->vista->model()->headerData( qobject_cast<QSqlTableModel*>(vp->vista->model())->fieldIndex( "marca" ), Qt::Horizontal, Qt::DisplayRole ).toString(),
+              QString("Proveedor") );
+    delete vp;
+
+    FormAgregarProducto *fap = new FormAgregarProducto();
+    QVERIFY2( fap->LEMarca->isVisible() == false, "El campo marca debería de ser proveedor o no estar visible" );
+    QVERIFY2( fap->LMarca->isVisible() == false, "El campo marca debería de ser proveedor o no estar visible" );
+    delete fap;
+
+    FormModificarProducto *fmp = new FormModificarProducto( new MProductos() );
+    QVERIFY2( fmp->LEMarca->isVisible() == false, "El campo marca debería de ser proveedor o no estar visible" );
+    QVERIFY2( fmp->LMarca->isVisible() == false, "El campo marca debería de ser proveedor o no estar visible" );
+    delete fmp;
 }
 
 #include "mcategorias.h"
@@ -321,6 +346,30 @@ void ProductosTest::testCategoriaEnAltaProducto()
     QVERIFY2( lista.size() != 0, "La lista de productos de la cateogría esta vacia" );
     QVERIFY2( lista.contains( id_producto ), "El Producto no se dio de alta en la categoria asignada" );
 
+}
+
+void ProductosTest::testOcultarCosto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "costo", false );
+    p->inicio();
+    p=0;
+
+    VProductos *vp = new VProductos();
+    QVERIFY2( vp->ActVerCosto->isVisible() == false, "No se deberia de mostrar el boton del costo del producto" );
+    delete vp;
+
+    FormAgregarProducto *fap = new FormAgregarProducto();
+    QVERIFY2( fap->DSBCosto->isVisible() == false, "No se debería de ver el precio de costo en agregar producto" );
+    delete fap;
+
+    FormModificarProducto *fmp = new FormModificarProducto( new MProductos() );
+    QVERIFY2( fmp->DSBCosto->isVisible() == false, "No se debería de ver el precio de costo en modificar producto" );
+    delete fmp;
 }
 
 QTEST_MAIN(ProductosTest)

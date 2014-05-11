@@ -51,7 +51,7 @@ protected slots:
     void mostrarDeshabilitados( bool );
     void mostrarOcultarCosto( bool );
 
-private:
+public:
     QAction *ActHabilitar;
     QAction *ActDeshabilitar;
     QAction *ActCategorias;
