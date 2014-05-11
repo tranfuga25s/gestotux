@@ -17,6 +17,7 @@ FORMS += ../../plugins/ventas/FormAgregarVentaBase.ui \
          ../../plugins/ventas/FormPrefVentaBase.ui
 
 INCLUDEPATH += ../../plugins/ventas \
+               ../../plugins/productos \
                ../../utiles
 
 LIBS += ../../bin/plugins/libventas.so \

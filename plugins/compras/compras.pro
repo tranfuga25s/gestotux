@@ -25,7 +25,8 @@ TRANSLATIONS += compras.ts
 
 FORMS += FormAgregarCompraBase.ui \
          FormActualizarPrecios.ui \
-         ../productos/formproductobase.ui
+         ../productos/formproductobase.ui \
+    FormPrefComprasBase.ui
 
 RESOURCES += compras.qrc
 
@@ -36,7 +37,8 @@ SOURCES += mcompra.cpp \
            mcompraproducto.cpp \
            FormActualizarPrecios.cpp \
            vlistacompra.cpp \
-           ../productos/formagregarproducto.cpp
+           ../productos/formagregarproducto.cpp \
+    formprefcompras.cpp
 
 HEADERS += formagregarcompra.h \
            mcompra.h \
@@ -46,7 +48,8 @@ HEADERS += formagregarcompra.h \
            FormActualizarPrecios.h \
            vlistacompra.h \
            ../productos/formagregarproducto.h \
-           ../productos/ecbcategoriasproductos.h
+           ../productos/ecbcategoriasproductos.h \
+    formprefcompras.h
 
 OTHER_FILES += compras.QMYSQL.sql \
                compras.QSQLITE.sql

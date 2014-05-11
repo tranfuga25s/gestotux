@@ -19,47 +19,40 @@
  ***************************************************************************/
 #include "edsbprecio.h"
 
-#include <QLatin1Char>
+#include <QLineEdit>
 #include <QKeyEvent>
 #include <QCoreApplication>
+
+#include <QDebug>
 
 EDSBPrecio::EDSBPrecio(QWidget *parent)
  : QDoubleSpinBox( parent )
 {
  setPrefix( "$ " );
+ setDecimals( 2 );
 }
 
 /*!
-    \fn EDSBPrecio::keyPressEvent ( QKeyEvent * event )
+ * \fn EDSBPrecio::keyPressEvent ( QKeyEvent * event )
+ * \param evento
  */
 void EDSBPrecio::keyPressEvent( QKeyEvent * event )
 {
- //qDebug( QString( "Tecla: %1, texto: %2" ).arg( event->nativeScanCode() ).arg( event->text()).toLocal8Bit() );
- switch( event->nativeScanCode() )
+    qDebug() << event->key();
+ if( event->key() == Qt::Key_Period
+  && event->modifiers().testFlag( Qt::KeypadModifier ) )
  {
-#ifdef Q_WS_X11
-     case 91:
-     {
-       QKeyEvent *ev = new QKeyEvent( event->type(), Qt::Key_Comma, event->modifiers(), ",", event->isAutoRepeat(), event->count() );
-       ev->setAccepted( false );
-       QCoreApplication::sendEvent( this, ev );
-       break;
+     // Convierto el ingreso en una coma
+     QLocale locale;
+     int pos_cursor = this->lineEdit()->cursorPosition();
+     int pos_coma = this->lineEdit()->text().indexOf( "," );
+     if( pos_coma != -1 && pos_cursor < pos_coma ) {
+         this->lineEdit()->setText( this->lineEdit()->text().remove( pos_cursor, abs( pos_coma-pos_cursor ) ) );
      }
-#endif
-#ifdef Q_WS_WIN
-     case 83:
-     {
-       QKeyEvent *ev = new QKeyEvent( event->type(), Qt::Key_Comma, event->modifiers(), ",", event->isAutoRepeat(), event->count() );
-       ev->setAccepted( false );
-       QCoreApplication::sendEvent( this, ev );
-       break;
-     }
-#endif
-     default:
-     {
+     this->lineEdit()->setText( this->lineEdit()->text().split( "," ).first().replace( ",", "" ).append( locale.decimalPoint() ) );
+     event->accept();
+ } else {
        QDoubleSpinBox::keyPressEvent( event );
-       break;
-     }
-   }
+ }
 }
 

@@ -1,7 +1,5 @@
 #-------------------------------------------------
-#
-# Project created by QtCreator 2014-04-29T21:05:45
-#
+# Test para compras
 #-------------------------------------------------
 
 QT       += sql testlib
@@ -15,7 +13,12 @@ TEMPLATE = app
 SOURCES += tst_comprastest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-INCLUDEPATH += ../../plugins/compras
+INCLUDEPATH += ../../plugins/compras \
+               ../../utiles
+
+LIBS += ../../bin/plugins/libcompras.so
+
+FORMS += ../../plugins/compras/FormPrefComprasBase.ui
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

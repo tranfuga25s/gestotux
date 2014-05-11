@@ -24,6 +24,14 @@ FormAgregarProducto::FormAgregarProducto(QWidget *parent) :
         // Cargo las cateogrías que haya
         _categorias = true;
     }
+    /////////////
+    // Veo si está oculto el codigo del producto
+    if( preferencias::getInstancia()->value( "Preferencias/Productos/ocultar_codigo" ).toBool() )
+    {
+      this->LCodigo->setVisible( false );
+      this->LECodigo->setVisible( false );
+      _codigo_oculto = true;
+    } else { _codigo_oculto = false; }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Solicito la descripcion si esta habilitado
     if( ! preferencias::getInstancia()->value( "Preferencias/Productos/descripcion" ).toBool() )
@@ -71,7 +79,7 @@ void FormAgregarProducto::cambioPrecioCosto( double precio ) {
 
 void FormAgregarProducto::accept() {
     // Verificaciones de estado correcto
-    if( this->LECodigo->text().isEmpty() ) {
+    if( this->LECodigo->text().isEmpty() && !_codigo_oculto ) {
         QMessageBox::warning( this, "Error", QString::fromUtf8("El código del producto no puede ser nulo. Por favor, ingrese un código para el producto" ) );
         return;
     }
@@ -116,19 +124,24 @@ void FormAgregarProducto::accept() {
         return;
     }
     // Todos los datos pasaron bien luego de este punto
-    if( m->agregarProducto(
+    int id_producto = m->agregarProducto(
                 this->LECodigo->text(),
                 this->LENombre->text(),
                 this->DSBCosto->value(),
                 this->DSBVenta->value(),
-                this->SBStock->value(), 0,
-                //this->CBCategoria->idActual(),
+                this->SBStock->value(),
+                this->CBCategoria->idActual(),
                 this->LEDescripcion->text(),
                 this->LEMarca->text(),
-                this->LEModelo->text() ) ) {
+                this->LEModelo->text() );
+    if( id_producto > 0 ) {
         QMessageBox::information( this, "Correcto", QString::fromUtf8( "El producto se agregó correctamente" ) );
         if( _id_anterior < 0 ) {
-            emit agregarProducto( _id_anterior,  m->idProductoPorCodigo( LECodigo->text() )  );
+            if( _codigo_oculto ) {
+                emit agregarProducto( _id_anterior, id_producto );
+            } else {
+                emit agregarProducto( _id_anterior, id_producto );
+            }
         }
         QDialog::accept();
         delete m;

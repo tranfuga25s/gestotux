@@ -1,10 +1,11 @@
 #ifndef RESUMENCOMPRASPROVEEDOR_H
 #define RESUMENCOMPRASPROVEEDOR_H
 
-#include <QSqlTableModel>
+#include <QSqlQueryModel>
+#include <QMap>
 #include "TiposPeriodos.h"
 
-class ResumenComprasProveedor : public QSqlTableModel
+class ResumenComprasProveedor : public QSqlQueryModel
 {
     Q_OBJECT
 public:
@@ -21,6 +22,8 @@ private:
     QString _filtro;
     void actualizarDatos();
     DivisionTemporal _metodo_temporal;
+
+    QMap<QString,QString> consultas;
        
 };
 

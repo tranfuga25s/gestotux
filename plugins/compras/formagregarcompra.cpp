@@ -44,9 +44,9 @@
 FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
 : EVentana( parent ), Ui::FormAgregarCompraBase()
 {
-	setupUi(this);
-	setObjectName( "agregar_compra" );
-	setWindowTitle( "Agregar nueva compra" );
+    setupUi(this);
+    setObjectName( "agregar_compra" );
+    setWindowTitle( "Agregar nueva compra" );
     setWindowIcon( QIcon( ":/imagenes/agregar_compras.png" ) );
 
     if( m == 0 ) {
@@ -71,7 +71,7 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     mcp->setearTipoPrecioBuscar( MProductosTotales::Costo );
     TVLista->setModel( mcp );
     TVLista->setAlternatingRowColors( true );
-    TVLista->setItemDelegateForColumn( 1, new DProductosTotales( TVLista ) );
+    TVLista->setItemDelegate( new DProductosTotales( TVLista ) );
     TVLista->setSelectionBehavior( QAbstractItemView::SelectRows );
     TVLista->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
 
@@ -85,6 +85,19 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
         RBOtro->setVisible( false );
         LFormaPago->setVisible( false );
     }
+
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Ventas" );
+    if( p->value("filtrarProveedor").toBool() ) {
+        connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), this, SLOT( cambioProveedor( int ) ) );
+    } else {
+        CBProveedor->setVisible( false );
+    }
+    p->endGroup();
+    p->endGroup();
+    p=0;
 }
 
 
@@ -130,6 +143,16 @@ void FormAgregarCompra::guardar()
  // Busco el ultimo id de compra
  int id_compra = compra->ultimoId();
  //qDebug( qPrintable( QString( "idCompra: %1" ).arg( id_compra ) ) );
+
+ preferencias *p = preferencias::getInstancia();
+ p->inicio();
+ p->beginGroup( "Preferencias" );
+ p->beginGroup( "Compras" );
+ bool auto_agregar_productos = p->value( "auto-agregar-productos", false ).toBool();
+ p->endGroup();
+ p->endGroup();
+ p=0;
+
  // recorro el modelo y guardo los datos
  MCompraProducto *m = new MCompraProducto( this );
  bool siATodo = false;
@@ -144,7 +167,7 @@ void FormAgregarCompra::guardar()
          if( noATodo )
              // No quiere agregar ningun producto, siempre salto al siguiente
              continue;
-         if( siATodo )
+         if( siATodo || auto_agregar_productos )
                  ret = QMessageBox::Yes;
             else
                 ret = QMessageBox::question( this,
@@ -162,18 +185,35 @@ void FormAgregarCompra::guardar()
             case QMessageBox::Yes:
             case 0:
             {
-                 // Agrego el producto
-                FormAgregarProducto *f = new FormAgregarProducto();
-                f->setearNombre( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() );
-                //f->setearStockInicial( mcp->data( mcp->index( i, 0 ), Qt::EditRole ).toInt() );
-                f->setearStockInicial( 0 );
-                f->setearPrecioCosto( mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() );
-                f->setearNumeroAnterior( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
-                f->setearDesdeCompra( true );
-                f->setearProveedor( CBProveedor->currentText() );
-                connect( f, SIGNAL( agregarProducto( int, int ) ), this, SLOT( arreglarProductoAgregado( int, int ) ) );
-                emit agregarVentana( f );
-                parar = true;
+                // Agrego el producto
+                 if( auto_agregar_productos ) {
+                    FormAgregarProducto *f = new FormAgregarProducto();
+                    f->setearNombre( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() );
+                    //f->setearStockInicial( mcp->data( mcp->index( i, 0 ), Qt::EditRole ).toInt() );
+                    f->setearStockInicial( 0 );
+                    f->setearPrecioCosto( mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() );
+                    f->setearNumeroAnterior( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
+                    f->setearDesdeCompra( true );
+                    f->setearProveedor( CBProveedor->currentText() );
+                    connect( f, SIGNAL( agregarProducto( int, int ) ), this, SLOT( arreglarProductoAgregado( int, int ) ) );
+                    emit agregarVentana( f );
+                    parar = true;
+                 } else {
+                     MProductos *mp = new MProductos();
+                     int id_producto_nuevo = mp->agregarProducto(
+                                 QString(),
+                                 mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString(), // Nombre
+                                 mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Costo
+                                 mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Venta
+                                 0 // Stock inicial cero
+                                 );
+                     if( id_producto_nuevo > 0 ) {
+                        arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(), id_producto_nuevo );
+                     } else {
+                         qWarning() << "Error al insertar el nuevo producto. Hagalo manualmente";
+                     }
+                     delete mp;
+                }
                 break;
             }
             case QMessageBox::NoToAll:
@@ -325,5 +365,16 @@ void FormAgregarCompra::arreglarProductoAgregado( int anterior, int nuevo )
         if( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() == anterior ) {
             mcp->setData( mcp->index( i, 1 ), nuevo, Qt::EditRole );
         }
+    }
+}
+
+/*!
+ * \brief FormAgregarCompra::cambioProveedor
+ * \param id_proveedor
+ */
+void FormAgregarCompra::cambioProveedor(int id_proveedor)
+{
+    if( id_proveedor > 0 ) {
+        CBProducto->filtrarPorProveedor( id_proveedor );
     }
 }

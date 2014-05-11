@@ -9,6 +9,7 @@ class MItemFactura : public QSqlRelationalTableModel
 public:
     explicit MItemFactura(QObject *parent = 0);
     bool agregarItemFactura( const int id_venta, const double cantidad, const QString texto, const double precio_unitario, const int id_producto );
+    static bool anularItemsFactura( const int id_factura );
 
 private:
     void inicializar();

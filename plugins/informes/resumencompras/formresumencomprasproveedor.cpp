@@ -12,9 +12,8 @@ FormResumenComprasProveedor::FormResumenComprasProveedor(QWidget *parent) :
 
     _modelo = new ResumenComprasProveedor( this );
     TVResumen->setModel( _modelo );
-    _modelo->select();
-    TVResumen->hideColumn( _modelo->fieldIndex( "id_proveedor" ) );
-    TVResumen->hideColumn( _modelo->fieldIndex( "contado" ) );
+    TVResumen->hideColumn( 6 ); // Proveedor
+    TVResumen->hideColumn( 7 ); // Contado
 
     connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), _modelo, SLOT( cambiarProveedor( int ) ) );
 
