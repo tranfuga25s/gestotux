@@ -13,9 +13,12 @@ TEMPLATE = app
 SOURCES += tst_comprastest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-INCLUDEPATH += ../../plugins/compras
+INCLUDEPATH += ../../plugins/compras \
+               ../../utiles
 
 LIBS += ../../bin/plugins/libcompras.so
+
+FORMS += ../../plugins/compras/FormPrefComprasBase.ui
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

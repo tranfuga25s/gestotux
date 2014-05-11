@@ -69,9 +69,22 @@ QList< QActionGroup * > Compras::accionesBarra()
 QString Compras::nombre() const
 { return "compras"; }
 
+#include "formprefcompras.h"
+/*!
+ * \brief Compras::formsPreferencias
+ * \return
+ */
 QWidgetList Compras::formsPreferencias()
-{ return QWidgetList(); }
+{
+    QWidgetList lista;
+    lista.append( new FormPrefCompras() );
+    return lista;
+}
 
+/*!
+ * \brief Compras::crearMenu
+ * \param m
+ */
 void Compras::crearMenu(QMenuBar* m)
 {
  QMenu *mCompras = m->addMenu( "Compras" );
@@ -81,6 +94,9 @@ void Compras::crearMenu(QMenuBar* m)
  mCompras->addAction( ActCompras );
 }
 
+/*!
+ * \brief Compras::crearToolBar
+ */
 void Compras::crearToolBar(QToolBar*/* t */)
 {}
 

@@ -236,7 +236,7 @@ bool MProductos::modificarStock( const int id_producto, const double cantidad )
         anterior += cantidad;
         if(  cola.exec( QString( "UPDATE producto SET stock = %1 WHERE id = %2" ).arg( anterior ).arg( id_producto ) ) )
         {
-                qDebug( "Stock actualizado correctamente" );
+                //qDebug( "Stock actualizado correctamente" );
                 return true;
         }
         else
@@ -441,7 +441,7 @@ double MProductos::buscarPrecioVenta( const int id_producto )
         if( cola.next() ) {
             return cola.record().value(0).toDouble();
         } else {
-            qWarning( "Error al hacer next la cola de busqueda del precio de compra del producto solicitado" );
+            qWarning() << "Error al hacer next la cola de busqueda del precio de compra del producto solicitado";
         }
     }
     else
@@ -465,7 +465,7 @@ double MProductos::buscarPrecioCompra( const QString codigo )
         return -1.0;
     }
     QSqlQuery cola;
-    if( cola.exec( QString( "SELECT precio_costo FROM producto WHERE codigo = %1" ).arg( codigo ) ) )
+    if( cola.exec( QString( "SELECT precio_costo FROM producto WHERE codigo = '%1'" ).arg( codigo ) ) )
     {
         if( cola.next() ) {
             return cola.record().value(0).toDouble();
