@@ -36,6 +36,7 @@ private Q_SLOTS:
     void testCategoriaRepetida_data();
     void testOcultarCodigo();
     void testCategoriaEnAltaProducto();
+    void testModeloEnAltaProducto();
     void testOcultarCosto();
 
 private:
@@ -347,6 +348,43 @@ void ProductosTest::testCategoriaEnAltaProducto()
     QVERIFY2( lista.size() != 0, "La lista de productos de la cateogría esta vacia" );
     QVERIFY2( lista.contains( id_producto ), "El Producto no se dio de alta en la categoria asignada" );
 
+}
+
+#include <QSqlRecord>
+#include <QVector>
+/*!
+ * \brief ProductosTest::testModeloEnAltaProducto
+ * Test para verificar que se de correctamente de alta el modelo al agregar un producto
+ * Ver issue #77.
+ */
+void ProductosTest::testModeloEnAltaProducto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "marcas", true );
+    p->inicio();
+    p=0;
+
+    MProductos *mp = new MProductos();
+
+    int id_producto = mp->agregarProducto( QString(), "Test", 10.0, 12.0, 1, 1, QString(), "Marca 1" );
+
+    QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
+
+    QSqlQuery cola;
+    QVector<QString> marcas;
+    QVERIFY( cola.exec( "SELECT marca FROM producto" ) );
+    while( cola.next() ) {
+        QString marca = cola.record().value(0).toString();
+        if( !marca.isEmpty() && !marca.isNull() ) {
+            marcas.append( cola.record().value(0).toString() );
+        }
+    }
+    QVERIFY2( marcas.size() > 0 , "No hay ninguna marca!" );
+    QVERIFY2( marcas.contains( "Marca 1" ), "No se encontró la marca" );
 }
 
 void ProductosTest::testOcultarCosto()
