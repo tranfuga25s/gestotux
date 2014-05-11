@@ -213,10 +213,8 @@ void ProductosTest::testAutocompletadoMarcaProveedor()
     fap->setearPrecioCosto( precio );
     fap->setearProveedor( proveedor );
 
-    QVERIFY( fap->LEMarca->text() == proveedor );
+    QVERIFY( fap->LEMarca->text() == proveedor );    
     delete fap;
-
-
 }
 
 /*!
@@ -229,6 +227,7 @@ void ProductosTest::testAutocompletadoMarcaProveedor_data()
     QTest::addColumn<double>("precio");
     QTest::addColumn<double>("stock");
     QTest::newRow("Proveedor1") << "mc1" << "Proveedor 1" << 10.4 << 2.0;
+    QTest::newRow("Proveedor1") << "mc2" << "Proveedor 2" << 10.4 << 2.0;
 }
 
 void ProductosTest::testMarcaProveedor()
@@ -316,7 +315,9 @@ void ProductosTest::testOcultarCodigo()
     delete vp;
 
     // Intento guardar un producto con codigo nulo
-    QVERIFY2( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1, "", "", "" ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
+    QVERIFY2( mp->agregarProducto( QString(), "Test nulo", 1.0, 1.1, 1.0, 1 ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
+    QVERIFY2( mp->agregarProducto( QString(), "Test nulo2", 1.0, 1.1, 1.0, 1 ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
+    QVERIFY2( mp->agregarProducto( QString(), "Test nulo3", 1.0, 1.1, 1.0, 1 ) > 0, "Se debería de permitir agregar un producto con codigo nulo si está habilitado" );
 
     delete mp;
 }

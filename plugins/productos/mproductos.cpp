@@ -287,14 +287,20 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
     bool pstock = p->value( "stock", false ).toBool();
     bool ocodigo = p->value( "ocultar_codigo", false ).toBool();
     p->endGroup(); p->endGroup(); p=0;
-    if( ocodigo && codigo.isEmpty() ) {
+    if( ocodigo && ( codigo.isEmpty() || codigo == QString() ) ) {
         // busco el ultimo ID y le sumo un valor
         QSqlQuery cola2;
         if( !cola2.exec( "SELECT MAX( id ) FROM producto;" ) ) {
-
+            qDebug() << "Error al intentar buscar el nuevo codigo";
+            qDebug() << cola2.lastError().text();
+            return -2;
         }
         if( cola2.next() ) {
-            cola.bindValue( ":codigo", cola2.record().value(0).toInt() + 1 );
+            int cod = cola2.record().value(0).toInt() + 1;
+            while( existeCodigo( QString::number( cod ) ) ) {
+                cod++;
+            }
+            cola.bindValue( ":codigo", cod );
         } else {
             cola.bindValue( ":codigo", 1 );
         }
