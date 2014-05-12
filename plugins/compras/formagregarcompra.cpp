@@ -149,6 +149,7 @@ void FormAgregarCompra::guardar()
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Compras" );
  bool auto_agregar_productos = p->value( "auto-agregar-productos", false ).toBool();
+ bool marca_proveedor = p->value( "marca_proveedor", false ).toBool();
  p->endGroup();
  p->endGroup();
  p=0;
@@ -186,6 +187,10 @@ void FormAgregarCompra::guardar()
             case 0:
             {
                 // Agrego el producto
+                 QString marca = QString();
+                 if( marca_proveedor ) { // Veo si decidió utilizar marca como proveedor
+                     marca = CBProveedor->currentText();
+                 }
                  if( auto_agregar_productos ) {
                     FormAgregarProducto *f = new FormAgregarProducto();
                     f->setearNombre( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() );
@@ -194,7 +199,7 @@ void FormAgregarCompra::guardar()
                     f->setearPrecioCosto( mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() );
                     f->setearNumeroAnterior( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
                     f->setearDesdeCompra( true );
-                    f->setearProveedor( CBProveedor->currentText() );
+                    f->setearProveedor( marca );
                     connect( f, SIGNAL( agregarProducto( int, int ) ), this, SLOT( arreglarProductoAgregado( int, int ) ) );
                     emit agregarVentana( f );
                     parar = true;
@@ -205,8 +210,10 @@ void FormAgregarCompra::guardar()
                                  mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString(), // Nombre
                                  mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Costo
                                  mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Venta
-                                 0 // Stock inicial cero
-                                 );
+                                 0, // Stock inicial cero
+                                 -1, // Categoria indefinida
+                                 QString(), // Descripcion vacía
+                                 marca );
                      if( id_producto_nuevo > 0 ) {
                         arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(), id_producto_nuevo );
                      } else {

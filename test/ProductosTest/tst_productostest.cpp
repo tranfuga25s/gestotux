@@ -231,6 +231,9 @@ void ProductosTest::testAutocompletadoMarcaProveedor_data()
     QTest::newRow("Proveedor1") << "mc2" << "Proveedor 2" << 10.4 << 2.0;
 }
 
+/*!
+ * \brief ProductosTest::testMarcaProveedor
+ */
 void ProductosTest::testMarcaProveedor()
 {
     preferencias *p = preferencias::getInstancia();
