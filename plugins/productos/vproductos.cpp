@@ -146,8 +146,6 @@ VProductos::VProductos(QWidget *parent)
 
  if( p->value( "mostrar-costo", true ).toBool() ) {
     addAction( ActVerCosto );
- } else {
-     ActVerCosto->setVisible( false );
  }
  addAction( ActVerTodos );
  addAction( ActCerrar );

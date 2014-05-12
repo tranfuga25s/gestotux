@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QDebug>
 
 FormModificarProducto::FormModificarProducto( MProductos *mod, QWidget *parent) :
 QDialog(parent), Ui::FormProductoBase()
@@ -152,12 +153,12 @@ void FormModificarProducto::accept() {
             return;
         } else {
             QMessageBox::information( this, "Erroneo", "No se pudo hacer el submit del modelo" );
-            qDebug( this->modelo->lastError().text().toLocal8Bit() );
+            qDebug() << this->modelo->lastError().text();
             return;
         }
     } else {
         QMessageBox::information( this, "Erroneo", "No se pudo hacer el submit de los datos" );
-        qDebug( this->modelo->lastError().text().toLocal8Bit() );
+        qDebug() << this->modelo->lastError().text();
         return;
     }
 }

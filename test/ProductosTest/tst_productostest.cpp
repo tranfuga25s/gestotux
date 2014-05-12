@@ -397,12 +397,13 @@ void ProductosTest::testOcultarCosto()
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
-    p->setValue( "costo", false );
+    p->setValue( "mostrar-costo", false );
     p->inicio();
     p=0;
 
     VProductos *vp = new VProductos();
-    QVERIFY2( vp->ActVerCosto->isVisible() == false, "No se deberia de mostrar el boton del costo del producto" );
+    vp->show();
+    QVERIFY2( vp->actions().contains( vp->ActVerCosto ) == false, "No se deberia de mostrar el boton del costo del producto" );
     delete vp;
 
     FormAgregarProducto *fap = new FormAgregarProducto();
