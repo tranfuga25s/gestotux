@@ -17,7 +17,9 @@ private Q_SLOTS:
     void init();
     void cleanup();
     void testComprasEtiquetaFecha();
+    void testAutoAgregarProductosPreferencias();
     void testAutoAgregarProductos();
+    void testAutoAgregarProductos_data();
 };
 
 ComprasTest::ComprasTest()
@@ -49,11 +51,11 @@ void ComprasTest::testComprasEtiquetaFecha()
 #include "preferencias.h"
 #include "formprefcompras.h"
 /*!
- * \brief ComprasTest::testAutoAgregarProductos
+ * \brief ComprasTest::testAutoAgregarProductosPreferencias
  * Test que verifica el correcto funcionamiento de auto agregar productos al ponerlos en una compra.
  * ver issue #80.
  */
-void ComprasTest::testAutoAgregarProductos()
+void ComprasTest::testAutoAgregarProductosPreferencias()
 {
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
@@ -77,6 +79,49 @@ void ComprasTest::testAutoAgregarProductos()
     p->endGroup();
     p->endGroup();
     p=0;
+}
+
+#include "formagregarcompra.h"
+#include "einputdialog.h"
+/*!
+ * \brief ComprasTest::testAutoAgregarProductos
+ */
+void ComprasTest::testAutoAgregarProductos()
+{
+    QFETCH(QString,nombre);
+    QFETCH(double,precio);
+    QFETCH(int,id_proveedor);
+
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Compras" );
+    p->setValue( "auto-agregar-productos", true );
+    p->endGroup();
+    p->endGroup();
+
+    FormAgregarCompra *fac = new FormAgregarCompra();
+    fac->CBProveedor->setearId( id_proveedor );
+
+    QTest::keyClicks( fac->CBProducto, nombre );
+    /*fac->PBAgregarProducto->click();
+
+    EInputDialogDoubleSpinBox *dialogo_precio = fac->findChildren<EInputDialog *>()->findChildren<EInputDialogDoubleSpinBox *>();
+    dialogo_precio->setValue( precio );
+    qobject_cast<EInputDialog *>( dialogo_precio->parent() )->accept();*/
+
+
+
+}
+
+/*!
+ * \brief ComprasTest::testAutoAgregarProductos_data
+ */
+void ComprasTest::testAutoAgregarProductos_data()
+{
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("precio");
+    QTest::addColumn<int>("id_proveedor");
+    QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.40 << 1;
 }
 
 QTEST_MAIN(ComprasTest)

@@ -30,7 +30,7 @@ class MProductosTotales;
 /*!
  * @brief Formulario que permite agregar una compra
  */
-class FormAgregarCompra : public EVentana, private Ui::FormAgregarCompraBase
+class FormAgregarCompra : public EVentana, public Ui::FormAgregarCompraBase
 {
   Q_OBJECT
 

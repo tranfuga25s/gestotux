@@ -149,7 +149,10 @@ void FormAgregarCompra::guardar()
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Compras" );
  bool auto_agregar_productos = p->value( "auto-agregar-productos", false ).toBool();
+ p->endGroup();
+ p->beginGroup( "Productos" );
  bool marca_proveedor = p->value( "marca_proveedor", false ).toBool();
+ qDebug() << "Marca proveedor" << marca_proveedor;
  p->endGroup();
  p->endGroup();
  p=0;

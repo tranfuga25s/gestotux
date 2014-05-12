@@ -18,7 +18,8 @@ INCLUDEPATH += ../../plugins/compras \
 
 LIBS += ../../bin/plugins/libcompras.so
 
-FORMS += ../../plugins/compras/FormPrefComprasBase.ui
+FORMS += ../../plugins/compras/FormPrefComprasBase.ui \
+         ../../plugins/compras/FormAgregarCompraBase.ui
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )
