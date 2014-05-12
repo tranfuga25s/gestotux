@@ -61,12 +61,22 @@ void ComprasTest::testAutoAgregarProductos()
     p->setValue( "auto-agregar-productos", true );
     p->endGroup();
     p->endGroup();
-    p=0;
 
     FormPrefCompras *fpc = new FormPrefCompras();
     fpc->cargar();
     QVERIFY2( fpc->CkBAutoAgregarProductos->isChecked() == true, "No se seteo correctamente el autoagregar en comrpas" );
-    delete fpc;
+
+    fpc->CkBAutoAgregarProductos->setChecked( false );
+    fpc->guardar();
+    p->sync();
+
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Compras" );
+    QVERIFY2( p->value( "auto-agregar-productos", true ).toBool() == false, "No se guardó la preferencia bien" );
+    p->endGroup();
+    p->endGroup();
+    p=0;
 }
 
 QTEST_MAIN(ComprasTest)

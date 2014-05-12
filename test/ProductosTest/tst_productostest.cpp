@@ -37,6 +37,7 @@ private Q_SLOTS:
     void testOcultarCodigo();
     void testCategoriaEnAltaProducto();
     void testModeloEnAltaProducto();
+    void testMarcaEnAltaProducto();
     void testOcultarCosto();
 
 private:
@@ -356,11 +357,11 @@ void ProductosTest::testCategoriaEnAltaProducto()
 #include <QSqlRecord>
 #include <QVector>
 /*!
- * \brief ProductosTest::testModeloEnAltaProducto
+ * \brief ProductosTest::testMarcaEnAltaProducto
  * Test para verificar que se de correctamente de alta el modelo al agregar un producto
  * Ver issue #77.
  */
-void ProductosTest::testModeloEnAltaProducto()
+void ProductosTest::testMarcaEnAltaProducto()
 {
     // Habilito el uso de las categorías en el sistema
     preferencias *p = preferencias::getInstancia();
@@ -388,6 +389,41 @@ void ProductosTest::testModeloEnAltaProducto()
     }
     QVERIFY2( marcas.size() > 0 , "No hay ninguna marca!" );
     QVERIFY2( marcas.contains( "Marca 1" ), "No se encontró la marca" );
+}
+
+/*!
+ * \brief ProductosTest::testModeloEnAltaProducto
+ * Test para verificar que se de correctamente de alta el modelo al agregar un producto
+ * Ver issue #77.
+ */
+void ProductosTest::testModeloEnAltaProducto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "modelo", true );
+    p->inicio();
+    p=0;
+
+    MProductos *mp = new MProductos();
+
+    int id_producto = mp->agregarProducto( QString(), "Test", 10.0, 12.0, 1, 1, QString(), "Marca 1", "Modelo 1" );
+
+    QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
+
+    QSqlQuery cola;
+    QVector<QString> marcas;
+    QVERIFY( cola.exec( "SELECT modelo FROM producto" ) );
+    while( cola.next() ) {
+        QString marca = cola.record().value(0).toString();
+        if( !marca.isEmpty() && !marca.isNull() ) {
+            marcas.append( cola.record().value(0).toString() );
+        }
+    }
+    QVERIFY2( marcas.size() > 0 , "No hay ninguna marca!" );
+    QVERIFY2( marcas.contains( "Modelo 1" ), "No se encontró el modelo" );
 }
 
 void ProductosTest::testOcultarCosto()
