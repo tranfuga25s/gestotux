@@ -483,9 +483,11 @@ void ProductosTest::testPreferenciasStockLista()
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
-    p->setValue( "mostrar-stock-lista", false );
-    p->inicio();
-    p=0;
+    p->beginGroup( "Stock" );
+    p->setValue( "mostrar-stock-lista", true );
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
 
     FormPrefProductos *fpp = new FormPrefProductos();
     fpp->cargar();
@@ -497,8 +499,11 @@ void ProductosTest::testPreferenciasStockLista()
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
     QVERIFY( p->value( "mostrar-stock-lista", true ) == false );
-    p->inicio();
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
     p=0;
 }
 
