@@ -35,7 +35,7 @@ public:
     void iniciarTablas();
     void vaciarTablas();
 
-private  Q_SLOTS:
+public Q_SLOTS:
     /*
      * initTestCase() will be called before the first testfunction is executed.
      * cleanupTestCase() will be called after the last testfunction was executed.
@@ -332,12 +332,12 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
 }
 
 
-void EDatabaseTest::init() { EDatabaseTest::iniciarTablas(); }
+void EDatabaseTest::init() { QSqlDatabase::database().transaction(); }
 
-void EDatabaseTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void EDatabaseTest::initTestCase() { EDatabaseTest::generarTablas(); EDatabaseTest::iniciarTablas(); }
 
-void EDatabaseTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void EDatabaseTest::cleanupTestCase() { EDatabaseTest::vaciarTablas(); EDatabaseTest::borrarTablas(); }
 
-void EDatabaseTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void EDatabaseTest::cleanup() { QSqlDatabase::database().rollback(); }
 
 #endif // EDATABASETEST_H

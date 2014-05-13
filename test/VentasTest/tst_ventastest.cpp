@@ -28,13 +28,13 @@ VentasTest::VentasTest()
                  << "productos";
 }
 
-void VentasTest::init() { EDatabaseTest::iniciarTablas(); }
+void VentasTest::init() { EDatabaseTest::init(); }
 
-void VentasTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void VentasTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void VentasTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void VentasTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void VentasTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void VentasTest::cleanup() { EDatabaseTest::cleanup(); }
 
 #include "preferencias.h"
 #include "formagregarventa.h"

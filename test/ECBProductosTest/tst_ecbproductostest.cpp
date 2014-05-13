@@ -41,13 +41,13 @@ ECBProductosTest::~ECBProductosTest() {
     delete ecb;
 }
 
-void ECBProductosTest::init() { EDatabaseTest::iniciarTablas(); }
+void ECBProductosTest::init() { EDatabaseTest::init(); }
 
-void ECBProductosTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void ECBProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void ECBProductosTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void ECBProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void ECBProductosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
 
 void ECBProductosTest::testFiltroProveedor()
 {

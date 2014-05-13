@@ -106,7 +106,6 @@ double BackupRemotoPlugin::version() const
 void BackupRemotoPlugin::crearToolBar( QToolBar */*t*/ )
 {}
 
-
 /*!
     \fn BackupRemotoPlugin::seCierraGestotux()
  */

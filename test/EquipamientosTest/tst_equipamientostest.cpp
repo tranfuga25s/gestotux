@@ -29,20 +29,20 @@ EquipamientosTest::EquipamientosTest()
     this->tablas << "equipamientos";
 }
 
-void EquipamientosTest::init() { EDatabaseTest::iniciarTablas(); }
+void EquipamientosTest::init() { EDatabaseTest::init(); }
 
 void EquipamientosTest::initTestCase() {
-    EDatabaseTest::generarTablas();
+    EDatabaseTest::initTestCase();
     mequipamiento = new MEquipamiento( this );
 }
 
 void EquipamientosTest::cleanupTestCase() {
-    EDatabaseTest::borrarTablas();
+    EDatabaseTest::cleanupTestCase();
     delete mequipamiento;
     mequipamiento = 0;
 }
 
-void EquipamientosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void EquipamientosTest::cleanup() { EDatabaseTest::cleanup(); }
 
 void EquipamientosTest::testCargaDatos()
 {

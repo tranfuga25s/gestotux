@@ -26,13 +26,13 @@ ProveedorTest::ProveedorTest()
 {
     this->tablas << "proveedor";
 }
-void ProveedorTest::init() { EDatabaseTest::iniciarTablas(); }
+void ProveedorTest::init() { EDatabaseTest::init(); }
 
-void ProveedorTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void ProveedorTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void ProveedorTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void ProveedorTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void ProveedorTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void ProveedorTest::cleanup() { EDatabaseTest::cleanup(); }
 
 void ProveedorTest::testListado()
 {

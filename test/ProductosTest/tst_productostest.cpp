@@ -7,7 +7,7 @@
 #include "mproductos.h"
 #include "../edatabasetest.h"
 
-class ProductosTest : public QObject, private EDatabaseTest
+class ProductosTest : public QObject, public EDatabaseTest
 {
     Q_OBJECT
     
@@ -54,13 +54,13 @@ ProductosTest::ProductosTest()
     this->tablas << "categorias_productos" << "productos" << "compras" << "compras_productos";
 }
 
-void ProductosTest::init() { EDatabaseTest::iniciarTablas(); }
+void ProductosTest::init() { EDatabaseTest::init(); }
 
-void ProductosTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void ProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void ProductosTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void ProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void ProductosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void ProductosTest::cleanup() { EDatabaseTest::cleanup(); }
 
 /*!
  * \brief ProductosTest::testCodigoRepetido

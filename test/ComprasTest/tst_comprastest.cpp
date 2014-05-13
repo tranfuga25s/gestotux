@@ -27,10 +27,10 @@ ComprasTest::ComprasTest()
     this->tablas << "compras" << "compras_productos" << "productos";
 }
 
-void ComprasTest::initTestCase() { EDatabaseTest::generarTablas(); }
-void ComprasTest::init() { EDatabaseTest::iniciarTablas(); }
-void ComprasTest::cleanup() { EDatabaseTest::vaciarTablas(); }
-void ComprasTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void ComprasTest::initTestCase() { EDatabaseTest::initTestCase(); }
+void ComprasTest::init() { EDatabaseTest::init(); }
+void ComprasTest::cleanup() { EDatabaseTest::cleanup(); }
+void ComprasTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
 #include "mcompra.h"
 /*!
