@@ -101,6 +101,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="CkBMostrarStockLista">
+        <property name="text">
+         <string>Mostrar stock en la lista de productos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="CkBAvisosStock">
         <property name="enabled">
          <bool>false</bool>
