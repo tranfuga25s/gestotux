@@ -30,6 +30,9 @@ private:
      ECBProductos *ecb;
 };
 
+/*!
+ * \brief ECBProductosTest::ECBProductosTest
+ */
 ECBProductosTest::ECBProductosTest()
 {
     this->tablas << "productos"
@@ -39,18 +42,36 @@ ECBProductosTest::ECBProductosTest()
     ecb = new ECBProductos();
 }
 
+/*!
+ * \brief ECBProductosTest::~ECBProductosTest
+ */
 ECBProductosTest::~ECBProductosTest() {
     delete ecb;
 }
 
+/*!
+ * \brief ECBProductosTest::init
+ */
 void ECBProductosTest::init() { EDatabaseTest::init(); }
 
+/*!
+ * \brief ECBProductosTest::initTestCase
+ */
 void ECBProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
+/*!
+ * \brief ECBProductosTest::cleanupTestCase
+ */
 void ECBProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
+/*!
+ * \brief ECBProductosTest::cleanup
+ */
 void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
 
+/*!
+ * \brief ECBProductosTest::testFiltroProveedor
+ */
 void ECBProductosTest::testFiltroProveedor()
 {
     QFETCH( int, id_proveedor );
@@ -62,6 +83,9 @@ void ECBProductosTest::testFiltroProveedor()
     QCOMPARE( conteo_real, conteo );
 }
 
+/*!
+ * \brief ECBProductosTest::testFiltroProveedor_data
+ */
 void ECBProductosTest::testFiltroProveedor_data()
 {
     QTest::addColumn<int>("id_proveedor");
@@ -84,7 +108,8 @@ void ECBProductosTest::testMostrarStock()
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
-    p->setValue( "?", habilitado );
+    p->beginGroup( "Stock" );
+    p->setValue( "mostrar-stock-lista", habilitado );
     p->endGroup();
     p->endGroup();
     p=0;
@@ -94,20 +119,18 @@ void ECBProductosTest::testMostrarStock()
     if( habilitado ) {
         QString texto = ecb->itemText( posicion );
         QVERIFY( !texto.isEmpty() );
-        QStringList lista = texto.split( '(' );
-        QVERIFY( lista.size() > 0 );
-        QString test = lista.last();
-        test.remove( ")" );
-        QVERIFY( test.toDouble() == stock );
+        QVERIFY( texto.contains( QString( "(%L1)" ).arg( stock ) ) );
     } else {
         QString texto = ecb->itemText( posicion );
         QVERIFY( !texto.isEmpty() );
-        QStringList lista = texto.split( '(' );
-        QVERIFY( lista.size() <= 0 );
+        QVERIFY( texto.contains( "(" ) == false );
     }
     delete ecb;
 }
 
+/*!
+ * \brief ECBProductosTest::testMostrarStock_data
+ */
 void ECBProductosTest::testMostrarStock_data()
 {
     QTest::addColumn<bool>("habilitado");
