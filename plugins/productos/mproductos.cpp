@@ -308,8 +308,8 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
         cola.bindValue( ":codigo", codigo );
     }
     cola.bindValue( ":nombre", nombre );
-    if( descripcion == "" || !pdescripcion  )
-    { cola.bindValue( ":descripcion", QVariant() ); }
+    if( descripcion == "" || pdescripcion  )
+    { cola.bindValue( ":descripcion", QVariant() );  }
     else
     { cola.bindValue( ":descripcion", descripcion ); }
 

@@ -43,6 +43,7 @@ private Q_SLOTS:
 
 private:
     MProductos *mp;
+    bool doClean;
 
 };
 
@@ -51,16 +52,19 @@ private:
  */
 ProductosTest::ProductosTest()
 {
-    this->tablas << "categorias_productos" << "productos" << "compras" << "compras_productos";
+    this->tablas << "categorias_productos"
+                 << "productos"
+                 << "compras"
+                 << "compras_productos";
 }
 
-void ProductosTest::init() { EDatabaseTest::init(); }
+void ProductosTest::init() { EDatabaseTest::init(); doClean = true; }
 
 void ProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
 void ProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void ProductosTest::cleanup() { EDatabaseTest::cleanup(); }
+void ProductosTest::cleanup() { if( this->doClean ) { EDatabaseTest::cleanup(); } }
 
 /*!
  * \brief ProductosTest::testCodigoRepetido
@@ -79,6 +83,7 @@ void ProductosTest::testCodigoRepetido()
     QFETCH( bool, resultado );
     if( resultado ) {
         QVERIFY( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) > 0 );
+        doClean = false;
     } else {
         QCOMPARE( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ), -1 );
     }
@@ -429,7 +434,7 @@ void ProductosTest::testDescripcionEnAltaProducto()
 
     MProductos *mp = new MProductos();
 
-    int id_producto = mp->agregarProducto( QString(), "testDescripcionEnAltaProducto", 10.0, 12.0, 1, 1, "testDescripcionEnAltaProducto", "Marcass1" );
+    int id_producto = mp->agregarProducto( QString(), "testDescripcionEnAltaProducto", 10.0, 12.0, 1, 1, "testDescripcionEnAltaProducto" );
 
     QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
 
