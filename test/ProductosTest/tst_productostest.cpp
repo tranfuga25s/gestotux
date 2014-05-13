@@ -38,6 +38,7 @@ private Q_SLOTS:
     void testCategoriaEnAltaProducto();
     void testModeloEnAltaProducto();
     void testMarcaEnAltaProducto();
+    void testDescripcionEnAltaProducto();
     void testOcultarCosto();
 
 private:
@@ -374,21 +375,14 @@ void ProductosTest::testMarcaEnAltaProducto()
 
     MProductos *mp = new MProductos();
 
-    int id_producto = mp->agregarProducto( QString(), "Test", 10.0, 12.0, 1, 1, QString(), "Marca 1" );
+    int id_producto = mp->agregarProducto( QString(), "testMarcaEnAltaProducto", 10.0, 12.0, 1, 1, QString(), "Marcass1" );
 
     QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
 
     QSqlQuery cola;
-    QVector<QString> marcas;
-    QVERIFY( cola.exec( "SELECT marca FROM producto" ) );
-    while( cola.next() ) {
-        QString marca = cola.record().value(0).toString();
-        if( !marca.isEmpty() && !marca.isNull() ) {
-            marcas.append( cola.record().value(0).toString() );
-        }
-    }
-    QVERIFY2( marcas.size() > 0 , "No hay ninguna marca!" );
-    QVERIFY2( marcas.contains( "Marca 1" ), "No se encontró la marca" );
+    QVERIFY( cola.exec( "SELECT COUNT( marca ) FROM producto WHERE marca = 'Marcass1'" ) );
+    QVERIFY( cola.next() );
+    QVERIFY( cola.record().value(0).toInt() == 1 );
 }
 
 /*!
@@ -409,21 +403,40 @@ void ProductosTest::testModeloEnAltaProducto()
 
     MProductos *mp = new MProductos();
 
-    int id_producto = mp->agregarProducto( QString(), "Test", 10.0, 12.0, 1, 1, QString(), "Marca 1", "Modelo 1" );
+    int id_producto = mp->agregarProducto( QString(), "testModeloEnAltaProducto", 10.0, 12.0, 1, 1, QString(), "Marca1", "Modelos1" );
 
     QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
 
     QSqlQuery cola;
-    QVector<QString> marcas;
-    QVERIFY( cola.exec( "SELECT modelo FROM producto" ) );
-    while( cola.next() ) {
-        QString marca = cola.record().value(0).toString();
-        if( !marca.isEmpty() && !marca.isNull() ) {
-            marcas.append( cola.record().value(0).toString() );
-        }
-    }
-    QVERIFY2( marcas.size() > 0 , "No hay ninguna marca!" );
-    QVERIFY2( marcas.contains( "Modelo 1" ), "No se encontró el modelo" );
+    QVERIFY( cola.exec( "SELECT COUNT( modelo ) FROM producto WHERE modelo = 'Modelos1'" ) );
+    QVERIFY( cola.next() );
+    QVERIFY( cola.record().value(0).toInt() == 1 );
+}
+
+/*!
+ * \brief ProductosTest::testDescripcionEnAltaProducto
+ */
+void ProductosTest::testDescripcionEnAltaProducto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "marcas", true );
+    p->inicio();
+    p=0;
+
+    MProductos *mp = new MProductos();
+
+    int id_producto = mp->agregarProducto( QString(), "testDescripcionEnAltaProducto", 10.0, 12.0, 1, 1, "testDescripcionEnAltaProducto", "Marcass1" );
+
+    QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
+
+    QSqlQuery cola;
+    QVERIFY( cola.exec( "SELECT COUNT( descripcion ) FROM producto WHERE descripcion = 'testDescripcionEnAltaProducto'" ) );
+    QVERIFY( cola.next() );
+    QVERIFY( cola.record().value(0).toInt() == 1 );
 }
 
 void ProductosTest::testOcultarCosto()

@@ -37,6 +37,9 @@ class FormAgregarCompra : public EVentana, public Ui::FormAgregarCompraBase
 public:
   FormAgregarCompra( MCompra *m = 0, QWidget* parent = 0  );
 
+public slots:
+  void guardar();
+
 signals:
   void actualizarVista();
 
@@ -45,7 +48,6 @@ private:
   MProductosTotales *mcp;
 
 protected slots:
-    void guardar();
     void agregarProducto();
     void eliminarProducto();
     void arreglarProductoAgregado( int anterior, int nuevo );

@@ -266,7 +266,9 @@ void EDatabaseTest::vaciarTabla( QString nombre )
 {
     if( _lista_tablas.contains( nombre ) ) {
         QSqlQuery cola;
-        cola.exec( "TRUNCATE TABLE " + nombre + ";" );
+        cola.exec( "DELETE FROM " + nombre + ";" );
+        cola.exec( "VACCUM;" );
+        //qDebug() << "DELETE FROM " << nombre << "; VACCUM;";
     } else {
         qDebug() << "La tabla " << nombre << " no está inicializada! - No se truncara.";
     }
@@ -281,7 +283,7 @@ void EDatabaseTest::vaciarTabla( QString nombre )
 void EDatabaseTest::iniciarTabla( QString nombre ) {
     // Busco si no está ya inicializada
     if( !_lista_tablas.contains( nombre ) ) {
-        qDebug() << "Inicializando tabla " << nombre;
+        //qDebug() << "Inicializando tabla " << nombre;
         QDir *path = new QDir( QCoreApplication::applicationDirPath() );
         path->cdUp();
         path->cd( "sql" );
@@ -305,11 +307,13 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
                                                qWarning() << cadena;
                                                qWarning() << " Fallo...." << cola.lastError().text();
                                                return;
+                                       } else {
+                                           //qDebug() << cadena;
                                        }
                                }
                        }
                        archivo.close();
-                       qDebug() << "Tabla " << nombre << " inicializada.";
+                       //qDebug() << "Tabla " << nombre << " inicializada.";
                        _lista_tablas.append( nombre );
                }
                else

@@ -82,6 +82,8 @@ void ComprasTest::testAutoAgregarProductosPreferencias()
 }
 
 #include "formagregarcompra.h"
+#include "mproductostotales.h"
+#include <QSqlRecord>
 #include "einputdialog.h"
 /*!
  * \brief ComprasTest::testAutoAgregarProductos
@@ -91,25 +93,35 @@ void ComprasTest::testAutoAgregarProductos()
     QFETCH(QString,nombre);
     QFETCH(double,precio);
     QFETCH(int,id_proveedor);
+    QFETCH(QString,nombre_proveedor);
 
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Compras" );
     p->setValue( "auto-agregar-productos", true );
     p->endGroup();
+    p->beginGroup( "Productos");
+    p->setValue( "marcas", true );
+    p->setValue( "marca_proveedor", true );
+    p->endGroup();
     p->endGroup();
 
     FormAgregarCompra *fac = new FormAgregarCompra();
+
     fac->CBProveedor->setearId( id_proveedor );
+    QTest::qWait( 1000 );
 
+    // Agrego un nuevo item
     QTest::keyClicks( fac->CBProducto, nombre );
-    /*fac->PBAgregarProducto->click();
+    QTest::mouseClick( fac->PBAgregarProducto, Qt::LeftButton );
 
-    EInputDialogDoubleSpinBox *dialogo_precio = fac->findChildren<EInputDialog *>()->findChildren<EInputDialogDoubleSpinBox *>();
-    dialogo_precio->setValue( precio );
-    qobject_cast<EInputDialog *>( dialogo_precio->parent() )->accept();*/
+    fac->guardar();
 
-
+    // Verifico que se haya agregado el producto con el proveedor correspondiente
+    QSqlQuery cola;
+    QVERIFY2( cola.exec( QString( "SELECT marca FROM producto WHERE nombre = '%1'" ).arg( nombre ) ) == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.record().value(0).toString() == nombre_proveedor, "No coincide el nombre del proveedor en la marca del producto agregado" );
 
 }
 
@@ -121,7 +133,8 @@ void ComprasTest::testAutoAgregarProductos_data()
     QTest::addColumn<QString>("nombre");
     QTest::addColumn<double>("precio");
     QTest::addColumn<int>("id_proveedor");
-    QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.40 << 1;
+    QTest::addColumn<QString>("nombre_proveedor");
+    QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.0 << 1 << "Proveedor 1";
 }
 
 QTEST_MAIN(ComprasTest)

@@ -308,17 +308,17 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
         cola.bindValue( ":codigo", codigo );
     }
     cola.bindValue( ":nombre", nombre );
-    if( descripcion == "" || pdescripcion  )
+    if( descripcion == "" || !pdescripcion  )
     { cola.bindValue( ":descripcion", QVariant() ); }
     else
     { cola.bindValue( ":descripcion", descripcion ); }
 
-    if( marca == "" || pmarcas  )
+    if( marca == "" || !pmarcas )
     { cola.bindValue( ":marca", QVariant() ); }
     else
     { cola.bindValue( ":marca", marca ); }
 
-    if( modelo == "" || pmodelo )
+    if( modelo == "" || !pmodelo )
     { cola.bindValue( ":modelo", QVariant() ); }
     else
     { cola.bindValue( ":modelo", modelo); }
@@ -409,18 +409,19 @@ bool MProductos::actualizarPrecioVenta( const int id_producto, const double prec
  */
 double MProductos::buscarPrecioCompra( const int id_producto )
 {
+ if( id_producto <= 0 ) { return -2.0; }
  QSqlQuery cola;
  if( cola.exec( QString( "SELECT precio_costo FROM producto WHERE id = %1" ).arg( id_producto ) ) )
  {
      if( cola.next() ) {
          return cola.record().value(0).toDouble();
      } else {
-         qWarning( "Error al hacer next la cola de busqueda del precio de compra del producto solicitado" );
+         qWarning() << "MProductos::buscarPrecioCompra()::Error al hacer next la cola de busqueda del precio de compra del producto solicitado";
      }
  }
  else
  {
-  qWarning( "Error al ejecutar la cola de busqueda del precio de compra del producto solicitado" );
+  qWarning() << "MProductos::buscarPrecioCompra()::Error al ejecutar la cola de busqueda del precio de compra del producto solicitado";
  }
  qDebug() << cola.lastError().text();
  qDebug() << cola.lastQuery();
@@ -470,7 +471,7 @@ double MProductos::buscarPrecioCompra( const QString codigo )
         if( cola.next() ) {
             return cola.record().value(0).toDouble();
         } else {
-            qWarning( "Error al hacer next la cola de busqueda del precio de compra del producto solicitado - codigo" );
+            qWarning( "MProductos::buscarPrecioCompra()::Error al hacer next la cola de busqueda del precio de compra del producto solicitado - codigo" );
         }
     }
     else

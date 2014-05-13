@@ -59,13 +59,13 @@ MCompraProducto::MCompraProducto(QObject *parent)
 bool MCompraProducto::agregarCompraProducto( const int id_compra, const int id_producto, const double precio_compra, const int cantidad, bool stock_habilitado )
 {
     if( id_compra <= 0 )
-        return false;
+    { qDebug() << "Id compra nulo"; return false; }
     if( id_producto <= 0 )
-        return false;
+    { qDebug() << "Id producto nulo"; return false; }
     if( cantidad <= 0 )
-        return false;
+    { qDebug() << "cantidad nulo"; return false; }
     if( precio_compra <= 0 )
-        return false;
+    { qDebug() << "preciocompra nulo"; return false; }
 
     // Veo si existe el producto ( recordar que viene del mproductostotales )
     if( id_producto > 0 ) {
