@@ -55,7 +55,7 @@ public:
     bool buscaPrecios();
     void buscarPrecios( bool activado = true );
 
-    void agregarNuevoProducto( const int cantidad, const int Id );
+    void agregarNuevoProducto( const int cantidad, const int Id, double precio_unitario = -1.1 );
    /*!
     * \enum TipoPrecio
     * Indica que tipo de precio se buscara cuando se realize una busqueda

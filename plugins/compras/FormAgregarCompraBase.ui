@@ -111,16 +111,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="ECBProductos" name="CBProducto">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QSpinBox" name="SBCant">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -132,6 +122,19 @@
         <number>999999999</number>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="ECBProductos" name="CBProducto">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="EDSBPrecio" name="DSBPrecioUnitario"/>
      </item>
      <item>
       <widget class="QPushButton" name="PBAgregarProducto">
@@ -185,6 +188,11 @@
    <class>ECBProveedor</class>
    <extends>QComboBox</extends>
    <header>ecbproveedor.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EDSBPrecio</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>edsbprecio.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

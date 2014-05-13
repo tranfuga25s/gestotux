@@ -141,7 +141,6 @@ void FormAgregarCompra::guardar()
  }
  // Busco el ultimo id de compra
  int id_compra = compra->ultimoId();
- //qDebug( qPrintable( QString( "idCompra: %1" ).arg( id_compra ) ) );
 
  preferencias *p = preferencias::getInstancia();
  p->inicio();
@@ -207,6 +206,7 @@ void FormAgregarCompra::guardar()
 
                  } else {
                      MProductos *mp = new MProductos();
+                     qDebug() << "precio venta " << mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble();
                      int id_producto_nuevo = mp->agregarProducto(
                                  QString(),
                                  mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString(), // Nombre
@@ -215,11 +215,11 @@ void FormAgregarCompra::guardar()
                                  0, // Stock inicial cero
                                  -1, // Categoria indefinida
                                  QString(), // Descripcion vacía
-                                 marca );
+                                 marca ); // Marca designada
                      if( id_producto_nuevo > 0 ) {
                          arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(),
                                                    id_producto_nuevo );
-                        i--; // vuelvo a repetir el proceso para que continue con los datos
+                        i--; // vuelvo a repetir el proceso para que continue con los datos actualizados
                         qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
                         continue;
                      } else {
@@ -263,7 +263,8 @@ void FormAgregarCompra::guardar()
                                                                 0.01, 2147483647, 2, &ok );
                  if( ok ) {
                     if( !MProductos::actualizarPrecioVenta( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(), precio_venta ) ) {
-                         qWarning() << "No se pudo actualizar el precio de venta del producto " << mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString();
+                         qWarning() << "No se pudo actualizar el precio de venta del producto "
+                                    << mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString();
                     }
                  }
              }
@@ -323,9 +324,12 @@ void FormAgregarCompra::agregarProducto()
  if( CBProducto->currentText().isEmpty() )
  { QMessageBox::information( this, "Error de datos", "Ingrese un producto a agregar", QMessageBox::Ok ); return; }
 
+ /*if( DSBPrecioUnitario->value() <= 0.0 )
+ { QMessageBox::Information( this, "Error de datos", "Ingrese un precio unitario", QMessageBox::Ok ); return; } */
+
  CBProducto->verificarExiste();
 
- mcp->agregarNuevoProducto( SBCant->value(), CBProducto->idActual() );
+ mcp->agregarNuevoProducto( SBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
 
  SBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );

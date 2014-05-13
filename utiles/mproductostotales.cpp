@@ -662,7 +662,7 @@ double MProductosTotales::buscarPrecioCompra( int id_producto )
      }
      else
      {
-      qDebug( "No se encontro el precio de compra" );
+      qDebug() << "No se encontro el precio de compra";
       return 0.0;
      }
   } else {
@@ -686,7 +686,7 @@ double MProductosTotales::buscarPrecioVenta( int id_producto )
      }
      else
      {
-      qDebug( "No se encontro el precio de compra" );
+      qDebug() << "No se encontro el precio de compra";
       return 0.0;
      }
   } else {
@@ -697,13 +697,13 @@ double MProductosTotales::buscarPrecioVenta( int id_producto )
 
 #include <QInputDialog>
 #include "einputdialog.h"
-void MProductosTotales::agregarNuevoProducto( int cantidad, int Id )
+void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double precio_unitario )
 {
   // Veo si existe y lo agrego a la lista si no existe....
   bool ok = false;
-  double precio_unitario = -1.1;
 
-  if( Id <= -1 ) {
+
+  if( Id <= -1 && precio_unitario <= 0.0 ) {
       // Pido el precio si fue agregado especificamente
       precio_unitario = EInputDialog::getImporte( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
   } else {

@@ -103,6 +103,7 @@ void ComprasTest::testAutoAgregarProductos()
     p->beginGroup( "Productos");
     p->setValue( "marcas", true );
     p->setValue( "marca_proveedor", true );
+    p->setValue( "ocultar_codigo", true );
     p->endGroup();
     p->endGroup();
 
@@ -113,6 +114,7 @@ void ComprasTest::testAutoAgregarProductos()
 
     // Agrego un nuevo item
     QTest::keyClicks( fac->CBProducto, nombre );
+    QTest::keyClicks( fac->DSBPrecioUnitario, QString::number( precio ) );
     QTest::mouseClick( fac->PBAgregarProducto, Qt::LeftButton );
 
     fac->guardar();
