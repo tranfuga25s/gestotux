@@ -54,6 +54,7 @@ void FormPrefProductos::cargar()
  CkBLimitarVenta->setChecked( p->value( "limitar", false ).toBool() );
  CkBAvisosStock->setChecked( p->value( "avisos", false ).toBool() );
  DSBLimiteMinimo->setValue( p->value( "limiteMinimo", 0.0 ).toDouble() );
+ CkBMostrarStockLista->setChecked( p->value( "mostrar-stock-lista", false ).toBool() );
  p->endGroup();
  DsBGanancia->setValue( p->value( "ganancia", 10.0 ).toDouble() );
  p->endGroup();
@@ -90,6 +91,7 @@ void FormPrefProductos::guardar()
  p->setValue( "limitar", CkBLimitarVenta->isChecked() );
  p->setValue( "avisos", CkBAvisosStock->isChecked() );
  p->setValue( "limiteMinimo", DSBLimiteMinimo->value() );
+ p->setValue( "mostrar-stock-lista", CkBMostrarStockLista->isChecked() );
  p->endGroup();
  p->setValue( "ganancia", DsBGanancia->value() );
  p->endGroup();
