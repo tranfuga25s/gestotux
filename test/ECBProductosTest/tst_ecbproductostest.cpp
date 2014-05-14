@@ -26,8 +26,6 @@ private Q_SLOTS:
     void testMostrarStock();
     void testMostrarStock_data();
 
-private:
-     ECBProductos *ecb;
 };
 
 /*!
@@ -39,15 +37,12 @@ ECBProductosTest::ECBProductosTest()
                  << "proveedor"
                  << "compras"
                  << "compras_productos";
-    ecb = new ECBProductos();
 }
 
 /*!
  * \brief ECBProductosTest::~ECBProductosTest
  */
-ECBProductosTest::~ECBProductosTest() {
-    delete ecb;
-}
+ECBProductosTest::~ECBProductosTest() {}
 
 /*!
  * \brief ECBProductosTest::init
@@ -77,10 +72,12 @@ void ECBProductosTest::testFiltroProveedor()
     QFETCH( int, id_proveedor );
     QFETCH( int, conteo );
 
+    ECBProductos *ecb = new ECBProductos();
     ecb->filtrarPorProveedor( id_proveedor );
     int conteo_real = ecb->count();
 
     QCOMPARE( conteo_real, conteo );
+    delete ecb;
 }
 
 /*!
@@ -112,11 +109,12 @@ void ECBProductosTest::testMostrarStock()
     p->setValue( "mostrar-stock-lista", habilitado );
     p->endGroup();
     p->endGroup();
+    p->endGroup();
     p->sync();
     p=0;
 
     ECBProductos *ecb = new ECBProductos();
-    QTest::qWait( 2000 );
+    QTest::qWait( 1000 );
     if( habilitado ) {
         ecb->setCurrentIndex( posicion );
         QString texto = ecb->currentText();
@@ -125,7 +123,7 @@ void ECBProductosTest::testMostrarStock()
     } else {
         QString texto = ecb->itemText( posicion );
         QVERIFY( !texto.isEmpty() );
-        QVERIFY( texto.contains( "(" ) == false );
+        QVERIFY2( texto.contains( "(" ) == false, texto.toLocal8Bit() );
     }
     delete ecb;
 }
@@ -138,8 +136,9 @@ void ECBProductosTest::testMostrarStock_data()
     QTest::addColumn<bool>("habilitado");
     QTest::addColumn<int>("posicion");
     QTest::addColumn<double>("stock");
-    QTest::newRow("ConStock") << true << 1 << 1.0;
     QTest::newRow("SinStock") << false << 1 << 0.0;
+    QTest::newRow("ConStock") << true << 1 << 1.0;
+
 }
 
 QTEST_MAIN(ECBProductosTest)
