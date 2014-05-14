@@ -38,7 +38,6 @@ EDSBPrecio::EDSBPrecio(QWidget *parent)
  */
 void EDSBPrecio::keyPressEvent( QKeyEvent * event )
 {
-    qDebug() << event->key();
  if( event->key() == Qt::Key_Period
   && event->modifiers().testFlag( Qt::KeypadModifier ) )
  {
