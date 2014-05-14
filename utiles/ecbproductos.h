@@ -57,6 +57,7 @@ private:
     int _min;
     bool _mostrar_deshabilitados;
     bool _mostrar_sin_stock;
+    bool _mostrar_stock_lista;
     int _id_proveedor;
 };
 

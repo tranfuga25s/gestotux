@@ -112,14 +112,16 @@ void ECBProductosTest::testMostrarStock()
     p->setValue( "mostrar-stock-lista", habilitado );
     p->endGroup();
     p->endGroup();
+    p->sync();
     p=0;
 
     ECBProductos *ecb = new ECBProductos();
-    QTest::qWait( 1000 );
+    QTest::qWait( 2000 );
     if( habilitado ) {
-        QString texto = ecb->itemText( posicion );
+        ecb->setCurrentIndex( posicion );
+        QString texto = ecb->currentText();
         QVERIFY( !texto.isEmpty() );
-        QVERIFY( texto.contains( QString( "(%L1)" ).arg( stock ) ) );
+        QVERIFY2( texto.contains( QString( "(%L1)" ).arg( stock ) ), texto.toLocal8Bit() );
     } else {
         QString texto = ecb->itemText( posicion );
         QVERIFY( !texto.isEmpty() );
