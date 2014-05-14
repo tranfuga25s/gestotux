@@ -280,7 +280,6 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
-    bool pdescripcion = p->value( "descripcion", false ).toBool();
     bool pmarcas = p->value( "marcas", false ).toBool();
     bool pmodelo = p->value( "modelo", false ).toBool();
     bool pcategorias = p->value( "categorias", false ).toBool();
@@ -308,7 +307,7 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
         cola.bindValue( ":codigo", codigo );
     }
     cola.bindValue( ":nombre", nombre );
-    if( descripcion == "" || pdescripcion  )
+    if( descripcion == "" )
     { cola.bindValue( ":descripcion", QVariant() );  }
     else
     { cola.bindValue( ":descripcion", descripcion ); }
