@@ -40,6 +40,7 @@ private Q_SLOTS:
     void testMarcaEnAltaProducto();
     void testDescripcionEnAltaProducto();
     void testOcultarCosto();
+    void testPreferenciasStockLista();
 
 private:
     MProductos *mp;
@@ -444,6 +445,9 @@ void ProductosTest::testDescripcionEnAltaProducto()
     QVERIFY( cola.record().value(0).toInt() == 1 );
 }
 
+/*!
+ * \brief ProductosTest::testOcultarCosto
+ */
 void ProductosTest::testOcultarCosto()
 {
     // Habilito el uso de las categorías en el sistema
@@ -467,6 +471,40 @@ void ProductosTest::testOcultarCosto()
     FormModificarProducto *fmp = new FormModificarProducto( new MProductos() );
     QVERIFY2( fmp->DSBCosto->isVisible() == false, "No se debería de ver el precio de costo en modificar producto" );
     delete fmp;
+}
+
+/*!
+ * \brief ProductosTest::testPreferenciasStockLista
+ */
+void ProductosTest::testPreferenciasStockLista()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "mostrar-stock-lista", true );
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+
+    FormPrefProductos *fpp = new FormPrefProductos();
+    fpp->cargar();
+    QVERIFY( fpp->CkBMostrarStockLista->isChecked() );
+
+    fpp->CkBMostrarStockLista->setChecked( false );
+    fpp->guardar();
+
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    QVERIFY( p->value( "mostrar-stock-lista", true ) == false );
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    p=0;
 }
 
 QTEST_MAIN(ProductosTest)

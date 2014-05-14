@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QDebug>
 
+#include "preferencias.h"
+
 ECBProductos::ECBProductos( QWidget *parent ) :
  QComboBox( parent )
 {
@@ -29,6 +31,16 @@ ECBProductos::ECBProductos( QWidget *parent ) :
     this->_mostrar_deshabilitados = false;
     this->_mostrar_sin_stock = false;
     this->_id_proveedor = -1;
+
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    p=0;
 
     QTimer timer;
     timer.singleShot( 900, this, SLOT( inicializar() ) );
@@ -56,7 +68,7 @@ void ECBProductos::inicializar()
     // Cargo los datos del modelo
     QSqlQuery cola;
     QString tcola;
-    tcola.append( "SELECT id, codigo, nombre FROM producto WHERE " );
+    tcola.append( "SELECT id, codigo, nombre, stock FROM producto WHERE " );
     if( !_mostrar_deshabilitados ) {
         tcola.append( " habilitado IN ( 1, 'true' ) " );
     }
@@ -92,7 +104,16 @@ void ECBProductos::inicializar()
             // Pos = currentIndex();
             // id_producto = _mapa_pos_ids
             // codigo = _mapa_pos_codigo
-            this->insertItem( pos, cola.record().value(2).toString(), cola.record().value(0).toInt() );
+            if( this->_mostrar_stock_lista ) {
+                this->insertItem( pos,
+                                  QString( "%1 (%L2)" )
+                                         .arg( cola.record().value(2).toString() )
+                                         .arg( cola.record().value(3).toDouble() ),
+                                  cola.record().value(0).toInt()
+                );
+            } else {
+                this->insertItem( pos, cola.record().value(2).toString(), cola.record().value(0).toInt() );
+            }
             this->_mapa_pos_codigo->insert( cola.record().value(1).toString(), pos );
             this->_mapa_id_nombre->insert ( cola.record().value(0).toInt()   , cola.record().value(2).toString() );
             this->_mapa_pos_ids->insert   ( pos, cola.record().value(0).toInt() );
