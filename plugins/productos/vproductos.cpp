@@ -371,7 +371,8 @@ void VProductos::eliminar()
     }
     int ret = QMessageBox::question( this,
                                      QString::fromUtf8( "¿Está seguro?"),
-                                     QString::fromUtf8("¿Está seguro que desea eliminar %1 producto(s)?").arg( indices.size() ) );
+                                     QString::fromUtf8("¿Está seguro que desea eliminar %1 producto(s)?").arg( indices.size() ),
+                                     QMessageBox::Yes, QMessageBox::No );
     if( ret == QMessageBox::Yes ) {
         int neliminados = 0; int eliminados = 0;
         foreach( QModelIndex idx, indices ) {
