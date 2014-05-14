@@ -94,7 +94,7 @@ void ComprasTest::testAutoAgregarProductos()
     QFETCH(double,precio);
     QFETCH(int,id_proveedor);
     QFETCH(QString,nombre_proveedor);
-/*
+
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Compras" );
@@ -110,12 +110,17 @@ void ComprasTest::testAutoAgregarProductos()
     FormAgregarCompra *fac = new FormAgregarCompra();
 
     fac->CBProveedor->setearId( id_proveedor );
-    QTest::qWait( 1000 );
+    QTest::qWait( 2000 );
 
     // Agrego un nuevo item
     QTest::keyClicks( fac->CBProducto, nombre );
-    QTest::keyClicks( fac->DSBPrecioUnitario, QString::number( precio ) );
+    fac->DSBPrecioUnitario->setValue( precio );
     QTest::mouseClick( fac->PBAgregarProducto, Qt::LeftButton );
+
+    QVERIFY2( fac->TVLista->model()->rowCount() == 2, "Error de conteo" );
+    QCOMPARE( fac->TVLista->model()->data( fac->TVLista->model()->index( 0, 0 ) ).toDouble(), 1.0  );
+    QCOMPARE( fac->TVLista->model()->data( fac->TVLista->model()->index( 0, 1 ) ).toString(), nombre );
+    QCOMPARE( fac->TVLista->model()->data( fac->TVLista->model()->index( 0, 2 ), Qt::EditRole ).toDouble(), precio );
 
     fac->guardar();
 
@@ -124,7 +129,6 @@ void ComprasTest::testAutoAgregarProductos()
     QVERIFY2( cola.exec( QString( "SELECT marca FROM producto WHERE nombre = '%1'" ).arg( nombre ) ) == true, cola.lastError().text().toLocal8Bit() );
     QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
     QVERIFY2( cola.record().value(0).toString() == nombre_proveedor, "No coincide el nombre del proveedor en la marca del producto agregado" );
-*/
 }
 
 /*!
@@ -137,6 +141,7 @@ void ComprasTest::testAutoAgregarProductos_data()
     QTest::addColumn<int>("id_proveedor");
     QTest::addColumn<QString>("nombre_proveedor");
     QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.0 << 1 << "Proveedor 1";
+    QTest::newRow("SegundoItem") << "Prueba insersión 2 " << 11.0 << 2 << "Proveedor 2";
 }
 
 QTEST_MAIN(ComprasTest)

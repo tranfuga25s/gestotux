@@ -702,12 +702,7 @@ void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double preci
   // Veo si existe y lo agrego a la lista si no existe....
   bool ok = false;
 
-
-  if( Id <= -1 && precio_unitario <= 0.0 ) {
-      // Pido el precio si fue agregado especificamente
-      precio_unitario = EInputDialog::getImporte( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
-  } else {
-
+  if( Id > 0 ) {
       if( this->_buscarPrecio ) {
           if( this->_tipoPrecio == MProductosTotales::Costo ) {
             precio_unitario = buscarPrecioCompra( Id );
@@ -715,11 +710,7 @@ void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double preci
             precio_unitario = buscarPrecioVenta( Id );
           }
           ok = true;
-      } else {
-          // Como no busca el precio, inserto el dialogo
-          precio_unitario = EInputDialog::getImporte( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
       }
-
       // Es un producto valido
       preferencias *p = preferencias::getInstancia();
       p->beginGroup( "Preferencias" );
@@ -732,6 +723,14 @@ void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double preci
         }
       }
       p->endGroup(); p->endGroup(); p=0;
+  }
+
+  if( precio_unitario <= 0.0 ) {
+      // Como no busca el precio, inserto el dialogo
+      precio_unitario = EInputDialog::getImporte( 0, "Falta precio", "Ingrese el precio unitario", 0.0, 0.0, 2147483647, 2, &ok );
+  } else {
+      // Ingreso el precio antes
+      ok = true;
   }
 
   // Inserto el dato con la cantidad si fue buscado el precio o insertado

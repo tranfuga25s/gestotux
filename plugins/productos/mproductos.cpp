@@ -364,7 +364,7 @@ bool MProductos::actualizarPrecioCompra( const int id_producto, const double pre
  QSqlQuery cola;
  if( cola.exec( QString( "UPDATE producto SET precio_costo = %1 WHERE id = %2" ).arg( precio ).arg( id_producto ) ) )
  {
-        qDebug( "Precio de compra actualizado correctamente" );
+        //qDebug( "Precio de compra actualizado correctamente" );
         return true;
  }
  else
@@ -388,7 +388,7 @@ bool MProductos::actualizarPrecioVenta( const int id_producto, const double prec
  QSqlQuery cola;
  if( cola.exec( QString( "UPDATE producto SET precio_venta = %1 WHERE id = %2" ).arg( precio ).arg( id_producto ) ) )
  {
-        qDebug( "Precio de venta actualizado correctamente" );
+        //qDebug( "Precio de venta actualizado correctamente" );
         return true;
  }
  else

@@ -92,12 +92,12 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     p->beginGroup( "Ventas" );
     if( p->value("filtrarProveedor").toBool() ) {
         connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), this, SLOT( cambioProveedor( int ) ) );
-    } else {
-        CBProveedor->setVisible( false );
     }
     p->endGroup();
     p->endGroup();
     p=0;
+
+    DSBPrecioUnitario->setVisible( false );
 }
 
 
@@ -206,7 +206,6 @@ void FormAgregarCompra::guardar()
 
                  } else {
                      MProductos *mp = new MProductos();
-                     qDebug() << "precio venta " << mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble();
                      int id_producto_nuevo = mp->agregarProducto(
                                  QString(),
                                  mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString(), // Nombre
@@ -220,7 +219,7 @@ void FormAgregarCompra::guardar()
                          arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(),
                                                    id_producto_nuevo );
                         i--; // vuelvo a repetir el proceso para que continue con los datos actualizados
-                        qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
+                        //qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
                         continue;
                      } else {
                          qWarning() << "Error al insertar el nuevo producto. Hagalo manualmente"; abort();
@@ -334,7 +333,6 @@ void FormAgregarCompra::agregarProducto()
  SBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
  SBCant->setFocus();
-
 }
 
 
