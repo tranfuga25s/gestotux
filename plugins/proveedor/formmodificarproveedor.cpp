@@ -43,10 +43,11 @@ bool FormModificarProveedor::guardar()
         QMessageBox::information( this, "Error", "Por favor, ingrese una razon CUIT/CUIL valido para el proveedor" );
         return false;
     }
+    // Verifico el nombre para ver s existe al cambiarlo
     if( modelo->data( modelo->index( mapa->currentIndex(), modelo->fieldIndex( "nombre" ) ), Qt::EditRole ).toString() != LERazonSocial->text() ) {
         // Cambio el nombre del proveedor -> verifico
         if( modelo->existeProveedor( LERazonSocial->text() ) ) {
-            qWarning( "El CUIT/CUIL ingresado ya existe en la base de datos en otro proveedor" );
+            qWarning( "El nombre de proveedor ingresado ya existe en la base de datos" );
             return false;
         }
     }
