@@ -98,6 +98,8 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     p=0;
 
     DSBPrecioUnitario->setVisible( false );
+
+    CBProducto->setearMostrarSinStock( true );
 }
 
 
