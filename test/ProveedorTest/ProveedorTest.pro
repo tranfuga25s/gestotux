@@ -18,6 +18,8 @@ INCLUDEPATH += ../../plugins/proveedor \
 
 LIBS += ../../bin/plugins/libproveedor.so
 
+FORMS += ../../plugins/proveedor/FormProveedorBase.ui
+
 exists( ../../travis.pri ) {
     include( ../../travis.pri )
 }

@@ -12,7 +12,7 @@
  *
  * \author Esteban Zeller
  */
-class FormModificarProveedor : public EVentana, private Ui::FormProveedorBase
+class FormModificarProveedor : public EVentana, public Ui::FormProveedorBase
 {
     Q_OBJECT
 public:
@@ -20,7 +20,7 @@ public:
     void setearItem( const int id );
 
 public slots:
-    void guardar();
+    bool guardar();
 
 private:
     QDataWidgetMapper *mapa;

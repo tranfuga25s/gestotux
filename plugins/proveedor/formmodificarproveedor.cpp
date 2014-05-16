@@ -32,39 +32,39 @@ FormModificarProveedor::FormModificarProveedor( MProveedor *m, QWidget *parent) 
 
 #include <QSqlError>
 #include <QMessageBox>
-void FormModificarProveedor::guardar()
+bool FormModificarProveedor::guardar()
 {
     if( LERazonSocial->text().isEmpty() ) {
         QMessageBox::information( this, "Error", "Por favor, ingrese una razon social para el proveedor" );
-        return;
+        return false;
     }
     // Verifico el Cuit
     if( !LECUIT->verificar() ) {
         QMessageBox::information( this, "Error", "Por favor, ingrese una razon CUIT/CUIL valido para el proveedor" );
-        return;
+        return false;
     }
     if( modelo->data( modelo->index( mapa->currentIndex(), modelo->fieldIndex( "nombre" ) ), Qt::EditRole ).toString() != LERazonSocial->text() ) {
         // Cambio el nombre del proveedor -> verifico
         if( modelo->existeProveedor( LERazonSocial->text() ) ) {
             qWarning( "El CUIT/CUIL ingresado ya existe en la base de datos en otro proveedor" );
-            return;
+            return false;
         }
     }
     if( modelo->data( modelo->index( mapa->currentIndex(), modelo->fieldIndex( "cuit_cuil" ) ), Qt::EditRole ).toString() != LECUIT->text() ) {
         // Cambio el cuit/cuil -> verifico
         if( modelo->existeCuitCuil( LECUIT->text() ) ) {
             qWarning( "El CUIT/CUIL ingresado ya existe en la base de datos en otro proveedor" );
-            return;
+            return false;
         }
     }
     if( mapa->submit() ) {
         QMessageBox::information( this, "Correcto", "Datos guardados correctamente" );
         this->close();
-        return;
+        return true;
     } else {
         qDebug( "Error al intentar guardar los datos" );
         qDebug( this->modelo->lastError().text().toLocal8Bit() );
-        return;
+        return false;
     }
 }
 
