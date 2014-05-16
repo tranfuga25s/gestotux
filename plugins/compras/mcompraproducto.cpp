@@ -77,7 +77,7 @@ bool MCompraProducto::agregarCompraProducto( const int id_compra, const int id_p
             }
         }
         // Actualizo el precio de compra
-        if( !MProductos::actualizarPrecioCompra( id_producto, cantidad ) ) {
+        if( !MProductos::actualizarPrecioCompra( id_producto, precio_compra ) ) {
             qWarning( "Existió un error al intentar ajustar el precio de compra del producto" );
             return false;
         }
