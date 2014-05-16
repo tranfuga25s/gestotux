@@ -104,8 +104,11 @@ void ComprasTest::testAutoAgregarProductos()
     p->setValue( "marcas", true );
     p->setValue( "marca_proveedor", true );
     p->setValue( "ocultar_codigo", true );
+    double ganancia = p->value( "ganancia", 10.0 ).toDouble();
     p->endGroup();
     p->endGroup();
+
+
 
     FormAgregarCompra *fac = new FormAgregarCompra();
 
@@ -130,7 +133,7 @@ void ComprasTest::testAutoAgregarProductos()
     QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
     QVERIFY2( cola.record().value(0).toString() == nombre_proveedor, "No coincide el nombre del proveedor en la marca del producto agregado" );
     QCOMPARE( cola.record().value(1).toDouble(), precio );
-    QCOMPARE( cola.record().value(2).toDouble(), precio*1.1 );
+    QCOMPARE( cola.record().value(2).toDouble(), precio*( 1 + ( ganancia /100 ) ) );
 
 
 }
