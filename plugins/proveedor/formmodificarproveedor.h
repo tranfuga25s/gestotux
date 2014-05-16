@@ -16,7 +16,7 @@ class FormModificarProveedor : public EVentana, public Ui::FormProveedorBase
 {
     Q_OBJECT
 public:
-    explicit FormModificarProveedor( MProveedor *m, QWidget *parent = 0);
+    explicit FormModificarProveedor( MProveedor *m, QWidget *parent = 0, bool testing = false );
     void setearItem( const int id );
 
 public slots:
@@ -25,6 +25,7 @@ public slots:
 private:
     QDataWidgetMapper *mapa;
     MProveedor *modelo;
+    bool testing;
 
 };
 

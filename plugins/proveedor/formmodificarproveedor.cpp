@@ -3,7 +3,7 @@
 #include "eactcerrar.h"
 #include "eactguardar.h"
 
-FormModificarProveedor::FormModificarProveedor( MProveedor *m, QWidget *parent) :
+FormModificarProveedor::FormModificarProveedor( MProveedor *m, QWidget *parent, bool test ) :
     EVentana(parent), Ui::FormProveedorBase()
 {
     setupUi(this);
@@ -28,6 +28,8 @@ FormModificarProveedor::FormModificarProveedor( MProveedor *m, QWidget *parent) 
     mapa->setSubmitPolicy( QDataWidgetMapper::ManualSubmit );
 
     this->GBTitulo->setTitle( "Modificar proveedor" );
+
+    testing = test;
 }
 
 #include <QSqlError>
@@ -59,7 +61,7 @@ bool FormModificarProveedor::guardar()
         }
     }
     if( mapa->submit() ) {
-        QMessageBox::information( this, "Correcto", "Datos guardados correctamente" );
+        if( !testing ) { QMessageBox::information( this, "Correcto", "Datos guardados correctamente" ); }
         this->close();
         return true;
     } else {

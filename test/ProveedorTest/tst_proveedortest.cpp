@@ -71,8 +71,9 @@ void ProveedorTest::testVentanaModificar()
 
     MProveedor *mp = new MProveedor();
     mp->select();
-    FormModificarProveedor *fmp = new FormModificarProveedor( mp );
-    fmp->setearItem( id_proveedor );
+
+    FormModificarProveedor *fmp = new FormModificarProveedor( mp, 0, true );
+    fmp->setearItem( 0 );
     fmp->LERazonSocial->setText( nombre );
     fmp->TEDireccion->setPlainText( direccion );
     fmp->LEFax->setText( fax );
@@ -94,7 +95,7 @@ void ProveedorTest::testVentanaModificar()
     QCOMPARE( cola.record().value(3).toString(), telefono );
     QCOMPARE( cola.record().value(4).toString(), email );
     QCOMPARE( cola.record().value(5).toString(), celular );
-    QCOMPARE( cola.record().value(6).toString(), cuit_cuil );
+    QCOMPARE( cola.record().value(6).toString().replace( '-', "" ), cuit_cuil );
 }
 
 void ProveedorTest::testVentanaModificar_data()
