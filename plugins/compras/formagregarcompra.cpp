@@ -150,6 +150,7 @@ void FormAgregarCompra::guardar()
  p->endGroup();
  p->beginGroup( "Productos" );
  bool marca_proveedor = p->value( "marca_proveedor", false ).toBool();
+ double ganancia = p->value( "ganancia", 10.0 ).toDouble();
  p->endGroup();
  p->endGroup();
  p=0;
@@ -206,11 +207,13 @@ void FormAgregarCompra::guardar()
 
                  } else {
                      MProductos *mp = new MProductos();
+                     double precio_compra = mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble();
+                     double precio_venta = precio_compra * ( 1.0 + ( ganancia / 100.0 ) );
                      int id_producto_nuevo = mp->agregarProducto(
                                  QString(),
                                  mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString(), // Nombre
-                                 mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Costo
-                                 mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Venta
+                                 precio_compra, // Costo
+                                 precio_venta, // Venta
                                  0, // Stock inicial cero
                                  -1, // Categoria indefinida
                                  QString(), // Descripcion vacía
@@ -247,6 +250,8 @@ void FormAgregarCompra::guardar()
          double precio_anterior = MProductos::buscarPrecioCompra( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
          if( precio_anterior > 0.0 ) {
              if( ( precio_anterior - mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() ) != 0.0 ) {
+                 /// @todo: Agregar actualización de precio de compra
+
                  // Actualizo el precio de venta
                  preferencias *p = preferencias::getInstancia();
                  p->beginGroup( "Preferencias" );

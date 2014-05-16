@@ -126,9 +126,11 @@ void ComprasTest::testAutoAgregarProductos()
 
     // Verifico que se haya agregado el producto con el proveedor correspondiente
     QSqlQuery cola;
-    QVERIFY2( cola.exec( QString( "SELECT marca FROM producto WHERE nombre = '%1'" ).arg( nombre ) ) == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.exec( QString( "SELECT marca, precio_costo, precio_venta FROM producto WHERE nombre = '%1'" ).arg( nombre ) ) == true, cola.lastError().text().toLocal8Bit() );
     QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
     QVERIFY2( cola.record().value(0).toString() == nombre_proveedor, "No coincide el nombre del proveedor en la marca del producto agregado" );
+    QCOMPARE( cola.record().value(1).toDouble(), precio );
+    QCOMPARE( cola.record().value(2).toDouble(), precio*1.1 );
 }
 
 /*!
