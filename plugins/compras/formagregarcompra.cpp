@@ -246,17 +246,15 @@ void FormAgregarCompra::guardar()
 
          }
      } else {
-         // El sistema ajusta automaticamente el precio de compra pero no el de venta.
+         // El MCompraItem ajusta automaticamente el precio de compra pero no el de venta.
          double precio_anterior = MProductos::buscarPrecioCompra( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
          if( precio_anterior > 0.0 ) {
              if( ( precio_anterior - mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() ) != 0.0 ) {
-                 /// @todo: Agregar actualización de precio de compra
-
                  // Actualizo el precio de venta
                  preferencias *p = preferencias::getInstancia();
                  p->beginGroup( "Preferencias" );
                  p->beginGroup( "Productos" );
-                 double ganancia = ( p->value( "ganancia", 10 ).toDouble() )/100;
+                 double ganancia = ( p->value( "ganancia", 10 ).toDouble() ) / 100.0;
                  p->endGroup();p->endGroup(); p = 0;
                  double precio_calculado = precio_anterior * ( 1 + ganancia );
                  bool ok = false;
