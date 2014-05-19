@@ -3,6 +3,8 @@
 #include "eactcerrar.h"
 #include "eactguardar.h"
 
+#include <QDebug>
+
 FormModificarProveedor::FormModificarProveedor( MProveedor *m, QWidget *parent, bool test ) :
     EVentana(parent), Ui::FormProveedorBase()
 {
@@ -65,8 +67,8 @@ bool FormModificarProveedor::guardar()
         this->close();
         return true;
     } else {
-        qDebug( "Error al intentar guardar los datos" );
-        qDebug( this->modelo->lastError().text().toLocal8Bit() );
+        qDebug() << "Error al intentar guardar los datos";
+        qDebug() <<  this->modelo->lastError().text();
         return false;
     }
 }
