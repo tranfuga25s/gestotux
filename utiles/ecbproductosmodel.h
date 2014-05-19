@@ -16,8 +16,11 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
     
-    int columnCount(const QModelIndex &parent) const;
-    int rowCount(const QModelIndex &parent) const;
+    int columnCount(const QModelIndex &parent = QModelIndex() ) const;
+    int rowCount(const QModelIndex &parent = QModelIndex() ) const;
+
+    bool insertRow(int row, const QModelIndex &parent);
+
     void inicializar();
 
 private:

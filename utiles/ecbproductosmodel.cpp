@@ -141,16 +141,17 @@ void ECBProductosModel::inicializar()
  * \param parent
  * \return
  */
-bool MProductosTotales::insertRow( int row, const QModelIndex& parent )
+bool ECBProductosModel::insertRow( int row, const QModelIndex& parent )
 {
  if( row == -1 )
- { row = cantidades->size(); }
+ { row = this->_ids->size(); }
  beginInsertRows( parent, row, row );
- cantidades->insert( row, 0 );
- precio_unitario->insert( row, 0 );
- subtotales->insert( row, 0 );
- productos->insert( row, -1 );
- //qDebug( qPrintable( "Insertada fila: " + QString::number( row ) ) );
+ this->_ids->insert( row, 0 );
+ this->_codigos->insert( row, 0 );
+ this->_nombres->insert( row, 0 );
+ this->_stock->insert( row, -1 );
+ this->_habilitado->insert( row, true );
+ this->_proveedor->insert( row, 0 );
  endInsertRows();
  emit dataChanged( this->index( row, 0 ), this->index( row, this->columnCount() ) );
  emit dataChanged( this->index( this->rowCount(), 0 ), this->index( this->rowCount(), this->columnCount() ) );
