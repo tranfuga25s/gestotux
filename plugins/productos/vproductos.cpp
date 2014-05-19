@@ -75,6 +75,7 @@ VProductos::VProductos(QWidget *parent)
  vista->horizontalHeader()->setResizeMode( rmodelo->fieldIndex( "codigo" ), QHeaderView::ResizeToContents );
  vista->setAlternatingRowColors( true );
  vista->setSortingEnabled( true );
+ vista->horizontalHeader()->setMovable( true );
 
  addAction( ActAgregar );
  addAction( ActModificar );
@@ -163,6 +164,8 @@ VProductos::VProductos(QWidget *parent)
  habilitarBusqueda();
 
  p->endGroup();p->endGroup(); p=0;
+
+ this->restaurarEstado();
 }
 
 /*!

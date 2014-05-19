@@ -44,6 +44,7 @@ public:
     EVLista(QWidget *parent = 0, Qt::WFlags fl = 0 );
     ~EVLista();
     void closeEvent( QCloseEvent * c);
+    void restaurarEstado();
 
    /*!
     * Visor utilizado para ver los datos
