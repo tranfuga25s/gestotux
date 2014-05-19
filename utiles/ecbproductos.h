@@ -53,6 +53,7 @@ private:
     QMap<QString, int> *_mapa_pos_codigo;
     QMap<int, QString> *_mapa_id_nombre;
     QMap<int, int> *_mapa_pos_ids;
+    QMap<int, int> *_mapa_id_proveedor;
 
     int _min;
     bool _mostrar_deshabilitados;

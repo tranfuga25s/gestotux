@@ -26,6 +26,7 @@ ECBProductos::ECBProductos( QWidget *parent ) :
     _mapa_pos_codigo = new QMap<QString, int>();
     _mapa_id_nombre = new QMap<int, QString>();
     _mapa_pos_ids = new QMap<int, int>();
+    _mapa_id_proveedor = new QMap<int, int>();
 
     this->_min = -1;
     this->_mostrar_deshabilitados = false;
@@ -54,6 +55,8 @@ ECBProductos::~ECBProductos()
     _mapa_id_nombre = 0;
     delete _mapa_pos_ids;
     _mapa_pos_ids = 0;
+    delete _mapa_id_proveedor;
+    _mapa_id_proveedor;
 }
 
 #include <QSqlQuery>
@@ -68,8 +71,8 @@ void ECBProductos::inicializar()
     // Cargo los datos del modelo
     QSqlQuery cola;
     QString tcola;
-    tcola.append( "SELECT id, codigo, nombre, stock FROM producto WHERE " );
-    if( !_mostrar_deshabilitados ) {
+    tcola.append( "SELECT id, codigo, nombre, stock, habilitado, ( SELECT id_proveedor FROM compras WHERE id  IN ( SELECT MAX( id_compra ) FROM compras_productos  WHERE id_producto = 1 ) ) AS id_proveedor FROM producto " );
+/*    if( !_mostrar_deshabilitados ) {
         tcola.append( " habilitado IN ( 1, 'true' ) " );
     }
     if( !_mostrar_sin_stock && !_mostrar_deshabilitados ) {
@@ -92,7 +95,7 @@ void ECBProductos::inicializar()
                                "      WHERE id_proveedor = %1"
                                "  )"
                                " )" ).arg( _id_proveedor ) );
-    }
+    } */
     tcola.append( " ORDER BY nombre ASC" );
     if( cola.exec( tcola ) ) {
         int pos = 0;
@@ -117,6 +120,7 @@ void ECBProductos::inicializar()
             this->_mapa_pos_codigo->insert( cola.record().value(1).toString(), pos );
             this->_mapa_id_nombre->insert ( cola.record().value(0).toInt()   , cola.record().value(2).toString() );
             this->_mapa_pos_ids->insert   ( pos, cola.record().value(0).toInt() );
+            this->_mapa_id_proveedor->insert( pos, cola.record().value(0).toInt() );
             pos++;
         }
         if( pos == 0 ) {
