@@ -3,6 +3,8 @@
 
 #include <QComboBox>
 
+#include "ecbproductosfilter.h"
+
 /*!
  * \brief Combobox de productos con autodeteccion de codigo.
  *
@@ -19,9 +21,6 @@
 class ECBProductos : public QComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( int id_producto READ idActual USER true )
-    Q_PROPERTY( bool sin_stock READ mostrarSinStock WRITE setearMostrarSinStock USER true )
-    Q_PROPERTY( bool deshabilitados READ mostrarDeshabilitados WRITE setearMostrarDeshabilitados USER true )
 public:
     ECBProductos( QWidget *parent = 0 );
     ~ECBProductos();
@@ -32,16 +31,15 @@ public:
 
     QList<int> *getListaIDs();
 
-    bool mostrarDeshabilitados() { return _mostrar_deshabilitados; }
+    bool mostrarDeshabilitados() { return this->modelo->mostrarProductosDeshabilitados(); }
     void setearMostrarDeshabilitados( bool estado );
 
-    bool mostrarSinStock() { return _mostrar_sin_stock; }
+    bool mostrarSinStock() { return this->modelo->mostrarProductosSinStock(); }
     void setearMostrarSinStock( bool estado );
 
     void filtrarPorProveedor( const int id_proveedor );
 
-protected slots:
-    void inicializar();
+    void setearModelo( ECBProductosFilter *modelo );
 
 signals:
     void agregarProducto();
@@ -53,13 +51,8 @@ private:
     QMap<QString, int> *_mapa_pos_codigo;
     QMap<int, QString> *_mapa_id_nombre;
     QMap<int, int> *_mapa_pos_ids;
-    QMap<int, int> *_mapa_id_proveedor;
 
-    int _min;
-    bool _mostrar_deshabilitados;
-    bool _mostrar_sin_stock;
-    bool _mostrar_stock_lista;
-    int _id_proveedor;
+    ECBProductosFilter *modelo;
 };
 
 #endif // ECBPRODUCTOS_H

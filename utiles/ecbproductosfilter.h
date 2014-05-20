@@ -11,6 +11,8 @@ public:
     void setearNoMostrarProductosSinStock( bool estado );
     void setearNoMostrarProductosDeshabilitados( bool estado );
     void setearIdProveedor( int id_proveedor );
+    bool mostrarProductosDeshabilitados() { return _mostrar_deshabilitados; }
+    bool mostrarProductosSinStock() { return _mostrar_sin_stock; }
 
 protected:
     bool filterAcceptsRow( int source_row, const QModelIndex &source_parent = QModelIndex() ) const;
