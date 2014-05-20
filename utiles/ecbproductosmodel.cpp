@@ -189,12 +189,11 @@ bool ECBProductosModel::removeRow( int row, const QModelIndex& parent )
 }
 
 /*!
- * \fn MProductosTotales::agregarItem( const int cant, const QString texto, const double pu )
- * Funcion especial que ingresara los elementos sin hacer las verificaciones normales como si fuera un agregado desde la lista de ventas.
- * Util para mostrar elementos con subtotales y totales en listas estaticas para mostrar por ejemplo elementos de compras.
- * \param cant Cantidad del item.
- * \param texto Texto del item.
- * \param pu Precio unitario del item
+ * \brief ECBProductosModel::agregarItem
+ * \param texto
+ * \param stock
+ * \param habilitado
+ * \param proveedor
  */
 void ECBProductosModel::agregarItem( const QString texto, double stock, bool habilitado, int proveedor )
 {
