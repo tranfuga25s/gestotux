@@ -44,6 +44,7 @@ EVLista::EVLista( QWidget *parent, Qt::WFlags fl )
  QGridLayout *layout = new QGridLayout( this );
  vista = new QTableView( this );
  vista->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+
  layout->addWidget( vista );
  this->setLayout( layout );
  // Propiedades varias
@@ -196,8 +197,29 @@ void EVLista::closeEvent( QCloseEvent * c)
 {
  /*if( modelo )
  { modelo->submitAll(); }*/
-// delete modelo;
+ // delete modelo;
+ // Guardo el estado de las cabeceras
+ preferencias *p = preferencias::getInstancia();
+ p->inicio();
+ p->beginGroup("Ventanas");
+ p->beginGroup("Cabeceras");
+ p->setValue( this->objectName(), vista->horizontalHeader()->saveState() );
+ p=0;
  EVentana::closeEvent( c );
+}
+
+/*!
+ * Coloca nuevamente el estado buscado por las cabeceras y otros
+ */
+void EVLista::restaurarEstado()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup("Ventanas");
+    p->beginGroup("Cabeceras");
+    qDebug() << this->objectName();
+    vista->horizontalHeader()->restoreState( p->value( this->objectName(), QByteArray() ).toByteArray() );
+    p=0;
 }
 
 

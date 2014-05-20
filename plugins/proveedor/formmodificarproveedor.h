@@ -12,19 +12,20 @@
  *
  * \author Esteban Zeller
  */
-class FormModificarProveedor : public EVentana, private Ui::FormProveedorBase
+class FormModificarProveedor : public EVentana, public Ui::FormProveedorBase
 {
     Q_OBJECT
 public:
-    explicit FormModificarProveedor( MProveedor *m, QWidget *parent = 0);
+    explicit FormModificarProveedor( MProveedor *m, QWidget *parent = 0, bool testing = false );
     void setearItem( const int id );
 
 public slots:
-    void guardar();
+    bool guardar();
 
 private:
     QDataWidgetMapper *mapa;
     MProveedor *modelo;
+    bool testing;
 
 };
 
