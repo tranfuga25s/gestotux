@@ -29,6 +29,7 @@ private Q_SLOTS:
     void testECBProductosModel_data();
     void testECBProductosModelAgregarItem();
     void testECBProductosModelAgregarItem_data();
+    void testECBProductosConFiltrado();
 };
 
 /*!
@@ -198,6 +199,8 @@ void ECBProductosTest::testECBProductosModelAgregarItem()
     QCOMPARE( m->data( m->index( i, 3 ) ).toDouble(), stock        );
     QCOMPARE( m->data( m->index( i, 4 ) ).toBool()  , habilitado   );
     QCOMPARE( m->data( m->index( i, 5 ) ).toInt()   , id_proveedor );
+
+    delete m;
 }
 
 /*!
@@ -216,6 +219,39 @@ void ECBProductosTest::testECBProductosModelAgregarItem_data()
     QTest::newRow("Producto2") << 1 << 2 << "2" << "Producto 2" << 1.0 << true << 2;
     QTest::newRow("ProductoInsertado") << -1 << -1 << "-1" << "Producto insertado" << 1.0 << true << 0;
 }
+
+#include "ecbproductosfilter.h"
+/*!
+ * \brief ECBProductosTest::testECBProductosConFiltrado
+ * Permite probar la salida de los modelos de filtrado
+ */
+void ECBProductosTest::testECBProductosConFiltrado()
+{
+    ECBProductosModel *mp = new ECBProductosModel();
+    mp->inicializar();
+
+    ECBProductosFilter *modelo = new ECBProductosFilter( this );
+    modelo->setSourceModel( mp );
+
+    modelo->setearNoMostrarProductosSinStock( true );
+    for( int i=0; i<modelo->rowCount(); i++ ) {
+        QVERIFY( modelo->data( modelo->index( i, ECBProductosModel::Stock ) ).toDouble() > 0.0 );
+    }
+
+    modelo->setearNoMostrarProductosDeshabilitados( true );
+    for( int i=0; i<modelo->rowCount(); i++ ) {
+        QVERIFY( modelo->data( modelo->index( i, ECBProductosModel::Habilitado ) ).toBool() == true );
+    }
+
+    int id_proveedor = 1;
+    modelo->setearIdProveedor( id_proveedor );
+    for( int i=0; i<modelo->rowCount(); i++ ) {
+        QVERIFY( modelo->data( modelo->index( i, ECBProductosModel::IdProveedor ) ).toInt() == id_proveedor );
+    }
+
+}
+
+
 QTEST_MAIN(ECBProductosTest)
 
 #include "tst_ecbproductostest.moc"

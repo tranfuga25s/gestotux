@@ -32,7 +32,8 @@ HEADERS += eactcerrar.h \
            eddescuento.h \
     util.h \
     einputdialog.h \
-    ecbproductosmodel.h
+    ecbproductosmodel.h \
+    ecbproductosfilter.h
 SOURCES += eactcerrar.cpp \
            eactimprimir.cpp \
            eventana.cpp \
@@ -64,7 +65,8 @@ SOURCES += eactcerrar.cpp \
            eddescuento.cpp \
     util.cpp \
     einputdialog.cpp \
-    ecbproductosmodel.cpp
+    ecbproductosmodel.cpp \
+    ecbproductosfilter.cpp
 
 QT += sql \
       xml

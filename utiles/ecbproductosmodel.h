@@ -26,6 +26,15 @@ public:
 
     void agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
 
+    enum Columnas {
+        Ids=0,
+        Codigos=1,
+        Nombres=2,
+        Stock=3,
+        Habilitado=4,
+        IdProveedor=5
+    };
+
 private:
     QHash<int, int> *_ids;
     QHash<int, QString> *_codigos;
@@ -36,14 +45,7 @@ private:
 
     int _min;
 
-    enum Columnas {
-        Ids=0,
-        Codigos=1,
-        Nombres=2,
-        Stock=3,
-        Habilitado=4,
-        IdProveedor=5
-    };
+
 };
 
 #endif // ECBPRODUCTOSMODEL_H
