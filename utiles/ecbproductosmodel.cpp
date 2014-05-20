@@ -89,7 +89,7 @@ QVariant ECBProductosModel::data( const QModelIndex &index, int role ) const
  * \return
  */
 int ECBProductosModel::columnCount( const QModelIndex & ) const
-{ return 5; }
+{ return 6; }
 
 /*!
  * \brief ECBProductosModel::rowCount
