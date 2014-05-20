@@ -149,7 +149,7 @@ bool ECBProductosModel::insertRow( int row, const QModelIndex& parent )
  this->_ids       ->insert( row, 0 );
  this->_codigos   ->insert( row, QString() );
  this->_nombres   ->insert( row, QString() );
- this->_stock     ->insert( row, -1 );
+ this->_stock     ->insert( row, -1.0 );
  this->_habilitado->insert( row, true );
  this->_proveedor ->insert( row, 0 );
  endInsertRows();
@@ -186,4 +186,30 @@ bool ECBProductosModel::removeRow( int row, const QModelIndex& parent )
   endRemoveRows();
   emit dataChanged( this->index( row, 0 ), this->index( this->rowCount(), this->columnCount() ) );
   return true;
+}
+
+/*!
+ * \fn MProductosTotales::agregarItem( const int cant, const QString texto, const double pu )
+ * Funcion especial que ingresara los elementos sin hacer las verificaciones normales como si fuera un agregado desde la lista de ventas.
+ * Util para mostrar elementos con subtotales y totales en listas estaticas para mostrar por ejemplo elementos de compras.
+ * \param cant Cantidad del item.
+ * \param texto Texto del item.
+ * \param pu Precio unitario del item
+ */
+void ECBProductosModel::agregarItem( const QString texto, double stock, bool habilitado, int proveedor )
+{
+    int pos = this->_ids->size();
+    this->insertRow( -1 );
+
+    this->_ids       ->insert( pos, _min                          );
+    this->_codigos   ->insert( pos, QString::number( this->_min ) );
+    this->_nombres   ->insert( pos, texto                         );
+    this->_habilitado->insert( pos, habilitado                    );
+    this->_stock     ->insert( pos, stock                         );
+    this->_proveedor ->insert( pos, proveedor                     );
+
+    this->_min--;
+
+    emit dataChanged( this->index( pos, 0 ), this->index( pos, this->columnCount() ) );
+    emit dataChanged( this->index( this->rowCount(), 0 ), this->index( this->rowCount(), this->columnCount() ) );
 }

@@ -14,7 +14,7 @@ public:
     ECBProductosModel( QObject *parent = 0 );
     ~ECBProductosModel();
 
-    QVariant data(const QModelIndex &index, int role) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole ) const;
     
     int columnCount(const QModelIndex &parent = QModelIndex() ) const;
     int rowCount(const QModelIndex &parent = QModelIndex() ) const;
@@ -23,6 +23,8 @@ public:
     bool removeRow(int row, const QModelIndex &parent = QModelIndex() );
 
     void inicializar();
+
+    void agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
 
 private:
     QHash<int, int> *_ids;

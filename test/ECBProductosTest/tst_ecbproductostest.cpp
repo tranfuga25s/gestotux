@@ -25,7 +25,8 @@ private Q_SLOTS:
     void testFiltroProveedor_data();
     void testMostrarStock();
     void testMostrarStock_data();
-
+    void testECBProductosModel();
+    void testECBProductosModel_data();
 };
 
 /*!
@@ -44,24 +45,10 @@ ECBProductosTest::ECBProductosTest()
  */
 ECBProductosTest::~ECBProductosTest() {}
 
-/*!
- * \brief ECBProductosTest::init
- */
+
 void ECBProductosTest::init() { EDatabaseTest::init(); }
-
-/*!
- * \brief ECBProductosTest::initTestCase
- */
 void ECBProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
-
-/*!
- * \brief ECBProductosTest::cleanupTestCase
- */
 void ECBProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
-
-/*!
- * \brief ECBProductosTest::cleanup
- */
 void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
 
 /*!
@@ -139,6 +126,44 @@ void ECBProductosTest::testMostrarStock_data()
     QTest::newRow("SinStock") << false << 1 << 0.0;
     QTest::newRow("ConStock") << true << 1 << 1.0;
 
+}
+
+#include "ecbproductosmodel.h"
+/*!
+ * \brief ECBProductosTest::testECBProductosModel
+ */
+void ECBProductosTest::testECBProductosModel()
+{
+    ECBProductosModel *m = new ECBProductosModel();
+    m->inicializar();
+
+    QFETCH( int, i );
+    QFETCH( int, id_producto );
+    QFETCH( QString, codigo );
+    QFETCH( QString, nombre );
+    QFETCH( double, stock );
+    QFETCH( bool, habilitado );
+    QFETCH( int, id_proveedor );
+
+    QCOMPARE( m->data( m->index( i, 0 ) ).toInt()   , id_producto  );
+    QCOMPARE( m->data( m->index( i, 1 ) ).toString(), codigo       );
+    QCOMPARE( m->data( m->index( i, 2 ) ).toString(), nombre       );
+    QCOMPARE( m->data( m->index( i, 3 ) ).toDouble(), stock        );
+    QCOMPARE( m->data( m->index( i, 4 ) ).toBool()  , habilitado   );
+    QCOMPARE( m->data( m->index( i, 5 ) ).toInt()   , id_proveedor );
+}
+
+void ECBProductosTest::testECBProductosModel_data()
+{
+    QTest::addColumn<int>("i");
+    QTest::addColumn<int>("id_producto");
+    QTest::addColumn<QString>("codigo");
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("stock");
+    QTest::addColumn<bool>("habilitado");
+    QTest::addColumn<int>("id_proveedor");
+    QTest::newRow("Producto1") << 0 << 1 << "1" << "Producto 1" << 1.0 << true << 1;
+    QTest::newRow("Producto2") << 1 << 2 << "2" << "Producto 2" << 1.0 << true << 2;
 }
 
 QTEST_MAIN(ECBProductosTest)

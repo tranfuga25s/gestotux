@@ -71,8 +71,8 @@ void ECBProductos::inicializar()
     // Cargo los datos del modelo
     QSqlQuery cola;
     QString tcola;
-    tcola.append( "SELECT id, codigo, nombre, stock, habilitado, ( SELECT id_proveedor FROM compras WHERE id  IN ( SELECT MAX( id_compra ) FROM compras_productos  WHERE id_producto = 1 ) ) AS id_proveedor FROM producto " );
-/*    if( !_mostrar_deshabilitados ) {
+    tcola.append( "SELECT id, codigo, nombre, stock, habilitado FROM producto WHERE " );
+    if( !_mostrar_deshabilitados ) {
         tcola.append( " habilitado IN ( 1, 'true' ) " );
     }
     if( !_mostrar_sin_stock && !_mostrar_deshabilitados ) {
@@ -95,7 +95,7 @@ void ECBProductos::inicializar()
                                "      WHERE id_proveedor = %1"
                                "  )"
                                " )" ).arg( _id_proveedor ) );
-    } */
+    }
     tcola.append( " ORDER BY nombre ASC" );
     if( cola.exec( tcola ) ) {
         int pos = 0;
