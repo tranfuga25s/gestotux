@@ -106,7 +106,7 @@ void ECBProductosModel::inicializar()
     // Cargo los datos del modelo
     QSqlQuery cola;
     QString tcola;
-    tcola.append( "SELECT id, codigo, nombre, stock, habilitado, ( SELECT id_proveedor FROM compras WHERE id  IN ( SELECT MAX( id_compra ) FROM compras_productos  WHERE id_producto = 1 ) ) AS id_proveedor FROM producto ORDER BY nombre ASC" );
+    tcola.append( "SELECT id, codigo, nombre, stock, habilitado, ( SELECT id_proveedor FROM compras WHERE id  IN ( SELECT MAX( id_compra ) FROM compras_productos as  cp WHERE cp.id_producto = p.id ) ) AS id_proveedor FROM producto AS p ORDER BY nombre ASC" );
     if( cola.exec( tcola ) ) {
         int pos = 0;
         this->_ids->clear();
