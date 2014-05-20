@@ -11,9 +11,12 @@ TEMPLATE = app
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += tst_ecbproductostest.cpp \
-           ../../utiles/ecbproductosmodel.cpp
+           ../../utiles/ecbproductosmodel.cpp \
+           ../../utiles/ecbproductosfilter.cpp
+
 HEADERS += ../edatabasetest.h \
-           ../../utiles/ecbproductosmodel.h
+           ../../utiles/ecbproductosmodel.h \
+           ../../utiles/ecbproductosfilter.h
 
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles

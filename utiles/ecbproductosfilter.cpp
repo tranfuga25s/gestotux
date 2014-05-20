@@ -2,6 +2,8 @@
 
 #include "ecbproductosmodel.h"
 
+#include <QDebug>
+
 ECBProductosFilter::ECBProductosFilter(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
@@ -18,6 +20,7 @@ ECBProductosFilter::ECBProductosFilter(QObject *parent) :
 void ECBProductosFilter::setearNoMostrarProductosSinStock( bool estado )
 {
     _mostrar_sin_stock = !estado;
+    this->invalidateFilter();
 }
 
 /*!
@@ -28,6 +31,7 @@ void ECBProductosFilter::setearNoMostrarProductosSinStock( bool estado )
 void ECBProductosFilter::setearNoMostrarProductosDeshabilitados(bool estado)
 {
     _mostrar_deshabilitados = !estado;
+    this->invalidateFilter();
 }
 
 /*!
@@ -38,6 +42,7 @@ void ECBProductosFilter::setearNoMostrarProductosDeshabilitados(bool estado)
 void ECBProductosFilter::setearIdProveedor(int id_proveedor)
 {
     _id_proveedor = id_proveedor;
+    this->invalidateFilter();
 }
 
 /*!
@@ -47,7 +52,7 @@ void ECBProductosFilter::setearIdProveedor(int id_proveedor)
  * \param source_parent Padre
  * \return verdadero o falso
  */
-bool ECBProductosFilter::filterAcceptsRow(int source_row, const QModelIndex & ) const
+bool ECBProductosFilter::filterAcceptsRow( int source_row, const QModelIndex & ) const
 {
     if( !_mostrar_sin_stock ) {
         if( sourceModel()->data( sourceModel()->index( source_row, ECBProductosModel::Stock ) ).toDouble() <= 0.0 )

@@ -12,7 +12,7 @@ public:
     void setearNoMostrarProductosDeshabilitados( bool estado );
     void setearIdProveedor( int id_proveedor );
 
-private:
+protected:
     bool filterAcceptsRow( int source_row, const QModelIndex &source_parent = QModelIndex() ) const;
 
 private:

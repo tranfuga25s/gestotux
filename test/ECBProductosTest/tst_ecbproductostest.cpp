@@ -246,7 +246,7 @@ void ECBProductosTest::testECBProductosConFiltrado()
     int id_proveedor = 1;
     modelo->setearIdProveedor( id_proveedor );
     for( int i=0; i<modelo->rowCount(); i++ ) {
-        QVERIFY( modelo->data( modelo->index( i, ECBProductosModel::IdProveedor ) ).toInt() == id_proveedor );
+        QCOMPARE( modelo->data( modelo->index( i, ECBProductosModel::IdProveedor ) ).toInt(), id_proveedor );
     }
 
 }
