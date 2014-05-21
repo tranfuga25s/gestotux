@@ -25,6 +25,7 @@ private Q_SLOTS:
     void testListado_data();
     void testVentanaModificar();
     void testVentanaModificar_data();
+    void testVerificarDatosRelacionados();
 };
 
 ProveedorTest::ProveedorTest()
@@ -116,6 +117,10 @@ void ProveedorTest::testVentanaModificar_data()
                            << "email@gmail.com"
                            << "20391038923"
                            << "20309983042";
+}
+
+void ProveedorTest::testVerificarDatosRelacionados() {
+
 }
 
 QTEST_MAIN(ProveedorTest)
