@@ -43,10 +43,12 @@ MProductosTotales::MProductosTotales( QObject *parent, QMap<int, QString> *_mapa
  productos = new QHash<int, int>();
  texto_descuentos = new QHash<int, QString>();
  descuentos = new QHash<int, double>();
- if( _mapa_id_prod != 0 )
+ if( _mapa_id_prod != 0 ) {
     prods = _mapa_id_prod;
- else
+ } else {
      prods = new QMap<int, QString>();
+     // Tengo que llenar los productos ?
+ }
  cantidades->clear();
  _tipoPrecio = MProductosTotales::Venta;
  _admite_duplicados = false;
@@ -387,7 +389,7 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                                     return prods->value( productos->value( idx.row() ) );
                                 } else {
                                     qDebug() << "No se encontro el articulo en el data. Row= " << idx.row() << ", indice=" << productos->value( idx.row());
-                                    return " error al buscar el prod en prods ";
+                                    return prods->size();/*" error al buscar el prod en prods ";*/
                                 }
                                 break;
                         }

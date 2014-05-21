@@ -25,6 +25,8 @@
 #include "ui_FormAgregarVentaBase.h"
 #include "../cuotas/mplancuota.h"
 class MProductosTotales;
+class ECBProductosModel;
+class ECBProductosFilter;
 
 /*!
  * \brief Formulario para agregar una venta
@@ -82,6 +84,8 @@ protected slots:
         void cambioProveedor( int id_proveedor );
 
 private:
+        ECBProductosModel *ecbmprod;
+        ECBProductosFilter *ecbfiltro;
         MProductosTotales *mcp;
         int id_plan_cuota;
 

@@ -6,6 +6,8 @@
 #include <QDebug>
 
 #include "preferencias.h"
+#include "ecbproductosmodel.h"
+#include "ecbproductosfilter.h"
 
 ECBProductos::ECBProductos( QWidget *parent ) :
  QComboBox( parent )
@@ -27,16 +29,11 @@ ECBProductos::ECBProductos( QWidget *parent ) :
     _mapa_id_nombre = new QMap<int, QString>();
     _mapa_pos_ids = new QMap<int, int>();
 
-    this->_min = -1;
-    this->_mostrar_deshabilitados = false;
-    this->_mostrar_sin_stock = false;
-    this->_id_proveedor = -1;
-
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
     p->beginGroup( "Stock" );
-    this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
+    //this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
     p->endGroup();
     p->endGroup();
     p->endGroup();
@@ -54,82 +51,6 @@ ECBProductos::~ECBProductos()
     _mapa_id_nombre = 0;
     delete _mapa_pos_ids;
     _mapa_pos_ids = 0;
-}
-
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-/*!
- * \fn ECBProductos::inicializar()
- * Función que carga los datos y setea todo como para su uso
- */
-void ECBProductos::inicializar()
-{
-    // Cargo los datos del modelo
-    QSqlQuery cola;
-    QString tcola;
-    tcola.append( "SELECT id, codigo, nombre, stock FROM producto WHERE " );
-    if( !_mostrar_deshabilitados ) {
-        tcola.append( " habilitado IN ( 1, 'true' ) " );
-    }
-    if( !_mostrar_sin_stock && !_mostrar_deshabilitados ) {
-        tcola.append( " AND " );
-    }
-    if( !_mostrar_sin_stock ) {
-        tcola.append( " stock > 0 " );
-    }
-    if( _id_proveedor > 0 ) {
-        if( !_mostrar_sin_stock || !_mostrar_deshabilitados
-                || ( !_mostrar_sin_stock && !_mostrar_deshabilitados ) ) {
-            tcola.append( " AND " );
-        }
-        tcola.append( QString( " id IN ( "
-                               "  SELECT DISTINCT( id_producto ) "
-                               "  FROM compras_productos  "
-                               "  WHERE id_compra IN (    "
-                               "      SELECT id           "
-                               "      FROM compras        "
-                               "      WHERE id_proveedor = %1"
-                               "  )"
-                               " )" ).arg( _id_proveedor ) );
-    }
-    tcola.append( " ORDER BY nombre ASC" );
-    if( cola.exec( tcola ) ) {
-        int pos = 0;
-        this->clear();
-        this->_mapa_pos_codigo->clear();
-        this->_mapa_id_nombre->clear();
-        this->_mapa_pos_ids->clear();
-        while( cola.next() ) {
-            // Pos = currentIndex();
-            // id_producto = _mapa_pos_ids
-            // codigo = _mapa_pos_codigo
-            if( this->_mostrar_stock_lista ) {
-                this->insertItem( pos,
-                                  QString( "%1 (%L2)" )
-                                         .arg( cola.record().value(2).toString() )
-                                         .arg( cola.record().value(3).toDouble() ),
-                                  cola.record().value(0).toInt()
-                );
-            } else {
-                this->insertItem( pos, cola.record().value(2).toString(), cola.record().value(0).toInt() );
-            }
-            this->_mapa_pos_codigo->insert( cola.record().value(1).toString(), pos );
-            this->_mapa_id_nombre->insert ( cola.record().value(0).toInt()   , cola.record().value(2).toString() );
-            this->_mapa_pos_ids->insert   ( pos, cola.record().value(0).toInt() );
-            pos++;
-        }
-        if( pos == 0 ) {
-            qWarning( "No hay ningun producto para cargar!" );
-            this->lineEdit()->setText( "No hay productos cargados..." );
-        }
-        this->setEnabled( true );
-        this->setCurrentIndex( -1 );
-    } else {
-        qWarning( "Error al intentar ejecutar la cola para cargar los productos" );
-        qDebug() << cola.lastError().text();
-        qDebug() << cola.lastQuery();
-    }
 }
 
 /*!
@@ -203,12 +124,11 @@ void ECBProductos::verificarExiste()
             // Tengo que agregarlo como item exclusivo
             // Agregado al final pero con ID <= -1
             int pos_nueva = this->count();
-            this->_mapa_pos_codigo->insert( QString::number( _min ), pos_nueva );
-            this->_mapa_pos_ids->insert( pos_nueva, _min );
-            this->_mapa_id_nombre->insert( _min, this->lineEdit()->text() );
-            this->insertItem( pos_nueva, this->lineEdit()->text(), _min );
+            //this->_mapa_pos_codigo->insert( QString::number( _min ), pos_nueva );
+            //this->_mapa_pos_ids->insert( pos_nueva, _min );
+            //this->_mapa_id_nombre->insert( _min, this->lineEdit()->text() );
+            //this->insertItem( pos_nueva, this->lineEdit()->text(), _min );
             this->setCurrentIndex( pos_nueva );
-            this->_min--;
         }
     }
 }
@@ -229,10 +149,7 @@ QList<int> *ECBProductos::getListaIDs()
  */
 void ECBProductos::setearMostrarDeshabilitados( bool estado )
 {
-    if( _mostrar_deshabilitados != estado ) {
-        _mostrar_deshabilitados = estado;
-        inicializar();
-    }
+    this->modelo->setearNoMostrarProductosDeshabilitados( estado );
 }
 
 /*!
@@ -241,19 +158,24 @@ void ECBProductos::setearMostrarDeshabilitados( bool estado )
  */
 void ECBProductos::setearMostrarSinStock( bool estado )
 {
-    if( _mostrar_sin_stock != estado ) {
-        _mostrar_sin_stock = estado;
-        inicializar();
-    }
+   this->modelo->setearNoMostrarProductosSinStock( estado );
 }
 
 /*!
- *
+ * Permite filtrar los productos por proveedor
  */
 void ECBProductos::filtrarPorProveedor( const int id_proveedor )
 {
-    if( id_proveedor > 0 ) {
-       this->_id_proveedor = id_proveedor;
-        inicializar();
-    }
+    modelo->setearIdProveedor( id_proveedor );
+}
+
+/**
+ * @brief ECBProductos::setearModelo
+ * @param modelo
+ */
+void ECBProductos::setearModelo(ECBProductosFilter *modelo)
+{
+    this->modelo = modelo;
+    this->setModel( this->modelo );
+    this->setModelColumn( ECBProductosModel::Nombres );
 }
