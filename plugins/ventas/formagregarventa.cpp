@@ -80,7 +80,7 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         CBProducto->setearModelo( ecbfiltro );
 
         // Modelo del tableview
-        mcp = new MProductosTotales( TVProductos, ecbmprod );
+        mcp = new MProductosTotales( TVProductos, CBProducto->listadoProductos() );
         mcp->calcularTotales( true );
         preferencias *p = preferencias::getInstancia();
         p->inicio();
