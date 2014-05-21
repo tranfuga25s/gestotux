@@ -30,7 +30,9 @@ private Q_SLOTS:
 
 ProveedorTest::ProveedorTest()
 {
-    this->tablas << "proveedor";
+    this->tablas << "proveedor"
+                 << "compras"
+                 << "compras_productos";
 }
 void ProveedorTest::init() { EDatabaseTest::init(); }
 
@@ -120,7 +122,11 @@ void ProveedorTest::testVentanaModificar_data()
 }
 
 void ProveedorTest::testVerificarDatosRelacionados() {
+    // el proveedor 1 tiene que tener datos
+    QVERIFY( MProveedor::tieneDatosRelacionados( 1 ) );
 
+    // Agrego un proveedor sin datos relacionados ( en el schema )
+    QVERIFY( MProveedor::tieneDatosRelacionados( 3 ) == false );
 }
 
 QTEST_MAIN(ProveedorTest)
