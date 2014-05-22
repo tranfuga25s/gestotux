@@ -80,6 +80,8 @@ public:
     void setearListaProductos(  QMap<int, QString> *_mapa_id_prod );
     QMap<int, QString> *listaProductos() { return prods; }
 
+    void vaciarProductos();
+
 public slots:
     void agregarDescuento( QString texto, double porcentaje );
 
