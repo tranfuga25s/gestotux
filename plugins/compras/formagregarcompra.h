@@ -46,6 +46,7 @@ signals:
 private:
   MCompra *modelo;
   MProductosTotales *mcp;
+  int _id_proveedor_anterior;
 
 protected slots:
     void agregarProducto();
