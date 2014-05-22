@@ -23,6 +23,8 @@
 
 #include <QAbstractTableModel>
 
+#include "ecbproductosmodel.h"
+
 /**
  * \brief Modelo que calcula totales segun modelo de venta, compra y presupuesto
  *
@@ -33,7 +35,7 @@ class MProductosTotales : public QAbstractTableModel
 {
 Q_OBJECT
 public:
-    MProductosTotales( QObject *parent = 0, QMap<int, QString> *_mapa = 0 );
+    MProductosTotales(QObject *parent = 0, ECBProductosModel *_m = 0 );
     ~MProductosTotales();
 
     bool insertRow(int row, const QModelIndex& parent = QModelIndex() );
@@ -77,8 +79,8 @@ public:
     int conteoDescuentos() { return descuentos->size(); }
     int conteoItems() { return cantidades->size(); }
 
-    void setearListaProductos(  QMap<int, QString> *_mapa_id_prod );
-    QMap<int, QString> *listaProductos() { return prods; }
+    void setearListaProductos( ECBProductosModel *_m );
+    ECBProductosModel *listaProductos() { return prods; }
 
     void vaciarProductos();
 
@@ -103,9 +105,9 @@ private:
          */
         QHash<int, int> *productos;
         /*!
-         * Contiene el listado de ids relacionados con los nombres de los productos
+         * Contiene el listado de los productos en un modelo
          */
-        QMap<int, QString> *prods;
+        ECBProductosModel *prods;
         /*!
          * Contiene el listado de subtotales por definicion de fila
          */

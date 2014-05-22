@@ -24,7 +24,10 @@ public:
 
     void inicializar();
 
-    void agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
+    int agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
+
+    bool existeID( const int id_producto );
+    QString nombreProductoSegunID( const int id_producto );
 
     enum Columnas {
         Ids=0,

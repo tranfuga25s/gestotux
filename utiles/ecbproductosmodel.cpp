@@ -195,7 +195,7 @@ bool ECBProductosModel::removeRow( int row, const QModelIndex& parent )
  * \param habilitado
  * \param proveedor
  */
-void ECBProductosModel::agregarItem( const QString texto, double stock, bool habilitado, int proveedor )
+int ECBProductosModel::agregarItem( const QString texto, double stock, bool habilitado, int proveedor )
 {
     int pos = this->_ids->size();
     this->insertRow( -1 );
@@ -211,4 +211,32 @@ void ECBProductosModel::agregarItem( const QString texto, double stock, bool hab
 
     emit dataChanged( this->index( pos, 0 ), this->index( pos, this->columnCount() ) );
     emit dataChanged( this->index( this->rowCount(), 0 ), this->index( this->rowCount(), this->columnCount() ) );
+    return pos;
+}
+
+/*!
+ * \brief ECBProductosModel::existeID
+ * Verifica si existe el ID de producto elegido
+ * \param id_producto Identificador del producto
+ * \return Verdadero si existe
+ */
+bool ECBProductosModel::existeID( const int id_producto )
+{
+    return this->_ids->contains( id_producto );
+}
+
+/*!
+ * \brief ECBProductosModel::nombreProductoSegunID
+ * Devuelve el nombre del producto que está indicado según el ID indicado
+ * \param id_producto ID Producto
+ * \return Devolverá un valor vacío si el producto no existe.
+ */
+QString ECBProductosModel::nombreProductoSegunID( const int id_producto )
+{
+    int pos = this->_ids->key( id_producto );
+    if( pos >= 0 ) {
+        return this->_nombres->value( pos );
+    } else {
+        return QString();
+    }
 }

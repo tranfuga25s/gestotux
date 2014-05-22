@@ -29,7 +29,7 @@
 #include <QSqlRecord>
 #include <QDebug>
 
-MProductosTotales::MProductosTotales( QObject *parent, QMap<int, QString> *_mapa_id_prod )
+MProductosTotales::MProductosTotales(QObject *parent, ECBProductosModel *_m )
  : QAbstractTableModel(parent)
 {
  // Inicializo los sistemas
@@ -43,11 +43,11 @@ MProductosTotales::MProductosTotales( QObject *parent, QMap<int, QString> *_mapa
  productos = new QHash<int, int>();
  texto_descuentos = new QHash<int, QString>();
  descuentos = new QHash<int, double>();
- if( _mapa_id_prod != 0 ) {
-    prods = _mapa_id_prod;
+ if( _m != 0 ) {
+    prods = _m;
  } else {
-     prods = new QMap<int, QString>();
-     // Tengo que llenar los productos ?
+     prods = new ECBProductosModel( this );
+     prods->inicializar();
  }
  cantidades->clear();
  _tipoPrecio = MProductosTotales::Venta;
@@ -185,7 +185,7 @@ bool MProductosTotales::setData(const QModelIndex& index, const QVariant& value,
                         {
                                 //qDebug( qPrintable( QString( "insert: size: %1, index.row(): %2" ).arg( this->productos->size() ).arg( index.row() ) ) );
                                 if( !value.isValid() ) { qDebug( "El valor es invalido!" ); return false; }
-                                if( !prods->contains( value.toInt() ) ) {
+                                if( !prods->existeID( value.toInt() ) ) {
                                     qDebug( "Indice no encontrado en la lista de productos" );
                                     return false;
                                 }
@@ -425,11 +425,11 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         case 1:
                         {
                                 // Devuelvo el mapeo idfila->productos->prods
-                                if( prods->contains( productos->value( idx.row() ) ) ) {
-                                    return prods->value( productos->value( idx.row() ) );
+                                if( prods->existeID( productos->value( idx.row() ) ) ) {
+                                    return prods->nombreProductoSegunID( productos->value( idx.row() ) );
                                 } else {
                                     qDebug() << "No se encontro el articulo en el data. Row= " << idx.row() << ", indice=" << productos->value( idx.row());
-                                    return prods->size();/*" error al buscar el prod en prods ";*/
+                                    return prods->rowCount();/*" error al buscar el prod en prods ";*/
                                 }
                                 break;
                         }
@@ -629,7 +629,7 @@ void MProductosTotales::agregarItem( const int cant, const QString texto, double
     this->subtotales->insert( pos, cant * pu );
 
     // inserto el texto en la lista de nombre de productos
-    int pos2 = this->prods->insert( pos, texto ).key();
+    int pos2 = this->prods->agregarItem( texto );
     // inserto el indice de lo anterior en el mapa de productos
     this->productos->insert( pos, pos2 );
 
@@ -956,9 +956,9 @@ bool MProductosTotales::eliminarDescuento( QModelIndex idx )
  * \brief MProductosTotales::setearListaProductos
  * \param _mapa_id_prod
  */
-void MProductosTotales::setearListaProductos(  QMap<int, QString> *_mapa_id_prod )
+void MProductosTotales::setearListaProductos( ECBProductosModel *_m )
 {
-    this->prods = _mapa_id_prod;
+    this->prods = _m;
 }
 
 /*!
