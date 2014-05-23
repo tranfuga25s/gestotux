@@ -41,6 +41,8 @@ private Q_SLOTS:
     void testDescripcionEnAltaProducto();
     void testOcultarCosto();
     void testPreferenciasStockLista();
+    void testBuscarCodigoExistente();
+    void testBuscarCodigoExistente_data();
 
 private:
     MProductos *mp;
@@ -505,6 +507,25 @@ void ProductosTest::testPreferenciasStockLista()
     p->endGroup();
     p->endGroup();
     p=0;
+}
+
+/*!
+ * Test para verificar si funciona correctamente la busqueda por código.
+ **/
+void ProductosTest::testBuscarCodigoExistente()
+{
+    QFETCH( QString, codigo );
+    QFETCH( bool, existe );
+    QCOMPARE( MProductos::existeCodigo( codigo ), existe );
+}
+
+void ProductosTest::testBuscarCodigoExistente_data()
+{
+    QTest::addColumn<QString>("codigo");
+    QTest::addColumn<bool>("existe");
+    QTest::newRow("Producto1") << "1" << true;
+    QTest::newRow("Productos2") << "19" << false;
+    QTest::newRow("Producto 3") << "6" << true;
 }
 
 QTEST_MAIN(ProductosTest)
