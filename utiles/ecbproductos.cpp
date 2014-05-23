@@ -74,31 +74,17 @@ void ECBProductos::enterApretado()
  * Devuelve el listado de productos mapeado
  * \return
  */
-QMap<int, QString> *ECBProductos::listadoProductos()
-{ return this->_mapa_id_nombre; }
+ECBProductosModel *ECBProductos::listadoProductos()
+{ return qobject_cast<ECBProductosModel *>(this->modelo->sourceModel()); }
 
 /*!
  * \brief ECBProductos::setearListado
- * Coloca el listado puesto como parametro como lista de productos
+ * Coloca el modelo puesto como parametro como lista de productos para el combobox
  * \param lista Lista de productos
  */
-void ECBProductos::setearListado( QMap<int, QString> *lista )
+void ECBProductos::setearListado( ECBProductosModel *lista )
 {
-    // Verifica que los demás items estén de acuerdo con esta lista
-    // El mappeo debe sacar solo los elementos menores que cero
-    /*QList<int> l2 = lista->keys();
-    for( int i = 0; i < l2.size(); i++ ) {
-        if( l2.value(i) < 0 ) {
-            // Ingreso este valor al cb
-            QString texto = lista->value( l2.value( i ) );
-            int indice = l2.value( i );
-            int pos = this->count();
-            this->insertItem( pos, texto, indice );
-            this->_mapa_id_nombre->insert( indice, texto );
-            this->_mapa_pos_ids->insert( pos, indice );
-            this->_mapa_pos_codigo->insert( QString::number( indice ), pos );
-        }
-    }*/
+    this->modelo->setSourceModel( lista );
 }
 
 /*!

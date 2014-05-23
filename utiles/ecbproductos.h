@@ -4,6 +4,7 @@
 #include <QComboBox>
 
 #include "ecbproductosfilter.h"
+#include "ecbproductosmodel.h"
 
 /*!
  * \brief Combobox de productos con autodeteccion de codigo.
@@ -24,8 +25,8 @@ class ECBProductos : public QComboBox
 public:
     ECBProductos( QWidget *parent = 0,  ECBProductosFilter *m = 0 );
     ~ECBProductos();
-    QMap<int, QString> *listadoProductos();
-    void setearListado( QMap<int, QString> *lista );
+    ECBProductosModel *listadoProductos();
+    void setearListado( ECBProductosModel *lista );
     int idActual() const;
     void verificarExiste();
 

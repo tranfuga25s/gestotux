@@ -71,7 +71,7 @@ FormAgregarRemito::FormAgregarRemito ( QWidget* parent, Qt::WFlags fl )
         DEFecha->setDate( QDate::currentDate() );
 
         // Modelo del tableview
-        mcp = new MProductosTotales( TVProductos, CBProducto->listadoProductos() );
+        mcp = new MProductosTotales( TVProductos/*, CBProducto->listadoProductos()*/ );
         mcp->calcularTotales( true );
         preferencias *p = preferencias::getInstancia();
         p->inicio();
@@ -467,7 +467,7 @@ void FormAgregarRemito::setearItems( MProductosTotales *m )
 {
     m->setParent( this );
     this->mcp = m;
-    this->CBProducto->setearListado( this->mcp->listaProductos() );
+    //this->CBProducto->setearListado( this->mcp->listaProductos() );
 
     mcp->calcularTotales( true );
 

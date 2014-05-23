@@ -65,7 +65,12 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     // Rellenar los items de productos
     connect( CBProducto, SIGNAL( agregarProducto() ), PBAgregarProducto, SIGNAL( clicked() ) );
 
-    mcp = new MProductosTotales( this, CBProducto->listadoProductos() );
+    ecbmproducto = new ECBProductosModel( this );
+    ecbmproducto->inicializar();
+
+    CBProducto->setearListado( ecbmproducto );
+
+    mcp = new MProductosTotales( this, ecbmproducto );
     mcp->calcularTotales( true );
     mcp->buscarPrecios( true );
     mcp->setearTipoPrecioBuscar( MProductosTotales::Costo );

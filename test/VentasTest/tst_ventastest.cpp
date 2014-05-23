@@ -18,7 +18,6 @@ private Q_SLOTS:
     void cleanup();
     void testPreferenciaConsumidorFinalPredeterminado();
     void testAnulacionFacturaDescensoStock();
-    void testListaProductosMProductos();
 };
 
 VentasTest::VentasTest()
@@ -151,14 +150,6 @@ void VentasTest::testAnulacionFacturaDescensoStock()
                   .toLocal8Bit() );
         i++;
     }
-}
-
-/*!
- * \brief VentasTest::testListaProductosMProductos
- */
-void VentasTest::testListaProductosMProductos()
-{
-
 }
 
 QTEST_MAIN(VentasTest)
