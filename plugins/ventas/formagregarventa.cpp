@@ -45,6 +45,8 @@
 #include "eddescuento.h"
 #include "preferencias.h"
 #include "eregistroplugins.h"
+#include "ecbproductosmodel.h"
+#include "ecbproductosfilter.h"
 
 FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
 : EVentana ( parent, fl ), Ui::FormAgregarVentaBase()
@@ -66,9 +68,16 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         // Inicio los modelos
         CBCliente->setEditable( true );
 
-        connect( CBProducto, SIGNAL( agregarProducto() ), this, SLOT( agregarProducto() ) );
-
         DEFecha->setDate( QDate::currentDate() );
+
+        ecbmprod = new ECBProductosModel( this );
+        ecbmprod->inicializar();
+
+        ecbfiltro = new ECBProductosFilter( this );
+        ecbfiltro->setSourceModel( ecbmprod );
+
+        connect( CBProducto, SIGNAL( agregarProducto() ), this, SLOT( agregarProducto() ) );
+        CBProducto->setearModelo( ecbfiltro );
 
         // Modelo del tableview
         mcp = new MProductosTotales( TVProductos, CBProducto->listadoProductos() );

@@ -25,11 +25,14 @@ private Q_SLOTS:
     void testListado_data();
     void testVentanaModificar();
     void testVentanaModificar_data();
+    void testVerificarDatosRelacionados();
 };
 
 ProveedorTest::ProveedorTest()
 {
-    this->tablas << "proveedor";
+    this->tablas << "proveedor"
+                 << "compras"
+                 << "compras_productos";
 }
 void ProveedorTest::init() { EDatabaseTest::init(); }
 
@@ -116,6 +119,14 @@ void ProveedorTest::testVentanaModificar_data()
                            << "email@gmail.com"
                            << "20391038923"
                            << "20309983042";
+}
+
+void ProveedorTest::testVerificarDatosRelacionados() {
+    // el proveedor 1 tiene que tener datos
+    QVERIFY( MProveedor::tieneDatosRelacionados( 1 ) );
+
+    // Agrego un proveedor sin datos relacionados ( en el schema )
+    QVERIFY( MProveedor::tieneDatosRelacionados( 3 ) == false );
 }
 
 QTEST_MAIN(ProveedorTest)

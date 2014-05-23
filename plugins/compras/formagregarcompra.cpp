@@ -100,6 +100,8 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     DSBPrecioUnitario->setVisible( false );
 
     CBProducto->setearMostrarSinStock( true );
+
+    _id_proveedor_anterior = -1;
 }
 
 
@@ -398,9 +400,24 @@ void FormAgregarCompra::arreglarProductoAgregado( int anterior, int nuevo )
  * \brief FormAgregarCompra::cambioProveedor
  * \param id_proveedor
  */
-void FormAgregarCompra::cambioProveedor(int id_proveedor)
+void FormAgregarCompra::cambioProveedor( int id_proveedor )
 {
-    if( id_proveedor > 0 ) {
-        CBProducto->filtrarPorProveedor( id_proveedor );
+    if( id_proveedor != _id_proveedor_anterior ) {
+        if( mcp->rowCount() > 1 ) {
+            int ret = QMessageBox::question( this,
+                                             QString::fromUtf8( "¿Esta seguro?" ),
+                                             QString::fromUtf8( "Esta seguro que desea cambiar de proveedor? Se borraran todos los productos ingresados" ),
+                                             QMessageBox::Yes,
+                                             QMessageBox::No );
+            if( ret == QMessageBox::Yes ) {
+                mcp->vaciarProductos();
+                CBProducto->filtrarPorProveedor( id_proveedor );
+                _id_proveedor_anterior = id_proveedor;
+            } else {
+                CBProveedor->setearId( _id_proveedor_anterior );
+            }
+        } else {
+            _id_proveedor_anterior = id_proveedor;
+        }
     }
 }

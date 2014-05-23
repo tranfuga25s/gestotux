@@ -25,7 +25,11 @@ private Q_SLOTS:
     void testFiltroProveedor_data();
     void testMostrarStock();
     void testMostrarStock_data();
-
+    void testECBProductosModel();
+    void testECBProductosModel_data();
+    void testECBProductosModelAgregarItem();
+    void testECBProductosModelAgregarItem_data();
+    void testECBProductosConFiltrado();
 };
 
 /*!
@@ -44,24 +48,10 @@ ECBProductosTest::ECBProductosTest()
  */
 ECBProductosTest::~ECBProductosTest() {}
 
-/*!
- * \brief ECBProductosTest::init
- */
+
 void ECBProductosTest::init() { EDatabaseTest::init(); }
-
-/*!
- * \brief ECBProductosTest::initTestCase
- */
 void ECBProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
-
-/*!
- * \brief ECBProductosTest::cleanupTestCase
- */
 void ECBProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
-
-/*!
- * \brief ECBProductosTest::cleanup
- */
 void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
 
 /*!
@@ -140,6 +130,127 @@ void ECBProductosTest::testMostrarStock_data()
     QTest::newRow("ConStock") << true << 1 << 1.0;
 
 }
+
+#include "ecbproductosmodel.h"
+/*!
+ * \brief ECBProductosTest::testECBProductosModel
+ */
+void ECBProductosTest::testECBProductosModel()
+{
+    ECBProductosModel *m = new ECBProductosModel();
+    m->inicializar();
+
+    QFETCH( int, i );
+    QFETCH( int, id_producto );
+    QFETCH( QString, codigo );
+    QFETCH( QString, nombre );
+    QFETCH( double, stock );
+    QFETCH( bool, habilitado );
+    QFETCH( int, id_proveedor );
+
+    QCOMPARE( m->data( m->index( i, 0 ) ).toInt()   , id_producto  );
+    QCOMPARE( m->data( m->index( i, 1 ) ).toString(), codigo       );
+    QCOMPARE( m->data( m->index( i, 2 ) ).toString(), nombre       );
+    QCOMPARE( m->data( m->index( i, 3 ) ).toDouble(), stock        );
+    QCOMPARE( m->data( m->index( i, 4 ) ).toBool()  , habilitado   );
+    QCOMPARE( m->data( m->index( i, 5 ) ).toInt()   , id_proveedor );
+}
+
+/*!
+ * \brief ECBProductosTest::testECBProductosModel_data
+ */
+void ECBProductosTest::testECBProductosModel_data()
+{
+    QTest::addColumn<int>("i");
+    QTest::addColumn<int>("id_producto");
+    QTest::addColumn<QString>("codigo");
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("stock");
+    QTest::addColumn<bool>("habilitado");
+    QTest::addColumn<int>("id_proveedor");
+    QTest::newRow("Producto1") << 0 << 1 << "1" << "Producto 1" << 1.0 << true << 1;
+    QTest::newRow("Producto2") << 1 << 2 << "2" << "Producto 2" << 1.0 << true << 2;
+}
+
+/*!
+ * \brief ECBProductosTest::testECBProductosModelAgregarItem
+ */
+void ECBProductosTest::testECBProductosModelAgregarItem()
+{
+    ECBProductosModel *m = new ECBProductosModel();
+    m->inicializar();
+
+    QFETCH( int    , i            );
+    QFETCH( int    , id_producto  );
+    QFETCH( QString, codigo       );
+    QFETCH( QString, nombre       );
+    QFETCH( double , stock        );
+    QFETCH( bool   , habilitado   );
+    QFETCH( int    , id_proveedor );
+
+    if( i < 0 ) {
+        m->agregarItem( nombre );
+        i = m->rowCount()-1;
+    }
+
+    QCOMPARE( m->data( m->index( i, 0 ) ).toInt()   , id_producto  );
+    QCOMPARE( m->data( m->index( i, 1 ) ).toString(), codigo       );
+    QCOMPARE( m->data( m->index( i, 2 ) ).toString(), nombre       );
+    QCOMPARE( m->data( m->index( i, 3 ) ).toDouble(), stock        );
+    QCOMPARE( m->data( m->index( i, 4 ) ).toBool()  , habilitado   );
+    QCOMPARE( m->data( m->index( i, 5 ) ).toInt()   , id_proveedor );
+
+    delete m;
+}
+
+/*!
+ * \brief ECBProductosTest::testECBProductosModelAgregarItem_data
+ */
+void ECBProductosTest::testECBProductosModelAgregarItem_data()
+{
+    QTest::addColumn<int>("i");
+    QTest::addColumn<int>("id_producto");
+    QTest::addColumn<QString>("codigo");
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("stock");
+    QTest::addColumn<bool>("habilitado");
+    QTest::addColumn<int>("id_proveedor");
+    QTest::newRow("Producto1") << 0 << 1 << "1" << "Producto 1" << 1.0 << true << 1;
+    QTest::newRow("Producto2") << 1 << 2 << "2" << "Producto 2" << 1.0 << true << 2;
+    QTest::newRow("ProductoInsertado") << -1 << -1 << "-1" << "Producto insertado" << 1.0 << true << 0;
+}
+
+#include "ecbproductosfilter.h"
+/*!
+ * \brief ECBProductosTest::testECBProductosConFiltrado
+ * Permite probar la salida de los modelos de filtrado
+ */
+void ECBProductosTest::testECBProductosConFiltrado()
+{
+    ECBProductosModel *mp = new ECBProductosModel();
+    mp->inicializar();
+
+    ECBProductosFilter *modelo = new ECBProductosFilter( this );
+    modelo->setSourceModel( mp );
+
+    modelo->setearNoMostrarProductosSinStock( true );
+    for( int i=0; i<modelo->rowCount(); i++ ) {
+        QVERIFY( modelo->data( modelo->index( i, ECBProductosModel::Stock ) ).toDouble() > 0.0 );
+    }
+
+    modelo->setearNoMostrarProductosDeshabilitados( true );
+    for( int i=0; i<modelo->rowCount(); i++ ) {
+        QVERIFY( modelo->data( modelo->index( i, ECBProductosModel::Habilitado ) ).toBool() == true );
+    }
+
+    int id_proveedor = 1;
+    modelo->setearIdProveedor( id_proveedor );
+    for( int i=0; i<modelo->rowCount(); i++ ) {
+        QCOMPARE( modelo->data( modelo->index( i, ECBProductosModel::IdProveedor ) ).toInt(), id_proveedor );
+    }
+
+}
+
 
 QTEST_MAIN(ECBProductosTest)
 

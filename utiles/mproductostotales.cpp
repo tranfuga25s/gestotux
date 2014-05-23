@@ -43,17 +43,21 @@ MProductosTotales::MProductosTotales( QObject *parent, QMap<int, QString> *_mapa
  productos = new QHash<int, int>();
  texto_descuentos = new QHash<int, QString>();
  descuentos = new QHash<int, double>();
- if( _mapa_id_prod != 0 )
+ if( _mapa_id_prod != 0 ) {
     prods = _mapa_id_prod;
- else
+ } else {
      prods = new QMap<int, QString>();
+     // Tengo que llenar los productos ?
+ }
  cantidades->clear();
  _tipoPrecio = MProductosTotales::Venta;
  _admite_duplicados = false;
  _solo_lectura = false;
 }
 
-
+/*!
+ * \brief MProductosTotales::~MProductosTotales
+ */
 MProductosTotales::~MProductosTotales()
 {
     delete cantidades;
@@ -71,6 +75,12 @@ MProductosTotales::~MProductosTotales()
     descuentos = 0;
 }
 
+/*!
+ * \brief MProductosTotales::insertRow
+ * \param row
+ * \param parent
+ * \return
+ */
 bool MProductosTotales::insertRow( int row, const QModelIndex& parent )
 {
  if( row == -1 )
@@ -87,6 +97,12 @@ bool MProductosTotales::insertRow( int row, const QModelIndex& parent )
  return true;
 }
 
+/*!
+ * \brief MProductosTotales::removeRow
+ * \param row
+ * \param parent
+ * \return
+ */
 bool MProductosTotales::removeRow( int row, const QModelIndex& parent )
 {
   //qDebug( QString( "Eliminando fila: %1" ).arg( row ).toLocal8Bit() );
@@ -109,6 +125,13 @@ bool MProductosTotales::removeRow( int row, const QModelIndex& parent )
   return true;
 }
 
+/*!
+ * \brief MProductosTotales::setData
+ * \param index
+ * \param value
+ * \param role
+ * \return
+ */
 bool MProductosTotales::setData(const QModelIndex& index, const QVariant& value, int role)
 {
  if( !index.isValid() )
@@ -235,6 +258,10 @@ bool MProductosTotales::setData(const QModelIndex& index, const QVariant& value,
   }
 }
 
+/*!
+ * \brief MProductosTotales::columnCount
+ * \return
+ */
 int MProductosTotales::columnCount(const QModelIndex& /*parent*/) const
 {
  if( _calcularTotal )
@@ -243,6 +270,10 @@ int MProductosTotales::columnCount(const QModelIndex& /*parent*/) const
  { return 3; }
 }
 
+/*!
+ * \brief MProductosTotales::rowCount
+ * \return
+ */
 int MProductosTotales::rowCount(const QModelIndex& /*parent*/) const
 {
  if( _calcularTotal )
@@ -251,6 +282,11 @@ int MProductosTotales::rowCount(const QModelIndex& /*parent*/) const
  { return cantidades->size() + descuentos->size(); }
 }
 
+/*!
+ * \brief MProductosTotales::flags
+ * \param index
+ * \return
+ */
 Qt::ItemFlags MProductosTotales::flags(const QModelIndex& index) const
 {
  if( _solo_lectura ) {
@@ -277,6 +313,12 @@ Qt::ItemFlags MProductosTotales::flags(const QModelIndex& index) const
  }
 }
 
+/*!
+ * \brief MProductosTotales::data
+ * \param idx
+ * \param role
+ * \return
+ */
 QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
 {
  if( !idx.isValid() )
@@ -387,7 +429,7 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                                     return prods->value( productos->value( idx.row() ) );
                                 } else {
                                     qDebug() << "No se encontro el articulo en el data. Row= " << idx.row() << ", indice=" << productos->value( idx.row());
-                                    return " error al buscar el prod en prods ";
+                                    return prods->size();/*" error al buscar el prod en prods ";*/
                                 }
                                 break;
                         }
@@ -512,7 +554,9 @@ void MProductosTotales::recalcularTotalItems()
  recalcularTotal();
 }
 
-
+/*!
+ * \brief MProductosTotales::recalcularTotal
+ */
 void MProductosTotales::recalcularTotal()
 {
     Total = totalItems;
@@ -697,6 +741,12 @@ double MProductosTotales::buscarPrecioVenta( int id_producto )
 
 #include <QInputDialog>
 #include "einputdialog.h"
+/*!
+ * \brief MProductosTotales::agregarNuevoProducto
+ * \param cantidad
+ * \param Id
+ * \param precio_unitario
+ */
 void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double precio_unitario )
 {
   // Veo si existe y lo agrego a la lista si no existe....
@@ -791,6 +841,10 @@ void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double preci
   return;
 }
 
+/*!
+ * \brief MProductosTotales::setearTipoPrecioBuscar
+ * \param t
+ */
 void MProductosTotales::setearTipoPrecioBuscar( int t )
 {
     if( t == MProductosTotales::Costo ) {
@@ -800,9 +854,18 @@ void MProductosTotales::setearTipoPrecioBuscar( int t )
     }
 }
 
+/*!
+ * \brief MProductosTotales::tipoPrecioBuscar
+ * \return
+ */
 int  MProductosTotales::tipoPrecioBuscar()
 { return this->_tipoPrecio; }
 
+/*!
+ * \brief MProductosTotales::agregarDescuento
+ * \param texto
+ * \param porcentaje
+ */
 void MProductosTotales::agregarDescuento( QString texto, double porcentaje )
 {
     if( texto_descuentos->values().contains( texto ) ) {
@@ -833,6 +896,11 @@ void MProductosTotales::agregarDescuento( QString texto, double porcentaje )
     recalcularTotal();
 }
 
+/*!
+ * \brief MProductosTotales::esDescuento
+ * \param idx
+ * \return
+ */
 bool MProductosTotales::esDescuento( QModelIndex idx )
 {
     if( !idx.isValid() )
@@ -845,6 +913,11 @@ bool MProductosTotales::esDescuento( QModelIndex idx )
     }
 }
 
+/*!
+ * \brief MProductosTotales::eliminarDescuento
+ * \param idx
+ * \return
+ */
 bool MProductosTotales::eliminarDescuento( QModelIndex idx )
 {
     if( !idx.isValid() )
@@ -879,7 +952,22 @@ bool MProductosTotales::eliminarDescuento( QModelIndex idx )
     return true;
 }
 
+/*!
+ * \brief MProductosTotales::setearListaProductos
+ * \param _mapa_id_prod
+ */
 void MProductosTotales::setearListaProductos(  QMap<int, QString> *_mapa_id_prod )
 {
     this->prods = _mapa_id_prod;
+}
+
+/*!
+ * \brief MProductosTotales::vaciarProductos
+ * Elimina todos los productos que hay en el listado.
+ */
+void MProductosTotales::vaciarProductos()
+{
+    while( this->cantidades->size() > 0 ) {
+        this->removeRow( 0 );
+    }
 }
