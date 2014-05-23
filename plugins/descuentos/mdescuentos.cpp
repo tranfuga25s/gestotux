@@ -3,6 +3,7 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QDebug>
 
 MDescuentos::MDescuentos(QObject *parent) :
 QSqlTableModel(parent)
@@ -72,8 +73,8 @@ bool MDescuentos::existenDatos()
       }
   } else {
       qDebug( "Error al buscar la cantidad de descuentos relacionados a un comprobante" );
-      qDebug( cola.lastError().text().toLocal8Bit() );
-      qDebug( cola.lastQuery().toLocal8Bit() );
+      qDebug() << cola.lastError().text();
+      qDebug() << cola.lastQuery();
   }
   return false;
 }
@@ -96,8 +97,8 @@ bool MDescuentos::seleccionarDatos()
         return true;
     } else {
         qDebug( "Error al buscar la cantidad de descuentos relacionados a un comprobante" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     }
     return false;
 }

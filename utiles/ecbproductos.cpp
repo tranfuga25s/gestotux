@@ -9,7 +9,7 @@
 #include "ecbproductosmodel.h"
 #include "ecbproductosfilter.h"
 
-ECBProductos::ECBProductos( ECBProductosFilter *m, QWidget *parent ) :
+ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
  QComboBox( parent )
 {
     this->setObjectName( "SelectorProductos" );

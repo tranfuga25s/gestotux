@@ -28,6 +28,8 @@ private Q_SLOTS:
     void testVerificarDatosRelacionados();
     void testRazonSocialRepetida();
     void testRazonSocialRepetida_data();
+    void testCuitCuilRepetido();
+    void testCuitCuilRepetido_data();
 };
 
 ProveedorTest::ProveedorTest()
@@ -148,6 +150,24 @@ void ProveedorTest::testRazonSocialRepetida_data()
     QTest::newRow("Proveedor1") << "Proveedor 1" << true;
     QTest::newRow("Proveedor2") << "Proveedor 2" << true;
     QTest::newRow("ProvedorNuevo") << "Proveedor 3" << false;
+}
+
+/*!
+ *
+ */
+void ProveedorTest::testCuitCuilRepetido()
+{
+    QFETCH( QString, cuit );
+    QFETCH( bool, error );
+    QCOMPARE( MProveedor::existeCuitCuil( cuit ), error );
+}
+
+void ProveedorTest::testCuitCuilRepetido_data()
+{
+    QTest::addColumn<QString>("cuit");
+    QTest::addColumn<bool>("error");
+    QTest::newRow("Proveedor1") << "20309983042" << true;
+    QTest::newRow("Proveedor2") << "56497824556" << false;
 }
 
 QTEST_MAIN(ProveedorTest)

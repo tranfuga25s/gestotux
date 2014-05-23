@@ -3,6 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QDebug>
 
 MItemRemito::MItemRemito(QObject *parent) :
     QSqlRelationalTableModel(parent) {
@@ -46,14 +47,14 @@ bool MItemRemito::agregarItemRemito( const int id_venta, const double cantidad, 
                 }
             } else {
                 qDebug( "Error al hacer next en la verificacion de que existe la factura para el item de factura" );
-                qDebug( cola.lastError().text().toLocal8Bit() );
-                qDebug( cola.lastQuery().toLocal8Bit() );
+                qDebug() << cola.lastError().text();
+                qDebug() << cola.lastQuery();
                 return false;
             }
         } else {
             qDebug( "Error al hacer exec en la verificacion de que existe la factura para el item de factura" );
-            qDebug( cola.lastError().text().toLocal8Bit() );
-            qDebug( cola.lastQuery().toLocal8Bit() );
+            qDebug() << cola.lastError().text();
+            qDebug() << cola.lastQuery();
             return false;
         }
     }
@@ -72,7 +73,7 @@ bool MItemRemito::agregarItemRemito( const int id_venta, const double cantidad, 
         return true;
     } else {
         qDebug( "Error al intentar insertar valor de item de remito" );
-        qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+        qDebug() << "Detalles: tipo: " << cola.lastError().type() << " errno: " << cola.lastError().number() << ", descripcion: " << cola.lastError().text();
         return false;
     }
 

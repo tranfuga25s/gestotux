@@ -6,6 +6,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QMutableListIterator>
+#include <QDebug>
 
 MTempProductoRemarcar::MTempProductoRemarcar( QObject *parent ) :
   QAbstractTableModel( parent )
@@ -135,8 +136,8 @@ void MTempProductoRemarcar::agregarProducto( int id )
         endInsertRows();
     } else {
         qWarning( "Error al consultar los datos del producto" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     }
 }
 

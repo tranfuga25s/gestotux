@@ -1,6 +1,7 @@
 #include "formagregarproveedor.h"
 
 #include <QMessageBox>
+#include <QDebug>
 
 FormAgregarProveedor::FormAgregarProveedor( MProveedor *m, QWidget *parent) :
     EVentana(parent), Ui::FormProveedorBase()
@@ -64,6 +65,6 @@ void FormAgregarProveedor::guardar() {
         return;
     } else {
         qDebug( "Error al insertar el registro" );
-        qDebug( this->modelo->lastError().text().toLocal8Bit() );
+        qDebug() << modelo->lastError().text();
     }
 }
