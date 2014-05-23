@@ -21,10 +21,10 @@ private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
     void cleanup();
-    void testFiltroProveedor();
+   /* void testFiltroProveedor();
     void testFiltroProveedor_data();
     void testMostrarStock();
-    void testMostrarStock_data();
+    void testMostrarStock_data();*/
     void testECBProductosModel();
     void testECBProductosModel_data();
     void testECBProductosModelAgregarItem();
@@ -57,7 +57,7 @@ void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
 /*!
  * \brief ECBProductosTest::testFiltroProveedor
  */
-void ECBProductosTest::testFiltroProveedor()
+/*void ECBProductosTest::testFiltroProveedor()
 {
     QFETCH( int, id_proveedor );
     QFETCH( int, conteo );
@@ -68,25 +68,25 @@ void ECBProductosTest::testFiltroProveedor()
 
     QCOMPARE( conteo_real, conteo );
     delete ecb;
-}
+}*/
 
 /*!
  * \brief ECBProductosTest::testFiltroProveedor_data
  */
-void ECBProductosTest::testFiltroProveedor_data()
+/*void ECBProductosTest::testFiltroProveedor_data()
 {
     QTest::addColumn<int>("id_proveedor");
     QTest::addColumn<int>("conteo");
     QTest::newRow("Proveedor 1") << 1 << 1;
     QTest::newRow("Proveedor 2") << 2 << 1;
-}
+}*/
 
 #include "preferencias.h"
 /*!
  * \brief ECBProductosTest::testMostrarStock
  * Permite probar la característica de mostrar el stock al lado del nombre del producto
  */
-void ECBProductosTest::testMostrarStock()
+/*void ECBProductosTest::testMostrarStock()
 {
     QFETCH( bool, habilitado );
     QFETCH( int, posicion );
@@ -116,12 +116,12 @@ void ECBProductosTest::testMostrarStock()
         QVERIFY2( texto.contains( "(" ) == false, texto.toLocal8Bit() );
     }
     delete ecb;
-}
+}*/
 
 /*!
  * \brief ECBProductosTest::testMostrarStock_data
  */
-void ECBProductosTest::testMostrarStock_data()
+/*void ECBProductosTest::testMostrarStock_data()
 {
     QTest::addColumn<bool>("habilitado");
     QTest::addColumn<int>("posicion");
@@ -129,7 +129,7 @@ void ECBProductosTest::testMostrarStock_data()
     QTest::newRow("SinStock") << false << 1 << 0.0;
     QTest::newRow("ConStock") << true << 1 << 1.0;
 
-}
+}*/
 
 #include "ecbproductosmodel.h"
 /*!
@@ -250,7 +250,6 @@ void ECBProductosTest::testECBProductosConFiltrado()
     }
 
 }
-
 
 QTEST_MAIN(ECBProductosTest)
 

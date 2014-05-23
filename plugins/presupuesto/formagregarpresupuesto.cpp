@@ -19,13 +19,13 @@
  ***************************************************************************/
 #include "formagregarpresupuesto.h"
 
-
 #include <QDate>
 #include <QSqlError>
 #include <QHeaderView>
 #include <QCompleter>
 #include <QSqlQuery>
 #include <QInputDialog>
+#include <QDebug>
 
 #include "mproductostotales.h"
 #include "dproductostotales.h"
@@ -196,7 +196,7 @@ void FormAgregarPresupuesto::guardar( bool cerrar )
                                          m->data( m->index( fila, 1 ), Qt::DisplayRole ).toString(), // Texto
                                          m->data( m->index( fila, 2 ), Qt::EditRole ).toDouble()  // Precio unitario
                                        ) ) {
-         qDebug( QString( "No se pudo agregar el item %1 del presupuesto a la base de datos" ).arg( fila ).toLocal8Bit() );
+         qDebug() << "No se pudo agregar el item " << fila << " del presupuesto a la base de datos";
          QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
          return;
      }

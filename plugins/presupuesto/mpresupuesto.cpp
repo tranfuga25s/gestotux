@@ -23,6 +23,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
+#include <QDebug>
 
 #include "mdescuentos.h"
 
@@ -85,21 +86,21 @@ NumeroComprobante &MPresupuesto::proximoComprobante() {
                   return *num;
               } else {
                   qDebug( "Error de cola al hacer next al obtener el numero de prespuesto maximo");
-                  qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+                  qDebug() <<  "Error: " << cola.lastError().number() << " - " << cola.lastError().text() << " - " << cola.lastQuery();
               }
           } else {
               qDebug( "Error de cola al hacer exec al obtener el numero de prespuesto maximo" );
-              qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+              qDebug() <<  "Error: " << cola.lastError().number() << " - " << cola.lastError().text() << " - " << cola.lastQuery();
           }
       } else {
           qDebug( "Error de cola al hacer next al obtener el numero de serie de presupuesto maximo" );
-          qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+          qDebug() <<  "Error: " << cola.lastError().number() << " - " << cola.lastError().text() << " - " << cola.lastQuery();
       }
   } else {
       NumeroComprobante *num = new NumeroComprobante( 0, 1, 0 );
       num->siguienteNumero();
       qDebug( "Error de cola al hacer exec al obtener el numero de serie de presupuesto maximo - Se inicio una nueva numeracion" );
-      qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+      qDebug() <<  "Error: " << cola.lastError().number() << " - " << cola.lastError().text() << " - " << cola.lastQuery();
       return *num;
   }
   NumeroComprobante *invalido = new NumeroComprobante( 0, -1, -1 );
@@ -121,7 +122,7 @@ int MPresupuesto::agregarPresupuesto(int id_cliente, QString texto_cliente, QStr
     QSqlQuery cola;
     if( !cola.prepare( "INSERT INTO presupuestos( id_cliente, destinatario, direccion, fecha, total, serie, numero, observaciones ) VALUES ( :id_cliente, :nombre, :direccion, :fecha, :total, :serie, :numero, :observaciones )") ) {
         qDebug( "Error al preparar la cola" );
-        qDebug( QString( "Error: %1 - %2" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).toLocal8Bit() );
+        qDebug() << "Error: " << cola.lastError().number() << " - " << cola.lastError().text();
         return -1;
     }
     if( id_cliente < 0 ) {
@@ -152,7 +153,7 @@ int MPresupuesto::agregarPresupuesto(int id_cliente, QString texto_cliente, QStr
         } else { return -1; }
     } else {
         qDebug( "Error al hacer exec para insertar un nuevo presupeusto.");
-        qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+        qDebug() << "Error: " << cola.lastError().number() << " - " << cola.lastError().text() << " - " << cola.lastQuery();
         return -1;
     }
 }
@@ -190,9 +191,9 @@ bool MPresupuesto::modificarPresupuesto( int id_presupuesto, int id_cliente, QSt
                     .arg( total )
                     .arg( observaciones ) ) ) {
         qWarning( "Hubo un error al guardar los datos del presupuesto" );
-        qDebug( "Error de exec al actualizar los datos del presupuesto." );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error de exec al actualizar los datos del presupuesto.";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return false;
     } else {
         return true;
@@ -212,10 +213,10 @@ bool MPresupuesto::eliminarPresupuesto(int id_presupuesto)
     QSqlQuery cola;
     // Elimino sus items
     if( !cola.exec( QString( "DELETE FROM item_presupuesto WHERE id_presupuesto = %1 LIMIT 1" ).arg( id_presupuesto ) ) ) {
-        qWarning( "No se pudo ejecutar la cola para eliminar los items de presupuesto" );
-        qDebug( "Error al ejectuar la cola para eliminar el presupuesto" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qWarning( ) << "No se pudo ejecutar la cola para eliminar los items de presupuesto";
+        qDebug() << "Error al ejectuar la cola para eliminar el presupuesto";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
         return false;
     }
@@ -225,10 +226,10 @@ bool MPresupuesto::eliminarPresupuesto(int id_presupuesto)
         QSqlQuery cola2;
         while( cola.next() ) {
             if( !cola2.exec( QString( "DELETE FROM descuento WHERE id_descuento = %1 LIMIT 1" ).arg( cola.record().value(0).toInt() ) ) ) {
-                qWarning( "No se pudo ejecutar la cola para eliminar los descuentos del presupuesto" );
-                qDebug( "Error al ejectuar la cola para eliminar el presupuesto" );
-                qDebug( cola2.lastError().text().toLocal8Bit() );
-                qDebug( cola2.lastQuery().toLocal8Bit() );
+                qWarning() << "No se pudo ejecutar la cola para eliminar los descuentos del presupuesto";
+                qDebug() << "Error al ejectuar la cola para eliminar el presupuesto";
+                qDebug() << cola2.lastError().text();
+                qDebug() << cola2.lastQuery();
                 QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
                 return false;
             }
@@ -236,10 +237,10 @@ bool MPresupuesto::eliminarPresupuesto(int id_presupuesto)
     }
 
     if( !cola.exec( QString( "DELETE FROM descuento_comprobante WHERE id_comprobante = %1 AND tipo = %2 LIMIT 1" ).arg( id_presupuesto ).arg( MDescuentos::Presupuesto ) ) ) {
-        qWarning( "No se pudo ejecutar la cola para eliminar los descuentos del presupuesto" );
-        qDebug( "Error al ejectuar la cola para eliminar el presupuesto" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qWarning() << "No se pudo ejecutar la cola para eliminar los descuentos del presupuesto";
+        qDebug() << "Error al ejectuar la cola para eliminar el presupuesto";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
         return false;
     }
@@ -252,10 +253,10 @@ bool MPresupuesto::eliminarPresupuesto(int id_presupuesto)
             return false;
         }
     } else {
-        qWarning( "No se pudo ejecutar la cola para eliminar el presupuesto" );
-        qDebug( "Error al ejectuar la cola para eliminar el presupuesto" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qWarning() << "No se pudo ejecutar la cola para eliminar el presupuesto";
+        qDebug() << "Error al ejectuar la cola para eliminar el presupuesto";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
         return false;
     }
@@ -278,9 +279,9 @@ QDate MPresupuesto::obtenerFecha( int id_presupuesto )
         cola.next();
         return cola.record().value(0).toDate();
     } else {
-        qDebug( "Error al obtener la fecha del presupuesto" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al obtener la fecha del presupuesto";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return QDate();
     }
 }
@@ -300,9 +301,9 @@ int MPresupuesto::obtenerIdCliente( int id_presupuesto )
         cola.next();
         return cola.record().value(0).toInt();
     } else {
-        qDebug( "Error al obtener la fecha del presupuesto" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al obtener la fecha del presupuesto";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return -1;
     }
 }

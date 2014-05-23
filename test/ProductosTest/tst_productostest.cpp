@@ -41,6 +41,10 @@ private Q_SLOTS:
     void testDescripcionEnAltaProducto();
     void testOcultarCosto();
     void testPreferenciasStockLista();
+    void testBuscarCodigoExistente();
+    void testBuscarCodigoExistente_data();
+    void testBuscarPrecioCompra();
+    void testBuscarPrecioCompra_data();
 
 private:
     MProductos *mp;
@@ -505,6 +509,45 @@ void ProductosTest::testPreferenciasStockLista()
     p->endGroup();
     p->endGroup();
     p=0;
+}
+
+/*!
+ * Test para verificar si funciona correctamente la busqueda por código.
+ **/
+void ProductosTest::testBuscarCodigoExistente()
+{
+    QFETCH( QString, codigo );
+    QFETCH( bool, existe );
+    QCOMPARE( MProductos::existeCodigo( codigo ), existe );
+}
+
+void ProductosTest::testBuscarCodigoExistente_data()
+{
+    QTest::addColumn<QString>("codigo");
+    QTest::addColumn<bool>("existe");
+    QTest::newRow("Producto1") << "1" << true;
+    QTest::newRow("Productos2") << "19" << false;
+    QTest::newRow("Producto 3") << "6" << true;
+}
+
+/*!
+ * Permite saber si se genera correctamente la consulta del precio de compra
+ */
+void ProductosTest::testBuscarPrecioCompra()
+{
+    QFETCH( int, id_producto );
+    QFETCH( double, precio_compra );
+    QCOMPARE( MProductos::buscarPrecioCompra( id_producto ), precio_compra );
+}
+
+void ProductosTest::testBuscarPrecioCompra_data()
+{
+    QTest::addColumn<int>("id_producto");
+    QTest::addColumn<double>("precio_compra");
+    QTest::newRow("Producto1") << 1 << 10.0;
+    QTest::newRow("Producto2") << 2 << 10.0;
+    QTest::newRow("Producto3") << 3 << 10.0;
+    QTest::newRow("Producto4") << 4 << 10.0;
 }
 
 QTEST_MAIN(ProductosTest)

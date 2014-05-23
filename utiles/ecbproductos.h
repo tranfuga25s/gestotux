@@ -22,7 +22,7 @@ class ECBProductos : public QComboBox
 {
     Q_OBJECT
 public:
-    ECBProductos( QWidget *parent = 0 );
+    ECBProductos( QWidget *parent = 0,  ECBProductosFilter *m = 0 );
     ~ECBProductos();
     QMap<int, QString> *listadoProductos();
     void setearListado( QMap<int, QString> *lista );

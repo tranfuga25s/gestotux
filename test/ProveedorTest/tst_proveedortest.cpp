@@ -26,6 +26,10 @@ private Q_SLOTS:
     void testVentanaModificar();
     void testVentanaModificar_data();
     void testVerificarDatosRelacionados();
+    void testRazonSocialRepetida();
+    void testRazonSocialRepetida_data();
+    void testCuitCuilRepetido();
+    void testCuitCuilRepetido_data();
 };
 
 ProveedorTest::ProveedorTest()
@@ -127,6 +131,43 @@ void ProveedorTest::testVerificarDatosRelacionados() {
 
     // Agrego un proveedor sin datos relacionados ( en el schema )
     QVERIFY( MProveedor::tieneDatosRelacionados( 3 ) == false );
+}
+
+/*!
+ * Verifica que no se permita ingresar 2 proveedores con la misma razon social - issue #51
+ */
+void ProveedorTest::testRazonSocialRepetida()
+{
+    QFETCH( QString, nombre );
+    QFETCH( bool, error );
+    QCOMPARE( MProveedor::existeProveedor( nombre ), error );
+}
+
+void ProveedorTest::testRazonSocialRepetida_data()
+{
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<bool>("error");
+    QTest::newRow("Proveedor1") << "Proveedor 1" << true;
+    QTest::newRow("Proveedor2") << "Proveedor 2" << true;
+    QTest::newRow("ProvedorNuevo") << "Proveedor 3" << false;
+}
+
+/*!
+ *
+ */
+void ProveedorTest::testCuitCuilRepetido()
+{
+    QFETCH( QString, cuit );
+    QFETCH( bool, error );
+    QCOMPARE( MProveedor::existeCuitCuil( cuit ), error );
+}
+
+void ProveedorTest::testCuitCuilRepetido_data()
+{
+    QTest::addColumn<QString>("cuit");
+    QTest::addColumn<bool>("error");
+    QTest::newRow("Proveedor1") << "20309983042" << true;
+    QTest::newRow("Proveedor2") << "56497824556" << false;
 }
 
 QTEST_MAIN(ProveedorTest)

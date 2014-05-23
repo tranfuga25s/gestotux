@@ -9,7 +9,7 @@
 #include "ecbproductosmodel.h"
 #include "ecbproductosfilter.h"
 
-ECBProductos::ECBProductos( QWidget *parent ) :
+ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
  QComboBox( parent )
 {
     this->setObjectName( "SelectorProductos" );
@@ -39,8 +39,14 @@ ECBProductos::ECBProductos( QWidget *parent ) :
     p->endGroup();
     p=0;
 
-    QTimer timer;
-    timer.singleShot( 900, this, SLOT( inicializar() ) );
+    if( m != 0 ) {
+        modelo = m;
+    } else {
+        modelo = new ECBProductosFilter( this );
+        ECBProductosModel *m = new ECBProductosModel( modelo );
+        m->inicializar();
+        modelo->setSourceModel( m );
+    }
 }
 
 ECBProductos::~ECBProductos()
@@ -80,7 +86,7 @@ void ECBProductos::setearListado( QMap<int, QString> *lista )
 {
     // Verifica que los demás items estén de acuerdo con esta lista
     // El mappeo debe sacar solo los elementos menores que cero
-    QList<int> l2 = lista->keys();
+    /*QList<int> l2 = lista->keys();
     for( int i = 0; i < l2.size(); i++ ) {
         if( l2.value(i) < 0 ) {
             // Ingreso este valor al cb
@@ -92,7 +98,7 @@ void ECBProductos::setearListado( QMap<int, QString> *lista )
             this->_mapa_pos_ids->insert( pos, indice );
             this->_mapa_pos_codigo->insert( QString::number( indice ), pos );
         }
-    }
+    }*/
 }
 
 /*!
