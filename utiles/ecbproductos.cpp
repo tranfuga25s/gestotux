@@ -22,10 +22,6 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
     this->setInsertPolicy( QComboBox::NoInsert );
     this->connect( this->lineEdit(), SIGNAL( returnPressed() ), this, SLOT( enterApretado() ) );
 
-    _mapa_pos_codigo = new QMap<QString, int>();
-    _mapa_id_nombre = new QMap<int, QString>();
-    _mapa_pos_ids = new QMap<int, int>();
-
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
@@ -50,14 +46,7 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
 }
 
 ECBProductos::~ECBProductos()
-{
-    delete _mapa_pos_codigo;
-    _mapa_pos_codigo = 0;
-    delete _mapa_id_nombre;
-    _mapa_id_nombre = 0;
-    delete _mapa_pos_ids;
-    _mapa_pos_ids = 0;
-}
+{}
 
 /*!
  * \brief ECBProductos::enterApretado
@@ -94,7 +83,7 @@ void ECBProductos::setearListado( ECBProductosModel *lista )
  */
 int ECBProductos::idActual() const
 {
-    return this->_mapa_pos_ids->value( this->currentIndex() );
+    return this->modelo->data( this->modelo->index( this->currentIndex(), ECBProductosModel::Ids ), Qt::EditRole ).toInt();
 }
 
 /*!
@@ -109,18 +98,10 @@ void ECBProductos::verificarExiste()
     if( b != -1 ) {
         this->setCurrentIndex( b );
     } else {
-        QMap<QString, int>::const_iterator i =  this->_mapa_pos_codigo->find( buscar );
-        if( i != this->_mapa_pos_codigo->end() ) {
-            this->setCurrentIndex( i.value() );
-        } else {
-            // Tengo que agregarlo como item exclusivo
-            // Agregado al final pero con ID <= -1
-            int pos_nueva = this->count();
-            //this->_mapa_pos_codigo->insert( QString::number( _min ), pos_nueva );
-            //this->_mapa_pos_ids->insert( pos_nueva, _min );
-            //this->_mapa_id_nombre->insert( _min, this->lineEdit()->text() );
-            //this->insertItem( pos_nueva, this->lineEdit()->text(), _min );
-            this->setCurrentIndex( pos_nueva );
+        // Busco por codigo
+        int pos = this->modelo->buscarPorCodigo( buscar );
+        if( pos != -1 ) {
+            this->setCurrentIndex( pos );
         }
     }
 }
@@ -132,7 +113,7 @@ void ECBProductos::verificarExiste()
  */
 QList<int> *ECBProductos::getListaIDs()
 {
-    return new QList<int>( _mapa_pos_ids->values() );
+    return modelo->getListaIDs();
 }
 
 /*!

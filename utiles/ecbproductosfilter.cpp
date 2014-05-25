@@ -46,6 +46,27 @@ void ECBProductosFilter::setearIdProveedor(int id_proveedor)
 }
 
 /*!
+ * \brief ECBProductosFilter::buscarPorCodigo
+ * \param buscar
+ * \return
+ */
+int ECBProductosFilter::buscarPorCodigo(const QString buscar)
+{
+    // @TODO: No debería de mappearlo?
+    return qobject_cast<ECBProductosModel *>(sourceModel())->buscarPorCodigo( buscar );
+}
+
+/*!
+ * \brief ECBProductosFilter::getListaIDs
+ * Devuelve la lista de IDs
+ * \return QList<int> *
+ */
+QList<int> *ECBProductosFilter::getListaIDs()
+{
+    return qobject_cast<ECBProductosModel *>(sourceModel())->getListaIDs();
+}
+
+/*!
  * \brief ECBProductosFilter::filterAcceptsRow
  * Permite definir si la columna utiliza se puede mostrar o no según los datos seleccionados de filtrado
  * \param source_row ID de columna de modelo de origen

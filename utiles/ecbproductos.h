@@ -49,10 +49,6 @@ private slots:
     void enterApretado();
 
 private:
-    QMap<QString, int> *_mapa_pos_codigo;
-    QMap<int, QString> *_mapa_id_nombre;
-    QMap<int, int> *_mapa_pos_ids;
-
     ECBProductosFilter *modelo;
 };
 

@@ -14,6 +14,9 @@ public:
     bool mostrarProductosDeshabilitados() { return _mostrar_deshabilitados; }
     bool mostrarProductosSinStock() { return _mostrar_sin_stock; }
 
+    int buscarPorCodigo( const QString buscar );
+    QList<int> *getListaIDs();
+
 protected:
     bool filterAcceptsRow( int source_row, const QModelIndex &source_parent = QModelIndex() ) const;
 

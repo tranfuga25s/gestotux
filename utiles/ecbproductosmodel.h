@@ -30,6 +30,9 @@ public:
 
     bool existeID( const int id_producto );
     QString nombreProductoSegunID( const int id_producto );
+    int buscarPorCodigo( const QString buscar );
+
+    QList<int> *getListaIDs();
 
     enum Columnas {
         Ids=0,

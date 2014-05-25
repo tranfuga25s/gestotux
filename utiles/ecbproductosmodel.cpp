@@ -275,3 +275,23 @@ QString ECBProductosModel::nombreProductoSegunID( const int id_producto )
         return QString();
     }
 }
+
+/*!
+ * \brief ECBProductosModel::buscarPorCodigo
+ * Devuelve la posición donde se encuentra el codigo buscado
+ * \param buscar Texto a buscar
+ * \return La posicion o -1 si no se encuentra
+ */
+int ECBProductosModel::buscarPorCodigo( const QString buscar )
+{
+    return this->_codigos->key( buscar );
+}
+
+/*!
+ * \brief ECBProductosModel::getListaIDs
+ * \return
+ */
+QList<int> *ECBProductosModel::getListaIDs()
+{
+    return new QList<int>( this->_ids->values() );
+}
