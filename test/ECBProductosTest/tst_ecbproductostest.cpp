@@ -279,9 +279,8 @@ void ECBProductosTest::testECBModeloCambiarAnterior()
     mp->arreglarItemTemporal( -1, 1000 );
     mpt->arreglarIdProductoAgregado( -1, 1000 );
 
-    QCOMPARE( mp->data( mp->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt(), 1000 ); // Verifico que el ID se haya cambiado
+    QCOMPARE( mp->data( mp->index( mp->rowCount()-1, ECBProductosModel::Ids ), Qt::EditRole ).toInt(), 1000 ); // Verifico que el ID se haya cambiado
     QCOMPARE( mpt->data( mpt->index( mpt->rowCount() - 1, 1 ), Qt::EditRole ).toInt(), 1000 ); // Verifico que el ID sea negativo
-
 
     delete mpt;
     delete mp;

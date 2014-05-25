@@ -989,7 +989,6 @@ void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const in
         qDebug() << "No se encontró el elemento para reemplazar!";
         return;
     }
-
     this->productos->insert( pos, nuevo );
 
 }

@@ -223,16 +223,17 @@ int ECBProductosModel::agregarItem( const QString texto, double stock, bool habi
  */
 bool ECBProductosModel::arreglarItemTemporal( const int anterior, const int nuevo )
 {
-    if( anterior > 0 ) {
+    if( anterior >= 0 ) {
         return false;
     }
-    QHash<int, int>::iterator pos_anterior = this->_ids->find( anterior );
-    if( pos_anterior == this->_ids->end() ) {
+    int pos_anterior = this->_ids->key( anterior );
+    if( pos_anterior == 0 ) {
         qDebug() << "El ID anterior no estaba en la lista";
         return false;
     }
-    this->_ids->insert( pos_anterior.key(), nuevo );
+    this->_ids->insert( pos_anterior, nuevo );
     /// @TODO Ver si se utiliza la versión de agregar por ventana de agregar producto para actualizar los otros datos.
+    qDebug() << "Ver agregado de otros datos ademas del ID";
     return true;
 }
 
