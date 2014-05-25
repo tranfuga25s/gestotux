@@ -84,6 +84,8 @@ public:
 
     void vaciarProductos();
 
+    void arreglarIdProductoAgregado( const int anterior, const int nuevo );
+
 public slots:
     void agregarDescuento( QString texto, double porcentaje );
 

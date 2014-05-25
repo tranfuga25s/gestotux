@@ -386,19 +386,14 @@ void FormAgregarCompra::eliminarProducto()
  */
 void FormAgregarCompra::arreglarProductoAgregado( int anterior, int nuevo )
 {
-    // Actualizo la lista del cb que esta siendo usada por el mcp
-    QString val_anterior = this->CBProducto->listadoProductos()->value( anterior );
-    this->CBProducto->listadoProductos()->remove( anterior );
-    this->CBProducto->listadoProductos()->insert( nuevo, val_anterior );
+
+    ecbmproducto->arreglarItemTemporal( anterior, nuevo );
+
+    mcp->arreglarIdProductoAgregado( anterior, nuevo );
 
     // Como mcp esta trabajando con un puntero a la lista anterior no tengo que actualizar nada mas
 
-    // Actualizo el dato del mcp
-    for( int i = 0; i < mcp->rowCount(); i++ ) {
-        if( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() == anterior ) {
-            mcp->setData( mcp->index( i, 1 ), nuevo, Qt::EditRole );
-        }
-    }
+
 }
 
 /*!

@@ -215,6 +215,28 @@ int ECBProductosModel::agregarItem( const QString texto, double stock, bool habi
 }
 
 /*!
+ * \brief ECBProductosModel::arreglarItemTemporal
+ * Actualiza el valor de ID temporal de un producto que no estaba en la base de datos con el nuevo dato.
+ * \param anterior ID temporal anterior.
+ * \param nuevo ID Nuevo
+ * \return
+ */
+bool ECBProductosModel::arreglarItemTemporal( const int anterior, const int nuevo )
+{
+    if( anterior > 0 ) {
+        return false;
+    }
+    QHash<int, int>::iterator pos_anterior = this->_ids->find( anterior );
+    if( pos_anterior == this->_ids->end() ) {
+        qDebug() << "El ID anterior no estaba en la lista";
+        return false;
+    }
+    this->_ids->insert( pos_anterior.key(), nuevo );
+    /// @TODO Ver si se utiliza la versión de agregar por ventana de agregar producto para actualizar los otros datos.
+    return true;
+}
+
+/*!
  * \brief ECBProductosModel::existeID
  * Verifica si existe el ID de producto elegido
  * \param id_producto Identificador del producto

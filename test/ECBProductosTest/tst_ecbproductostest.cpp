@@ -30,6 +30,7 @@ private Q_SLOTS:
     void testECBProductosModelAgregarItem();
     void testECBProductosModelAgregarItem_data();
     void testECBProductosConFiltrado();
+    void testECBModeloCambiarAnterior();
 };
 
 /*!
@@ -249,6 +250,40 @@ void ECBProductosTest::testECBProductosConFiltrado()
         QCOMPARE( modelo->data( modelo->index( i, ECBProductosModel::IdProveedor ) ).toInt(), id_proveedor );
     }
 
+}
+
+#include "mproductostotales.h"
+/*!
+ * \brief ECBProductosTest::testECBModeloCambiarAnterior
+ * Testea que funcione correctamente el cambiador de valores anteriores a nuevo en mproductostotales
+ */
+void ECBProductosTest::testECBModeloCambiarAnterior()
+{
+    ECBProductosModel *mp = new ECBProductosModel();
+    mp->inicializar();
+    int cantidad_mp = mp->rowCount();
+
+    MProductosTotales *mpt = new MProductosTotales();
+    mpt->setearListaProductos( mp );
+    mpt->calcularTotales( false );
+    int cantidad_mpt = mpt->rowCount();
+
+    mpt->agregarItem( 1.0, "ProductoAgregadoExtra", 10.0 );
+
+    QCOMPARE( mpt->rowCount(), 1 );
+    QVERIFY( ( mpt->rowCount() - cantidad_mpt ) == 1 ); // Verifica que se haya agregado un elemento
+    QVERIFY( ( mp->rowCount() - cantidad_mp ) == 1 ); // Verifica que se haya agregado un elemento
+
+    QCOMPARE( mpt->data( mpt->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt(), -1 ); // Verifico que el ID sea negativo
+
+    mpt->arreglarIdProductoAgregado( -1, 1000 );
+
+    QVERIFY( mp->data( mp->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt() > 999 ); // Verifico que el ID se haya cambiado
+    QVERIFY( mpt->data( mpt->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt() > 999 ); // Verifico que el ID sea negativo
+
+
+    delete mpt;
+    delete mp;
 }
 
 QTEST_MAIN(ECBProductosTest)

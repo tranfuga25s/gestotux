@@ -485,7 +485,7 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         case 1:
                         {
                                 // tengo que devolver el Id de producto de la lista de general
-                                return productos->value( idx.row() );
+                                return this->prods->data( this->prods->index( productos->value( idx.row() ), ECBProductosModel::Ids ), Qt::EditRole ).toInt();
                                 // Si el item no existe, devuelve cero....esto proboca que no se verifique el stock si esta habilitado
                                 break;
                         }
@@ -630,6 +630,7 @@ void MProductosTotales::agregarItem( const int cant, const QString texto, double
 
     // inserto el texto en la lista de nombre de productos
     int pos2 = this->prods->agregarItem( texto );
+    qDebug() << "pos2: " << pos2;
     // inserto el indice de lo anterior en el mapa de productos
     this->productos->insert( pos, pos2 );
 
@@ -970,4 +971,23 @@ void MProductosTotales::vaciarProductos()
     while( this->cantidades->size() > 0 ) {
         this->removeRow( 0 );
     }
+}
+
+/*!
+ * \brief MProductosTotales::arreglarIdProductoAgregado
+ * Cambia el id anterior en el nuevo en la lista de productos
+ * \param anterior ID anterior < 0
+ * \param nuevo ID nuevo
+ */
+void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const int nuevo )
+{
+    // Actualizo el dato del mcp
+    int pos = this->productos->key( anterior );
+    if( pos == -1 ) {
+        qDebug() << "No se encontró el elemento para reemplazar!";
+        return;
+    }
+
+    this->productos->insert( pos, nuevo );
+
 }
