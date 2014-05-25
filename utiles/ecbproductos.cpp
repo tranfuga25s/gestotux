@@ -22,9 +22,6 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
     this->setInsertPolicy( QComboBox::NoInsert );
     this->connect( this->lineEdit(), SIGNAL( returnPressed() ), this, SLOT( enterApretado() ) );
 
-    this->lineEdit()->setText( "Cargando datos..." );
-    this->setEnabled( false );
-
     _mapa_pos_codigo = new QMap<QString, int>();
     _mapa_id_nombre = new QMap<int, QString>();
     _mapa_pos_ids = new QMap<int, int>();
@@ -47,6 +44,9 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
         m->inicializar();
         modelo->setSourceModel( m );
     }
+
+    this->setModel( modelo );
+    this->setModelColumn( ECBProductosModel::Nombres );
 }
 
 ECBProductos::~ECBProductos()
