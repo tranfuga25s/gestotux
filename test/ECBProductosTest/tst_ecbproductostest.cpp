@@ -274,12 +274,13 @@ void ECBProductosTest::testECBModeloCambiarAnterior()
     QVERIFY( ( mpt->rowCount() - cantidad_mpt ) == 1 ); // Verifica que se haya agregado un elemento
     QVERIFY( ( mp->rowCount() - cantidad_mp ) == 1 ); // Verifica que se haya agregado un elemento
 
-    QCOMPARE( mpt->data( mpt->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt(), -1 ); // Verifico que el ID sea negativo
+    QCOMPARE( mpt->data( mpt->index( mpt->rowCount()-1, 1 ), Qt::EditRole ).toInt(), -1 ); // Verifico que el ID sea negativo
 
+    mp->arreglarItemTemporal( -1, 1000 );
     mpt->arreglarIdProductoAgregado( -1, 1000 );
 
-    QVERIFY( mp->data( mp->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt() > 999 ); // Verifico que el ID se haya cambiado
-    QVERIFY( mpt->data( mpt->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt() > 999 ); // Verifico que el ID sea negativo
+    QCOMPARE( mp->data( mp->index( mp->rowCount() - 1, 1 ), Qt::EditRole ).toInt(), 1000 ); // Verifico que el ID se haya cambiado
+    QCOMPARE( mpt->data( mpt->index( mpt->rowCount() - 1, 1 ), Qt::EditRole ).toInt(), 1000 ); // Verifico que el ID sea negativo
 
 
     delete mpt;
@@ -287,5 +288,10 @@ void ECBProductosTest::testECBModeloCambiarAnterior()
 }
 
 QTEST_MAIN(ECBProductosTest)
+
+
+
+
+
 
 #include "tst_ecbproductostest.moc"

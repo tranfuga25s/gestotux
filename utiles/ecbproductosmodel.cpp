@@ -37,42 +37,42 @@ QVariant ECBProductosModel::data( const QModelIndex &index, int role ) const
     switch( index.column() ) {
         case Ids:
         {
-            if( role == Qt::DisplayRole ) {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
                 return _ids->value( index.row() );
             }
             break;
         }
         case Codigos:
         {
-            if( role == Qt::DisplayRole ) {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
                 return _codigos->value( index.row() );
             }
             break;
         }
         case Nombres:
         {
-            if( role == Qt::DisplayRole ) {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
                 return _nombres->value( index.row() );
             }
             break;
         }
         case Stock:
         {
-            if( role == Qt::DisplayRole ) {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
                 return _stock->value( index.row() );
             }
             break;
         }
         case Habilitado:
         {
-            if( role == Qt::DisplayRole ) {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
                 return _habilitado->value( index.row() );
             }
             break;
         }
         case IdProveedor:
         {
-            if( role == Qt::DisplayRole ) {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
                 return _proveedor->value( index.row() );
             }
             break;

@@ -485,7 +485,10 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         case 1:
                         {
                                 // tengo que devolver el Id de producto de la lista de general
-                                return this->prods->data( this->prods->index( productos->value( idx.row() ), ECBProductosModel::Ids ), Qt::EditRole ).toInt();
+                                return this->prods->data(
+                                            this->prods->index( productos->value( idx.row() ), ECBProductosModel::Ids ),
+                                            Qt::EditRole )
+                                        .toInt();
                                 // Si el item no existe, devuelve cero....esto proboca que no se verifique el stock si esta habilitado
                                 break;
                         }
@@ -630,7 +633,6 @@ void MProductosTotales::agregarItem( const int cant, const QString texto, double
 
     // inserto el texto en la lista de nombre de productos
     int pos2 = this->prods->agregarItem( texto );
-    qDebug() << "pos2: " << pos2;
     // inserto el indice de lo anterior en el mapa de productos
     this->productos->insert( pos, pos2 );
 
