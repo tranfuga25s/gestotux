@@ -990,5 +990,7 @@ void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const in
         return;
     }
     this->productos->insert( pos, nuevo );
+    // Paso el cambio al modelo inferior.
+    this->prods->arreglarItemTemporal( anterior, nuevo );
 
 }
