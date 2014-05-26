@@ -989,8 +989,9 @@ void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const in
         qDebug() << "No se encontró el elemento para reemplazar!";
         return;
     }
-    this->productos->insert( pos, nuevo );
-    // Paso el cambio al modelo inferior.
-    this->prods->arreglarItemTemporal( anterior, nuevo );
+    //this->productos->insert( pos, nuevo );
+    /// El mappeo al modelo ECBProductosModel no cambia al actualizar el ID del producto
 
+    // Paso el cambio al modelo inferior.
+    this->prods->arreglarItemTemporal( anterior, nuevo );    
 }
