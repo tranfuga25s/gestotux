@@ -53,7 +53,6 @@ ECBProductos::~ECBProductos()
  */
 void ECBProductos::enterApretado()
 {
-    qDebug() << "Enter Apretado!";
     verificarExiste();
     emit agregarProducto();
     return;

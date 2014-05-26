@@ -240,12 +240,13 @@ bool ECBProductosModel::arreglarItemTemporal( const int anterior, const int nuev
     if( ! cola.next() ) {
         qDebug() << "Error de cola.next en buscar los datos del producto actualizado";
         qDebug() << cola.lastQuery();
+    } else {
+        this->_codigos->insert( pos_anterior, cola.record().value(1).toString() );
+        this->_nombres->insert( pos_anterior, cola.record().value(2).toString() );
+        this->_habilitado->insert( pos_anterior, cola.record().value(4).toBool() );
+        this->_stock->insert( pos_anterior, cola.record().value(3).toDouble() );
+        this->_proveedor->insert( pos_anterior, 0 ); /// @TODO: ver como ajustar esto
     }
-    this->_codigos->insert( pos_anterior, cola.record().value(1).toString() );
-    this->_nombres->insert( pos_anterior, cola.record().value(2).toString() );
-    this->_habilitado->insert( pos_anterior, cola.record().value(4).toBool() );
-    this->_stock->insert( pos_anterior, cola.record().value(3).toDouble() );
-    this->_proveedor->insert( pos_anterior, 0 ); /// @TODO: ver como ajustar esto
     return true;
 }
 
