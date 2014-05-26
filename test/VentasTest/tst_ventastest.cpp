@@ -25,7 +25,9 @@ VentasTest::VentasTest()
     this->tablas << "clientes"
                  << "factura"
                  << "item_factura"
-                 << "productos";
+                 << "productos"
+                 << "compras_productos"
+                 << "compras";
 }
 
 void VentasTest::init() { EDatabaseTest::init(); }
