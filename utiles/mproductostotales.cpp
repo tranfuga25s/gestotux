@@ -984,11 +984,11 @@ void MProductosTotales::vaciarProductos()
 void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const int nuevo )
 {
     // Actualizo el dato del mcp
-    int pos = this->productos->key( anterior );
+    /*int pos = this->productos->key( anterior );
     if( pos == -1 ) {
         qDebug() << "No se encontró el elemento para reemplazar!";
         return;
-    }
+    } */
     //this->productos->insert( pos, nuevo );
     /// El mappeo al modelo ECBProductosModel no cambia al actualizar el ID del producto
 

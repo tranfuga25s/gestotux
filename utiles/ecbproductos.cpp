@@ -26,7 +26,7 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
     p->beginGroup( "Stock" );
-    //this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
+    this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
     p->endGroup();
     p->endGroup();
     p->endGroup();
@@ -42,7 +42,11 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
     }
 
     this->setModel( modelo );
-    this->setModelColumn( ECBProductosModel::Nombres );
+    if( _mostrar_stock_lista ) {
+        this->setModelColumn( ECBProductosModel::NombresStock );
+    } else {
+        this->setModelColumn( ECBProductosModel::Nombres );
+    }
 }
 
 ECBProductos::~ECBProductos()

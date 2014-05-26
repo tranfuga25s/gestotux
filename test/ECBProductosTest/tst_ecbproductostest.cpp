@@ -3,6 +3,7 @@
 #include <QtCore/QCoreApplication>
 
 #include <QSqlRecord>
+#include <QLineEdit>
 
 #include "../edatabasetest.h"
 #include "mproveedor.h"
@@ -22,9 +23,9 @@ private Q_SLOTS:
     void cleanupTestCase();
     void cleanup();
    /* void testFiltroProveedor();
-    void testFiltroProveedor_data();
+    void testFiltroProveedor_data();*/
     void testMostrarStock();
-    void testMostrarStock_data();*/
+    void testMostrarStock_data();
     void testECBProductosModel();
     void testECBProductosModel_data();
     void testECBProductosModelAgregarItem();
@@ -89,7 +90,7 @@ void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
  * \brief ECBProductosTest::testMostrarStock
  * Permite probar la característica de mostrar el stock al lado del nombre del producto
  */
-/*void ECBProductosTest::testMostrarStock()
+void ECBProductosTest::testMostrarStock()
 {
     QFETCH( bool, habilitado );
     QFETCH( int, posicion );
@@ -107,10 +108,8 @@ void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
     p=0;
 
     ECBProductos *ecb = new ECBProductos();
-    QTest::qWait( 1000 );
     if( habilitado ) {
-        ecb->setCurrentIndex( posicion );
-        QString texto = ecb->currentText();
+        QString texto = ecb->itemText( posicion );
         QVERIFY( !texto.isEmpty() );
         QVERIFY2( texto.contains( QString( "(%L1)" ).arg( stock ) ), texto.toLocal8Bit() );
     } else {
@@ -119,12 +118,12 @@ void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
         QVERIFY2( texto.contains( "(" ) == false, texto.toLocal8Bit() );
     }
     delete ecb;
-}*/
+}
 
 /*!
  * \brief ECBProductosTest::testMostrarStock_data
  */
-/*void ECBProductosTest::testMostrarStock_data()
+void ECBProductosTest::testMostrarStock_data()
 {
     QTest::addColumn<bool>("habilitado");
     QTest::addColumn<int>("posicion");
@@ -132,7 +131,7 @@ void ECBProductosTest::cleanup() { EDatabaseTest::cleanup(); }
     QTest::newRow("SinStock") << false << 1 << 0.0;
     QTest::newRow("ConStock") << true << 1 << 1.0;
 
-}*/
+}
 
 #include "ecbproductosmodel.h"
 /*!
@@ -157,6 +156,7 @@ void ECBProductosTest::testECBProductosModel()
     QCOMPARE( m->data( m->index( i, 3 ) ).toDouble(), stock        );
     QCOMPARE( m->data( m->index( i, 4 ) ).toBool()  , habilitado   );
     QCOMPARE( m->data( m->index( i, 5 ) ).toInt()   , id_proveedor );
+    QCOMPARE( m->data( m->index( i, 6 ) ).toString(), QString( "%1 (%2)" ).arg( nombre ).arg( stock ) );
 }
 
 /*!
@@ -287,13 +287,23 @@ void ECBProductosTest::testECBModeloCambiarAnterior()
     delete mp;
 }
 
-#include <QLineEdit>
 /*!
  * \brief ECBProductosTest::testECBProductosBuscarPorCodigo
  * Verifica que funcione correctamente el buscar por codigo con la nuevo modelo
  */
 void ECBProductosTest::testECBProductosBuscarPorCodigo()
 {
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "mostrar-stock-lista", false );
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    p->sync();
+    p=0;
+
     QFETCH( QString, texto );
     QFETCH( QString, nombre );
     ECBProductos *ecb = new ECBProductos();

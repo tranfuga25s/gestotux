@@ -77,6 +77,15 @@ QVariant ECBProductosModel::data( const QModelIndex &index, int role ) const
             }
             break;
         }
+        case NombresStock:
+        {
+            if( role == Qt::DisplayRole || role == Qt::EditRole ) {
+                return QString( "%1 (%2)" )
+                        .arg( _nombres->value( index.row() ) )
+                        .arg( _stock->value( index.row() ) );
+            }
+            break;
+        }
         default:
         { break; }
     }
@@ -89,7 +98,7 @@ QVariant ECBProductosModel::data( const QModelIndex &index, int role ) const
  * \return
  */
 int ECBProductosModel::columnCount( const QModelIndex & ) const
-{ return 6; }
+{ return 7; }
 
 /*!
  * \brief ECBProductosModel::rowCount

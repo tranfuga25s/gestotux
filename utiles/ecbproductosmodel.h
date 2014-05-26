@@ -40,7 +40,8 @@ public:
         Nombres=2,
         Stock=3,
         Habilitado=4,
-        IdProveedor=5
+        IdProveedor=5,
+        NombresStock=6
     };
 
 private:

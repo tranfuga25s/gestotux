@@ -50,6 +50,7 @@ private slots:
 
 private:
     ECBProductosFilter *modelo;
+    bool _mostrar_stock_lista;
 };
 
 #endif // ECBPRODUCTOS_H
