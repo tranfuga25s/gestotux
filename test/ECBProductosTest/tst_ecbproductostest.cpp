@@ -287,6 +287,7 @@ void ECBProductosTest::testECBModeloCambiarAnterior()
     delete mp;
 }
 
+#include <QLineEdit>
 /*!
  * \brief ECBProductosTest::testECBProductosBuscarPorCodigo
  * Verifica que funcione correctamente el buscar por codigo con la nuevo modelo
@@ -299,6 +300,7 @@ void ECBProductosTest::testECBProductosBuscarPorCodigo()
     QVERIFY( ecb->count() > 0 );
 
     QCOMPARE( ecb->isEditable(), true );
+    ecb->lineEdit()->setText( "" );
     QTest::keyClicks( ecb, texto );
     QTest::keyClick( ecb, Qt::Key_Enter );
 
@@ -309,7 +311,7 @@ void ECBProductosTest::testECBProductosBuscarPorCodigo_data() {
     QTest::addColumn<QString>("texto");
     QTest::addColumn<QString>("nombre");
     QTest::newRow("Producto1") << "1" << "Producto 1";
-    QTest::newRow("Producto4") << "4" << "Producto 4";
+    QTest::newRow("Producto4") << "3" << "Producto 4";
 }
 
 QTEST_MAIN(ECBProductosTest)
