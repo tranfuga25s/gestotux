@@ -52,8 +52,7 @@ void ECBProductosFilter::setearIdProveedor(int id_proveedor)
  */
 int ECBProductosFilter::buscarPorCodigo(const QString buscar)
 {
-    // @TODO: No debería de mappearlo?
-    return qobject_cast<ECBProductosModel *>(sourceModel())->buscarPorCodigo( buscar );
+    return mapFromSource( sourceModel()->index( modeloFuente()->buscarPorCodigo( buscar ), 0 ) ).row();
 }
 
 /*!
@@ -63,7 +62,17 @@ int ECBProductosFilter::buscarPorCodigo(const QString buscar)
  */
 QList<int> *ECBProductosFilter::getListaIDs()
 {
-    return qobject_cast<ECBProductosModel *>(sourceModel())->getListaIDs();
+    return modeloFuente()->getListaIDs();
+}
+
+int ECBProductosFilter::agregarItem(const QString texto, double stock, bool habilitado, int proveedor)
+{
+    return mapFromSource( sourceModel()->index( modeloFuente()->agregarItem( texto, stock, habilitado, proveedor ), 0 ) ).row();
+}
+
+ECBProductosModel *ECBProductosFilter::modeloFuente()
+{
+    return qobject_cast<ECBProductosModel *>(QSortFilterProxyModel::sourceModel());
 }
 
 /*!

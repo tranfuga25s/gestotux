@@ -3,6 +3,8 @@
 
 #include <QSortFilterProxyModel>
 
+#include "ecbproductosmodel.h"
+
 class ECBProductosFilter : public QSortFilterProxyModel
 {
     Q_OBJECT
@@ -16,6 +18,9 @@ public:
 
     int buscarPorCodigo( const QString buscar );
     QList<int> *getListaIDs();
+
+    int agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
+    ECBProductosModel *modeloFuente();
 
 protected:
     bool filterAcceptsRow( int source_row, const QModelIndex &source_parent = QModelIndex() ) const;

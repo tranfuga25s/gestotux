@@ -47,8 +47,8 @@ public:
     QVariant data(const QModelIndex& idx, int role) const;
     QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
-    void agregarItem( const int cant, const QString texto, double pu );
-    void agregarItem( const int cant, const int id_producto, double pu );
+    void agregarItem( const double cant, const QString texto, double pu );
+    void agregarItem( const double cant, const int id_producto, double pu );
 
     double totalitems();
     double total();
@@ -57,7 +57,7 @@ public:
     bool buscaPrecios();
     void buscarPrecios( bool activado = true );
 
-    void agregarNuevoProducto( const int cantidad, const int Id, double precio_unitario = -1.1 );
+    void agregarNuevoProducto( const double cantidad, const int Id, double precio_unitario = -1.1 );
    /*!
     * \enum TipoPrecio
     * Indica que tipo de precio se buscara cuando se realize una busqueda

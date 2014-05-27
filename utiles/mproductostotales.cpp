@@ -622,7 +622,7 @@ QVariant MProductosTotales::headerData ( int section, Qt::Orientation orientatio
  * \param texto Texto del item.
  * \param pu Precio unitario del item
  */
-void MProductosTotales::agregarItem( const int cant, const QString texto, double pu )
+void MProductosTotales::agregarItem( const double cant, const QString texto, double pu )
 {
     int pos = this->cantidades->size();
     this->insertRow( -1 );
@@ -653,7 +653,7 @@ void MProductosTotales::agregarItem( const int cant, const QString texto, double
  * \param id_producto Identificador del producto
  * \param pu Precio unitario del item
  */
-void MProductosTotales::agregarItem( const int cant, const int id_producto, double pu )
+void MProductosTotales::agregarItem( const double cant, const int id_producto, double pu )
 {
     int pos = this->cantidades->size();
     this->insertRow( -1 );
@@ -746,11 +746,12 @@ double MProductosTotales::buscarPrecioVenta( int id_producto )
 #include "einputdialog.h"
 /*!
  * \brief MProductosTotales::agregarNuevoProducto
- * \param cantidad
- * \param Id
- * \param precio_unitario
+ * \param cantidad Cantidad a agregar
+ * \param Id Identificador del producto
+ * \param precio_unitario Precio unitario del producto
+ * \param texto Texto para el nombre del rpoducto
  */
-void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double precio_unitario )
+void MProductosTotales::agregarNuevoProducto( double cantidad, int Id, double precio_unitario )
 {
   // Veo si existe y lo agrego a la lista si no existe....
   bool ok = false;

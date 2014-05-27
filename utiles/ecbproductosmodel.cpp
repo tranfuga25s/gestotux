@@ -199,10 +199,11 @@ bool ECBProductosModel::removeRow( int row, const QModelIndex& parent )
 
 /*!
  * \brief ECBProductosModel::agregarItem
- * \param texto
- * \param stock
- * \param habilitado
- * \param proveedor
+ * Agrega un nuevo item temporal al modelo
+ * \param texto Nombre que tendrá el item
+ * \param stock Stock asignado
+ * \param habilitado Habilitación de producto
+ * \param proveedor ID del proveedor
  */
 int ECBProductosModel::agregarItem( const QString texto, double stock, bool habilitado, int proveedor )
 {
@@ -294,7 +295,12 @@ QString ECBProductosModel::nombreProductoSegunID( const int id_producto )
  */
 int ECBProductosModel::buscarPorCodigo( const QString buscar )
 {
-    return this->_codigos->key( buscar );
+    int clave = this->_codigos->key( buscar );
+    if( clave == 0 ) {
+        return -1;
+    } else {
+        return clave;
+    }
 }
 
 /*!

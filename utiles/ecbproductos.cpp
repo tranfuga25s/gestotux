@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QLineEdit>
 #include <QDebug>
+#include <QApplication>
 
 #include "preferencias.h"
 #include "ecbproductosmodel.h"
@@ -92,7 +93,8 @@ int ECBProductos::idActual() const
 
 /*!
  * \brief ECBProductos::verificarExiste
- * Verifica que el elementos que está actualmente exista
+ * Verifica que el elementos que está actualmente exista y si no existe lo inserta en el modelo base como elemento
+ *
  */
 void ECBProductos::verificarExiste()
 {
@@ -101,11 +103,17 @@ void ECBProductos::verificarExiste()
     int b = this->findText( buscar );
     if( b != -1 ) {
         this->setCurrentIndex( b );
+        qDebug() << "Paso 2";
     } else {
         // Busco por codigo
         int pos = this->modelo->buscarPorCodigo( buscar );
         if( pos != -1 ) {
             this->setCurrentIndex( pos );
+        } else {
+            // Inserto el elemento nuevo en el modelo base
+            int id_nuevo = modelo->agregarItem( buscar );
+            // El ID nuevo está mappeado a la posición actual
+            this->setCurrentIndex( id_nuevo );
         }
     }
 }

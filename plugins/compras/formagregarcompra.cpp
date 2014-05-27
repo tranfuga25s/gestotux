@@ -329,7 +329,7 @@ void FormAgregarCompra::guardar()
 void FormAgregarCompra::agregarProducto()
 {
 
- if( SBCant->value() == 0 )
+ if( SBCant->value() == 0.0 )
  { QMessageBox::information( this, "Error de datos", "La cantidad a agregar debe ser mayor que cero", QMessageBox::Ok ); return; }
 
  if( CBProducto->currentText().isEmpty() )
