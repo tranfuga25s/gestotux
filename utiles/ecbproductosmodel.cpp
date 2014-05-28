@@ -268,7 +268,13 @@ bool ECBProductosModel::arreglarItemTemporal( const int anterior, const int nuev
  */
 bool ECBProductosModel::existeID( const int id_producto )
 {
-    return this->_ids->contains( id_producto );
+    if( this->_ids->values().contains( id_producto ) ) {
+        int id = this->_ids->values().indexOf( id_producto );
+        if( id > 0 ) {
+            return id;
+        }
+    }
+    return -1;
 }
 
 /*!

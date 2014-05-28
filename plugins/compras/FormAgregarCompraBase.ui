@@ -121,22 +121,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="SBCant">
+      <widget class="QDoubleSpinBox" name="DSBCant">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>999999999</number>
        </property>
       </widget>
      </item>
      <item>
       <widget class="EDSBPrecio" name="DSBPrecioUnitario">
        <property name="value">
-        <double>0.000000000000000</double>
+        <double>1.000000000000000</double>
        </property>
       </widget>
      </item>

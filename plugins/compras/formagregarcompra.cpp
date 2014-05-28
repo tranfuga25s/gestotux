@@ -107,6 +107,8 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     CBProducto->setearMostrarSinStock( true );
 
     _id_proveedor_anterior = -1;
+
+    DSBCant->setValue( 1.0 );
 }
 
 
@@ -328,8 +330,7 @@ void FormAgregarCompra::guardar()
  */
 void FormAgregarCompra::agregarProducto()
 {
-
- if( SBCant->value() == 0.0 )
+ if( DSBCant->value() <= 0.0 )
  { QMessageBox::information( this, "Error de datos", "La cantidad a agregar debe ser mayor que cero", QMessageBox::Ok ); return; }
 
  if( CBProducto->currentText().isEmpty() )
@@ -338,13 +339,13 @@ void FormAgregarCompra::agregarProducto()
  /*if( DSBPrecioUnitario->value() <= 0.0 )
  { QMessageBox::Information( this, "Error de datos", "Ingrese un precio unitario", QMessageBox::Ok ); return; } */
 
- CBProducto->verificarExiste();
+ CBProducto->verificarExiste(); // Esto agrega el elemento el ecbproductosmodel
 
- mcp->agregarNuevoProducto( SBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
+ mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
 
- SBCant->setValue( 1.0 );
+ DSBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
- SBCant->setFocus();
+ CBProducto->setFocus();
 }
 
 

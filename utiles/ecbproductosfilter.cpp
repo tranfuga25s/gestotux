@@ -53,7 +53,6 @@ void ECBProductosFilter::setearIdProveedor(int id_proveedor)
 int ECBProductosFilter::buscarPorCodigo(const QString buscar)
 {
     QModelIndex indicem = mapFromSource( sourceModel()->index( modeloFuente()->buscarPorCodigo( buscar ), 0 ) );
-    qDebug() << "buscarPorCodigo::Mappeado:valido=" << indicem.isValid();
     return indicem.row();
 }
 
