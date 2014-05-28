@@ -10,7 +10,13 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += tst_comprastest.cpp
+SOURCES += tst_comprastest.cpp \
+           ../../utiles/ecbproductos.cpp \
+           ../../utiles/ecbproductosmodel.cpp \
+           ../../utiles/ecbproductosfilter.cpp
+HEADERS += ../../utiles/ecbproductos.h \
+           ../../utiles/ecbproductosmodel.h \
+           ../../utiles/ecbproductosfilter.h
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../plugins/compras \

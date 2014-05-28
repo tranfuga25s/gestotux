@@ -113,7 +113,7 @@ void ComprasTest::testAutoAgregarProductos()
     FormAgregarCompra *fac = new FormAgregarCompra();
 
     fac->CBProveedor->setearId( id_proveedor );
-    QTest::qWait( 2000 );
+    QTest::qWait( 1000 );
 
     // Agrego un nuevo item
     QTest::keyClicks( fac->CBProducto, nombre );

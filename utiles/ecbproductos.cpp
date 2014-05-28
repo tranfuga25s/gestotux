@@ -103,7 +103,6 @@ void ECBProductos::verificarExiste()
     int b = this->findText( buscar );
     if( b != -1 ) {
         this->setCurrentIndex( b );
-        qDebug() << "Paso 2";
     } else {
         // Busco por codigo
         int pos = this->modelo->buscarPorCodigo( buscar );
