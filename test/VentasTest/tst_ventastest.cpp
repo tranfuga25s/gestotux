@@ -52,7 +52,7 @@ void VentasTest::testPreferenciaConsumidorFinalPredeterminado()
     p->endGroup();
 
     FormAgregarVenta *fav = new FormAgregarVenta();
-    usleep( 9000 );
+    QTest::qWait( 9000 );
     QVERIFY( fav->CBCliente->idClienteActual() == 0 );
     //QVERIFY( fav->CBCliente->currentText() == "Consumidor Final" );
     delete fav;

@@ -77,7 +77,8 @@ QList<int> *ECBProductosFilter::getListaIDs()
  */
 int ECBProductosFilter::agregarItem(const QString texto, double stock, bool habilitado, int proveedor)
 {
-    QModelIndex indice = sourceModel()->index( modeloFuente()->agregarItem( texto, stock, habilitado, proveedor ), 0 );
+    int nuevo_id = modeloFuente()->agregarItem( texto, stock, habilitado, proveedor );
+    QModelIndex indice = sourceModel()->index( modeloFuente()->obtenerPosicionSegunId( nuevo_id ), 0 );
     this->invalidateFilter(); // Es necesario ya que se reinicializa el modelo base
     QModelIndex indicem = mapFromSource( indice );
     return indicem.row();

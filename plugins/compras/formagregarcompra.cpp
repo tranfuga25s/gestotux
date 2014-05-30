@@ -232,9 +232,7 @@ void FormAgregarCompra::guardar()
                      if( id_producto_nuevo > 0 ) {
                          arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(),
                                                    id_producto_nuevo );
-                        i--; // vuelvo a repetir el proceso para que continue con los datos actualizados
-                        //qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
-                        continue;
+                        qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
                      } else {
                          qWarning() << "Error al insertar el nuevo producto. Hagalo manualmente"; abort();
                      }

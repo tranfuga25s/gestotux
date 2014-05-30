@@ -217,11 +217,12 @@ int ECBProductosModel::agregarItem( const QString texto, double stock, bool habi
     this->_stock     ->insert( pos, stock                         );
     this->_proveedor ->insert( pos, proveedor                     );
 
+    int retorno = this->_min;
     this->_min--;
 
     emit dataChanged( this->index( pos, 0 ), this->index( pos, this->columnCount() ) );
     emit dataChanged( this->index( this->rowCount(), 0 ), this->index( this->rowCount(), this->columnCount() ) );
-    return pos;
+    return retorno;
 }
 
 /*!
@@ -236,8 +237,9 @@ bool ECBProductosModel::arreglarItemTemporal( const int anterior, const int nuev
     if( anterior >= 0 ) {
         return false;
     }
+    qDebug() << "Anterior: " << anterior << " -> " << nuevo;
     int pos_anterior = this->_ids->key( anterior );
-    if( pos_anterior == 0 ) {
+    if( pos_anterior == 0 && this->_ids->value( 0 ) != anterior ) {
         qDebug() << "El ID anterior no estaba en la lista";
         return false;
     }
@@ -286,9 +288,12 @@ bool ECBProductosModel::existeID( const int id_producto )
 QString ECBProductosModel::nombreProductoSegunID( const int id_producto )
 {
     int pos = this->_ids->key( id_producto );
-    if( pos >= 0 ) {
+    if( pos > 0 ) {
         return this->_nombres->value( pos );
+    } else if( pos == 0 && this->_ids->value( 0 ) == id_producto ) { // hay que poner esto porque el DefaultConstructed Key es 0, igual que la posicion posible
+        return this->_nombres->value( 0 );
     } else {
+        qDebug() << "Clave para ID de producto " << id_producto << " no encontrado";
         return QString();
     }
 }
@@ -302,11 +307,25 @@ QString ECBProductosModel::nombreProductoSegunID( const int id_producto )
 int ECBProductosModel::buscarPorCodigo( const QString buscar )
 {
     int clave = this->_codigos->key( buscar );
-    if( clave == 0 ) {
+    if( clave == 0 && this->_codigos->value(0) != buscar ) {
         return -1;
     } else {
         return clave;
     }
+}
+
+/*!
+ * \brief ECBProductosModel::obtenerPosicionSegunId
+ * Devuelve la posicion del ID pasado como parámetro
+ * \param id_producto ID del item a buscar
+ * \return Devuelve la posicion >= 0 o -1 si no la encuentra
+ */
+int ECBProductosModel::obtenerPosicionSegunId(const int id_producto)
+{
+    int pos = this->_ids->key( id_producto );
+    if( pos > 0 ) { return pos; }
+    if( pos == 0 && this->_ids->value( 0 ) == id_producto ) { return 0; }
+    else { return -1; }
 }
 
 /*!

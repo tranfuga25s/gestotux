@@ -424,9 +424,10 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         // Producto
                         case 1:
                         {
-                                // Devuelvo el mapeo idfila->productos->prods
-                                if( prods->existeID( productos->value( idx.row() ) ) ) {
-                                    return prods->nombreProductoSegunID( productos->value( idx.row() ) );
+                                // Devuelvo el nombre del producto
+                                int id = productos->value( idx.row() );
+                                if( prods->existeID( id ) ) {
+                                    return prods->nombreProductoSegunID( id );
                                 } else {
                                     qDebug() << "No se encontro el articulo en el data. Row= " << idx.row() << ", indice=" << productos->value( idx.row());
                                     return prods->rowCount();/*" error al buscar el prod en prods ";*/
@@ -485,13 +486,7 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         case 1:
                         {
                                 // tengo que devolver el Id de producto de la lista de general
-                                /*
-                                return this->prods->data(
-                                            this->prods->index( productos->value( idx.row() ), ECBProductosModel::Ids ),
-                                            Qt::EditRole )
-                                        .toInt();*/
                                 return productos->value( idx.row() );
-                                // Si el item no existe, devuelve cero....esto proboca que no se verifique el stock si esta habilitado
                                 break;
                         }
                         // precio unitario
@@ -634,9 +629,9 @@ void MProductosTotales::agregarItem( const double cant, const QString texto, dou
     this->subtotales->insert( pos, cant * pu );
 
     // inserto el texto en la lista de nombre de productos
-    int pos2 = this->prods->agregarItem( texto );
+    int id_nuevo = this->prods->agregarItem( texto );
     // inserto el indice de lo anterior en el mapa de productos
-    this->productos->insert( pos, pos2 );
+    this->productos->insert( pos, id_nuevo );
 
     if( _calcularTotal )
         recalcularTotalItems(); recalcularTotal();
@@ -987,13 +982,12 @@ void MProductosTotales::vaciarProductos()
 void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const int nuevo )
 {
     // Actualizo el dato del mcp
-    /*int pos = this->productos->key( anterior );
+    int pos = this->productos->key( anterior );
     if( pos == -1 ) {
         qDebug() << "No se encontró el elemento para reemplazar!";
         return;
-    } */
-    //this->productos->insert( pos, nuevo );
-    /// El mappeo al modelo ECBProductosModel no cambia al actualizar el ID del producto
+    }
+    this->productos->insert( pos, nuevo );
 
     // Paso el cambio al modelo inferior.
     this->prods->arreglarItemTemporal( anterior, nuevo );    

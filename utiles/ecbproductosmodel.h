@@ -32,6 +32,8 @@ public:
     QString nombreProductoSegunID( const int id_producto );
     int buscarPorCodigo( const QString buscar );
 
+    int obtenerPosicionSegunId( const int id_producto );
+
     QList<int> *getListaIDs();
 
     enum Columnas {
