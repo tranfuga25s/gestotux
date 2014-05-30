@@ -237,10 +237,10 @@ bool ECBProductosModel::arreglarItemTemporal( const int anterior, const int nuev
     if( anterior >= 0 ) {
         return false;
     }
-    qDebug() << "Anterior: " << anterior << " -> " << nuevo;
+    //qDebug() << "Anterior: " << anterior << " -> " << nuevo;
     int pos_anterior = this->_ids->key( anterior );
     if( pos_anterior == 0 && this->_ids->value( 0 ) != anterior ) {
-        qDebug() << "El ID anterior no estaba en la lista";
+        // qDebug() << "El ID anterior no estaba en la lista";
         return false;
     }
     this->_ids->insert( pos_anterior, nuevo );
