@@ -13,16 +13,19 @@ TEMPLATE = app
 SOURCES += tst_comprastest.cpp \
            ../../utiles/ecbproductos.cpp \
            ../../utiles/ecbproductosmodel.cpp \
-           ../../utiles/ecbproductosfilter.cpp
+           ../../utiles/ecbproductosfilter.cpp \
+           ../../utiles/mproductostotales.cpp
 HEADERS += ../../utiles/ecbproductos.h \
            ../../utiles/ecbproductosmodel.h \
-           ../../utiles/ecbproductosfilter.h
+           ../../utiles/ecbproductosfilter.h \
+           ../../utiles/mproductostotales.h
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../plugins/compras \
                ../../utiles
 
-LIBS += ../../bin/plugins/libcompras.so
+LIBS += ../../bin/plugins/libcompras.so \
+        ../../bin/libutiles.a
 
 FORMS += ../../plugins/compras/FormPrefComprasBase.ui \
          ../../plugins/compras/FormAgregarCompraBase.ui

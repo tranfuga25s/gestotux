@@ -305,7 +305,6 @@ void FormAgregarCompra::guardar()
          mcp->calcularTotales( true );
          return;
      }
-
   } // fin del for
   // Si llegue hasta aca sin problema, hago el submit
   // listo

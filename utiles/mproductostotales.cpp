@@ -485,10 +485,12 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         case 1:
                         {
                                 // tengo que devolver el Id de producto de la lista de general
+                                /*
                                 return this->prods->data(
                                             this->prods->index( productos->value( idx.row() ), ECBProductosModel::Ids ),
                                             Qt::EditRole )
-                                        .toInt();
+                                        .toInt();*/
+                                return productos->value( idx.row() );
                                 // Si el item no existe, devuelve cero....esto proboca que no se verifique el stock si esta habilitado
                                 break;
                         }
