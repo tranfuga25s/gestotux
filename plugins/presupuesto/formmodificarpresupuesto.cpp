@@ -50,7 +50,7 @@ FormModificarPresupuesto::FormModificarPresupuesto(QWidget *parent) :
     //connect( CBCliente, SIGNAL( currentIndexChanged(int) ), this, SLOT( cambioCliente( int ) ) );
 
     // Pongo el sistema de relleno
-    m = new MProductosTotales( this, CBProductos->listadoProductos() );
+    m = new MProductosTotales( this/*, CBProductos->listadoProductos()*/ );
     m->calcularTotales( true );
     m->buscarPrecios( true );
     TVContenido->setModel( m );

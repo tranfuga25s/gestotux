@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QSqlError>
 #include <QDataWidgetMapper>
+#include <QDebug>
 
 #include "eactcerrar.h"
 #include "eactguardar.h"
@@ -107,13 +108,13 @@ void FormServicio::guardar()
             this->close();
             return;
          } else {
-             qDebug( "Error, no se pudo hacer el submitAll del modelo" );
-             qDebug( this->modelo->lastError().text().toLocal8Bit() );
-             qWarning( "Hubo un error al guardar los datos en la base de datos" );
+             qDebug() << "Error, no se pudo hacer el submitAll del modelo";
+             qDebug() << this->modelo->lastError().text();
+             qWarning() << "Hubo un error al guardar los datos en la base de datos";
          }
      } else {
-         qDebug( "Error, no se pudo hacer submit del mapa" );
-         qDebug( this->modelo->lastError().text().toLocal8Bit() );
+         qDebug() << "Error, no se pudo hacer submit del mapa";
+         qDebug() << this->modelo->lastError().text();
      }
  } else {
          if( modelo->existe( LENombre->text() ) ) {
@@ -135,7 +136,7 @@ void FormServicio::guardar()
              return;
          } else {
              QMessageBox::information( this, "Incorrecto", "El servicio <b>NO</b> pudo ser dado de alta" );
-             qDebug( QString( "Error de modelo: %1").arg( modelo->lastError().text() ).toLocal8Bit() );
+             qDebug() << "Error de modelo: " << modelo->lastError().text();
              return;
          }
  }

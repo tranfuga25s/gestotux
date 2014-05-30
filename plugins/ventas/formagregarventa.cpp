@@ -80,7 +80,7 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         CBProducto->setearModelo( ecbfiltro );
 
         // Modelo del tableview
-        mcp = new MProductosTotales( TVProductos, CBProducto->listadoProductos() );
+        mcp = new MProductosTotales( TVProductos, ecbmprod );
         mcp->calcularTotales( true );
         preferencias *p = preferencias::getInstancia();
         p->inicio();
@@ -168,6 +168,8 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         DEFecha->setMinimumDate( MFactura::fechaUltimaVenta() );
 
         id_plan_cuota = -1;
+
+        DSBPrecioUnitario->setVisible( false );
 }
 
 
@@ -184,12 +186,17 @@ void FormAgregarVenta::agregarProducto()
  if( CBProducto->currentText().isEmpty() )
  { QMessageBox::information( this, "Error de datos", "Por favor, ingrese un producto", QMessageBox::Ok ); return; }
 
+ if( DSBPrecioUnitario->value() == 0 )
+ { QMessageBox::information( this, "Error de datos", "Por favor, ingrese un precio unitario", QMessageBox::Ok ); return; }
+
  CBProducto->verificarExiste();
- mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual() );
+ mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
 
  // Reseteo los ingresos de producto
  DSBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
+ DSBPrecioUnitario->setValue( 0.0 );
+
  // Seteo el foco
  DSBCant->setFocus();
 }
@@ -307,23 +314,25 @@ void FormAgregarVenta::cambioProveedor( int id_proveedor )
 }
 
 /*!
-    \fn FormAgregarVenta::guardar()
+ * \fn FormAgregarVenta::guardar
+ * \param imprimir
+ * \return ID de la venta agregada
  */
-void FormAgregarVenta::guardar()
+int FormAgregarVenta::guardar( bool imprimir )
 {
  if( CBCliente->currentIndex() == -1 )
  {
   QMessageBox::warning( this, "Faltan Datos" , "Por favor, ingrese un cliente para esta venta" );
-  return;
+  return -1;
  }
  if( !DEFecha->date().isValid() && DEFecha->date() <= MFactura::fechaUltimaVenta() )
  {
   QMessageBox::warning( this, "Faltan Datos" , "Por favor, ingrese una fecha valida para esta venta" );
-  return;
+  return -1;
  }
  if( !( RBContado->isChecked() || RBCuotas->isChecked() || RBCtaCte->isChecked() || RBOtro->isChecked() ) ) {
      QMessageBox::warning( this, "Faltan Datos" , "Por favor, elija una forma de pago para esta venta" );
-     return;
+     return -1;
  }
 
  mcp->calcularTotales( false );
@@ -331,7 +340,7 @@ void FormAgregarVenta::guardar()
  {
   QMessageBox::warning( this, "Faltan Datos" , "Por favor, ingrese una cantidad de productos vendidos distinta de cero para esta venta" );
   mcp->calcularTotales( true );
-  return;
+  return -1;
  }
  // Verifico que no se le venda a cuenta corriente a un cliente consumidor final
  if( RBCtaCte->isChecked() && CBCliente->currentIndex() <=  0 ) {
@@ -363,7 +372,7 @@ void FormAgregarVenta::guardar()
      if( id_plan_cuota == -1 ) {
          // Todavía no se pudo hacer el plan de cuotas
          emit emitirPlanCuota( CBCliente->idClienteActual(), mcp->total(), MPlanCuota::Factura );
-         return;
+         return 0;
      } else {
          // Si paso por aquí el plan de cuota fue creado pero todavía no se le asigno el id de factura
          QMessageBox::information( this, "Paso", "Plan de cuota emitido" );
@@ -373,7 +382,7 @@ void FormAgregarVenta::guardar()
  } else {
      QMessageBox::warning( this, "Faltan Datos" , "Por favor, elija una forma de pago para esta venta" );
      mcp->calcularTotales( true );
-     return;
+     return -1;
  }
  //Inicio una transacción
  QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).transaction();
@@ -383,7 +392,7 @@ void FormAgregarVenta::guardar()
  if( id_venta == -1 ) {
     QMessageBox::information( this, "Error", "No se pudo agregar la venta" );
     QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
-    return;
+    return -1;
  }
  // si el plan de cuota fue utilizado tengo que asociarlo con la factura
  if( id_forma_pago == MFactura::Cuotas ) {
@@ -391,40 +400,42 @@ void FormAgregarVenta::guardar()
  }
  if( QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).commit() ) {
    // Ver si quiere ver la factura o imprimirla
-   int respuesta = QMessageBox::question( this, "Correcto", "La venta se ha registrado correctamente. Desea imprimir un comprobante de venta?",
-                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
-   switch( respuesta )
-   {
-    case QMessageBox::Yes:
-    {
-     ParameterList lista;
-     lista.append( "cliente", CBCliente->currentText());
-     lista.append( "direccion", LEDireccion->text() );
-     lista.append( "id_factura", id_venta );
+   if( imprimir ) {
+       int respuesta = QMessageBox::question( this, "Correcto", "La venta se ha registrado correctamente. Desea imprimir un comprobante de venta?",
+                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+       switch( respuesta )
+       {
+        case QMessageBox::Yes:
+        {
+         ParameterList lista;
+         lista.append( "cliente", CBCliente->currentText());
+         lista.append( "direccion", LEDireccion->text() );
+         lista.append( "id_factura", id_venta );
 
-     EReporte *rep = new EReporte( this );
-     rep->factura();
-     if( !rep->hacer( lista ) ) {
-         QMessageBox::critical( this, "Error", "No se pudo imprimir el reporte. Consulte con el administrador del sistema" );
-         return;
-     }
-     break;
-    }
-    case QMessageBox::No:
-    case QMessageBox::Cancel:
-    {
-           //qDebug( "Respondio no o cancelar" );
-           break;
-    }
+         EReporte *rep = new EReporte( this );
+         rep->factura();
+         if( !rep->hacer( lista ) ) {
+             QMessageBox::critical( this, "Error", "No se pudo imprimir el reporte. Consulte con el administrador del sistema" );
+             return 0;
+         }
+         break;
+        }
+        case QMessageBox::No:
+        case QMessageBox::Cancel:
+        {
+               //qDebug( "Respondio no o cancelar" );
+               break;
+        }
+       }
    }
    /// @TODO: Agregar pregunta para garantía!
    this->close();
    emit actualizarListado();
-   return;
+   return id_venta;
 
   } else {
    QMessageBox::information( this, "Incorrecto" , "La venta no se pudo guardar correctamente" );
-   return;
+   return -1;
   }
 }
 

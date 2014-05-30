@@ -46,6 +46,54 @@ void ECBProductosFilter::setearIdProveedor(int id_proveedor)
 }
 
 /*!
+ * \brief ECBProductosFilter::buscarPorCodigo
+ * \param buscar
+ * \return
+ */
+int ECBProductosFilter::buscarPorCodigo(const QString buscar)
+{
+    QModelIndex indicem = mapFromSource( sourceModel()->index( modeloFuente()->buscarPorCodigo( buscar ), 0 ) );
+    return indicem.row();
+}
+
+/*!
+ * \brief ECBProductosFilter::getListaIDs
+ * Devuelve la lista de IDs
+ * \return QList<int> *
+ */
+QList<int> *ECBProductosFilter::getListaIDs()
+{
+    return modeloFuente()->getListaIDs();
+}
+
+/*!
+ * \brief ECBProductosFilter::agregarItem
+ * Agrega el elemento temporal mapeado al modelo actual
+ * \param texto Nombre de producto
+ * \param stock Stock actual
+ * \param habilitado Habilitado o no
+ * \param proveedor ID proveedor
+ * \return Posición del elemento en el modelo actual
+ */
+int ECBProductosFilter::agregarItem(const QString texto, double stock, bool habilitado, int proveedor)
+{
+    int nuevo_id = modeloFuente()->agregarItem( texto, stock, habilitado, proveedor );
+    QModelIndex indice = sourceModel()->index( modeloFuente()->obtenerPosicionSegunId( nuevo_id ), 0 );
+    this->invalidateFilter(); // Es necesario ya que se reinicializa el modelo base
+    QModelIndex indicem = mapFromSource( indice );
+    return indicem.row();
+}
+
+/*!
+ * \brief ECBProductosFilter::modeloFuente
+ * \return
+ */
+ECBProductosModel *ECBProductosFilter::modeloFuente()
+{
+    return qobject_cast<ECBProductosModel *>(QSortFilterProxyModel::sourceModel());
+}
+
+/*!
  * \brief ECBProductosFilter::filterAcceptsRow
  * Permite definir si la columna utiliza se puede mostrar o no según los datos seleccionados de filtrado
  * \param source_row ID de columna de modelo de origen

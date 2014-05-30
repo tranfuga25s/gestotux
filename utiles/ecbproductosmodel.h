@@ -24,7 +24,17 @@ public:
 
     void inicializar();
 
-    void agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
+    int agregarItem( const QString texto, double stock = 1.0, bool habilitado = true, int proveedor = 0 );
+
+    bool arreglarItemTemporal( const int anterior, const int nuevo );
+
+    bool existeID( const int id_producto );
+    QString nombreProductoSegunID( const int id_producto );
+    int buscarPorCodigo( const QString buscar );
+
+    int obtenerPosicionSegunId( const int id_producto );
+
+    QList<int> *getListaIDs();
 
     enum Columnas {
         Ids=0,
@@ -32,7 +42,8 @@ public:
         Nombres=2,
         Stock=3,
         Habilitado=4,
-        IdProveedor=5
+        IdProveedor=5,
+        NombresStock=6
     };
 
 private:

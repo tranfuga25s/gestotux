@@ -65,7 +65,12 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     // Rellenar los items de productos
     connect( CBProducto, SIGNAL( agregarProducto() ), PBAgregarProducto, SIGNAL( clicked() ) );
 
-    mcp = new MProductosTotales( this, CBProducto->listadoProductos() );
+    ecbmproducto = new ECBProductosModel( this );
+    ecbmproducto->inicializar();
+
+    CBProducto->setearListado( ecbmproducto );
+
+    mcp = new MProductosTotales( this, ecbmproducto );
     mcp->calcularTotales( true );
     mcp->buscarPrecios( true );
     mcp->setearTipoPrecioBuscar( MProductosTotales::Costo );
@@ -102,6 +107,8 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     CBProducto->setearMostrarSinStock( true );
 
     _id_proveedor_anterior = -1;
+
+    DSBCant->setValue( 1.0 );
 }
 
 
@@ -225,9 +232,7 @@ void FormAgregarCompra::guardar()
                      if( id_producto_nuevo > 0 ) {
                          arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(),
                                                    id_producto_nuevo );
-                        i--; // vuelvo a repetir el proceso para que continue con los datos actualizados
-                        //qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
-                        continue;
+                        qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
                      } else {
                          qWarning() << "Error al insertar el nuevo producto. Hagalo manualmente"; abort();
                      }
@@ -298,7 +303,6 @@ void FormAgregarCompra::guardar()
          mcp->calcularTotales( true );
          return;
      }
-
   } // fin del for
   // Si llegue hasta aca sin problema, hago el submit
   // listo
@@ -323,8 +327,7 @@ void FormAgregarCompra::guardar()
  */
 void FormAgregarCompra::agregarProducto()
 {
-
- if( SBCant->value() == 0 )
+ if( DSBCant->value() <= 0.0 )
  { QMessageBox::information( this, "Error de datos", "La cantidad a agregar debe ser mayor que cero", QMessageBox::Ok ); return; }
 
  if( CBProducto->currentText().isEmpty() )
@@ -333,13 +336,13 @@ void FormAgregarCompra::agregarProducto()
  /*if( DSBPrecioUnitario->value() <= 0.0 )
  { QMessageBox::Information( this, "Error de datos", "Ingrese un precio unitario", QMessageBox::Ok ); return; } */
 
- CBProducto->verificarExiste();
+ CBProducto->verificarExiste(); // Esto agrega el elemento el ecbproductosmodel
 
- mcp->agregarNuevoProducto( SBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
+ mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
 
- SBCant->setValue( 1.0 );
+ DSBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
- SBCant->setFocus();
+ CBProducto->setFocus();
 }
 
 
@@ -381,19 +384,14 @@ void FormAgregarCompra::eliminarProducto()
  */
 void FormAgregarCompra::arreglarProductoAgregado( int anterior, int nuevo )
 {
-    // Actualizo la lista del cb que esta siendo usada por el mcp
-    QString val_anterior = this->CBProducto->listadoProductos()->value( anterior );
-    this->CBProducto->listadoProductos()->remove( anterior );
-    this->CBProducto->listadoProductos()->insert( nuevo, val_anterior );
+
+    ecbmproducto->arreglarItemTemporal( anterior, nuevo );
+
+    mcp->arreglarIdProductoAgregado( anterior, nuevo );
 
     // Como mcp esta trabajando con un puntero a la lista anterior no tengo que actualizar nada mas
 
-    // Actualizo el dato del mcp
-    for( int i = 0; i < mcp->rowCount(); i++ ) {
-        if( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() == anterior ) {
-            mcp->setData( mcp->index( i, 1 ), nuevo, Qt::EditRole );
-        }
-    }
+
 }
 
 /*!

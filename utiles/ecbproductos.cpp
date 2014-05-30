@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QLineEdit>
 #include <QDebug>
+#include <QApplication>
 
 #include "preferencias.h"
 #include "ecbproductosmodel.h"
@@ -22,18 +23,11 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
     this->setInsertPolicy( QComboBox::NoInsert );
     this->connect( this->lineEdit(), SIGNAL( returnPressed() ), this, SLOT( enterApretado() ) );
 
-    this->lineEdit()->setText( "Cargando datos..." );
-    this->setEnabled( false );
-
-    _mapa_pos_codigo = new QMap<QString, int>();
-    _mapa_id_nombre = new QMap<int, QString>();
-    _mapa_pos_ids = new QMap<int, int>();
-
     preferencias *p = preferencias::getInstancia();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
     p->beginGroup( "Stock" );
-    //this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
+    this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
     p->endGroup();
     p->endGroup();
     p->endGroup();
@@ -47,17 +41,17 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
         m->inicializar();
         modelo->setSourceModel( m );
     }
+
+    this->setModel( modelo );
+    if( _mostrar_stock_lista ) {
+        this->setModelColumn( ECBProductosModel::NombresStock );
+    } else {
+        this->setModelColumn( ECBProductosModel::Nombres );
+    }
 }
 
 ECBProductos::~ECBProductos()
-{
-    delete _mapa_pos_codigo;
-    _mapa_pos_codigo = 0;
-    delete _mapa_id_nombre;
-    _mapa_id_nombre = 0;
-    delete _mapa_pos_ids;
-    _mapa_pos_ids = 0;
-}
+{}
 
 /*!
  * \brief ECBProductos::enterApretado
@@ -74,31 +68,17 @@ void ECBProductos::enterApretado()
  * Devuelve el listado de productos mapeado
  * \return
  */
-QMap<int, QString> *ECBProductos::listadoProductos()
-{ return this->_mapa_id_nombre; }
+ECBProductosModel *ECBProductos::listadoProductos()
+{ return qobject_cast<ECBProductosModel *>(this->modelo->sourceModel()); }
 
 /*!
  * \brief ECBProductos::setearListado
- * Coloca el listado puesto como parametro como lista de productos
+ * Coloca el modelo puesto como parametro como lista de productos para el combobox
  * \param lista Lista de productos
  */
-void ECBProductos::setearListado( QMap<int, QString> *lista )
+void ECBProductos::setearListado( ECBProductosModel *lista )
 {
-    // Verifica que los demás items estén de acuerdo con esta lista
-    // El mappeo debe sacar solo los elementos menores que cero
-    /*QList<int> l2 = lista->keys();
-    for( int i = 0; i < l2.size(); i++ ) {
-        if( l2.value(i) < 0 ) {
-            // Ingreso este valor al cb
-            QString texto = lista->value( l2.value( i ) );
-            int indice = l2.value( i );
-            int pos = this->count();
-            this->insertItem( pos, texto, indice );
-            this->_mapa_id_nombre->insert( indice, texto );
-            this->_mapa_pos_ids->insert( pos, indice );
-            this->_mapa_pos_codigo->insert( QString::number( indice ), pos );
-        }
-    }*/
+    this->modelo->setSourceModel( lista );
 }
 
 /*!
@@ -108,12 +88,13 @@ void ECBProductos::setearListado( QMap<int, QString> *lista )
  */
 int ECBProductos::idActual() const
 {
-    return this->_mapa_pos_ids->value( this->currentIndex() );
+    return this->modelo->data( this->modelo->index( this->currentIndex(), ECBProductosModel::Ids ), Qt::EditRole ).toInt();
 }
 
 /*!
  * \brief ECBProductos::verificarExiste
- * Verifica que el elementos que está actualmente exista
+ * Verifica que el elementos que está actualmente exista y si no existe lo inserta en el modelo base como elemento
+ *
  */
 void ECBProductos::verificarExiste()
 {
@@ -123,17 +104,14 @@ void ECBProductos::verificarExiste()
     if( b != -1 ) {
         this->setCurrentIndex( b );
     } else {
-        QMap<QString, int>::const_iterator i =  this->_mapa_pos_codigo->find( buscar );
-        if( i != this->_mapa_pos_codigo->end() ) {
-            this->setCurrentIndex( i.value() );
+        // Busco por codigo
+        int pos = this->modelo->buscarPorCodigo( buscar );
+        if( pos != -1 ) {
+            this->setCurrentIndex( pos );
         } else {
-            // Tengo que agregarlo como item exclusivo
-            // Agregado al final pero con ID <= -1
-            int pos_nueva = this->count();
-            //this->_mapa_pos_codigo->insert( QString::number( _min ), pos_nueva );
-            //this->_mapa_pos_ids->insert( pos_nueva, _min );
-            //this->_mapa_id_nombre->insert( _min, this->lineEdit()->text() );
-            //this->insertItem( pos_nueva, this->lineEdit()->text(), _min );
+            // Inserto el elemento nuevo en el modelo base
+            int pos_nueva = modelo->agregarItem( buscar );
+            // El ID nuevo está mappeado a la posición actual
             this->setCurrentIndex( pos_nueva );
         }
     }
@@ -146,7 +124,7 @@ void ECBProductos::verificarExiste()
  */
 QList<int> *ECBProductos::getListaIDs()
 {
-    return new QList<int>( _mapa_pos_ids->values() );
+    return modelo->getListaIDs();
 }
 
 /*!

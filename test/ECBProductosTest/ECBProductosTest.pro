@@ -13,12 +13,14 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 SOURCES += tst_ecbproductostest.cpp \
            ../../utiles/ecbproductosmodel.cpp \
            ../../utiles/ecbproductosfilter.cpp \
-           ../../utiles/ecbproductos.cpp
+           ../../utiles/ecbproductos.cpp \
+           ../../utiles/mproductostotales.cpp
 
 HEADERS += ../edatabasetest.h \
            ../../utiles/ecbproductosmodel.h \
            ../../utiles/ecbproductosfilter.h \
-           ../../utiles/ecbproductos.h
+           ../../utiles/ecbproductos.h \
+           ../../utiles/mproductostotales.h
 
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles

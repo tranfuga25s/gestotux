@@ -26,6 +26,7 @@
 class MProveedor;
 class MCompra;
 class MProductosTotales;
+class ECBProductosModel;
 
 /*!
  * @brief Formulario que permite agregar una compra
@@ -46,6 +47,7 @@ signals:
 private:
   MCompra *modelo;
   MProductosTotales *mcp;
+  ECBProductosModel *ecbmproducto;
   int _id_proveedor_anterior;
 
 protected slots:

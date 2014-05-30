@@ -29,7 +29,7 @@
 #include <QSqlRecord>
 #include <QDebug>
 
-MProductosTotales::MProductosTotales( QObject *parent, QMap<int, QString> *_mapa_id_prod )
+MProductosTotales::MProductosTotales(QObject *parent, ECBProductosModel *_m )
  : QAbstractTableModel(parent)
 {
  // Inicializo los sistemas
@@ -43,11 +43,11 @@ MProductosTotales::MProductosTotales( QObject *parent, QMap<int, QString> *_mapa
  productos = new QHash<int, int>();
  texto_descuentos = new QHash<int, QString>();
  descuentos = new QHash<int, double>();
- if( _mapa_id_prod != 0 ) {
-    prods = _mapa_id_prod;
+ if( _m != 0 ) {
+    prods = _m;
  } else {
-     prods = new QMap<int, QString>();
-     // Tengo que llenar los productos ?
+     prods = new ECBProductosModel( this );
+     prods->inicializar();
  }
  cantidades->clear();
  _tipoPrecio = MProductosTotales::Venta;
@@ -185,7 +185,7 @@ bool MProductosTotales::setData(const QModelIndex& index, const QVariant& value,
                         {
                                 //qDebug( qPrintable( QString( "insert: size: %1, index.row(): %2" ).arg( this->productos->size() ).arg( index.row() ) ) );
                                 if( !value.isValid() ) { qDebug( "El valor es invalido!" ); return false; }
-                                if( !prods->contains( value.toInt() ) ) {
+                                if( !prods->existeID( value.toInt() ) ) {
                                     qDebug( "Indice no encontrado en la lista de productos" );
                                     return false;
                                 }
@@ -424,12 +424,13 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         // Producto
                         case 1:
                         {
-                                // Devuelvo el mapeo idfila->productos->prods
-                                if( prods->contains( productos->value( idx.row() ) ) ) {
-                                    return prods->value( productos->value( idx.row() ) );
+                                // Devuelvo el nombre del producto
+                                int id = productos->value( idx.row() );
+                                if( prods->existeID( id ) ) {
+                                    return prods->nombreProductoSegunID( id );
                                 } else {
                                     qDebug() << "No se encontro el articulo en el data. Row= " << idx.row() << ", indice=" << productos->value( idx.row());
-                                    return prods->size();/*" error al buscar el prod en prods ";*/
+                                    return prods->rowCount();/*" error al buscar el prod en prods ";*/
                                 }
                                 break;
                         }
@@ -486,7 +487,6 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         {
                                 // tengo que devolver el Id de producto de la lista de general
                                 return productos->value( idx.row() );
-                                // Si el item no existe, devuelve cero....esto proboca que no se verifique el stock si esta habilitado
                                 break;
                         }
                         // precio unitario
@@ -619,7 +619,7 @@ QVariant MProductosTotales::headerData ( int section, Qt::Orientation orientatio
  * \param texto Texto del item.
  * \param pu Precio unitario del item
  */
-void MProductosTotales::agregarItem( const int cant, const QString texto, double pu )
+void MProductosTotales::agregarItem( const double cant, const QString texto, double pu )
 {
     int pos = this->cantidades->size();
     this->insertRow( -1 );
@@ -629,9 +629,9 @@ void MProductosTotales::agregarItem( const int cant, const QString texto, double
     this->subtotales->insert( pos, cant * pu );
 
     // inserto el texto en la lista de nombre de productos
-    int pos2 = this->prods->insert( pos, texto ).key();
+    int id_nuevo = this->prods->agregarItem( texto );
     // inserto el indice de lo anterior en el mapa de productos
-    this->productos->insert( pos, pos2 );
+    this->productos->insert( pos, id_nuevo );
 
     if( _calcularTotal )
         recalcularTotalItems(); recalcularTotal();
@@ -650,7 +650,7 @@ void MProductosTotales::agregarItem( const int cant, const QString texto, double
  * \param id_producto Identificador del producto
  * \param pu Precio unitario del item
  */
-void MProductosTotales::agregarItem( const int cant, const int id_producto, double pu )
+void MProductosTotales::agregarItem( const double cant, const int id_producto, double pu )
 {
     int pos = this->cantidades->size();
     this->insertRow( -1 );
@@ -743,11 +743,12 @@ double MProductosTotales::buscarPrecioVenta( int id_producto )
 #include "einputdialog.h"
 /*!
  * \brief MProductosTotales::agregarNuevoProducto
- * \param cantidad
- * \param Id
- * \param precio_unitario
+ * \param cantidad Cantidad a agregar
+ * \param Id Identificador del producto
+ * \param precio_unitario Precio unitario del producto
+ * \param texto Texto para el nombre del rpoducto
  */
-void MProductosTotales::agregarNuevoProducto( int cantidad, int Id, double precio_unitario )
+void MProductosTotales::agregarNuevoProducto( double cantidad, int Id, double precio_unitario )
 {
   // Veo si existe y lo agrego a la lista si no existe....
   bool ok = false;
@@ -956,9 +957,9 @@ bool MProductosTotales::eliminarDescuento( QModelIndex idx )
  * \brief MProductosTotales::setearListaProductos
  * \param _mapa_id_prod
  */
-void MProductosTotales::setearListaProductos(  QMap<int, QString> *_mapa_id_prod )
+void MProductosTotales::setearListaProductos( ECBProductosModel *_m )
 {
-    this->prods = _mapa_id_prod;
+    this->prods = _m;
 }
 
 /*!
@@ -970,4 +971,24 @@ void MProductosTotales::vaciarProductos()
     while( this->cantidades->size() > 0 ) {
         this->removeRow( 0 );
     }
+}
+
+/*!
+ * \brief MProductosTotales::arreglarIdProductoAgregado
+ * Cambia el id anterior en el nuevo en la lista de productos
+ * \param anterior ID anterior < 0
+ * \param nuevo ID nuevo
+ */
+void MProductosTotales::arreglarIdProductoAgregado( const int anterior, const int nuevo )
+{
+    // Actualizo el dato del mcp
+    int pos = this->productos->key( anterior );
+    if( pos == -1 ) {
+        qDebug() << "No se encontró el elemento para reemplazar!";
+        return;
+    }
+    this->productos->insert( pos, nuevo );
+
+    // Paso el cambio al modelo inferior.
+    this->prods->arreglarItemTemporal( anterior, nuevo );    
 }
