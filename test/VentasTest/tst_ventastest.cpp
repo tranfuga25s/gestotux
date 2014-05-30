@@ -162,15 +162,59 @@ void VentasTest::testAnulacionFacturaDescensoStock()
  */
 void VentasTest::testCreacionFacturaItemsExtras()
 {
+    QFETCH( QString, nombre );
+    QFETCH( double, precio );
+    QFETCH( double, cantidad );
+    QFETCH( QString, codigo_producto );
+    QFETCH( int, id_producto );
 
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Ventas" );
+    p->setValue( "siempre_cf", true );
+    p->setValue( "buscarPrecio", true );
+    p->endGroup();
+    p->endGroup();
+
+    FormAgregarVenta *fav = new FormAgregarVenta();
+    QTest::qWait( 1000 );
+    QCOMPARE( fav->CBCliente->idClienteActual(), 0 );
+    QCOMPARE( fav->CBCliente->currentText(), QString( "Consumidor Final" ) );
+
+
+    QCOMPARE( fav->TVProductos->model()->rowCount(), 1 );
+
+    // Ingreso el producto a traves de la interfaz para que se busque por codigo
+    fav->DSBPrecioUnitario->setValue( precio );
+    fav->CBProducto->setCurrentIndex( -1 );
+    QTest::keyClicks( fav->CBProducto, codigo_producto );
+    QTest::keyClick( fav->CBProducto, Qt::Key_Enter );
+
+    QCOMPARE( fav->TVProductos->model()->rowCount(), 2 );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 0 ) ).toDouble(), 1.0  );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 1 ) ).toString(), nombre );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 2 ), Qt::EditRole ).toDouble(), precio );
+
+    fav->DSBPrecioUnitario->setValue( precio );
+    QTest::keyClicks( fav->DSBCant, QString::number( cantidad ) );
+    QTest::keyClicks( fav->CBProducto, nombre );
+    QTest::keyClick( fav->CBProducto, Qt::Key_Enter );
+
+
+
+    delete fav;
+    fav = 0;
 }
 
 void VentasTest::testCreacionFacturaItemsExtras_data()
 {
     QTest::addColumn<QString>("nombre");
     QTest::addColumn<double>("precio");
-    QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.0;
-    QTest::newRow("SegundoItem") << "Prueba insersión 2 " << 11.0;
+    QTest::addColumn<double>("cantidad");
+    QTest::addColumn<QString>("codigo_producto");
+    QTest::addColumn<int>("id_producto");
+    QTest::newRow("Primer elemento") << "Producto 1" << 10.0 << 1.0 << "1" << 1;
+    QTest::newRow("SegundoItem") << "Producto 4" << 11.0 << 2.0 << "3" << 4;
 }
 QTEST_MAIN(VentasTest)
 

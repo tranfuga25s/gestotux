@@ -140,6 +140,9 @@
          <widget class="EDSBPrecio" name="DSBCant"/>
         </item>
         <item>
+         <widget class="QDoubleSpinBox" name="DSBPrecioUnitario"/>
+        </item>
+        <item>
          <widget class="QPushButton" name="PBAgregarProducto">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">

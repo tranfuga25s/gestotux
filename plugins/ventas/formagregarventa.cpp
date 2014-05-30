@@ -168,6 +168,8 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         DEFecha->setMinimumDate( MFactura::fechaUltimaVenta() );
 
         id_plan_cuota = -1;
+
+        DSBPrecioUnitario->setVisible( false );
 }
 
 
@@ -184,12 +186,17 @@ void FormAgregarVenta::agregarProducto()
  if( CBProducto->currentText().isEmpty() )
  { QMessageBox::information( this, "Error de datos", "Por favor, ingrese un producto", QMessageBox::Ok ); return; }
 
+ if( DSBPrecioUnitario->value() == 0 )
+ { QMessageBox::information( this, "Error de datos", "Por favor, ingrese un precio unitario", QMessageBox::Ok ); return; }
+
  CBProducto->verificarExiste();
- mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual() );
+ mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
 
  // Reseteo los ingresos de producto
  DSBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
+ DSBPrecioUnitario->setValue( 0.0 );
+
  // Seteo el foco
  DSBCant->setFocus();
 }
