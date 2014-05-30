@@ -18,6 +18,8 @@ private Q_SLOTS:
     void cleanup();
     void testPreferenciaConsumidorFinalPredeterminado();
     void testAnulacionFacturaDescensoStock();
+    void testCreacionFacturaItemsExtras();
+    void testCreacionFacturaItemsExtras_data();
 };
 
 VentasTest::VentasTest()
@@ -52,15 +54,15 @@ void VentasTest::testPreferenciaConsumidorFinalPredeterminado()
     p->endGroup();
 
     FormAgregarVenta *fav = new FormAgregarVenta();
-    QTest::qWait( 9000 );
-    QVERIFY( fav->CBCliente->idClienteActual() == 0 );
-    //QVERIFY( fav->CBCliente->currentText() == "Consumidor Final" );
+    QTest::qWait( 1000 );
+    QCOMPARE( fav->CBCliente->idClienteActual(), 0 );
+    QCOMPARE( fav->CBCliente->currentText(), QString( "Consumidor Final" ) );
     delete fav;
     fav = 0;
 
     FormPrefVenta *fpv = new FormPrefVenta();
     fpv->cargar();
-    QVERIFY( fpv->CkBConsumidorFinal->isChecked() );
+    QCOMPARE( fpv->CkBConsumidorFinal->isChecked(), true );
     delete fpv;
     fpv=0;
 
@@ -71,14 +73,14 @@ void VentasTest::testPreferenciaConsumidorFinalPredeterminado()
     p->endGroup();
 
     fav = new FormAgregarVenta();
-    usleep( 9000 );
-    QVERIFY( fav->CBCliente->idClienteActual() == 0 );
-    //QVERIFY( fav->CBCliente->currentText() == "" );
+    QTest::qWait( 1000 );
+    QCOMPARE( fav->CBCliente->idClienteActual(), 0 );
+    QCOMPARE( fav->CBCliente->currentText(), QString("") );
     delete fav;
 
     fpv = new FormPrefVenta();
     fpv->cargar();
-    QVERIFY( fpv->CkBConsumidorFinal->isChecked() == false );
+    QCOMPARE( fpv->CkBConsumidorFinal->isChecked(), false );
     delete fpv;
     fpv=0;
 }
@@ -154,6 +156,22 @@ void VentasTest::testAnulacionFacturaDescensoStock()
     }
 }
 
+/*!
+ * \brief VentasTest::testCreacionFacturaItemsExtras
+ * Verifica el correcto uso del nuevo modelo en la facturacion
+ */
+void VentasTest::testCreacionFacturaItemsExtras()
+{
+
+}
+
+void VentasTest::testCreacionFacturaItemsExtras_data()
+{
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("precio");
+    QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.0;
+    QTest::newRow("SegundoItem") << "Prueba insersión 2 " << 11.0;
+}
 QTEST_MAIN(VentasTest)
 
 #include "tst_ventastest.moc"
