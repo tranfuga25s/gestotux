@@ -43,6 +43,9 @@ public:
         void setearFecha( QDate fecha );
         void setearItems( MProductosTotales *m );
 
+public slots:
+        int guardar( bool imprimir = true );
+
 signals:
         /*!
          * \brief emitirPlanCuota
@@ -76,7 +79,6 @@ public slots:
 protected slots:
         void agregarProducto();
         void eliminarProducto();
-        void guardar();
         void cambioCliente( int id_combo );
         void eliminarTodo();
         void agregarDescuento();

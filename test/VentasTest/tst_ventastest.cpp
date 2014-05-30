@@ -192,15 +192,28 @@ void VentasTest::testCreacionFacturaItemsExtras()
 
     QCOMPARE( fav->TVProductos->model()->rowCount(), 2 );
     QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 0 ) ).toDouble(), 1.0  );
-    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 1 ) ).toString(), nombre );
-    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 2 ), Qt::EditRole ).toDouble(), precio );
 
     fav->DSBPrecioUnitario->setValue( precio );
-    QTest::keyClicks( fav->DSBCant, QString::number( cantidad ) );
+    fav->DSBCant->setValue( cantidad );
     QTest::keyClicks( fav->CBProducto, nombre );
     QTest::keyClick( fav->CBProducto, Qt::Key_Enter );
 
+    QCOMPARE( fav->TVProductos->model()->rowCount(), 3 );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 1, 0 ) ).toDouble(), cantidad );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 1, 1 ) ).toString(), nombre );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 1, 2 ), Qt::EditRole ).toDouble(), precio );
 
+    int id_compra = fav->guardar( false );
+
+    // Busco que los items de productos se hayan guardado correctamente
+    QSqlQuery cola;
+    QVERIFY2( cola.exec( QString( "SELECT COUNT( id_producto ) FROM item_factura WHERE id_producto = %1" ).arg( id_producto ) ) == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.record().value(0).toString() > 0, "No coincide el numero de id_producto en la orden de compra" );
+
+    QVERIFY2( cola.exec( QString( "SELECT COUNT( id_producto ) FROM item_factura WHERE id_factura = %1" ).arg( id_compra ) ) == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.record().value(0).toString() > 0, "No coincide el numero de id_producto en la orden de compra" );
 
     delete fav;
     fav = 0;
@@ -213,8 +226,8 @@ void VentasTest::testCreacionFacturaItemsExtras_data()
     QTest::addColumn<double>("cantidad");
     QTest::addColumn<QString>("codigo_producto");
     QTest::addColumn<int>("id_producto");
-    QTest::newRow("Primer elemento") << "Producto 1" << 10.0 << 1.0 << "1" << 1;
-    QTest::newRow("SegundoItem") << "Producto 4" << 11.0 << 2.0 << "3" << 4;
+    QTest::newRow("Primer elemento") << "Producto insertado 1" << 10.0 << 1.0 << "1" << 1;
+    QTest::newRow("SegundoItem") << "Producto insertado 2" << 11.0 << 2.0 << "3" << 4;
 }
 QTEST_MAIN(VentasTest)
 
