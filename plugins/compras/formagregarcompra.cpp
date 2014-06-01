@@ -103,12 +103,14 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     p=0;
 
     DSBPrecioUnitario->setVisible( false );
+    DSBPrecioUnitario->setValue( 0.0 );
 
     CBProducto->setearMostrarSinStock( true );
 
     _id_proveedor_anterior = -1;
 
     DSBCant->setValue( 1.0 );
+
 }
 
 
@@ -342,6 +344,7 @@ void FormAgregarCompra::agregarProducto()
 
  DSBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
+ DSBPrecioUnitario->setValue( 0.0 );
  CBProducto->setFocus();
 }
 
