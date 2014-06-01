@@ -24,6 +24,7 @@ ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
     this->connect( this->lineEdit(), SIGNAL( returnPressed() ), this, SLOT( enterApretado() ) );
 
     preferencias *p = preferencias::getInstancia();
+    p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
     p->beginGroup( "Stock" );
@@ -157,9 +158,13 @@ void ECBProductos::filtrarPorProveedor( const int id_proveedor )
  * @brief ECBProductos::setearModelo
  * @param modelo
  */
-void ECBProductos::setearModelo(ECBProductosFilter *modelo)
+void ECBProductos::setearModelo( ECBProductosFilter *modelo )
 {
     this->modelo = modelo;
     this->setModel( this->modelo );
-    this->setModelColumn( ECBProductosModel::Nombres );
+    if( _mostrar_stock_lista ) {
+        this->setModelColumn( ECBProductosModel::NombresStock );
+    } else {
+        this->setModelColumn( ECBProductosModel::Nombres );
+    }
 }
