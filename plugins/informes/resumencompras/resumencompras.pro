@@ -28,16 +28,21 @@ HEADERS = reportecompras.h \
     resumencomprastotales.h \
     resumencomprasproveedor.h \
     TiposPeriodos.h \
-    formresumencomprasproveedor.h
+    formresumencomprasproveedor.h \
+    formresumencomprasporproductos.h \
+    resumencomprasporproductos.h
 
 SOURCES = reportecompras.cpp \
     formresumencomprastotales.cpp \
     resumencomprastotales.cpp \
     resumencomprasproveedor.cpp \
-    formresumencomprasproveedor.cpp
+    formresumencomprasproveedor.cpp \
+    formresumencomprasporproductos.cpp \
+    resumencomprasporproductos.cpp
 
 FORMS += formresumencomprastotales.ui \
-    formresumencomprasproveedor.ui
+    formresumencomprasproveedor.ui \
+    formresumencomprasporproductos.ui
 
 exists( ../../../travis.pri ) {
     include( ../../../travis.pri )
