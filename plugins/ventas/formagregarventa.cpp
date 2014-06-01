@@ -75,6 +75,7 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
 
         ecbfiltro = new ECBProductosFilter( this );
         ecbfiltro->setSourceModel( ecbmprod );
+        ecbfiltro->setearNoMostrarProductosSinStock( true );
 
         connect( CBProducto, SIGNAL( agregarProducto() ), this, SLOT( agregarProducto() ) );
         CBProducto->setearModelo( ecbfiltro );
@@ -170,6 +171,8 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
         id_plan_cuota = -1;
 
         DSBPrecioUnitario->setVisible( false );
+
+        CBProducto->setCurrentIndex( -1 );
 }
 
 
