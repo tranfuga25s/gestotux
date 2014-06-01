@@ -12,17 +12,15 @@ ResumenComprasProveedor::ResumenComprasProveedor(QObject *parent) :
 QSqlQueryModel( parent )
 {
     _metodo_temporal = PorMes;
-    consultas.insert( "QSQLITE", "SELECT COUNT( id ) as cantidad, MAX( fecha ) as fecha, strftime( \"%m\" , fecha ) as mes, strftime( \"%Y\", fecha ) as ano, SUM( total ) as total, id_proveedor, contado FROM compras " );
+    consultas.insert( "QSQLITE", "SELECT  strftime( \"%Y\", fecha ) as ano, strftime( \"%m\" , fecha ) as mes,  COUNT( id ) as cantidad, MAX( fecha ) as fecha, SUM( total ) as total FROM compras" );
     //consultas.insert( "QMYSQL" , "SELECT COUNT( id ) as cantidad, MAX( fecha ) as fecha, strftime( \"%m\" , max( fecha ) ) as mes, strftime( \"%Y\", MAX( fecha ) ) as ano, SUM( total ) as total, id_proveedor, contado FROM compras " );
 
     setQuery( consultas.value( QSqlDatabase::database().driverName() ) );
-    setHeaderData( 0, Qt::Horizontal, "Cantidad Total" );
-    setHeaderData( 1, Qt::Horizontal, QString::fromUtf8( "Fecha última" ) );
-    setHeaderData( 2, Qt::Horizontal, "Mes" );
-    setHeaderData( 3, Qt::Horizontal, QString::fromUtf8( "Año" ) );
+    setHeaderData( 0, Qt::Horizontal, QString::fromUtf8( "Año" ) );
+    setHeaderData( 1, Qt::Horizontal, "Mes" );
+    setHeaderData( 2, Qt::Horizontal, "Cantidad Total" );
+    setHeaderData( 3, Qt::Horizontal, QString::fromUtf8( "Fecha última" ) );
     setHeaderData( 4, Qt::Horizontal, "Total" );
-    setHeaderData( 5, Qt::Horizontal, "Proveedor" );
-    setHeaderData( 6, Qt::Horizontal, "Contado" );
 }
 
 /*!
@@ -47,15 +45,15 @@ QVariant ResumenComprasProveedor::data(const QModelIndex &idx, int role) const
     switch( role ) {
         case Qt::DisplayRole: {
             switch( idx.column() ) {
-                case 0: {
+                case 2: {
                     return QSqlQueryModel::data( idx, role ).toInt();
                     break;
                 }
-                case 1: {
+                case 3: {
                     return QSqlQueryModel::data( idx, role ).toDate().toString( Qt::SystemLocaleShortDate );
                     break;
                 }
-                case 2: {
+                case 1: {
                     // Lo convierto al mes que corresponde
                     return QDate::longMonthName( QSqlQueryModel::data( idx, role ).toInt() );
                     break;
@@ -125,16 +123,16 @@ void ResumenComprasProveedor::actualizarDatos()
 {
     QString groupBy;
     groupBy.clear();
-    groupBy.append( " GROUP BY id_proveedor" );
+    groupBy.append( " ORDER BY " );
     if( _metodo_temporal == SinDivision ) {
         // No separo nada
     } else if( _metodo_temporal == PorMes ||
                _metodo_temporal == PorBimestre ||
                _metodo_temporal == PorCuatrimestre ||
                _metodo_temporal == PorSeximestre ) {
-        groupBy.append( ", 3, 4 " );
+        groupBy.append( " 3, 4 " );
     } else if( _metodo_temporal == PorAno ) {
-        groupBy.append( ", 4 " );
+        groupBy.append( " 4 " );
     }
     _filtro.append( groupBy );
 }
