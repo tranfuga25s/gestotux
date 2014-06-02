@@ -281,6 +281,7 @@ bool Ebackup::generar_db( bool estructura )
   if( origen.open( QIODevice::ReadOnly ) )
   {
         datos->append( QTextStream( &origen ).readAll() );
+        datos->append( "\n" ); // Los archivos originales no tienen fin de linea final
   }
  }
  foreach( tabla, tablas )
