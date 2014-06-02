@@ -412,13 +412,12 @@ void FormAgregarCompra::cambioProveedor( int id_proveedor )
                                              QMessageBox::No );
             if( ret == QMessageBox::Yes ) {
                 mcp->vaciarProductos();
-                CBProducto->filtrarPorProveedor( id_proveedor );
-                _id_proveedor_anterior = id_proveedor;
             } else {
                 CBProveedor->setearId( _id_proveedor_anterior );
             }
-        } else {
-            _id_proveedor_anterior = id_proveedor;
         }
+        CBProducto->filtrarPorProveedor( id_proveedor );
+        _id_proveedor_anterior = id_proveedor;
     }
+
 }

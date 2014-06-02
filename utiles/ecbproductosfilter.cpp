@@ -20,7 +20,7 @@ ECBProductosFilter::ECBProductosFilter(QObject *parent) :
 void ECBProductosFilter::setearNoMostrarProductosSinStock( bool estado )
 {
     _mostrar_sin_stock = !estado;
-    this->invalidateFilter();
+    this->invalidate();
 }
 
 /*!
@@ -31,7 +31,7 @@ void ECBProductosFilter::setearNoMostrarProductosSinStock( bool estado )
 void ECBProductosFilter::setearNoMostrarProductosDeshabilitados(bool estado)
 {
     _mostrar_deshabilitados = !estado;
-    this->invalidateFilter();
+    this->invalidate();
 }
 
 /*!
@@ -42,7 +42,7 @@ void ECBProductosFilter::setearNoMostrarProductosDeshabilitados(bool estado)
 void ECBProductosFilter::setearIdProveedor(int id_proveedor)
 {
     _id_proveedor = id_proveedor;
-    this->invalidateFilter();
+    this->invalidate();
 }
 
 /*!
