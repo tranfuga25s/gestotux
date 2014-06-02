@@ -289,7 +289,7 @@ bool Ebackup::generar_db( bool estructura )
         cola.exec( QString( "SELECT * FROM %1" ).arg( tabla ) );
         while( cola.next() )
         {
-                datos->append( db->sqlStatement( QSqlDriver::InsertStatement, tabla, cola.record(), false ) );
+                datos->append( db->sqlStatement( QSqlDriver::InsertStatement, tabla, cola.record(), false ).replace( "INSERT ", "INSERT OR IGNORE " ) );
                 datos->append( ";\n" );
                 PBProgreso->setValue( PBProgreso->value() + 1 );
         }
