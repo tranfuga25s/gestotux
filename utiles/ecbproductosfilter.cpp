@@ -77,8 +77,13 @@ QList<int> *ECBProductosFilter::getListaIDs()
  */
 int ECBProductosFilter::agregarItem(const QString texto, double stock, bool habilitado, int proveedor)
 {
+    // Necesario ya que si se encuentra filtrando por proveedor el mapFromSource devuelve invalido
+    if( proveedor <= 0 && this->_id_proveedor > 0 ) {
+        proveedor = _id_proveedor;
+    }
     int nuevo_id = modeloFuente()->agregarItem( texto, stock, habilitado, proveedor );
-    QModelIndex indice = sourceModel()->index( modeloFuente()->obtenerPosicionSegunId( nuevo_id ), 0 );
+    int pos_id = modeloFuente()->obtenerPosicionSegunId( nuevo_id );
+    QModelIndex indice = sourceModel()->index( pos_id, 0 );
     this->invalidateFilter(); // Es necesario ya que se reinicializa el modelo base
     QModelIndex indicem = mapFromSource( indice );
     return indicem.row();

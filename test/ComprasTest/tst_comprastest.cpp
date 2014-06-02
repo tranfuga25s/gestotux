@@ -117,6 +117,7 @@ void ComprasTest::testAutoAgregarProductos()
 
     // Agrego un nuevo item
     QTest::keyClicks( fac->CBProducto, nombre );
+    QCOMPARE( fac->CBProducto->currentText(), nombre );
     fac->DSBPrecioUnitario->setValue( precio );
     QTest::mouseClick( fac->PBAgregarProducto, Qt::LeftButton );
 

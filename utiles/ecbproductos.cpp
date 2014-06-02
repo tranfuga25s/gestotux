@@ -112,6 +112,7 @@ void ECBProductos::verificarExiste()
         } else {
             // Inserto el elemento nuevo en el modelo base
             int pos_nueva = modelo->agregarItem( buscar );
+            qDebug() << "Pos nueva: " << pos_nueva;
             // El ID nuevo está mappeado a la posición actual
             this->setCurrentIndex( pos_nueva );
         }
