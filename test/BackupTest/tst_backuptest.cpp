@@ -56,10 +56,10 @@ void BackupTest::testGenerarBackup()
     eb->CkBBaseDatos->setChecked( true );
     eb->CkBConfiguracion->setChecked( true );
     eb->Pestanas->setCurrentIndex( 0 );
-    eb->iniciar( "test2" );
+    eb->iniciar( "test" );
 
-    QVERIFY( QFile::exists( QApplication::applicationDirPath().append( "test2.bkp" ) ) );
-    QFile *archivo = new QFile( QApplication::applicationDirPath().append( "test2.bkp" ) );
+    QVERIFY( QFile::exists( QApplication::applicationDirPath().append( "test.bkp" ) ) );
+    QFile *archivo = new QFile( QApplication::applicationDirPath().append( "test.bkp" ) );
     QVERIFY( archivo->open( QIODevice::ReadOnly ) );
     QVERIFY( archivo->size() > 0 );
 
