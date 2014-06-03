@@ -55,6 +55,8 @@ void BackupTest::testGenerarBackup()
 
     delete eb;
     eb=0;
+    delete archivo;
+    archivo=0;
 }
 
 #include <QSqlQuery>
@@ -91,12 +93,14 @@ void BackupTest::testCaseColasCorrectas_data()
          // desde ahora hasta el fin de la etiqueta, es sql puro
          // busco la etiqueta de fin
          int posfinal = contenido.indexOf( "<-basedatossql<-|" );
-         QStringRef cadenas( &contenido, 0, posfinal );
-         QString colas = cadenas.toString();
+         contenido.remove( posfinal, contenido.size() - posfinal );
          int posicion = 0;
-         foreach( QString cola, colas.split( ";" ) ) {
-            QTest::newRow( QString::number( posicion ).toLocal8Bit() ) << cola;
-            posicion++;
+         foreach( QString cola, contenido.split( ";" ) ) {
+             cola.remove( '\n' );
+            if( !cola.isEmpty() ) {
+                QTest::newRow( QString::number( posicion ).toLocal8Bit() ) << cola.append( ';' );
+                posicion++;
+            }
          }
         } else {
             QVERIFY2( false, "No se pudo entender el archivo" );
