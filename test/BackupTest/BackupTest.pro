@@ -21,3 +21,7 @@ SOURCES += tst_backuptest.cpp \
            ../../src/ebackup.cpp
 
 HEADERS += ../../src/ebackup.h
+
+exists( ../../travis.pri ) {
+    include( ../../travis.pri )
+}
