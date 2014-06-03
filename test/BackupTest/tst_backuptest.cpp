@@ -24,7 +24,17 @@ private Q_SLOTS:
 BackupTest::BackupTest()
 {
     this->tablas << "compras"
-                 << "compras_productos";
+                 << "compras_productos"
+                 << "categorias_productos"
+                 << "clientes"
+                 << "factura"
+                 << "item_factura"
+                 << "paises"
+                 << "periodo_servicio"
+                 << "productos"
+                 << "proveedor"
+                 << "provincias"
+                 << "servicios";
 }
 
 void BackupTest::init() { EDatabaseTest::init(); }
@@ -46,10 +56,10 @@ void BackupTest::testGenerarBackup()
     eb->CkBBaseDatos->setChecked( true );
     eb->CkBConfiguracion->setChecked( true );
     eb->Pestanas->setCurrentIndex( 0 );
-    eb->iniciar( "test" );
+    eb->iniciar( "test2" );
 
-    QVERIFY( QFile::exists( QApplication::applicationDirPath().append( "test.bkp" ) ) );
-    QFile *archivo = new QFile( QApplication::applicationDirPath().append( "test.bkp" ) );
+    QVERIFY( QFile::exists( QApplication::applicationDirPath().append( "test2.bkp" ) ) );
+    QFile *archivo = new QFile( QApplication::applicationDirPath().append( "test2.bkp" ) );
     QVERIFY( archivo->open( QIODevice::ReadOnly ) );
     QVERIFY( archivo->size() > 0 );
 
