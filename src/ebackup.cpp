@@ -48,10 +48,11 @@
 #include <QTabWidget>
 #include <QSqlDriver>
 #include <QTextStream>
+#include <QDebug>
 
 #include "eactcerrar.h"
 
-Ebackup::Ebackup( QWidget* parent )
+EBackup::EBackup( QWidget* parent )
 : EVentana( parent ), Ui_FormBackupBase()
 {
  setupUi(this);
@@ -82,7 +83,7 @@ Ebackup::Ebackup( QWidget* parent )
  addAction( ActDetener );
  addAction( new EActCerrar(this) );
 
- ChBBaseDatos->setCheckState( Qt::Checked );
+ CkBBaseDatos->setCheckState( Qt::Checked );
 
  connect( tBBuscar, SIGNAL( clicked() ), this, SLOT( abrirArchivoBackup() ) );
 
@@ -94,7 +95,7 @@ Ebackup::Ebackup( QWidget* parent )
 }
 
 
-Ebackup::~Ebackup()
+EBackup::~EBackup()
 {
  delete comprimidos;
  delete datos;
@@ -104,16 +105,16 @@ Ebackup::~Ebackup()
  *   \fn Ebackup::iniciar()
  *	Realiza todo el proceso de creacion del backup.
  */
-void Ebackup::iniciar()
+void EBackup::iniciar( QString nombre )
 {
  // Ver en que pestaña esta
  if( Pestanas->currentIndex() == 0 )
  {
-  generarBackup();
+  generarBackup( nombre );
  }
  else if( Pestanas->currentIndex() == 1 )
  {
-  restaurarBackup();
+  restaurarBackup( nombre );
   return;
  }
  else
@@ -127,7 +128,7 @@ void Ebackup::iniciar()
     \fn Ebackup::generar_config()
     Genera un una copia de los valores de configuracion del programa y los prepara para la compresion.
  */
-bool Ebackup::generar_config()
+bool EBackup::generar_config()
 {
  preferencias *p = preferencias::getInstancia();
  // Obtengo todas las claves
@@ -254,7 +255,7 @@ bool Ebackup::generar_config()
         @param estructura Hacer backup de la estructura de la db
         @return Verdadero si no existieron errores, falso en caso contrario
  */
-bool Ebackup::generar_db( bool estructura )
+bool EBackup::generar_db( bool estructura )
 {
  QSqlDriver *db = QSqlDatabase::database().driver();
  datos->append( "|->basedatossql->\n" );
@@ -290,9 +291,13 @@ bool Ebackup::generar_db( bool estructura )
         cola.exec( QString( "SELECT * FROM %1" ).arg( tabla ) );
         while( cola.next() )
         {
-                datos->append( db->sqlStatement( QSqlDriver::InsertStatement, tabla, cola.record(), false ).replace( "INSERT ", "INSERT OR IGNORE " ) );
-                datos->append( ";\n" );
-                PBProgreso->setValue( PBProgreso->value() + 1 );
+            QString scola = db->sqlStatement( QSqlDriver::InsertStatement, tabla, cola.record(), false );
+            scola.replace( "INSERT ", "INSERT OR IGNORE " );
+            scola.replace( "false,", "'false'," );
+            scola.replace( "true,", "'true'," );
+            datos->append( scola );
+            datos->append( ";\n" );
+            PBProgreso->setValue( PBProgreso->value() + 1 );
         }
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,7 +318,7 @@ bool Ebackup::generar_db( bool estructura )
         Funcion que comprime los datos en datos y lo agrega al buffer de datos comprimidos
         @return Verdadero si no hubo errores.
  */
-bool Ebackup::comprimir()
+bool EBackup::comprimir()
 {
  comprimidos->append( *datos );
  return true;
@@ -326,7 +331,7 @@ bool Ebackup::comprimir()
         @param nombre path del archivo de salida
         @return Verdadero si no hubo errores
  */
-bool Ebackup::guardar_a_archivo( QString *nombre )
+bool EBackup::guardar_a_archivo( QString *nombre )
 {
  destino = new QFile( *nombre );
  if( !destino->open( QIODevice::ReadWrite | QIODevice::Truncate ) )
@@ -338,8 +343,8 @@ bool Ebackup::guardar_a_archivo( QString *nombre )
  qint64 escritos = destino->write( *comprimidos );
  if( escritos != comprimidos->size() )
  {
-  qDebug( "Las cantidades de bytes no coinciden" );
-  qDebug( QString( "Bytes escritos: %1, Bytes de buffer: %2" ).arg(escritos).arg(comprimidos->size()).toLocal8Bit() );
+  qDebug() << "Las cantidades de bytes no coinciden";
+  qDebug() << "Bytes escritos: " << escritos << ", Bytes de buffer: " << comprimidos->size();
   destino->flush();
   destino->close();
   delete destino;
@@ -359,7 +364,7 @@ bool Ebackup::guardar_a_archivo( QString *nombre )
     \fn Ebackup::detener()
      Slot llamado para detener la generacion del backup
  */
-void Ebackup::detener()
+void EBackup::detener()
 {
   _continuar = false;
 }
@@ -368,19 +373,19 @@ void Ebackup::detener()
 /*!
     \fn Ebackup::generarBackup()
  */
-void Ebackup::generarBackup()
+void EBackup::generarBackup( QString name )
 {
   emit cambiarDetener( true );
  _continuar = true;
  QSqlQuery cola( "DELETE FROM ventas WHERE id IN ( SELECT id FROM ventas WHERE id NOT IN ( SELECT id_venta FROM ventas_productos ) )" );
- if( !ChBBaseDatos->isChecked() && !ChBConfirugacion->isChecked() )
+ if( !CkBBaseDatos->isChecked() && !CkBConfiguracion->isChecked() )
  {
   QMessageBox::information( this, "Seleccione opciones" , "Por favor, seleccione una opcion para iniciar la copia de seguridad" );
   emit cambiarDetener( false );
   return;
  }
  LDebug->setText( "Iniciando" );
- if( ChBBaseDatos->isChecked() )
+ if( CkBBaseDatos->isChecked() )
  {
   LDebug->setText( "Generando backup de Base de datos" );
   if( !generar_db( CkBEstructura->isChecked() ) )
@@ -390,7 +395,7 @@ void Ebackup::generarBackup()
    return;
   }
  }
- if( ChBConfirugacion->isChecked() )
+ if( CkBConfiguracion->isChecked() )
  {
   LDebug->setText( "Generando backup de Configuracion del programa" );
   if( !generar_config() )
@@ -405,16 +410,21 @@ void Ebackup::generarBackup()
   PBProgreso->setValue( PBProgreso->maximum() );
  }
  LDebug->setText( "Guardando..." );
- QString nombre = QDate::currentDate().toString( "yyyyMMdd" );
+ if( name.isEmpty() ) { name = QDate::currentDate().toString( "yyyyMMdd" ); }
  QFileDialog::Options options;
  options |= QFileDialog::DontUseNativeDialog;
  QString selectedFilter;
- QString fileName = QFileDialog::getSaveFileName( this,
-                                                  "Seleccione el lugar a donde guardar el archivo",
-                                                  QDir::home().path()+QDir::separator()+nombre,
-                                                  "Archivos de Backup ( *.bkp );; Todos los archivos (*.*)",
-                                                  &selectedFilter,
-                                                  options );
+ QString fileName;
+ if( this->isVisible() ) {
+     fileName = QFileDialog::getSaveFileName( this,
+                                              "Seleccione el lugar a donde guardar el archivo",
+                                              QDir::home().path()+QDir::separator()+name,
+                                              "Archivos de Backup ( *.bkp );; Todos los archivos (*.*)",
+                                              &selectedFilter,
+                                              options );
+ } else { // caso de los test
+    fileName = QApplication::applicationDirPath().append( name );
+ }
  if( !fileName.isEmpty() )
  {
   if( !fileName.contains( ".bkp" ) )
@@ -430,7 +440,7 @@ void Ebackup::generarBackup()
   }
   else
   {
-   QMessageBox::information( this, "Informacion", "El archivo de backup se ha guardado correctamente" );
+   if( this->isVisible() ) { QMessageBox::information( this, "Informacion", "El archivo de backup se ha guardado correctamente" ); }
    preferencias *p = preferencias::getInstancia();
    p->beginGroup( "backup" );
    p->setValue( "archivo", fileName );
@@ -449,7 +459,7 @@ void Ebackup::generarBackup()
 /*!
     \fn Ebackup::restaurarBackup()
  */
-void Ebackup::restaurarBackup()
+void EBackup::restaurarBackup( QString nombre )
 {
  emit cambiarDetener( true );
  _continuar = true;
@@ -480,7 +490,7 @@ void Ebackup::restaurarBackup()
   QString formato = contenido.section( ";", 0, 0 );
   if( formato != QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName() )
   {
-   qWarning( QString( "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente. Formato: " + formato ).toLocal8Bit() );
+   qWarning() << "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente. Formato: " << formato;
    return;
   }
   // saco esa subcadena
@@ -511,7 +521,7 @@ void Ebackup::restaurarBackup()
 /*!
     \fn Ebackup::abrirArchivoBackup()
  */
-void Ebackup::abrirArchivoBackup()
+void EBackup::abrirArchivoBackup()
 {
  QFileDialog::Options options;
  options |= QFileDialog::DontUseNativeDialog;
@@ -533,7 +543,7 @@ void Ebackup::abrirArchivoBackup()
     @param colas Lista de QString con las consultas SQL dentro.
     @return Verdadero si todas las consultas fueron ejecutadas correctamente.
  */
-bool Ebackup::ejecutarColas( QStringList colas )
+bool EBackup::ejecutarColas( QStringList colas )
 {
  bool estado = true;
  QSqlQuery *cola = new QSqlQuery();
@@ -545,7 +555,7 @@ bool Ebackup::ejecutarColas( QStringList colas )
   }
   else
   {
-        qWarning( qPrintable( cola->lastError().text() + ". Cola: " + cola->lastQuery() ) );
+        qWarning() << cola->lastError().text() << ". Cola: " << cola->lastQuery();
         estado = false;
   }
  }
@@ -565,7 +575,7 @@ bool Ebackup::ejecutarColas( QStringList colas )
 /*!
     \fn Ebackup::regenerarPreferencias( const QString *pref )
  */
-void Ebackup::regenerarPreferencias( const QString */*pref*/ )
+void EBackup::regenerarPreferencias( const QString */*pref*/ )
 {
     /// \todo implement me
 }

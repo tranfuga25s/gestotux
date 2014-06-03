@@ -34,14 +34,14 @@ class QAction;
  *
  *	@author Esteban Zeller <juiraze@yahoo.com.ar>
  */
-class Ebackup : public EVentana , private Ui_FormBackupBase
+class EBackup : public EVentana , public Ui_FormBackupBase
 {
 Q_OBJECT
 public:
-    Ebackup(QWidget* parent);
-    ~Ebackup();
-    void generarBackup();
-    void restaurarBackup();
+    EBackup( QWidget* parent = 0 );
+    ~EBackup();
+    void generarBackup( QString nombre = QString() );
+    void restaurarBackup( QString nombre = QString() );
 
 private:
        /*!
@@ -82,7 +82,7 @@ private:
 
 
 public slots:
-    void iniciar();
+    void iniciar( QString nombre = QString() );
     void detener();
 
 signals:
