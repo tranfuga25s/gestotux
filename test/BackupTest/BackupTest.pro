@@ -1,14 +1,23 @@
 #-------------------------------------------------
-#
+# Test para ver que funcione correctamente el Backup Local y Remoto
 #-------------------------------------------------
 QT       += sql testlib
-QT       -= gui
 TARGET    = tst_backuptest
-CONFIG   += console
+CONFIG   += console help
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-INCLUDEPATH += ../.
+INCLUDEPATH += ../. \
+               ../../src \
+               ../../utiles
 
-SOURCES += tst_backuptest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+
+LIBS += ../../bin/libutiles.a
+
+FORMS += ../../src/formBackup.ui
+
+SOURCES += tst_backuptest.cpp \
+           ../../src/ebackup.cpp
+
+HEADERS += ../../src/ebackup.h

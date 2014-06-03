@@ -16,8 +16,9 @@ private Q_SLOTS:
     void init();
     void cleanup();
     void cleanupTestCase();
-    void testCase1();
-    void testCase1_data();
+    void testGenerarBackup();
+    void testCaseColasCorrectas();
+    void testCaseColasCorrectas_data();
 };
 
 BackupTest::BackupTest()
@@ -34,16 +35,75 @@ void BackupTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
 void BackupTest::cleanup() { EDatabaseTest::cleanup(); }
 
-void BackupTest::testCase1()
+#include "ebackup.h"
+/*!
+ * Genera el backup
+ */
+void BackupTest::testGenerarBackup()
 {
-    QFETCH(QString, data);
-    QVERIFY2(true, "Failure");
+    EBackup *eb = new EBackup();
+    eb->CkBEstructura->setChecked( true );
+    eb->CkBBaseDatos->setChecked( true );
+    eb->CkBConfiguracion->setChecked( true );
+    eb->Pestanas->setCurrentIndex( 0 );
+    eb->iniciar( "test" );
+
+    QVERIFY( QFile::exists( QApplication::applicationDirPath().append( "test.bkp" ) ) );
+    QFile *archivo = new QFile( QApplication::applicationDirPath().append( "test.bkp" ) );
+    QVERIFY( archivo->open( QIODevice::ReadOnly ) );
+    QVERIFY( archivo->size() > 0 );
+
+    delete eb;
+    eb=0;
 }
 
-void BackupTest::testCase1_data()
+#include <QSqlQuery>
+/**
+ *
+ */
+void BackupTest::testCaseColasCorrectas()
 {
-    QTest::addColumn<QString>("data");
-    QTest::newRow("0") << QString();
+    QFETCH( QString, cola );
+
+    QSqlQuery ccola;
+    QVERIFY2( ccola.exec( cola ), QString( "Error: %1 - %2" ).arg( ccola.lastError().text() ).arg( ccola.lastQuery() ).toLocal8Bit() );
+}
+
+void BackupTest::testCaseColasCorrectas_data()
+{
+    QTest::addColumn<QString>("cola");
+    QFile archivo( QApplication::applicationDirPath().append( "test.bkp" ) );
+    if( archivo.open( QIODevice::ReadOnly ) ) {
+        QString contenido = archivo.readAll();
+        archivo.close();
+        if( contenido.isEmpty() )
+        { qWarning() << "El archivo esta vacio. \n Seleccione otro archivo para restaurar"; return; }
+        // empiezo a analizar el contenido
+        // tengo que encontrar la cabecera sino es invalido
+        if( contenido.startsWith( "|->basedatossql->", Qt::CaseSensitive ) )
+        {
+         // Encontrado datos sql, elimino la cabecera
+         contenido.remove( 0, QString( "|->basedatossql->formato= " ).size() );
+         // ahora tiene que estar el formato
+         QString formato = contenido.section( ";", 0, 0 );
+         // saco esa subcadena
+         contenido.remove( 0, formato.size() + 1 );
+         // desde ahora hasta el fin de la etiqueta, es sql puro
+         // busco la etiqueta de fin
+         int posfinal = contenido.indexOf( "<-basedatossql<-|" );
+         QStringRef cadenas( &contenido, 0, posfinal );
+         QString colas = cadenas.toString();
+         int posicion = 0;
+         foreach( QString cola, colas.split( ";" ) ) {
+            QTest::newRow( QString::number( posicion ).toLocal8Bit() ) << cola;
+            posicion++;
+         }
+        } else {
+            QVERIFY2( false, "No se pudo entender el archivo" );
+        }
+    } else {
+        QVERIFY2( false, "No se pudo abrir el archivo" );
+    }
 }
 
 QTEST_MAIN(BackupTest)
