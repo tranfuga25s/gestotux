@@ -25,6 +25,7 @@
 #include "einfoprogramainterface.h"
 #include <QFile>
 #include <QDate>
+#include <QDebug>
 
 EEnvioBackup::EEnvioBackup(QObject *parent)
  : QThread(parent)
@@ -58,7 +59,7 @@ void EEnvioBackup::run()
  archivo = new QFile( p->value( "archivo", QDate::currentDate().toString() ).toString() );
  if( !archivo->open( QIODevice::ReadOnly ) )
  {
-  qDebug( QString( "Error al abrir el archivo de backup: %1" ).arg( p->value( "backup/archivo" ).toString() ).toLocal8Bit() );
+  qDebug() << "Error al abrir el archivo de backup: " << p->value( "backup/archivo" ).toString();
   delete archivo;
   exit(0);
   return;
@@ -82,7 +83,7 @@ void EEnvioBackup::finComando( int id, bool error )
 {
  if( error )
  {
-  qDebug( QString( "Error: %1").arg( ftp->errorString() ).toLocal8Bit() );
+  qDebug() << "Error: " << ftp->errorString();
   //delete ftp;
   delete archivo;
   exit(0);

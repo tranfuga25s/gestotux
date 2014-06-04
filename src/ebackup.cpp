@@ -476,7 +476,7 @@ void EBackup::restaurarBackup( QString nombre )
  archivo.close();
  if( contenido.isEmpty() )
  {
-  qWarning( "El archivo esta vacio. \n Seleccione otro archivo para restaurar" );
+  qWarning() << "El archivo esta vacío. \n Seleccione otro archivo para restaurar.";
   emit cambiarDetener( false );
   return;
  }
@@ -490,16 +490,21 @@ void EBackup::restaurarBackup( QString nombre )
   QString formato = contenido.section( ";", 0, 0 );
   if( formato != QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName() )
   {
-   qWarning() << "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente. Formato: " << formato;
-   return;
+      qWarning() << "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente."
+                    "Formato: " << formato
+                 << " - Formato actual: " << QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName();
+      return;
   }
   // saco esa subcadena
   contenido.remove( 0, formato.size() + 1 );
   // desde ahora hasta el fin de la etiqueta, es sql puro
   // busco la etiqueta de fin
   int posfinal = contenido.indexOf( "<-basedatossql<-|" );
-  QStringRef cadenas( &contenido, 0, posfinal );
-  ejecutarColas( cadenas.string()->split( ";" ) );
+
+  QString colas = contenido;
+  colas.remove( posfinal, contenido.size() - posfinal );
+  ejecutarColas( colas.split( ";" ) );
+
   contenido.remove( 0, posfinal + QString( "<-basedatosql<-|").size() );
  }
  // Verifico si contiene el backup de las preferencias
@@ -509,9 +514,10 @@ void EBackup::restaurarBackup( QString nombre )
   contenido.remove( 0, QString( "|->preferencias->" ).size() );
   // Busco el fin de las preferencias
   int posfinal = contenido.indexOf( "<-preferencias<-|" );
-  QStringRef pref( &contenido, 0, posfinal );
-  regenerarPreferencias( pref.string() );
-  contenido.remove( 0, posfinal + QString( "<-preferencias<-|").size() );
+  QString prefs = contenido;
+  prefs.remove( posfinal, contenido.size() - posfinal );
+  regenerarPreferencias( &prefs );
+  //contenido.remove( 0, posfinal + QString( "<-preferencias<-|").size() );
  }
  // fin de la recuperación
  return;

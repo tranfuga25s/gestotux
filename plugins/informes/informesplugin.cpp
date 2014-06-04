@@ -23,6 +23,7 @@
 #include <QDir>
 #include <QApplication>
 #include <QHash>
+#include <QDebug>
 
 bool InformesPlugin::inicializar()
 {
@@ -138,16 +139,16 @@ bool InformesPlugin::cargarPluginsInformes()
 			connect( obj, SIGNAL( agregarVentana( QWidget * ) ), this, SIGNAL( agregarVentana( QWidget * ) ) );
                         connect( this, SIGNAL( seCierraGestotuxSignal() ), obj, SLOT( seCierraGestotux() ) );
 			_plugins->insert( plug->nombre(), plug );
-                        qDebug( QString( "Cargando Informe Plugin: %1" ).arg( pluginsDir.absoluteFilePath( fileName )).toLocal8Bit() );
+           qDebug() << "Cargando Informe Plugin: " << pluginsDir.absoluteFilePath( fileName );
 		}
 		else
 		{
-                        qWarning( QString( "Error de inicializacion en el plug in Informe %1" ).arg( plug->nombre() ).toLocal8Bit() );
+           qWarning() << "Error de inicializacion en el plug in Informe " << plug->nombre();
 		}
 	}
 	else
 	{
-                qWarning( QString( "Error al cargar el plugin Informe . Error: %1" ).arg( loader->errorString() ).toLocal8Bit() );
+        qWarning() << "Error al cargar el plugin Informe . Error: " << loader->errorString();
 	}
 	// Fin de la carga del plugin
   }
