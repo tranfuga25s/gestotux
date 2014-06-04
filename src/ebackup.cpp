@@ -476,7 +476,7 @@ void EBackup::restaurarBackup( QString nombre )
  archivo.close();
  if( contenido.isEmpty() )
  {
-  qWarning( "El archivo esta vacio. \n Seleccione otro archivo para restaurar" );
+  qWarning() << "El archivo esta vacío. \n Seleccione otro archivo para restaurar.";
   emit cambiarDetener( false );
   return;
  }
@@ -490,8 +490,10 @@ void EBackup::restaurarBackup( QString nombre )
   QString formato = contenido.section( ";", 0, 0 );
   if( formato != QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName() )
   {
-   qWarning() << "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente. Formato: " << formato;
-   return;
+      qWarning() << "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente."
+                    "Formato: " << formato
+                 << " - Formato actual: " << QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName();
+      return;
   }
   // saco esa subcadena
   contenido.remove( 0, formato.size() + 1 );
