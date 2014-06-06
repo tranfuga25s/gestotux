@@ -29,13 +29,13 @@ p, li { white-space: pre-wrap; }
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="TGenerar">
       <attribute name="title">
        <string>Generar copia de seguridad</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QCheckBox" name="ChBBaseDatos">
+        <widget class="QCheckBox" name="CkBBaseDatos">
          <property name="text">
           <string>Base de Datos</string>
          </property>
@@ -49,7 +49,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="ChBConfirugacion">
+        <widget class="QCheckBox" name="CkBConfiguracion">
          <property name="text">
           <string>Configuración del programa</string>
          </property>
@@ -57,7 +57,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="TRestairar">
       <attribute name="title">
        <string>Restaurar copia de seguridad</string>
       </attribute>
@@ -65,7 +65,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="LArchivo">
            <property name="text">
             <string>Archivo de Backup:</string>
            </property>
@@ -122,7 +122,7 @@ p, li { white-space: pre-wrap; }
  <resources/>
  <connections>
   <connection>
-   <sender>ChBBaseDatos</sender>
+   <sender>CkBBaseDatos</sender>
    <signal>toggled(bool)</signal>
    <receiver>CkBEstructura</receiver>
    <slot>setEnabled(bool)</slot>

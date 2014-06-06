@@ -102,7 +102,7 @@ void EMysql::accept()
         default:
         {
                 qDebug( "Error de conección" );
-                qWarning( qPrintable( "Ultimo error: -> " + QString::number( _db.lastError().number() ) + "<- - " + _db.lastError().text() ) );
+                qWarning() << "Ultimo error: -> " << _db.lastError().number() << "<- - " << _db.lastError().text();
                  _db.removeDatabase( _db.connectionName() );
         }
     }

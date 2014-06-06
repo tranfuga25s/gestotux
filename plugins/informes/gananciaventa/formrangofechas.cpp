@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QDebug>
 
 FormRangoFechas::FormRangoFechas( QWidget *parent ) :
 QDialog(parent)
@@ -21,10 +22,10 @@ QDialog(parent)
             DEDesde->setMaximumDate( DEHasta->date().addDays( -1 ) );
         }
     } else {
-        qWarning( "No se pudieron encontrar datos de las fechas maximas y minimas permitidas. No se controlará" );
-        qDebug( "Error de ejecución de la cola de obtención de fecha maxima y minima de reporte de ventas y ganancias" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qWarning() << "No se pudieron encontrar datos de las fechas maximas y minimas permitidas. No se controlará";
+        qDebug() << "Error de ejecución de la cola de obtención de fecha maxima y minima de reporte de ventas y ganancias";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     }
 }
 

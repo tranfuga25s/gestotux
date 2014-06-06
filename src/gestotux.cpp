@@ -313,7 +313,7 @@ void gestotux::verPreferencias()
   Slot llamado cuando se desea ver la ventana de backups
 */
 void gestotux::verBackup()
-{ formCen()->agregarForm( new Ebackup( this ) ); }
+{ formCen()->agregarForm( new EBackup( this ) ); }
 
 /*!
   \fn gestotux::bandeja_sistema()
