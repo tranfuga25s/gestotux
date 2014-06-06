@@ -539,6 +539,10 @@ bool Ebackup::ejecutarColas( QStringList colas )
  QSqlQuery *cola = new QSqlQuery();
  while( colas.size() > 0  && estado == true )
  {
+  if( colas.at(0).isEmpty() ) {
+     colas.removeFirst();
+     continue;
+  }
   if( cola->exec( colas.at( 0 ) ) )
   {
     colas.removeFirst();
