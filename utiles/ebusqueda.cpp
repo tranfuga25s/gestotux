@@ -1,6 +1,7 @@
 #include "ebusqueda.h"
 
 #include <QSqlQuery>
+#include <QDebug>
 
 EBusqueda::EBusqueda( QWidget *parent, QSqlTableModel *modelo, QString titulo ) :
     QDockWidget( parent ), Ui::EBusquedaBase()
@@ -17,7 +18,9 @@ EBusqueda::EBusqueda( QWidget *parent, QSqlTableModel *modelo, QString titulo ) 
 
     _modelo = modelo;
     // Guardo el filtro anterior
-    QString _filtro_anterior = _modelo->filter();
+    _filtro_anterior = _modelo->filter();
+
+    this->setAttribute( Qt::WA_DeleteOnClose );
 }
 
 /*!
@@ -29,12 +32,9 @@ void EBusqueda::filtrar()
 {
     if( filtros.isEmpty() || CBTipo->currentIndex() == -1
         || LETexto->text().isEmpty() || LETexto->text().isNull() )
-        return;
-    //qDebug( filtros.at( CBTipo->currentIndex() ).arg( LETexto->text() ).toLocal8Bit() );
+    { return; }
     _modelo->setFilter( filtros.at( CBTipo->currentIndex() ).arg( LETexto->text() ) );
-    //qDebug( _modelo->filter().toLocal8Bit() );
     _modelo->select();
-    //qDebug( _modelo->query().lastQuery().toLocal8Bit() );
 }
 
 /*!
@@ -68,21 +68,37 @@ void EBusqueda::agregarFiltro( QString nombre, QString filtro )
     filtros.insert( filtro.size(), filtro );
 }
 
+/*!
+ * \brief EBusqueda::changeEvent
+ * \param e
+ */
 void EBusqueda::changeEvent( QEvent *e )
 {
     QDockWidget::changeEvent(e);
     switch (e->type()) {
-    case QEvent::LanguageChange:
-        retranslateUi(this);
-        break;
-    case QEvent::Hide:
-    case QEvent::Close:
-        borrar();
-        emit cerrando();
-        break;
-    default:
-        break;
+        case QEvent::LanguageChange: {
+            retranslateUi(this);
+            break;
+        }
+        case QEvent::Hide:
+        {
+            borrar();
+            emit cerrando();
+            break;
+        }
+        default:
+        { break; }
     }
+}
+
+/*!
+ * \brief EBusqueda::closeEvent
+ * \param event
+ */
+void EBusqueda::closeEvent( QCloseEvent *event )
+{
+    borrar();
+    emit cerrando();
 }
 
 /*!

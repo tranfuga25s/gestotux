@@ -274,6 +274,7 @@ void EVLista::cerroBusqueda()
 {
   ActBuscar->setChecked( false );
   this->mostrarTodos();
+  dockBusqueda = 0;
 }
 
 /*!

@@ -25,6 +25,7 @@
 #include <QAction>
 #include <QMessageBox>
 #include <QSqlRelationalDelegate>
+#include <QDebug>
 
 #include "productos.h"
 #include "mcategorias.h"
