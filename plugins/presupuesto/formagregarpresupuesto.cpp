@@ -40,6 +40,7 @@
 #include "mdescuentos.h"
 #include "preferencias.h"
 #include "eregistroplugins.h"
+#include "ecbproductosmodel.h"
 
 FormAgregarPresupuesto::FormAgregarPresupuesto(QWidget* parent, Qt::WFlags fl)
 : EVentana( parent, fl ), Ui::FormPresupuestoBase()
@@ -78,8 +79,15 @@ FormAgregarPresupuesto::FormAgregarPresupuesto(QWidget* parent, Qt::WFlags fl)
         dEFecha->setDate( QDate::currentDate() );
         dEFecha->setMaximumDate( QDate::currentDate().addDays( 1 ) );
 
+        ecbmprod = new ECBProductosModel( this );
+        ecbmprod->inicializar();
+
+        ecbfiltro = new ECBProductosFilter( this );
+        ecbfiltro->setSourceModel( ecbmprod );
+        ecbfiltro->setearNoMostrarProductosSinStock( true );
+
         // Pongo el sistema de relleno
-        m = new MProductosTotales( this/*, CBProductos->listadoProductos()*/ );
+        m = new MProductosTotales( this, ecbmprod );
         m->calcularTotales( true );
         m->buscarPrecios( true );
         TVContenido->setModel( m );

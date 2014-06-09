@@ -26,6 +26,7 @@
 
 class QSqlQueryModel;
 class MProductosTotales;
+class ECBProductosModel;
 
 /*!
  * \brief Formulario para agregar un presupuesto
@@ -56,6 +57,8 @@ private:
     * Modelo para mostrar la lista de productos e items
     */
     MProductosTotales *m;
+    ECBProductosModel *ecbmprod;
+    ECBProductosFilter *ecbfiltro;
 };
 
 #endif
