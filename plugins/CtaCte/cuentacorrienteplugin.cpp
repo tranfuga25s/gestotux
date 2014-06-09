@@ -55,9 +55,9 @@ bool CuentaCorrientePlugin::inicializar()
 bool CuentaCorrientePlugin::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "ctacte" ) )
- { qWarning() << QString::fromUtf8( "No se encontro la tabla de cuenta corriente <br /> Se creará" ); return false; }
+ { qDebug() << QString::fromUtf8( "No se encontro la tabla de cuenta corriente <br /> Se creará" ); return false; }
  if( !tablas.contains( "item_ctacte" ) )
- { qWarning() << "Error al buscar la tabla de item cuenta corriente"; return false; }
+ { qDebug() << "Error al buscar la tabla de item cuenta corriente"; return false; }
  return true;
 }
 

@@ -63,11 +63,11 @@ bool DescuentosPlugin::inicializar()
 bool DescuentosPlugin::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "tipo_descuento" ) )
- { qWarning( "DescuentosPlugin::Error al buscar la tabla tipo_descuento" ); return false; }
+ { qDebug( "DescuentosPlugin::Error al buscar la tabla tipo_descuento" ); return false; }
  else if( !tablas.contains( "descuentos" ) )
- { qWarning( "DescuentosPlugin::Error al buscar la tabla descuentos" ); return false; }
+ { qDebug( "DescuentosPlugin::Error al buscar la tabla descuentos" ); return false; }
  else if( !tablas.contains( "descuento_comprobante" ) )
- { qWarning( "DescuentosPlugin::Error al buscar la tabla descuento_comprobante" ); return false; }
+ { qDebug( "DescuentosPlugin::Error al buscar la tabla descuento_comprobante" ); return false; }
  return true;
 }
 

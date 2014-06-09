@@ -88,13 +88,13 @@ bool Ventas::inicializar()
 bool Ventas::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "producto" ) )
- { qWarning( "Ventas::Error al buscar la tabla producto" ); return false; }
+ { qDebug( "Ventas::Error al buscar la tabla producto" ); return false; }
  else if( !tablas.contains( "categoria_producto" ) )
- { qWarning( "Ventas::Error al buscar la tabla categorias_producto" ); return false; }
+ { qDebug( "Ventas::Error al buscar la tabla categorias_producto" ); return false; }
  if( !tablas.contains( "factura" ) )
- { qWarning( "Ventas::Error al buscar la tabla factura" ); return false; }
+ { qDebug( "Ventas::Error al buscar la tabla factura" ); return false; }
  if( !tablas.contains( "item_factura" ) )
- { qWarning( "Ventas::Error al buscar la tabla item_factura" ); return false; }
+ { qDebug( "Ventas::Error al buscar la tabla item_factura" ); return false; }
  return true;
 }
 

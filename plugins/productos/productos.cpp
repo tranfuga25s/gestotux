@@ -108,9 +108,9 @@ bool productos::inicializar()
 bool productos::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "producto" ) )
- { qWarning( "Productos::Error al buscar la tabla producto" ); return false; }
+ { qDebug( "Productos::Error al buscar la tabla producto" ); return false; }
  else if( !tablas.contains( "categoria_producto" ) )
- { qWarning( "Productos::Error al buscar la tabla categoria_producto" ); return false; }
+ { qDebug( "Productos::Error al buscar la tabla categoria_producto" ); return false; }
  return true;
 }
 

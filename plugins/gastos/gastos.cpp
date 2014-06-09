@@ -23,6 +23,10 @@
 
 Q_EXPORT_PLUGIN2( gastos, Gastos );
 
+/**
+ * @brief Gastos::inicializar
+ * @return
+ */
 bool Gastos::inicializar()
 {
  Q_INIT_RESOURCE(gastos);
@@ -44,25 +48,42 @@ bool Gastos::inicializar()
  return true;
 }
 
+/**
+ * @brief Gastos::verificarTablas
+ * @param tablas
+ * @return
+ */
 bool Gastos::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "gastos" ) )
- { qWarning( "Gastos::Error al buscar la tabla gastos" ); return false; }
+ { qDebug( "Gastos::Error al buscar la tabla gastos" ); return false; }
  if( !tablas.contains( "categoria_gastos" ) )
- { qWarning( "Gastos::Error al buscar la tabla categorias_gastos" ); return false; }
+ { qDebug( "Gastos::Error al buscar la tabla categorias_gastos" ); return false; }
  return true;
 }
 
+/**
+ * @brief Gastos::version
+ * @return
+ */
 double Gastos::version() const
 {
  return 0.1;
 }
 
+/**
+ * @brief Gastos::tipo
+ * @return
+ */
 int Gastos::tipo() const
 {
  return EPlugin::comun;
 }
 
+/**
+ * @brief Gastos::accionesBarra
+ * @return
+ */
 QList< QActionGroup * > Gastos::accionesBarra()
 {
  /*QList<QActionGroup *> lista;
@@ -74,16 +95,28 @@ QList< QActionGroup * > Gastos::accionesBarra()
  return QList<QActionGroup *>();
 }
 
+/**
+ * @brief Gastos::nombre
+ * @return
+ */
 QString Gastos::nombre() const
 {
  return "gastos";
 }
 
+/**
+ * @brief Gastos::formsPreferencias
+ * @return
+ */
 QWidgetList Gastos::formsPreferencias()
 {
  return QWidgetList();
 }
 
+/**
+ * @brief Gastos::crearMenu
+ * @param m
+ */
 void Gastos::crearMenu(QMenuBar* m)
 {
  QMenu *menuHerramientas = m->findChild<QMenu *>( "menuHerramientas" );
@@ -97,17 +130,18 @@ void Gastos::crearMenu(QMenuBar* m)
  }
 }
 
-void Gastos::crearToolBar(QToolBar* t)
-{
-    (void)t;
-}
+/**
+ * @brief Gastos::crearToolBar
+ * @param t
+ */
+void Gastos::crearToolBar(QToolBar*)
+{}
 
 
 #include "formagregargasto.h"
 #include "mcategoriasgastos.h"
-/*!
-    \fn Gastos::agregarGasto()
-        Abre la ventana para agregar un gasto
+/**
+ * @brief Gastos::agregarGasto
  */
 void Gastos::agregarGasto()
 {
@@ -122,16 +156,15 @@ void Gastos::agregarGasto()
 
 
 #include "vgastos.h"
-/*!
-    \fn Gastos::ver_gastos()
-    Muestra el listado de gastos que haya cargado
+/**
+ * @brief Gastos::ver_gastos
  */
 void Gastos::ver_gastos()
 { emit agregarVentana( new VGastos() ); }
 
 
-/*!
-    \fn Gastos::seCierraGestotux()
+/**
+ * @brief Gastos::seCierraGestotux
  */
 void Gastos::seCierraGestotux()
 { Q_CLEANUP_RESOURCE(gastos); return; }

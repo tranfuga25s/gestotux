@@ -30,9 +30,9 @@ bool PluginEmail::inicializar()
 bool PluginEmail::verificarTablas( QStringList lista)
 {
  if( !lista.contains( "servidores_email" ) )
- { qWarning( "Error al buscar la tabla servidores_email" ); return false; }
+ { qDebug( "Error al buscar la tabla servidores_email" ); return false; }
  if( !lista.contains( "emails" ) )
- { qWarning( "Error al buscar la tabla emails" ); return false; }
+ { qDebug( "Error al buscar la tabla emails" ); return false; }
  return true;
 }
 

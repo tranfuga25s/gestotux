@@ -84,13 +84,13 @@ bool RemitoPlugin::inicializar()
 bool RemitoPlugin::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "producto" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla producto" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla producto" ); return false; }
  else if( !tablas.contains( "categoria_producto" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla categorias_producto" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla categorias_producto" ); return false; }
  if( !tablas.contains( "remito" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla remito" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla remito" ); return false; }
  if( !tablas.contains( "item_remito" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla item_remito" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla item_remito" ); return false; }
  return true;
 }
 
