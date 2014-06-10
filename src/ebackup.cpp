@@ -471,7 +471,7 @@ void EBackup::restaurarBackup( QString nombre )
         emit cambiarDetener( false );
         return;
  }
-
+ LDebug->setText( "Examinando archivo de backup" );
  QString contenido = archivo.readAll();
  archivo.close();
  if( contenido.isEmpty() )
@@ -503,13 +503,15 @@ void EBackup::restaurarBackup( QString nombre )
 
   QString colas = contenido;
   colas.remove( posfinal, contenido.size() - posfinal );
+  LDebug->setText( "Iniciando restauración de los datos" );
   ejecutarColas( colas.split( ";" ) );
-
+  LDebug->setText( "Terminada restauración de datos" );
   contenido.remove( 0, posfinal + QString( "<-basedatosql<-|").size() );
  }
  // Verifico si contiene el backup de las preferencias
  if( contenido.startsWith( "|->preferencias->", Qt::CaseSensitive ) )
  {
+  LDebug->setText( "Iniciando restauración de preferencias..." );
   // Elimino la cabecera de las preferencias
   contenido.remove( 0, QString( "|->preferencias->" ).size() );
   // Busco el fin de las preferencias
@@ -519,6 +521,9 @@ void EBackup::restaurarBackup( QString nombre )
   regenerarPreferencias( &prefs );
   //contenido.remove( 0, posfinal + QString( "<-preferencias<-|").size() );
  }
+ emit cambiarDetener( false );
+ ActCerrar->setDisabled( false );
+ LDebug->setText( "Terminada restauración del backup" );
  // fin de la recuperación
  return;
 }
@@ -553,19 +558,26 @@ bool EBackup::ejecutarColas( QStringList colas )
 {
  bool estado = true;
  QSqlQuery *cola = new QSqlQuery();
+ PBProgreso->setRange( 0, colas.size() );
+ PBProgreso->setValue( 0 );
  while( colas.size() > 0  && estado == true )
  {
-  if( colas.at(0).isEmpty() ) {
+  QString ejecutar = colas.at(0).simplified();
+  if( ejecutar.isEmpty() ) {
      colas.removeFirst();
+     PBProgreso->setValue( PBProgreso->value() + 1 );
      continue;
   }
-  if( cola->exec( colas.at( 0 ) ) )
+  QApplication::processEvents();
+  if( cola->exec( ejecutar ) )
   {
     colas.removeFirst();
+    PBProgreso->setValue( PBProgreso->value() + 1 );
   }
   else
   {
-        qWarning() << cola->lastError().text() << ". Cola: " << cola->lastQuery();
+        qWarning() << "Pos: " << PBProgreso->value() << ": " << cola->lastError().text() << ". Cola: " << cola->lastQuery();
+        PBProgreso->setValue( PBProgreso->value() + 1 );
         estado = false;
   }
  }
