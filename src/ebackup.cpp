@@ -467,7 +467,7 @@ void EBackup::restaurarBackup( QString nombre )
  QFile archivo( LEArchivo->text() );
  if( !archivo.open( QIODevice::ReadOnly ) )
  {
-        qWarning( "No se puede arbir el archivo de backup para restaruarlo. Verifique que la ruta sea correcta y que no este en uso" );
+        qWarning() << QString::fromUtf8( "No se puede arbir el archivo de backup para restaruarlo. Verifique que la ruta sea correcta y que no este en uso" );
         emit cambiarDetener( false );
         return;
  }
@@ -476,7 +476,7 @@ void EBackup::restaurarBackup( QString nombre )
  archivo.close();
  if( contenido.isEmpty() )
  {
-  qWarning() << "El archivo esta vacío. \n Seleccione otro archivo para restaurar.";
+   qWarning() << QString::fromUtf8( "El archivo esta vacío. \n Seleccione otro archivo para restaurar." );
   emit cambiarDetener( false );
   return;
  }
@@ -490,7 +490,7 @@ void EBackup::restaurarBackup( QString nombre )
   QString formato = contenido.section( ";", 0, 0 );
   if( formato != QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName() )
   {
-      qWarning() << "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente."
+      qWarning() << QString::fromUtf8( "Este backup que intenta restaurar no posee los datos para la base de datos que está utilizando actualmente." ) <<
                     "Formato: " << formato
                  << " - Formato actual: " << QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).driverName();
       return;
@@ -503,15 +503,15 @@ void EBackup::restaurarBackup( QString nombre )
 
   QString colas = contenido;
   colas.remove( posfinal, contenido.size() - posfinal );
-  LDebug->setText( "Iniciando restauración de los datos" );
+  LDebug->setText( QString::fromUtf8( "Iniciando restauración de los datos" ) );
   ejecutarColas( colas.split( ";" ) );
-  LDebug->setText( "Terminada restauración de datos" );
+  LDebug->setText( QString::fromUtf8( "Terminada restauración de datos" ) );
   contenido.remove( 0, posfinal + QString( "<-basedatosql<-|").size() );
  }
  // Verifico si contiene el backup de las preferencias
  if( contenido.startsWith( "|->preferencias->", Qt::CaseSensitive ) )
  {
-  LDebug->setText( "Iniciando restauración de preferencias..." );
+  LDebug->setText( QString::fromUtf8( "Iniciando restauración de preferencias..." ) );
   // Elimino la cabecera de las preferencias
   contenido.remove( 0, QString( "|->preferencias->" ).size() );
   // Busco el fin de las preferencias
@@ -522,8 +522,8 @@ void EBackup::restaurarBackup( QString nombre )
   //contenido.remove( 0, posfinal + QString( "<-preferencias<-|").size() );
  }
  emit cambiarDetener( false );
- ActCerrar->setDisabled( false );
- LDebug->setText( "Terminada restauración del backup" );
+ //ActCerrar->setDisabled( false );
+ LDebug->setText( QString::fromUtf8( "Terminada restauración del backup" ) );
  // fin de la recuperación
  return;
 }
