@@ -69,6 +69,8 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     ecbmproducto->inicializar();
 
     CBProducto->setearListado( ecbmproducto );
+    CBProducto->setearMostrarSinStock( true );
+    CBProducto->setearMostrarDeshabilitados( true );
 
     mcp = new MProductosTotales( this, ecbmproducto );
     mcp->calcularTotales( true );

@@ -135,7 +135,7 @@ QList<int> *ECBProductos::getListaIDs()
  */
 void ECBProductos::setearMostrarDeshabilitados( bool estado )
 {
-    this->modelo->setearNoMostrarProductosDeshabilitados( estado );
+    this->modelo->setearNoMostrarProductosDeshabilitados( !estado );
 }
 
 /*!
@@ -144,7 +144,7 @@ void ECBProductos::setearMostrarDeshabilitados( bool estado )
  */
 void ECBProductos::setearMostrarSinStock( bool estado )
 {
-   this->modelo->setearNoMostrarProductosSinStock( estado );
+   this->modelo->setearNoMostrarProductosSinStock( !estado );
 }
 
 /*!
