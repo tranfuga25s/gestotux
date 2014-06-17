@@ -42,7 +42,7 @@ public:
     QWidgetList formsPreferencias();
     void crearMenu(QMenuBar* m);
     void crearToolBar(QToolBar* t);
-    QAction *botonPantallaInicial() { return ActCompras; }
+    QAction *botonPantallaInicial() { return ActAgregarCompra; }
     void crearAccionesGlobales(QMainWindow *){}
 
 signals:
