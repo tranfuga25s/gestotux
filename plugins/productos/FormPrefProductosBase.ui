@@ -28,17 +28,28 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="CkBMarcas">
-        <property name="text">
-         <string>Utilizar Marcas</string>
+       <widget class="QGroupBox" name="GBMarcas">
+        <property name="title">
+         <string>Utilizar marcas</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="CkBMarcaProveedor">
-        <property name="text">
-         <string>Utilizar el nombre del  proveedor como marca</string>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="CkBMarcaProveedor">
+           <property name="text">
+            <string>Utilizar el nombre del  proveedor como marca</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -108,24 +119,27 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="CkBAvisosStock">
+       <widget class="QCheckBox" name="CkBCantidadDecimales">
         <property name="enabled">
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Habilitar avisos de stock bajo</string>
+         <string>Habilitar decimales en cantidad unitaria</string>
         </property>
        </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QLabel" name="LStockMin">
+         <widget class="QLabel" name="LCantDecimales">
           <property name="enabled">
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Limite de stock minimo:</string>
+           <string>Cantidad de decimales:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
           <property name="buddy">
            <cstring>DSBLimiteMinimo</cstring>
@@ -133,11 +147,24 @@
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="DSBLimiteMinimo">
+         <widget class="QSpinBox" name="DSBLimiteMinimo">
           <property name="enabled">
            <bool>false</bool>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -195,50 +222,34 @@
  <resources/>
  <connections>
   <connection>
-   <sender>CkBAvisosStock</sender>
+   <sender>CkBCantidadDecimales</sender>
    <signal>toggled(bool)</signal>
-   <receiver>LStockMin</receiver>
+   <receiver>LCantDecimales</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>287</y>
+     <x>136</x>
+     <y>328</y>
     </hint>
     <hint type="destinationlabel">
-     <x>190</x>
-     <y>321</y>
+     <x>161</x>
+     <y>356</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>CkBAvisosStock</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>DSBLimiteMinimo</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>271</x>
-     <y>287</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>496</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>CkBMarcas</sender>
+   <sender>GBMarcas</sender>
    <signal>toggled(bool)</signal>
    <receiver>CkBMarcaProveedor</receiver>
-   <slot>setVisible(bool)</slot>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>121</x>
-     <y>77</y>
+     <x>56</x>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
-     <x>126</x>
-     <y>98</y>
+     <x>265</x>
+     <y>99</y>
     </hint>
    </hints>
   </connection>

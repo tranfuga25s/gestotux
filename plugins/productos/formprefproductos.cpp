@@ -43,8 +43,10 @@ void FormPrefProductos::cargar()
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Productos");
  CkBCategorias->setChecked( p->value( "categorias", false ).toBool() );
- CkBMarcas->setChecked( p->value( "marcas", false ).toBool() );
+
+ GBMarcas->setChecked( p->value( "marcas", false ).toBool() );
  CkBMarcaProveedor->setChecked( p->value( "marca_proveedor", false ).toBool() );
+
  CkBDescripcion->setChecked( p->value( "descripcion", false ).toBool() );
  GBStock->setChecked( p->value( "stock", false ).toBool() );
  CkBCosto->setChecked( p->value( "mostrar-costo", true ).toBool() );
@@ -52,9 +54,10 @@ void FormPrefProductos::cargar()
  p->beginGroup( "Stock" );
  CkBPermitir->setChecked( p->value( "permitir", false ).toBool() );
  CkBLimitarVenta->setChecked( p->value( "limitar", false ).toBool() );
- CkBAvisosStock->setChecked( p->value( "avisos", false ).toBool() );
+ //CkBAvisosStock->setChecked( p->value( "avisos", false ).toBool() );
  DSBLimiteMinimo->setValue( p->value( "limiteMinimo", 0.0 ).toDouble() );
  CkBMostrarStockLista->setChecked( p->value( "mostrar-stock-lista", false ).toBool() );
+ CkBCantidadDecimales->setChecked( p->value( "mostrar-decimales", false ).toBool() );
  p->endGroup();
  DsBGanancia->setValue( p->value( "ganancia", 10.0 ).toDouble() );
  p->endGroup();
@@ -80,7 +83,7 @@ void FormPrefProductos::guardar()
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Productos" );
  p->setValue( "categorias",CkBCategorias->isChecked() );
- p->setValue( "marcas", CkBMarcas->isChecked() );
+ p->setValue( "marcas", GBMarcas->isChecked() );
  p->setValue( "marca_proveedor", CkBMarcaProveedor->isChecked() );
  p->setValue( "descripcion",CkBDescripcion->isChecked() );
  p->setValue( "stock", GBStock->isChecked() );
@@ -89,9 +92,10 @@ void FormPrefProductos::guardar()
  p->beginGroup( "Stock" );
  p->setValue( "permitir", CkBPermitir->isChecked() );
  p->setValue( "limitar", CkBLimitarVenta->isChecked() );
- p->setValue( "avisos", CkBAvisosStock->isChecked() );
+ //p->setValue( "avisos", CkBAvisosStock->isChecked() );
  p->setValue( "limiteMinimo", DSBLimiteMinimo->value() );
  p->setValue( "mostrar-stock-lista", CkBMostrarStockLista->isChecked() );
+ p->setValue( "mostrar-decimales", CkBCantidadDecimales->isChecked() );
  p->endGroup();
  p->setValue( "ganancia", DsBGanancia->value() );
  p->endGroup();
