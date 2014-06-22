@@ -55,9 +55,10 @@ void FormPrefProductos::cargar()
  CkBPermitir->setChecked( p->value( "permitir", false ).toBool() );
  CkBLimitarVenta->setChecked( p->value( "limitar", false ).toBool() );
  //CkBAvisosStock->setChecked( p->value( "avisos", false ).toBool() );
- DSBLimiteMinimo->setValue( p->value( "limiteMinimo", 0.0 ).toDouble() );
+ //DSBLimiteMinimo->setValue( p->value( "limiteMinimo", 0.0 ).toDouble() );
  CkBMostrarStockLista->setChecked( p->value( "mostrar-stock-lista", false ).toBool() );
  CkBCantidadDecimales->setChecked( p->value( "mostrar-decimales", false ).toBool() );
+ DSBCantidadDecimales->setValue( p->value( "cantidad-decimales", 4 ).toInt() );
  p->endGroup();
  DsBGanancia->setValue( p->value( "ganancia", 10.0 ).toDouble() );
  p->endGroup();
@@ -93,9 +94,10 @@ void FormPrefProductos::guardar()
  p->setValue( "permitir", CkBPermitir->isChecked() );
  p->setValue( "limitar", CkBLimitarVenta->isChecked() );
  //p->setValue( "avisos", CkBAvisosStock->isChecked() );
- p->setValue( "limiteMinimo", DSBLimiteMinimo->value() );
+ //p->setValue( "limiteMinimo", DSBLimiteMinimo->value() );
  p->setValue( "mostrar-stock-lista", CkBMostrarStockLista->isChecked() );
  p->setValue( "mostrar-decimales", CkBCantidadDecimales->isChecked() );
+ p->setValue( "cantidad-decimales", DSBCantidadDecimales->value() );
  p->endGroup();
  p->setValue( "ganancia", DsBGanancia->value() );
  p->endGroup();
