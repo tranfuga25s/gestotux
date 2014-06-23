@@ -50,6 +50,12 @@ MProductos::MProductos(QObject *parent)
  setHeaderData( 8, Qt::Horizontal, "Stock" );
  setHeaderData( 9, Qt::Horizontal, "Habilitado" );
  setSort( 0, Qt::AscendingOrder );
+ // Cantidad de decimales
+ if( p->value("mostrar-decimales", false ).toBool() ) {
+     this->_cantidad_decimales = p->value( "cantidad-decimales", 4 ).toInt();
+ } else {
+     this->_cantidad_decimales = 0;
+ }
  p->endGroup();
  p->endGroup();
  p=0;
@@ -69,7 +75,7 @@ QVariant MProductos::data( const QModelIndex& item, int role ) const
                         case 4:
                         case 5:
                         {
-                                return QString( "$ %1" ).arg( QString::number( QSqlRelationalTableModel::data(item, role).toDouble(), 'f', 2 ) );
+                                return QString( "$ %1" ).arg( QString::number( QSqlRelationalTableModel::data(item, role).toDouble(), 'f', this->_cantidad_decimales ) );
                                 break;
                         }
                         case 9:
@@ -82,7 +88,7 @@ QVariant MProductos::data( const QModelIndex& item, int role ) const
                         }
                         case 8:
                         {
-                            return QString::number( QSqlRelationalTableModel::data( item, role ).toDouble(), 'f', 2 );
+                            return QString::number( QSqlRelationalTableModel::data( item, role ).toDouble(), 'f', this->_cantidad_decimales );
                             break;
                         }
                         default:
@@ -270,7 +276,7 @@ bool MProductos::modificarStock( const int id_producto, const double cantidad )
  * \param modelo Modelo del producto
  * \returns Verdadero si se pudo ingresar correctamente el producto a la base de datos, falso en caso contrario.
  */
-int MProductos::agregarProducto(const QString codigo, const QString nombre, const double costo, const double venta, int stock, int categoria, QString descripcion, QString marca, QString modelo) {
+int MProductos::agregarProducto(const QString codigo, const QString nombre, const double costo, const double venta, double stock, int categoria, QString descripcion, QString marca, QString modelo) {
     QSqlQuery cola;
     if( !cola.prepare( "INSERT INTO producto ( codigo, nombre, precio_costo, precio_venta, stock, id_categoria, descripcion, marca, modelo, habilitado ) VALUES( :codigo, :nombre, :precio_costo, :precio_venta, :stock, :categoria, :descripcion, :marca, :modelo, :habilitado )" ) ) {
         qDebug() <<  cola.lastError().text();
