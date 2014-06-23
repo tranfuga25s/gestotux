@@ -45,6 +45,7 @@ private Q_SLOTS:
     void testBuscarCodigoExistente_data();
     void testBuscarPrecioCompra();
     void testBuscarPrecioCompra_data();
+    void testCantidadDecimales();
 
 private:
     MProductos *mp;
@@ -548,6 +549,50 @@ void ProductosTest::testBuscarPrecioCompra_data()
     QTest::newRow("Producto2") << 2 << 10.0;
     QTest::newRow("Producto3") << 3 << 10.0;
     QTest::newRow("Producto4") << 4 << 10.0;
+}
+
+/**
+ * @brief ProductosTest::testCantidadDecimales
+ * Permite verificar que tenga la cantidad de digitos de decimal especificados.
+ */
+void ProductosTest::testCantidadDecimales()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "cantidad-decimales", 4 );
+    p->setValue( "mostrar-decimales", true );
+    p->sync();
+
+    QLocale locale;
+
+    MProductos *mp = new MProductos();
+    mp->select();
+    QString salida = mp->data( mp->index( 0, mp->fieldIndex( "stock" ) ), Qt::DisplayRole ).toString();
+    QVERIFY( !salida.isEmpty() );
+    QVERIFY( salida.contains( locale.decimalPoint() ) );
+    QStringList lista = salida.split( "," );
+    QVERIFY( lista.size() > 1 );
+    QCOMPARE( lista.at(1).size(), 4 );
+    delete mp;
+    mp=0;
+
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "cantidad-decimales", 4 );
+    p->setValue( "mostrar-decimales", false );
+    p->sync();
+
+    mp = new MProductos();
+    mp->select();
+    // Busco un stock de producto
+    salida = mp->data( mp->index( 0, mp->fieldIndex( "stock" ) ), Qt::DisplayRole ).toString();
+    QVERIFY( !salida.isEmpty() );
+    QVERIFY( !salida.contains( locale.decimalPoint() ) );
+    delete mp;
+    mp=0;
 }
 
 QTEST_MAIN(ProductosTest)

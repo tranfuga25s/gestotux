@@ -75,7 +75,7 @@ QVariant MProductos::data( const QModelIndex& item, int role ) const
                         case 4:
                         case 5:
                         {
-                                return QString( "$ %1" ).arg( QString::number( QSqlRelationalTableModel::data(item, role).toDouble(), 'f', this->_cantidad_decimales ) );
+                                return QString( "$ %1" ).arg( QString::number( QSqlRelationalTableModel::data(item, role).toDouble(), 'f', 2 ) );
                                 break;
                         }
                         case 9:
@@ -88,8 +88,8 @@ QVariant MProductos::data( const QModelIndex& item, int role ) const
                         }
                         case 8:
                         {
-                            return QString::number( QSqlRelationalTableModel::data( item, role ).toDouble(), 'f', this->_cantidad_decimales );
-                            break;
+                                return QString( "%L1" ).arg( QSqlRelationalTableModel::data( item, role ).toDouble(), 0, 'f', this->_cantidad_decimales );
+                                break;
                         }
                         default:
                         {
