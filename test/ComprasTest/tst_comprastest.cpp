@@ -20,6 +20,7 @@ private Q_SLOTS:
     void testAutoAgregarProductosPreferencias();
     void testAutoAgregarProductos();
     void testAutoAgregarProductos_data();
+    void testCantidadDecimalesAgregarCompra();
 };
 
 ComprasTest::ComprasTest()
@@ -157,6 +158,40 @@ void ComprasTest::testAutoAgregarProductos_data()
     QTest::addColumn<QString>("nombre_proveedor");
     QTest::newRow("Primer elemento") << "Prueba insercion 1" << 10.0 << 1 << "Proveedor 1";
     QTest::newRow("SegundoItem") << "Prueba insersión 2 " << 11.0 << 2 << "Proveedor 2";
+}
+
+/**
+ * @brief ComprasTest::testCantidadDecimales
+ * Verifica que se cumpla la cantidad de decimales en el formulario de agregar compra
+ */
+void ComprasTest::testCantidadDecimalesAgregarCompra()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "cantidad-decimales", 4 );
+    p->setValue( "mostrar-decimales", true );
+    p->sync();
+
+    FormAgregarCompra *ac = new FormAgregarCompra();
+    QCOMPARE( ac->DSBCant->decimals(), 4 );
+    delete ac;
+    ac=0;
+
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "cantidad-decimales", 4 );
+    p->setValue( "mostrar-decimales", false );
+    p->sync();
+
+    ac = new FormAgregarCompra();
+    QCOMPARE( ac->DSBCant->decimals(), 0 );
+    delete ac;
+    ac=0;
 }
 
 QTEST_MAIN(ComprasTest)

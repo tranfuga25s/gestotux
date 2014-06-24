@@ -10,9 +10,10 @@ class VItemFactura : public EVLista
 public:
     explicit VItemFactura(QWidget *parent = 0);
     void setearIdFactura( const int id_factura );
-    
+
 private:
     MProductosTotales *modelo;
+
 };
 
 #endif // VITEMFACTURA_H

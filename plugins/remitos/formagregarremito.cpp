@@ -99,9 +99,6 @@ FormAgregarRemito::FormAgregarRemito ( QWidget* parent, Qt::WFlags fl )
         connect( PBEliminar, SIGNAL( clicked() ), this, SLOT( eliminarProducto() ) );
         connect( PBEliminarTodo, SIGNAL( clicked() ), this, SLOT( eliminarTodo() ) );
 
-        DSBCant->setValue( 1.0 );
-        DSBCant->setPrefix( "" );
-
         // Coloco el proximo numero de comprobante
         LNumeroComprobante->setText( LNumeroComprobante->text().append( "       <b>" ).append( MRemito::proximoComprobante().aCadena() ).append( "</b>" ) );
 
@@ -123,8 +120,21 @@ FormAgregarRemito::FormAgregarRemito ( QWidget* parent, Qt::WFlags fl )
         p->beginGroup( "Descuentos" );
         bool usar = p->value( "usar", false ).toBool();
         p->endGroup();
+        p->beginGroup( "Productos" );
+        p->beginGroup( "Stock" );
+        int cantidad_decimales = 0;
+        if( p->value("mostrar-decimales", false ).toBool() ) {
+            cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
+        }
+        p->endGroup();
+        p->endGroup();
         p->endGroup();
         p=0;
+
+        DSBCant->setDecimals( cantidad_decimales );
+        DSBCant->setValue( 1.0 );
+        DSBCant->setPrefix( "" );
+
         if(  !( ERegistroPlugins::getInstancia()->existePluginExterno( "descuentos" ) ) ) {
             PBAgregarDescuento->setVisible( false );
             PBEliminarDescuento->setVisible( false );

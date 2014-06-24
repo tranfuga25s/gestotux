@@ -14,7 +14,6 @@ public:
 
 private:
     MProductosTotales *modelo;
-    
 };
 
 #endif // VLISTAPRESUPUESTO_H

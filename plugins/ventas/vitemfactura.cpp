@@ -18,7 +18,6 @@ VItemFactura::VItemFactura(QWidget *parent) :
     vista->setModel( modelo );
     vista->horizontalHeader()->setAlternatingRowColors( true );
 
-
     addAction( ActCerrar );
 
 }

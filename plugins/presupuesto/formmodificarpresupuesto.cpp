@@ -8,6 +8,7 @@
 #include "mvpresupuestos.h"
 #include "NumeroComprobante.h"
 #include "mdescuentos.h"
+#include "preferencias.h"
 
 #include <QDataWidgetMapper>
 #include <QSqlQuery>
@@ -73,6 +74,21 @@ FormModificarPresupuesto::FormModificarPresupuesto(QWidget *parent) :
     connect( PBEliminar    , SIGNAL( clicked() ), this, SLOT( eliminarProducto()   ) );
     connect( PBEliminarTodo, SIGNAL( clicked() ), this, SLOT( borrarTodoProducto() ) );
 
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    int cantidad_decimales = 0;
+    if( p->value("mostrar-decimales", false ).toBool() ) {
+        cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
+    }
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    p=0;
+
+    DSBCant->setDecimals( cantidad_decimales );
     DSBCant->setValue( 1.0 );
     DSBCant->setPrefix( "" );
 }

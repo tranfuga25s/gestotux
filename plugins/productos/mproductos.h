@@ -38,7 +38,7 @@ public:
     bool setData( const QModelIndex &item, const QVariant &value, int role = Qt::EditRole );
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
-    static int agregarProducto( const QString codigo, const QString nombre, const double costo, const double venta, int stock = 0, int categoria = -1, QString descripcion = QString(), QString marca = QString(), QString modelo = QString() );
+    static int agregarProducto( const QString codigo, const QString nombre, const double costo, const double venta, double stock = 0, int categoria = -1, QString descripcion = QString(), QString marca = QString(), QString modelo = QString() );
 
     static double stock( const int id_producto );
     static bool modificarStock( const int id_producto, const double cantidad );
@@ -75,6 +75,8 @@ public:
 private:
     static bool cambiarHabilitado( const int id_producto, bool estado );
     bool cambiarHabilitado( const QModelIndex idx, bool estado );
+
+    int _cantidad_decimales;
 
 };
 
