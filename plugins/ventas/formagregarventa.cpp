@@ -144,8 +144,20 @@ FormAgregarVenta::FormAgregarVenta ( QWidget* parent, Qt::WFlags fl )
             CBProveedor->setVisible( false );
         }
         p->endGroup();
+        p->beginGroup( "Productos" );
+        p->beginGroup( "Stock" );
+        int cantidad_decimales = 0;
+        if( p->value("mostrar-decimales", false ).toBool() ) {
+            cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
+        }
+        p->endGroup();
+        p->endGroup();
         p->endGroup();
         p=0;
+
+        DSBCant->setDecimals( cantidad_decimales );
+        DSBCant->setValue( 1.0 );
+
         if(  !( ERegistroPlugins::getInstancia()->existePluginExterno( "descuentos" ) ) ) {
             PBAgregarDescuento->setVisible( false );
             PBEliminarDescuento->setVisible( false );
