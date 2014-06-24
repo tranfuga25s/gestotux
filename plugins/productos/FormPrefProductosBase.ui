@@ -121,7 +121,7 @@
       <item>
        <widget class="QCheckBox" name="CkBCantidadDecimales">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Habilitar decimales en cantidad unitaria</string>
@@ -225,7 +225,7 @@
    <sender>CkBCantidadDecimales</sender>
    <signal>toggled(bool)</signal>
    <receiver>LCantDecimales</receiver>
-   <slot>setVisible(bool)</slot>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>136</x>
@@ -250,6 +250,22 @@
     <hint type="destinationlabel">
      <x>265</x>
      <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CkBCantidadDecimales</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>DSBCantidadDecimales</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>197</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>

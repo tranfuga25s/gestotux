@@ -561,6 +561,7 @@ void ProductosTest::testCantidadDecimales()
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
     p->setValue( "cantidad-decimales", 4 );
     p->setValue( "mostrar-decimales", true );
     p->sync();
@@ -581,6 +582,7 @@ void ProductosTest::testCantidadDecimales()
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
     p->setValue( "cantidad-decimales", 4 );
     p->setValue( "mostrar-decimales", false );
     p->sync();

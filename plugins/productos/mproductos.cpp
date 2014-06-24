@@ -51,11 +51,14 @@ MProductos::MProductos(QObject *parent)
  setHeaderData( 9, Qt::Horizontal, "Habilitado" );
  setSort( 0, Qt::AscendingOrder );
  // Cantidad de decimales
+ p->beginGroup("Stock");
  if( p->value("mostrar-decimales", false ).toBool() ) {
      this->_cantidad_decimales = p->value( "cantidad-decimales", 4 ).toInt();
  } else {
      this->_cantidad_decimales = 0;
  }
+ qDebug() << "Cantidad de decimales " << this->_cantidad_decimales;
+ p->endGroup();
  p->endGroup();
  p->endGroup();
  p=0;
