@@ -23,6 +23,11 @@ VListaPresupuesto::VListaPresupuesto(QWidget *parent) :
 
 }
 
+/*!
+ * \brief VListaPresupuesto::setearIdPresupuesto
+ * Carga los datos del presupuesto indicado como parametro
+ * \param id_presupuesto Identificador del presupuesto a cargar
+ */
 void VListaPresupuesto::setearIdPresupuesto( const int id_presupuesto )
 {
   // Cargo todos los datos
@@ -37,6 +42,7 @@ void VListaPresupuesto::setearIdPresupuesto( const int id_presupuesto )
                     );
     }
     delete m;
+    m=0;
     // Cargo los datos si es necesario.
     MDescuentos *md = new MDescuentos();
     md->setearIdComprobante( id_presupuesto );
@@ -51,4 +57,5 @@ void VListaPresupuesto::setearIdPresupuesto( const int id_presupuesto )
         }
     }
     delete md;
+    md=0;
 }
