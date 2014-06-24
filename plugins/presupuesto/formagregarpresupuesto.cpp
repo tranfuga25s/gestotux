@@ -117,17 +117,27 @@ FormAgregarPresupuesto::FormAgregarPresupuesto(QWidget* parent, Qt::WFlags fl)
         // Busco el siguiente numero de comprobante valido para un presupuesto
         LNumeroComprobante->setText( LNumeroComprobante->text() + "   <b>" + MPresupuesto::proximoComprobante().aCadena() + "</b>" );
 
-        DSBCant->setValue( 1.0 );
-        DSBCant->setPrefix( "" );
-
         preferencias *p = preferencias::getInstancia();
         p->inicio();
         p->beginGroup( "Preferencias" );
         p->beginGroup( "Descuentos" );
         bool usar = p->value( "usar", false ).toBool();
         p->endGroup();
+        p->beginGroup( "Productos" );
+        p->beginGroup( "Stock" );
+        int cantidad_decimales = 0;
+        if( p->value("mostrar-decimales", false ).toBool() ) {
+            cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
+        }
+        p->endGroup();
+        p->endGroup();
         p->endGroup();
         p=0;
+
+        DSBCant->setDecimals( cantidad_decimales );
+        DSBCant->setValue( 1.0 );
+        DSBCant->setPrefix( "" );
+
         if( ! ERegistroPlugins::getInstancia()->existePluginExterno( "descuentos" ) ) {
             PBAgregarDescuento->setVisible( false );
             PBEliminarDescuento->setVisible( false );
