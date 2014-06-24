@@ -146,6 +146,10 @@ private:
          * Define que tipo de precio Costo o Venta se buscará
          */
         TipoPrecio _tipoPrecio;
+        /*!
+         * Cantidad de decimales que se utiliza en la cantidad
+         */
+        int _cantidad_decimales;
 
         double buscarPrecioVenta( int id_producto );
         double buscarPrecioCompra( int id_producto );

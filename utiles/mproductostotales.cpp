@@ -53,6 +53,19 @@ MProductosTotales::MProductosTotales(QObject *parent, ECBProductosModel *_m )
  _tipoPrecio = MProductosTotales::Venta;
  _admite_duplicados = false;
  _solo_lectura = false;
+ _cantidad_decimales = 0;
+ preferencias *p = preferencias::getInstancia();
+ p->inicio();
+ p->beginGroup( "Preferencias" );
+ p->beginGroup( "Productos" );
+ p->beginGroup( "Stock" );
+ if( p->value( "mostrar-decimales", false ).toBool() ) {
+     _cantidad_decimales = p->value( "cantidad-decimales", 4 ).toInt();
+ }
+ p->endGroup();
+ p->endGroup();
+ p->endGroup();
+ p=0;
 }
 
 /*!
@@ -418,7 +431,7 @@ QVariant MProductosTotales::data(const QModelIndex& idx, int role) const
                         // Cantidades
                         case 0:
                         {
-                                return QString( "%L1" ).arg( cantidades->value( idx.row() ) );
+                                return QString( "%L1" ).arg( cantidades->value( idx.row() ), 0, 'f', _cantidad_decimales );
                                 break;
                         }
                         // Producto
@@ -766,14 +779,17 @@ void MProductosTotales::agregarNuevoProducto( double cantidad, int Id, double pr
       preferencias *p = preferencias::getInstancia();
       p->beginGroup( "Preferencias" );
       p->beginGroup( "Productos" );
-      if( p->value( "stock", false ).toBool() && _tipoPrecio != MProductosTotales::Costo ) {
+      bool _stock_habilitado = p->value( "stock", false ).toBool();
+      p->endGroup();
+      p->endGroup();
+      p=0;
+      if( _stock_habilitado && _tipoPrecio != MProductosTotales::Costo ) {
         if( ( MProductos::stock( Id ) - cantidad ) < 0 ) {
               qDebug( "-> Error, stock negativo" );
               qWarning( "-> El stock de este producto es insuficiente para la cantidad que intenta vender." );
               return;
         }
       }
-      p->endGroup(); p->endGroup(); p=0;
   }
 
   if( precio_unitario <= 0.0 ) {
