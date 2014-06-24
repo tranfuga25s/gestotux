@@ -101,8 +101,19 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
         connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), this, SLOT( cambioProveedor( int ) ) );
     }
     p->endGroup();
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    int cantidad_decimales = 0;
+    if( p->value("mostrar-decimales", false ).toBool() ) {
+        cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
+    }
+    p->endGroup();
+    p->endGroup();
     p->endGroup();
     p=0;
+
+    DSBCant->setDecimals( cantidad_decimales );
+    DSBCant->setValue( 1.0 );
 
     DSBPrecioUnitario->setVisible( false );
     DSBPrecioUnitario->setValue( 0.0 );
@@ -110,9 +121,6 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     CBProducto->setearMostrarSinStock( true );
 
     _id_proveedor_anterior = -1;
-
-    DSBCant->setValue( 1.0 );
-
 }
 
 
