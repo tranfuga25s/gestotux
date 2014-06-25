@@ -57,7 +57,6 @@ MProductos::MProductos(QObject *parent)
  } else {
      this->_cantidad_decimales = 0;
  }
- qDebug() << "Cantidad de decimales " << this->_cantidad_decimales;
  p->endGroup();
  p->endGroup();
  p->endGroup();

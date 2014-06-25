@@ -15,7 +15,7 @@ MTempBackups::~MTempBackups()
     delete _tamanos;
 }
 
-bool MTempBackups::setData( const QModelIndex &index, const QVariant &value, int role )
+bool MTempBackups::setData( const QModelIndex &, const QVariant &, int )
 {
     return false;
 }

@@ -350,5 +350,7 @@ bool MEquipamiento::enGarantia()
         estado = mgarantia->estaActiva( mgarantia->obtenerIdSegunEquipamiento( id_equipamiento ) );
         delete mgarantia;
         return estado;
+    } else {
+        /// @TODO Ver cuando no hay datos seleccionados
     }
 }
