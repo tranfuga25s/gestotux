@@ -11,7 +11,8 @@ SUBDIRS +=  ProductosTest \
             ProveedorTest \
             VentasTest \
             BackupTest \
-            RemitosTest
+            RemitosTest \
+            PresupuestosTest
 
 OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/productos.sql \
@@ -30,4 +31,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/item_factura.sql \
                sql/QSQLITE/clientes.sql \
                sql/QSQLITE/remito.sql \
-               sql/QSQLITE/item_remito.sql
+               sql/QSQLITE/item_remito.sql \
+               sql/QSQLITE/presupuestos.sql \
+               sql/QSQLITE/item_presupuesto.sql
