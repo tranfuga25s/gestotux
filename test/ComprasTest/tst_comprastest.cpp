@@ -21,6 +21,7 @@ private Q_SLOTS:
     void testAutoAgregarProductos();
     void testAutoAgregarProductos_data();
     void testCantidadDecimalesAgregarCompra();
+    void testCantidadMaxima();
 };
 
 ComprasTest::ComprasTest()
@@ -190,6 +191,18 @@ void ComprasTest::testCantidadDecimalesAgregarCompra()
 
     ac = new FormAgregarCompra();
     QCOMPARE( ac->DSBCant->decimals(), 0 );
+    delete ac;
+    ac=0;
+}
+
+/*!
+ * Verifica que se tenga la cantidad suficiente de valores para ingresar
+ */
+void ComprasTest::testCantidadMaxima()
+{
+    FormAgregarCompra *ac = new FormAgregarCompra();
+    ac->DSBCant->setValue( 9999999.0 );
+    QCOMPARE( ac->DSBCant->value(), 9999999.0 );
     delete ac;
     ac=0;
 }
