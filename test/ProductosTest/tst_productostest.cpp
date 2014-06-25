@@ -573,7 +573,7 @@ void ProductosTest::testCantidadDecimales()
     QString salida = mp->data( mp->index( 0, mp->fieldIndex( "stock" ) ), Qt::DisplayRole ).toString();
     QVERIFY( !salida.isEmpty() );
     QVERIFY( salida.contains( locale.decimalPoint() ) );
-    QStringList lista = salida.split( "," );
+    QStringList lista = salida.split( locale.decimalPoint() );
     QVERIFY( lista.size() > 1 );
     QCOMPARE( lista.at(1).size(), 4 );
     delete mp;
