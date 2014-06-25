@@ -20,6 +20,7 @@ private Q_SLOTS:
     void testAnulacionFacturaDescensoStock();
     void testCreacionFacturaItemsExtras();
     void testCreacionFacturaItemsExtras_data();
+    void testCantidadMaxima();
 };
 
 VentasTest::VentasTest()
@@ -229,6 +230,19 @@ void VentasTest::testCreacionFacturaItemsExtras_data()
     QTest::newRow("Primer elemento") << "Producto insertado 1" << 10.0 << 1.0 << "1" << 1;
     QTest::newRow("SegundoItem") << "Producto insertado 2" << 11.0 << 2.0 << "3" << 4;
 }
+
+/*!
+ * Verifica que se tenga la cantidad suficiente de valores para ingresar
+ */
+void VentasTest::testCantidadMaxima()
+{
+    FormAgregarVenta *ac = new FormAgregarVenta();
+    ac->DSBCant->setValue( 9999999.0 );
+    QCOMPARE( ac->DSBCant->value(), 9999999.0 );
+    delete ac;
+    ac=0;
+}
+
 QTEST_MAIN(VentasTest)
 
 #include "tst_ventastest.moc"

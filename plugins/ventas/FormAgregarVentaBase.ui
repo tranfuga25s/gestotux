@@ -137,7 +137,11 @@
          </widget>
         </item>
         <item>
-         <widget class="EDSBPrecio" name="DSBCant"/>
+         <widget class="EDSBPrecio" name="DSBCant">
+          <property name="maximum">
+           <double>1000000000.000000000000000</double>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="DSBPrecioUnitario"/>
@@ -291,14 +295,14 @@
    <header>ecbproveedor.h</header>
   </customwidget>
   <customwidget>
-   <class>ECBClientes</class>
-   <extends>QComboBox</extends>
-   <header>ecbclientes.h</header>
-  </customwidget>
-  <customwidget>
    <class>EDSBPrecio</class>
    <extends>QDoubleSpinBox</extends>
    <header>edsbprecio.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ECBClientes</class>
+   <extends>QComboBox</extends>
+   <header>ecbclientes.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
