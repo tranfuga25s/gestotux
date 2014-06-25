@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS item_remito ( "id_item_remito" INTEGER PRIMARY KEY autoincrement, "id_remito" INTEGER NOT NULL, "cantidad" DOUBLE NOT NULL, "texto" TEXT NOT NULL, "precio_unitario" DOUBLE NOT NULL, "id_producto" INTEGER NULL );

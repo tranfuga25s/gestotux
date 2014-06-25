@@ -335,8 +335,8 @@ NumeroComprobante &MRemito::proximoComprobante() {
                   int numero = cola.record().value(0).toInt();
                   NumeroComprobante *num = new NumeroComprobante( 0, serie, numero );
                   num->siguienteNumero();
-                  qDebug( "Devolviendo proximo numero de remito:" );
-                  qDebug() << num->aCadena();
+                  //qDebug( "Devolviendo proximo numero de remito:" );
+                  //qDebug() << num->aCadena();
                   return *num;
               } else {
                   qDebug( "Error de cola al hacer next al obtener el numero de remito maximo");
