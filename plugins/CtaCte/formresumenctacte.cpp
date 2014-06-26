@@ -254,6 +254,7 @@ void FormResumenCtaCte::menuContextual( const QModelIndex &indice )
                 {
                         QAction *ActVerRecibo = new QAction( this );
                         ActVerRecibo->setText( "Ver Recibo..." );
+                        ActVerRecibo->setIcon( QIcon( ":/imagenes/recibo.png" ) );
                         connect( ActVerRecibo, SIGNAL( triggered() ), this, SLOT( verRecibo() ) );
                         _menuContextual->addAction( ActVerRecibo );
 
@@ -265,6 +266,7 @@ void FormResumenCtaCte::menuContextual( const QModelIndex &indice )
                  if( ERegistroPlugins::getInstancia()->existePluginExterno( "remitos" ) ) {
                      QAction *ActVerRemito = new QAction( this );
                      ActVerRemito->setText( "Ver Remito..." );
+                     ActVerRemito->setIcon( QIcon( ":/imagenes/remito.png" ) );
                      connect( ActVerRemito, SIGNAL( triggered() ), this, SLOT( verRemito() ) );
                      _menuContextual->addAction( ActVerRemito );
                  }
@@ -280,12 +282,14 @@ void FormResumenCtaCte::menuContextual( const QModelIndex &indice )
  {
         QAction *ActPagarTodo = new QAction( this );
         ActPagarTodo->setText( "Pagar todo..." );
+        ActPagarTodo->setIcon( QIcon( ":/imagenes/recibo.png" ) );
         connect( ActPagarTodo, SIGNAL( triggered() ), this, SLOT( pagarTodo() ) );
         _menuContextual->addAction( ActPagarTodo );
  }
 
  QAction *ActImprimirResumen = new QAction( this );
  ActImprimirResumen->setText( "Imprimir resumen de cuenta" );
+ ActImprimirResumen->setIcon( QIcon( ":/imagenes/imprimir.png" ) );
  connect( ActImprimirResumen, SIGNAL( triggered() ), this, SLOT( imprimir() ) );
  _menuContextual->addAction( ActImprimirResumen );
 

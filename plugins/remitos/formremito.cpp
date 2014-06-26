@@ -4,6 +4,7 @@
 #include "mitemremito.h"
 #include "NumeroComprobante.h"
 #include "mproductostotales.h"
+#include "mclientes.h"
 
 #include <QDebug>
 #include <QSqlField>
@@ -15,9 +16,13 @@ EVentana(parent), FormAgregarRemitoBase()
 {
     setupUi( this );
 
-    DEFecha->setReadOnly( true );
-    CBCliente->setEditable( false );
-    LEDireccion->setReadOnly( true );
+    setWindowTitle( "Ver remito" );
+    setWindowIcon( QIcon( ":/imagenes/remito.png" ) );
+    setObjectName( "ver_remito" );
+
+    DEFecha->setVisible( false );
+    CBCliente->setVisible( false );
+    LEDireccion->setVisible( false );
 
     PBAgregarProducto->setVisible( false );
     PBEliminar->setVisible( false );
@@ -27,9 +32,8 @@ EVentana(parent), FormAgregarRemitoBase()
     DSBCant->setVisible( false );
     CBProducto->setVisible( false );
 
-    GBFormaPago->setEnabled( false );
-
     PTEObservaciones->setReadOnly( true );
+    PTEObservaciones->setPlainText( "Observaciones: " );
 
     mpt = new MProductosTotales( TVProductos );
     mpt->calcularTotales( true );
@@ -40,6 +44,7 @@ EVentana(parent), FormAgregarRemitoBase()
     TVProductos->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     TVProductos->horizontalHeader()->setMinimumSectionSize( 140 );
     TVProductos->setSortingEnabled( false );
+
 }
 
 /*!
@@ -55,38 +60,49 @@ void FormRemito::setearValor( const int id_remito )
     delete mr;
     mr = 0;
 
-    if( r.count() <= 0 ) {
-        qWarning() << "Error obteniendo los datos!";
-        return;
-    }
-
-    DEFecha->setDate( r.field( "fecha" ).value().toDate() );
-    CBCliente->setearId( r.field("id_cliente").value().toInt() );
-    LEDireccion->setText( r.field("direccion").value().toString() );
-    PTEObservaciones->setPlainText( r.field("observaciones").value().toString() );
+    LFecha->setText( QString( "<b>Fecha:</b> %1" ).arg( r.value( "fecha" ).toDate().toString( Qt::SystemLocaleShortDate ) ) );
+    LCliente->setText( QString( "<b>Cliente:</b> %1" ).arg( r.value( "razon_social" ).toString() ) );
+    LDireccion->setText( QString::fromUtf8( "<b>Dirección:</b> %1" ).arg( r.value("direccion").toString() ) );
+    PTEObservaciones->setPlainText( r.value("observaciones").toString().prepend("Observaciones: ") );
     LComprobante->setText( NumeroComprobante( LComprobante,
-                                              r.field("serie").value().toInt(),
-                                              r.field("numero").value().toInt() ).aCadena() );
+                                              r.value("serie").toInt(),
+                                              r.value("numero").toInt() ).aCadena() );
 
 
-    switch( r.field("forma_pago").value().toInt() ) {
+    switch( r.value("id_forma_pago").toInt() ) {
         case MRemito::Contado: {
             RBContado->setChecked( true );
+            RBOtro->setEnabled( false );
+            RBCtaCte->setEnabled( false );
+            RBCuotas->setEnabled( false );
             break;
         }
         case MRemito::CuentaCorriente: {
             RBCtaCte->setChecked( true );
+            RBContado->setEnabled( false );
+            RBOtro->setEnabled( false );
+            RBCuotas->setEnabled( false );
             break;
         }
         case MRemito::Cuotas: {
             RBCuotas->setChecked( true );
+            RBContado->setEnabled( false );
+            RBOtro->setEnabled( false );
+            RBCtaCte->setEnabled( false );
             break;
         }
         case MRemito::Otro: {
             RBOtro->setChecked( true );
+            RBContado->setEnabled( false );
+            RBCtaCte->setEnabled( false );
+            RBCuotas->setEnabled( false );
             break;
         }
         default: {
+            RBContado->setEnabled( false );
+            RBOtro->setEnabled( false );
+            RBCtaCte->setEnabled( false );
+            RBCuotas->setEnabled( false );
             break;
         }
     }
