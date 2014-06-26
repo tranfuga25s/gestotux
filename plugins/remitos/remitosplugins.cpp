@@ -169,16 +169,18 @@ void RemitoPlugin::agregarRemito( int id_cliente, QDate fecha, MProductosTotales
     connect( f, SIGNAL( emitirPlanCuota( int, double ) ), this, SIGNAL( emitirPlanCuota( int, double ) ) );
     connect( this, SIGNAL( planCuotaSetearIdCuota( int ) ), f, SLOT( setearIdPlanCuota( int ) ) );
     connect( f, SIGNAL( emitirPlanCuotaSetIdFactura( int, int ) ), this, SIGNAL( emitirPlanCuotaSetIdFactura( int, int ) ) );
-        connect( f, SIGNAL( emitirGarantia( int, int, QString, int ) ), this, SIGNAL( emitirGarantia( int, int, QString, int ) ) );
+    connect( f, SIGNAL( emitirGarantia( int, int, QString, int ) ), this, SIGNAL( emitirGarantia( int, int, QString, int ) ) );
     emit agregarVentana( f );
 }
 
+#include "formremito.h"
 /*!
  * \brief RemitoPlugin::mostrarRemito
  * \param id_remito Numero de remito a buscar
  */
 void RemitoPlugin::mostrarRemito( int id_remito )
 {
-    qWarning() << "No implementado";
-    /// @TODO: Implementar vista de remito.
+    FormRemito *f = new FormRemito();
+    f->setearValor( id_remito );
+    emit agregarVentana( f );
 }
