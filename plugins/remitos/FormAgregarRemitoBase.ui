@@ -36,7 +36,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="NumeroComprobante">
+         <widget class="QLabel" name="LComprobante">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -89,7 +89,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="LDireccion">
           <property name="text">
            <string>Direccion:</string>
           </property>

@@ -100,7 +100,7 @@ FormAgregarRemito::FormAgregarRemito ( QWidget* parent, Qt::WFlags fl )
         connect( PBEliminarTodo, SIGNAL( clicked() ), this, SLOT( eliminarTodo() ) );
 
         // Coloco el proximo numero de comprobante
-        LNumeroComprobante->setText( MRemito::proximoComprobante().aCadena() );
+        LComprobante->setText( MRemito::proximoComprobante().aCadena() );
 
         PBEliminarDescuento->setIcon( QIcon( ":/imagenes/eliminar.png" ) );
         PBAgregarDescuento->setIcon( QIcon( ":/imagenes/add.png" ) );

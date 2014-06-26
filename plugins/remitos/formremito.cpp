@@ -5,6 +5,7 @@
 #include "NumeroComprobante.h"
 #include "mproductostotales.h"
 
+#include <QDebug>
 #include <QSqlField>
 #include <QSqlRecord>
 
@@ -42,7 +43,9 @@ EVentana(parent), FormAgregarRemitoBase()
 }
 
 /*!
- *
+ * \fn FormRemito::setearValor()
+ * Setear los valores del remito
+ * \param id_remito Identificador del remito
  */
 void FormRemito::setearValor( const int id_remito )
 {
@@ -52,13 +55,18 @@ void FormRemito::setearValor( const int id_remito )
     delete mr;
     mr = 0;
 
+    if( r.count() <= 0 ) {
+        qWarning() << "Error obteniendo los datos!";
+        return;
+    }
+
     DEFecha->setDate( r.field( "fecha" ).value().toDate() );
     CBCliente->setearId( r.field("id_cliente").value().toInt() );
     LEDireccion->setText( r.field("direccion").value().toString() );
     PTEObservaciones->setPlainText( r.field("observaciones").value().toString() );
-    NumeroComprobante->setText( NumeroComprobante( NumeroComprobante,
-                                                   r.field("serie").value().toInt(),
-                                                   r.field("numero").value().toInt() ).aCadena() );
+    LComprobante->setText( NumeroComprobante( LComprobante,
+                                              r.field("serie").value().toInt(),
+                                              r.field("numero").value().toInt() ).aCadena() );
 
 
     switch( r.field("forma_pago").value().toInt() ) {
