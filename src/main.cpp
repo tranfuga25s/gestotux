@@ -329,14 +329,26 @@ int main(int argc, char *argv[])
       /////////////////////////////////////////////////////////////////////////////////////////////////////////
       if( QSqlDatabase::isDriverAvailable( "QSQLITE" ) && fallosql == true )
       {
-       QFile *base = new QFile( QApplication::applicationDirPath().append( QDir::separator() ).append( "gestotux.database" ).toLocal8Bit() );
+       // Veo desde que sistema operativo estoy utilizando
+       QDir directorio_base;
+       #ifdef Q_OS_LINUX
+       directorio_base = QDir::home();
+       directorio_base.cd( ".gestotux" );
+       if( !directorio_base.mkdir( ".gestotux" ) ) {
+           qFatal( "No se pudo crear el directorio para guardar los datos!" );
+       }
+       #endif
+       #ifdef Q_OS_WIN
+       directorio_base = QApplication::applicationDirPath();
+       #endif
+       QFile *base = new QFile( directorio_base.path().append( QDir::separator() ).append( "gestotux.database" ).toLocal8Bit() );
        if( !base->open( QIODevice::ReadOnly ) )
        {
          qDebug( "-------------------------------------------------" );
          qDebug( "El archivo de Base de datos no existe!");
          qDebug( "-------------------------------------------------" );
                 QSqlDatabase DB = QSqlDatabase::addDatabase("QSQLITE");
-                DB.setDatabaseName( QApplication::applicationDirPath().append( QDir::separator() ).append( "gestotux.database" ) );
+                DB.setDatabaseName( directorio_base.path().append( QDir::separator() ).append( "gestotux.database" ) );
                 if( !DB.open() )
                 {
                         qDebug() << "Ultimo error: " << DB.lastError().text();
@@ -353,7 +365,7 @@ int main(int argc, char *argv[])
         }
         delete base;
         QSqlDatabase DB = QSqlDatabase::addDatabase("QSQLITE");
-        DB.setDatabaseName( QApplication::applicationDirPath().append( QDir::separator() ).append( "gestotux.database" ) );
+        DB.setDatabaseName( directorio_base.path().append( QDir::separator() ).append( "gestotux.database" ) );
         if( !DB.open() )
         {
                 qDebug() << "Ultimo error: " << DB.lastError().text();
