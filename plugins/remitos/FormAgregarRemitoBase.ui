@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Datos de la Venta</string>
+      <string>Datos del remito</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -31,7 +31,14 @@
         <item>
          <widget class="QLabel" name="LNumeroComprobante">
           <property name="text">
-           <string>Numero de Comprobante:</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numero de Comprobante:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="NumeroComprobante">
+          <property name="text">
+           <string>TextLabel</string>
           </property>
          </widget>
         </item>

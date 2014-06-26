@@ -23,12 +23,15 @@ EVentana(parent), FormAgregarRemitoBase()
     PBEliminarTodo->setVisible( false );
     PBAgregarDescuento->setVisible( false );
     PBEliminarDescuento->setVisible( false );
+    DSBCant->setVisible( false );
+    CBProducto->setVisible( false );
 
     GBFormaPago->setEnabled( false );
 
     PTEObservaciones->setReadOnly( true );
 
     mpt = new MProductosTotales( TVProductos );
+    mpt->calcularTotales( true );
     TVProductos->setModel( mpt );
     TVProductos->setAlternatingRowColors( true );
     TVProductos->setSelectionBehavior( QAbstractItemView::SelectRows );
@@ -53,9 +56,9 @@ void FormRemito::setearValor( const int id_remito )
     CBCliente->setearId( r.field("id_cliente").value().toInt() );
     LEDireccion->setText( r.field("direccion").value().toString() );
     PTEObservaciones->setPlainText( r.field("observaciones").value().toString() );
-    LNumeroComprobante->setText( NumeroComprobante( LNumeroComprobante,
-                                                    r.field("serie").value().toInt(),
-                                                    r.field("numero").value().toInt() ).aCadena() );
+    NumeroComprobante->setText( NumeroComprobante( NumeroComprobante,
+                                                   r.field("serie").value().toInt(),
+                                                   r.field("numero").value().toInt() ).aCadena() );
 
 
     switch( r.field("forma_pago").value().toInt() ) {
