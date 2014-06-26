@@ -79,3 +79,14 @@ bool MItemRemito::agregarItemRemito( const int id_venta, const double cantidad, 
 
 
 }
+
+/*!
+ * \fn MItemRemito::cargarItems()
+ * Selecciona los elementos que corresponden al remito pasado como parametro
+ * \param id_remito Identificador del remito
+ */
+void MItemRemito::cargarItems(const int id_remito)
+{
+    this->setFilter( QString( " id_rmeito = %1" ).arg( id_remito ) );
+    this->select();
+}
