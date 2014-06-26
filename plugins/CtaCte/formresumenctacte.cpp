@@ -262,7 +262,7 @@ void FormResumenCtaCte::menuContextual( const QModelIndex &indice )
         }
         case MItemCuentaCorriente::Remito:
         {
-                 if( ERegistroPlugins::getInstancia()->existePluginExterno( "remito" ) ) {
+                 if( ERegistroPlugins::getInstancia()->existePluginExterno( "remitos" ) ) {
                      QAction *ActVerRemito = new QAction( this );
                      ActVerRemito->setText( "Ver Remito..." );
                      connect( ActVerRemito, SIGNAL( triggered() ), this, SLOT( verRemito() ) );

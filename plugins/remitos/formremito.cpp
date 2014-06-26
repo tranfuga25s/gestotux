@@ -30,6 +30,12 @@ EVentana(parent), FormAgregarRemitoBase()
 
     mpt = new MProductosTotales( TVProductos );
     TVProductos->setModel( mpt );
+    TVProductos->setAlternatingRowColors( true );
+    TVProductos->setSelectionBehavior( QAbstractItemView::SelectRows );
+    TVProductos->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    TVProductos->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+    TVProductos->horizontalHeader()->setMinimumSectionSize( 140 );
+    TVProductos->setSortingEnabled( false );
 }
 
 /*!
