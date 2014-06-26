@@ -339,8 +339,17 @@ int main(int argc, char *argv[])
        }
        #endif
        #ifdef Q_OS_WIN
-       directorio_base = QApplication::applicationDirPath();
-       #endif
+       if( QSysInfo::windowsVersion() == QSysInfo::WV_WINDOWS7 )
+           directorio_base = QDir::home();
+           directorio_base.cd( "AppData" );
+           directorio_base.cd( "Gestotux" );
+           if( !directorio_base.mkdir( "Gestotux" ) ) {
+               qFatal( "No se pudo crear el directorio para guardar los datos!" );
+           }
+      } else if( QSysInfo::windowsVersion() == QSysInfo::WV_XP ) {
+          directorio_base = QApplication::applicationDirPath();
+      }
+      #endif
        QFile *base = new QFile( directorio_base.path().append( QDir::separator() ).append( "gestotux.database" ).toLocal8Bit() );
        if( !base->open( QIODevice::ReadOnly ) )
        {
