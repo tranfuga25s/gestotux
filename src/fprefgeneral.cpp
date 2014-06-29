@@ -66,25 +66,11 @@ void FPrefGeneral::cargar()
  CBSobreEstilo->setCurrentIndex( p->value( "sobreestiloint", -1 ).toInt() );
  CkBReloj->setChecked( p->value( "reloj", true ).toBool() );
  p->endGroup();
- p->beginGroup("Actualizaciones");
- LEServidor->setText( p->value("servidor", "tranfuga.no-ip.org" ).toString() );
- SBPuerto->setValue( p->value( "puerto", 21 ).toInt() );
- LERuta->setText( p->value( "ruta", "" ).toString() );
- LEUsuario->setText( p->value( "usuario", "" ).toString() );
- LEContra->setText( p->value( "contra","" ).toString() );
- CkBAnonimo->setChecked( p->value( "anonimo", true ).toBool() );
- p->endGroup();
  p->endGroup();
  // conecto el slot que realiza el cambio
  connect( CBSobreEstilo, SIGNAL( currentIndexChanged( const QString & ) ), this, SLOT( cambioSobreEstilo( const QString & ) ) );
  // conecto el slot para deshacer los cambios si se dechequea la casilla
  connect( CkBSobreEstilo, SIGNAL( toggled( bool ) ), this, SLOT( cambioSobreEstilo( bool ) ) );
- // conecto los slots de anonimo
- connect( CkBAnonimo, SIGNAL( toggled( bool ) ), LEUsuario, SLOT( setEnabled( bool ) ) );
- connect( CkBAnonimo, SIGNAL( toggled( bool ) ), LEContra , SLOT( setEnabled( bool ) ) );
- connect( CkBAnonimo, SIGNAL( toggled( bool ) ), LUsuario , SLOT( setEnabled( bool ) ) );
- connect( CkBAnonimo, SIGNAL( toggled( bool ) ), LContra  , SLOT( setEnabled( bool ) ) );
-
 }
 
 
@@ -105,14 +91,6 @@ void FPrefGeneral::guardar()
  p->setValue( "sobreestilonombre", CBSobreEstilo->currentText() );
  p->setValue( "sobreestiloint", CBSobreEstilo->currentIndex() );
  p->setValue( "reloj", CkBReloj->isChecked() );
- p->endGroup();
- p->beginGroup( "Actualizaciones" );
- p->setValue( "servidor", LEServidor->text() );
- p->setValue( "puerto", SBPuerto->value() );
- p->setValue( "ruta", LERuta->text() );
- p->setValue( "usuario", LEUsuario->text() );
- p->setValue( "contra", LEContra->text() );
- p->setValue( "anonimo", CkBAnonimo->isChecked() );
  p->endGroup();
  p->endGroup();
  p->sync();
