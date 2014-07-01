@@ -89,4 +89,5 @@ void EDDescuento::cargarPorcentaje( int id )
 void EDDescuento::sinDatosPorcentaje()
 {
     CBDescuento->setEditable( true );
+    CBDescuento->setEnabled( true );
 }
