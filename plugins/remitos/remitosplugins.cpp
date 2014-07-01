@@ -91,6 +91,8 @@ bool RemitoPlugin::verificarTablas( QStringList tablas )
  { qDebug( "RemitoPlugin::Error al buscar la tabla remito" ); return false; }
  if( !tablas.contains( "item_remito" ) )
  { qDebug( "RemitoPlugin::Error al buscar la tabla item_remito" ); return false; }
+ if( !tablas.contains( "v_remito" ) )
+ { qDebug( "RemitoPlugin::Error al buscar la vista item_remito" ); return false; }
  return true;
 }
 
