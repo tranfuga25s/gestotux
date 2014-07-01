@@ -56,6 +56,7 @@ protected slots:
 signals:
     void emitirPlanCuota( int, double, MPlanCuota::TipoComprobante );
     void emitirPlanCuotaSetIdFactura( int, int );
+    void emitirGarantia( int, int, QString, int );
     void actualizarListado();
 
 private:
