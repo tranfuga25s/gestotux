@@ -103,13 +103,13 @@ VPagos::VPagos(QWidget *parent)
 }
 
 /*!
-  \fn VPagos::agregar( bool a )
-  Llama al formulario para agregar un nuevo cliente
-  */
+ * \fn VPagos::agregar( bool a )
+ * Llama al formulario para agregar un nuevo cliente
+ */
 void VPagos::agregar( bool /*a*/)
 {
  FormAgregarRecibo *f = new FormAgregarRecibo( this );
- //f->setearModelo( qobject_cast<MPagos *>( this->modelo ) );
+ f->setearModelo( qobject_cast<MPagos *>( this->modelo ) );
  emit agregarVentana( f );
 }
 
