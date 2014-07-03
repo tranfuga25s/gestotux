@@ -101,7 +101,8 @@ void FormAgregarRecibo::setearModelo( MPagos *m )
 void FormAgregarRecibo::setearDatos( const int id_cliente, const QString texto, const double cantidad )
 {
     // No uso fecha porque el recibo se emite con la fecha en que se paga
-    this->setearModelo( 0 );
+    if( this->_modelo )
+    { this->setearModelo( 0 ); }
     this->TETexto->setText( texto );
     this->dSBPagado->setValue( cantidad );
     this->CBCliente->setearId( id_cliente );

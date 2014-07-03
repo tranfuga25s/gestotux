@@ -34,7 +34,7 @@ class ECBProductosModel;
  * Clase que permite agregar un nuevo presupuesto al sistema.
  * \author Esteban Zeller
  */
-class FormAgregarPresupuesto : public EVentana, private Ui::FormPresupuestoBase
+class FormAgregarPresupuesto : public EVentana, public Ui::FormPresupuestoBase
 {
   Q_OBJECT
 

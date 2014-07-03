@@ -78,7 +78,7 @@ FormAgregarRemito::FormAgregarRemito ( QWidget* parent, Qt::WFlags fl )
         p->beginGroup( "Preferencias" );
         p->beginGroup( "Remito" );
         if( p->value( "buscarPrecio", true ).toBool() )
-            mcp->buscarPrecios( true );
+        { mcp->buscarPrecios( true ); }
         p->endGroup();
 
         TVProductos->setModel( mcp );
@@ -100,7 +100,7 @@ FormAgregarRemito::FormAgregarRemito ( QWidget* parent, Qt::WFlags fl )
         connect( PBEliminarTodo, SIGNAL( clicked() ), this, SLOT( eliminarTodo() ) );
 
         // Coloco el proximo numero de comprobante
-        LNumeroComprobante->setText( LNumeroComprobante->text().append( "       <b>" ).append( MRemito::proximoComprobante().aCadena() ).append( "</b>" ) );
+        LComprobante->setText( MRemito::proximoComprobante().aCadena() );
 
         PBEliminarDescuento->setIcon( QIcon( ":/imagenes/eliminar.png" ) );
         PBAgregarDescuento->setIcon( QIcon( ":/imagenes/add.png" ) );

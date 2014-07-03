@@ -351,6 +351,7 @@ bool MEquipamiento::enGarantia()
         delete mgarantia;
         return estado;
     } else {
-        /// @TODO Ver cuando no hay datos seleccionados
+        qWarning() << "No hay datos seleccionados para obtener conclusión";
+        return false;
     }
 }

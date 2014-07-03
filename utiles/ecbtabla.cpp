@@ -140,13 +140,13 @@ void ECBTabla::inicializar()
     QSqlQuery cola;
     // Limpio el combobox para que no cargue datos repetidos
     this->clear();
-    qDebug() << QString( "SELECT %1, %2 %6 FROM %3 %4 %5" )
+    /*qDebug() << QString( "SELECT %1, %2 %6 FROM %3 %4 %5" )
                 .arg( _campo_id )
                 .arg( _campo_texto )
                 .arg( _tabla )
                 .arg( filtro )
                 .arg( _campo_orden )
-                .arg( _campo_busqueda );
+                .arg( _campo_busqueda );*/
     if( cola.exec( QString( "SELECT %1, %2 %6 FROM %3 %4 %5" )
                    .arg( _campo_id )
                    .arg( _campo_texto )
@@ -169,7 +169,8 @@ void ECBTabla::inicializar()
         if( pos == 0 ) {
             qDebug( "No hay ningun dato para cargar!" );
             this->lineEdit()->setText( "No hay datos cargados..." );
-            qDebug() << cola.lastQuery();
+            //qDebug() << cola.lastQuery();
+            emit sinDatos();
             return;
         }
         this->setEnabled( true );

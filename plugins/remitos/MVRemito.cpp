@@ -78,6 +78,10 @@ QVariant MVRemito::data( const QModelIndex& item, int role ) const {
     }
 }
 
+/**
+ * @brief MVRemito::verAnulados
+ * @param sino
+ */
 void MVRemito::verAnulados( bool sino )
 {
     if( sino ) {
@@ -89,6 +93,10 @@ void MVRemito::verAnulados( bool sino )
     }
 }
 
+/**
+ * @brief MVRemito::flags
+ * @return
+ */
 Qt::ItemFlags MVRemito::flags( const QModelIndex &/*index*/ ) const
 {
     return QFlags<Qt::ItemFlag>( !Qt::ItemIsEditable |  Qt::ItemIsSelectable | Qt::ItemIsEnabled );

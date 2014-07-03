@@ -1,5 +1,2 @@
 CREATE TABLE IF NOT EXISTS remito ( "id_remito" INTEGER PRIMARY KEY autoincrement, "id_cliente" INTEGER NOT NULL, "fecha" TEXT NOT NULL, "id_forma_pago" INTEGER NOT NULL, "serie" INTEGER NOT NULL, "numero" INTEGER NOT NULL, "total" NUMERIC NOT NULL, "id_ctate" NUMERIC NULL, "id_mov_caja" NUMERIC NULL, "anulada" NUMERIC NULL, "razon" TEXT NULL, "fecha_cancelada" TEXT NULL, "observaciones" TEXT DEFAULT NULL );
-CREATE TABLE IF NOT EXISTS item_remito ( "id_item_remito" INTEGER PRIMARY KEY autoincrement, "id_remito" INTEGER NOT NULL, "cantidad" DOUBLE NOT NULL, "texto" TEXT NOT NULL, "precio_unitario" DOUBLE NOT NULL, "id_producto" INTEGER NULL );
-INSERT OR IGNORE INTO "sqlite_sequence" ( "name", "seq" ) VALUES ( 'remito', '1');
-INSERT OR IGNORE INTO "sqlite_sequence" ( "name", "seq" ) VALUES ( 'item_remito', '1' );
 CREATE VIEW IF NOT EXISTS `v_remito` AS SELECT r.id_remito,   substr(  '0000000000' || r.serie, -5, 5 ) || '-'  || substr( '0000000000' || r.numero, -5, 5 ) AS `NumSerie`, c.razon_social AS cliente, r.fecha AS fecha, r.id_forma_pago, r.total AS precio, r.anulada AS anulada FROM `remito` AS r, `clientes` AS c WHERE r.id_cliente = c.id;

@@ -129,6 +129,9 @@ void VCliente::modificarIndice( QModelIndex m )
 }
 
 #include "EReporte.h"
+/*!
+ * \brief VCliente::listadoClientes
+ */
 void VCliente::listadoClientes() {
     if( this->mc->rowCount() <= 0 ) {
         QMessageBox::warning( this, "Error", "No existe ningun cliente para imprimir un listado. No se imprimira nada" );
@@ -147,6 +150,9 @@ void VCliente::listadoClientes() {
     delete rep;
 }
 
+/*!
+ * \brief VCliente::eliminar
+ */
 void VCliente::eliminar()
 {
     QModelIndex idx = this->vista->selectionModel()->selectedRows().first();
@@ -167,5 +173,30 @@ void VCliente::eliminar()
     return;
 }
 
+/*!
+ * \brief VCliente::mostrarTodos
+ */
 void VCliente::mostrarTodos()
-{ this->mc->select(); }
+{
+    this->mc->setFilter("");
+    this->mc->select();
+}
+
+/*!
+ * \brief VCliente::menuContextual
+ * \param indice
+ * \param menu
+ */
+void VCliente::menuContextual( const QModelIndex &indice, QMenu *menu )
+{
+    //int id_cliente = indice.model()->data( indice.model()->index( indice.row(), 0 ), Qt::EditRole ).toInt();
+    menu->addAction( ActAgregar );
+    menu->addAction( ActModificar );
+    menu->addAction( ActEliminar );
+    menu->addSeparator();
+    // Veo si tiene cuenta corriente
+
+    // Veo si está aderido a algún servicio
+
+
+}

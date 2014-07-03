@@ -318,6 +318,34 @@ int MRemito::agregarRemito( const int id_cliente, const QDateTime fecha, MRemito
 }
 
 /*!
+ * \fn MRemito::obtenerDatos()
+ * Obtiene el registro con los datos del remito pasado como parametro, sino un registro invaĺido.
+ * \param id_remito Identificador del remito
+ * \return QSqlRecord con los datos
+ */
+QSqlRecord MRemito::obtenerDatos( const int id_remito )
+{
+    // Verifico que exista el valor
+    QSqlQuery cola;
+    if( !cola.exec( QString( "SELECT COUNT(id_remito) FROM remito WHERE id_remito = %1" ).arg( id_remito ) ) ) {
+        qDebug() << "Error al ejecutar la cola de conteo de elementos";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+        return QSqlRecord();
+    }
+    cola.next();
+    if( cola.record().value(0).toInt() <= 0 ) {
+        qDebug() << "No se encontró el registro buscado!";
+        return QSqlRecord();
+    }
+
+    // El registro existe
+    this->setFilter( QString( " id_remito = %1 " ).arg( id_remito ) );
+    this->select();
+    return this->record(0);
+}
+
+/*!
  * \fn MRemito::proximoComprobante()
  * Devuelve un objeto NumeroComprobante conteniendo el proximo numero de serie y comprobante que corresponde.
  */
@@ -335,8 +363,8 @@ NumeroComprobante &MRemito::proximoComprobante() {
                   int numero = cola.record().value(0).toInt();
                   NumeroComprobante *num = new NumeroComprobante( 0, serie, numero );
                   num->siguienteNumero();
-                  qDebug( "Devolviendo proximo numero de remito:" );
-                  qDebug() << num->aCadena();
+                  //qDebug( "Devolviendo proximo numero de remito:" );
+                  //qDebug() << num->aCadena();
                   return *num;
               } else {
                   qDebug( "Error de cola al hacer next al obtener el numero de remito maximo");
