@@ -8,7 +8,7 @@ ECBProductosFilter::ECBProductosFilter(QObject *parent) :
     QSortFilterProxyModel(parent)
 {
     _mostrar_sin_stock = true;
-    _mostrar_deshabilitados = true;
+    _mostrar_deshabilitados = false;
     _id_proveedor = -1;
 }
 
