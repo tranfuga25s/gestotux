@@ -26,4 +26,5 @@ SUBDIRS +=  CtaCte/CtaCteLib.pro \
             ordentrabajo \
             garantias \
             backupremoto \
-            email
+            email \
+            diezmos
