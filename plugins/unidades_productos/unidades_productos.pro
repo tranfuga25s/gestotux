@@ -9,9 +9,11 @@ CONFIG += dll \
 QT += sql \
       xml
 
-HEADERS += unidadesproductosplugin.h
+HEADERS += unidadesproductosplugin.h \
+    formprefunidadesproductos.h
 
-SOURCES += unidadesproductosplugin.cpp
+SOURCES += unidadesproductosplugin.cpp \
+    formprefunidadesproductos.cpp
 
 TARGET = unidades_productos
 
@@ -40,3 +42,6 @@ RESOURCES += unidades_productos.qrc
 OTHER_FILES += \
     unidades_productos.QSQLITE.sql \
     unidades_productos.QMYSQL.sql
+
+FORMS += \
+    formprefunidadesproductos.ui

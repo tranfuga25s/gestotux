@@ -18,13 +18,14 @@ QString UnidadesProductosPlugin::nombre() const
   return "unidades_productos";
 }
 
+#include "formprefunidadesproductos.h"
 /*!
     \fn UnidadesProductosPlugin::formsPreferencias()
  */
 QWidgetList UnidadesProductosPlugin::formsPreferencias()
 {
     QWidgetList lista;
-    //lista.append( new FormPrefRemito() );
+    lista.append( new FormPrefUnidadesProductos() );
     return lista;
 }
 
