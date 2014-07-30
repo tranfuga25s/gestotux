@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/sql">
+        <file>unidades_productos.QMYSQL.sql</file>
+        <file>unidades_productos.QSQLITE.sql</file>
+    </qresource>
+</RCC>

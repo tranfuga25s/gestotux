@@ -1,7 +1,5 @@
 #include "unidadesproductosplugin.h"
 
-Q_EXPORT_PLUGIN2( unidades_productos, UnidadesProductosPlugin )
-
 /*!
     \fn UnidadesProductosPlugin::accionesBarra()
  */
@@ -36,7 +34,7 @@ QWidgetList UnidadesProductosPlugin::formsPreferencias()
  */
 bool UnidadesProductosPlugin::inicializar()
 {
- Q_INIT_RESOURCE(unidades_producto);
+ Q_INIT_RESOURCE(unidades_productos);
 
  /*ActAgregarRemito = new QAction( "Agregar remito", this );
  ActAgregarRemito->setIcon( QIcon( ":/imagenes/remito-nuevo.png" ) );
@@ -57,9 +55,9 @@ bool UnidadesProductosPlugin::inicializar()
  */
 bool UnidadesProductosPlugin::verificarTablas( QStringList tablas )
 {
- /*if( !tablas.contains( "producto" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla producto" ); return false; }
- else if( !tablas.contains( "categoria_producto" ) )
+ if( !tablas.contains( "unidades" ) )
+ { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla unidades" ); return false; }
+ /*else if( !tablas.contains( "categoria_producto" ) )
  { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla categorias_producto" ); return false; }
  if( !tablas.contains( "remito" ) )
  { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla remito" ); return false; }
@@ -111,3 +109,5 @@ void UnidadesProductosPlugin::seCierraGestotux()
  Q_CLEANUP_RESOURCE(unidades_productos);
  return;
 }
+
+Q_EXPORT_PLUGIN2( unidades_productos, UnidadesProductosPlugin )

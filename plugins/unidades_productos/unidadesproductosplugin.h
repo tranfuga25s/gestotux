@@ -7,6 +7,9 @@
 
 /**
  * @brief The UnidadesProductosPlugin class
+ *
+ * Permite mantener unidades de productos especificos para mejorar la calidad de el ingreso de estas.
+ * @author Esteban Zeller <esteban.zeller@gmail.com>
  */
 class UnidadesProductosPlugin : public QObject, public EPlugin
 {

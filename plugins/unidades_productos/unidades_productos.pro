@@ -9,6 +9,10 @@ CONFIG += dll \
 QT += sql \
       xml
 
+HEADERS += unidadesproductosplugin.h
+
+SOURCES += unidadesproductosplugin.cpp
+
 TARGET = unidades_productos
 
 DESTDIR = ../../bin/plugins/
@@ -31,6 +35,8 @@ exists( ../../travis.pri ) {
     include( ../../travis.pri )
 }
 
-HEADERS += unidadesproductosplugin.h
+RESOURCES += unidades_productos.qrc
 
-SOURCES += unidadesproductosplugin.cpp
+OTHER_FILES += \
+    unidades_productos.QSQLITE.sql \
+    unidades_productos.QMYSQL.sql
