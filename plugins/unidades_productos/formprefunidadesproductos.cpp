@@ -22,14 +22,23 @@ void FormPrefUnidadesProductos::changeEvent(QEvent *e)
     }
 }
 
+/**
+ * @brief FormPrefUnidadesProductos::cargar
+ */
 void FormPrefUnidadesProductos::cargar()
 {
 }
 
+/**
+ * @brief FormPrefUnidadesProductos::aplicar
+ */
 void FormPrefUnidadesProductos::aplicar()
 {
 }
 
+/**
+ * @brief FormPrefUnidadesProductos::guardar
+ */
 void FormPrefUnidadesProductos::guardar()
 {
 }
