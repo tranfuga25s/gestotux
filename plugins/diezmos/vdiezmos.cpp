@@ -11,7 +11,7 @@ EVLista(parent)
 {
     setObjectName( "visor_diezmos" );
     setWindowTitle( "Diezmos" );
-    //setWindowIcon( QIcon( ":/imagenes/diezmos.png" ) );
+    setWindowIcon( QIcon( ":/imagenes/diezmo.png" ) );
 
     modelo = new MDiezmos( this );
 
@@ -30,9 +30,7 @@ EVLista(parent)
  * \param autoeliminarid
  */
 void VDiezmos::agregar( bool )
-{
-    return;
-}
+{ return; }
 
 /*!
  * \brief VDiezmos::eliminar

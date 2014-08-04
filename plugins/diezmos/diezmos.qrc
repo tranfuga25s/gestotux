@@ -3,5 +3,8 @@
         <file>diezmos.QMYSQL.sql</file>
         <file>diezmos.QSQLITE.sql</file>
     </qresource>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>imagenes/diezmo.png</file>
+        <file>imagenes/recibo-diezmo.png</file>
+    </qresource>
 </RCC>

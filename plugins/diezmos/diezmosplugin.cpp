@@ -10,14 +10,14 @@ bool DiezmosPlugin::inicializar()
  /////////////////////////////////////
  ActDiezmos = new QAction( "Diezmos", this );
  ActDiezmos->setStatusTip( "Ver la cuenta corriente de diezmos" );
- ActDiezmos->setIcon( QIcon( ":/imagenes/diezmo.jpg" ) );
+ ActDiezmos->setIcon( QIcon( ":/imagenes/diezmo.png" ) );
  connect( ActDiezmos, SIGNAL( triggered() ), this, SLOT( ver_diezmos() ) );
  /////////////////////////////////////
  // Muestra el agregar un gasto
  /////////////////////////////////////
- ActDarDiezmo = new QAction( "Agregar Gasto", this );
- ActDarDiezmo->setStatusTip( "Agregar nuevo gasto" );
- ActDarDiezmo->setIcon( QIcon( ":/imagenes/gasto.jpg" ) );
+ ActDarDiezmo = new QAction( "Dar Diezmo", this );
+ ActDarDiezmo->setStatusTip( "Ingresar el dado de diezmo en una fecha" );
+ ActDarDiezmo->setIcon( QIcon( ":/imagenes/recibo-diezmo.png" ) );
  connect( ActDarDiezmo, SIGNAL( triggered() ), this, SLOT( darDiezmo() ) );
 
  return true;
@@ -52,14 +52,10 @@ QList< QActionGroup * > DiezmosPlugin::accionesBarra()
 }
 
 QString DiezmosPlugin::nombre() const
-{
- return "diezmos";
-}
+{ return "diezmos"; }
 
 QWidgetList DiezmosPlugin::formsPreferencias()
-{
- return QWidgetList();
-}
+{ return QWidgetList(); }
 
 void DiezmosPlugin::crearMenu(QMenuBar* m)
 {
@@ -71,6 +67,7 @@ void DiezmosPlugin::crearMenu(QMenuBar* m)
  else
  {
   QMenu *menuDiezmos = menuHerramientas->addMenu( "Diezmos" );
+  menuDiezmos->setIcon( QIcon( ":/imagenes/diezmos.png" ) );
   menuDiezmos->addAction( ActDarDiezmo );
   menuDiezmos->addAction( ActDiezmos );
  }
@@ -96,7 +93,6 @@ void DiezmosPlugin::darDiezmo()
  */
 void DiezmosPlugin::ver_diezmos()
 { emit agregarVentana( new VDiezmos() ); }
-
 
 /*!
     \fn DiezmosPlugin::seCierraGestotux()

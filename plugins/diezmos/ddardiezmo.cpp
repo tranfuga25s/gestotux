@@ -22,6 +22,7 @@ DDarDiezmo::DDarDiezmo(QWidget *parent) :
 
 /*!
  * \brief DDarDiezmo::accept
+ *
  */
 void DDarDiezmo::accept()
 {
