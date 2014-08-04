@@ -12,13 +12,15 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += tst_unidadesproductostest.cpp
 HEADERS += ../edatabasetest.h
-FORMS += ../../plugins/productos/formproductobase.ui \
-         ../../plugins/productos/FormPrefProductosBase.ui
 
 INCLUDEPATH += ../../plugins/productos \
+               ../../plugins/unidades_productos \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproductos.so
+QMAKE_LFLAGS += -Wl,-rpath,./../../bin/plugins
+
+LIBS += ../../bin/plugins/libproductos.so \
+        ../../bin/plugins/libunidades_productos.so
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

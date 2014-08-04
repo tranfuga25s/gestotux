@@ -49,7 +49,8 @@ bool MUnidadesProductos::tienePadre( const int id_unidad )
         qDebug() << cola.lastQuery();
     }
     if( cola.next() ) {
-        if( cola.record().value(0).toInt() != 0 ) {
+        if( !cola.record().value(0).isNull()
+          && cola.record().value(0).toInt() > 0 ) {
             return true;
         }
     }
