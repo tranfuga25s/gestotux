@@ -10,10 +10,12 @@ QT += sql \
       xml
 
 HEADERS += unidadesproductosplugin.h \
-    formprefunidadesproductos.h
+    formprefunidadesproductos.h \
+    munidadesproductos.h
 
 SOURCES += unidadesproductosplugin.cpp \
-    formprefunidadesproductos.cpp
+    formprefunidadesproductos.cpp \
+    munidadesproductos.cpp
 
 TARGET = unidades_productos
 
