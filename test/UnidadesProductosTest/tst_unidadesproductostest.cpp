@@ -22,6 +22,8 @@ private Q_SLOTS:
     void cleanup();
     void tstHerencia();
     void tstHerencia_data();
+    void tstConversion();
+    void tstConversion_data();
 
 private:
     MProductos *mp;
@@ -70,6 +72,30 @@ void UnidadesProductosTest::tstHerencia_data()
     QTest::addColumn<bool>("tiene_padre");
     QTest::newRow("SinPadre") << 1 << false;
     QTest::newRow("ConPadre") << 2 << true;
+}
+
+/**
+ * @brief UnidadesProductosTest::tstConversion
+ * Verifica la conversión entre unidades
+ */
+void UnidadesProductosTest::tstConversion()
+{
+    QFETCH( int, id_unidad );
+    QFETCH( double, original );
+    QFETCH( double, convertido );
+    mup = new MUnidadesProductos();
+    QCOMPARE( mup->getValorNominal( id_unidad, original ), convertido );
+    delete mup;
+    mup=0;
+}
+
+void UnidadesProductosTest::tstConversion_data()
+{
+    QTest::addColumn<int>("id_unidad");
+    QTest::addColumn<double>("original");
+    QTest::addColumn<double>("convertido");
+    QTest::newRow("SinPadre") << 1 << 1.0 << 1.0;
+    QTest::newRow("ConPadre") << 2 << 1000.0 << 1.0;
 }
 
 
