@@ -18,6 +18,9 @@ private Q_SLOTS:
     void cleanup();
     void testPreferenciaConsumidorFinalPredeterminado();
     void testAnulacionFacturaDescensoStock();
+    void testCreacionFacturaItemsExtras();
+    void testCreacionFacturaItemsExtras_data();
+    void testCantidadMaxima();
 };
 
 VentasTest::VentasTest()
@@ -25,16 +28,18 @@ VentasTest::VentasTest()
     this->tablas << "clientes"
                  << "factura"
                  << "item_factura"
-                 << "productos";
+                 << "productos"
+                 << "compras_productos"
+                 << "compras";
 }
 
-void VentasTest::init() { EDatabaseTest::iniciarTablas(); }
+void VentasTest::init() { EDatabaseTest::init(); }
 
-void VentasTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void VentasTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void VentasTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void VentasTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void VentasTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void VentasTest::cleanup() { EDatabaseTest::cleanup(); }
 
 #include "preferencias.h"
 #include "formagregarventa.h"
@@ -50,15 +55,15 @@ void VentasTest::testPreferenciaConsumidorFinalPredeterminado()
     p->endGroup();
 
     FormAgregarVenta *fav = new FormAgregarVenta();
-    usleep( 9000 );
-    QVERIFY( fav->CBCliente->idClienteActual() == 0 );
-    //QVERIFY( fav->CBCliente->currentText() == "Consumidor Final" );
+    QTest::qWait( 1000 );
+    QCOMPARE( fav->CBCliente->idClienteActual(), 0 );
+    QCOMPARE( fav->CBCliente->currentText(), QString( "Consumidor Final" ) );
     delete fav;
     fav = 0;
 
     FormPrefVenta *fpv = new FormPrefVenta();
     fpv->cargar();
-    QVERIFY( fpv->CkBConsumidorFinal->isChecked() );
+    QCOMPARE( fpv->CkBConsumidorFinal->isChecked(), true );
     delete fpv;
     fpv=0;
 
@@ -69,14 +74,14 @@ void VentasTest::testPreferenciaConsumidorFinalPredeterminado()
     p->endGroup();
 
     fav = new FormAgregarVenta();
-    usleep( 9000 );
-    QVERIFY( fav->CBCliente->idClienteActual() == 0 );
-    //QVERIFY( fav->CBCliente->currentText() == "" );
+    QTest::qWait( 1000 );
+    QCOMPARE( fav->CBCliente->idClienteActual(), 0 );
+    QCOMPARE( fav->CBCliente->currentText(), QString("") );
     delete fav;
 
     fpv = new FormPrefVenta();
     fpv->cargar();
-    QVERIFY( fpv->CkBConsumidorFinal->isChecked() == false );
+    QCOMPARE( fpv->CkBConsumidorFinal->isChecked(), false );
     delete fpv;
     fpv=0;
 }
@@ -150,6 +155,92 @@ void VentasTest::testAnulacionFacturaDescensoStock()
                   .toLocal8Bit() );
         i++;
     }
+}
+
+/*!
+ * \brief VentasTest::testCreacionFacturaItemsExtras
+ * Verifica el correcto uso del nuevo modelo en la facturacion
+ */
+void VentasTest::testCreacionFacturaItemsExtras()
+{
+    QFETCH( QString, nombre );
+    QFETCH( double, precio );
+    QFETCH( double, cantidad );
+    QFETCH( QString, codigo_producto );
+    QFETCH( int, id_producto );
+
+    preferencias *p = preferencias::getInstancia();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Ventas" );
+    p->setValue( "siempre_cf", true );
+    p->setValue( "buscarPrecio", true );
+    p->endGroup();
+    p->endGroup();
+
+    FormAgregarVenta *fav = new FormAgregarVenta();
+    QTest::qWait( 1000 );
+    QCOMPARE( fav->CBCliente->idClienteActual(), 0 );
+    QCOMPARE( fav->CBCliente->currentText(), QString( "Consumidor Final" ) );
+
+
+    QCOMPARE( fav->TVProductos->model()->rowCount(), 1 );
+
+    // Ingreso el producto a traves de la interfaz para que se busque por codigo
+    fav->DSBPrecioUnitario->setValue( precio );
+    fav->CBProducto->setCurrentIndex( -1 );
+    QTest::keyClicks( fav->CBProducto, codigo_producto );
+    QTest::keyClick( fav->CBProducto, Qt::Key_Enter );
+
+    QCOMPARE( fav->TVProductos->model()->rowCount(), 2 );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 0, 0 ) ).toDouble(), 1.0  );
+
+    fav->DSBPrecioUnitario->setValue( precio );
+    fav->DSBCant->setValue( cantidad );
+    QTest::keyClicks( fav->CBProducto, nombre );
+    QTest::keyClick( fav->CBProducto, Qt::Key_Enter );
+
+    QCOMPARE( fav->TVProductos->model()->rowCount(), 3 );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 1, 0 ) ).toDouble(), cantidad );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 1, 1 ) ).toString(), nombre );
+    QCOMPARE( fav->TVProductos->model()->data( fav->TVProductos->model()->index( 1, 2 ), Qt::EditRole ).toDouble(), precio );
+
+    int id_compra = fav->guardar( false );
+
+    // Busco que los items de productos se hayan guardado correctamente
+    QSqlQuery cola;
+    QVERIFY2( cola.exec( QString( "SELECT COUNT( id_producto ) FROM item_factura WHERE id_producto = %1" ).arg( id_producto ) ) == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.record().value(0).toString() > 0, "No coincide el numero de id_producto en la orden de compra" );
+
+    QVERIFY2( cola.exec( QString( "SELECT COUNT( id_producto ) FROM item_factura WHERE id_factura = %1" ).arg( id_compra ) ) == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.next() == true, cola.lastError().text().toLocal8Bit() );
+    QVERIFY2( cola.record().value(0).toString() > 0, "No coincide el numero de id_producto en la orden de compra" );
+
+    delete fav;
+    fav = 0;
+}
+
+void VentasTest::testCreacionFacturaItemsExtras_data()
+{
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("precio");
+    QTest::addColumn<double>("cantidad");
+    QTest::addColumn<QString>("codigo_producto");
+    QTest::addColumn<int>("id_producto");
+    QTest::newRow("Primer elemento") << "Producto insertado 1" << 10.0 << 1.0 << "1" << 1;
+    QTest::newRow("SegundoItem") << "Producto insertado 2" << 11.0 << 2.0 << "3" << 4;
+}
+
+/*!
+ * Verifica que se tenga la cantidad suficiente de valores para ingresar
+ */
+void VentasTest::testCantidadMaxima()
+{
+    FormAgregarVenta *ac = new FormAgregarVenta();
+    ac->DSBCant->setValue( 9999999.0 );
+    QCOMPARE( ac->DSBCant->value(), 9999999.0 );
+    delete ac;
+    ac=0;
 }
 
 QTEST_MAIN(VentasTest)

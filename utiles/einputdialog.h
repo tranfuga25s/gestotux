@@ -57,7 +57,7 @@ private:
 
 };
 
-class EInputDialog : private QInputDialog
+class EInputDialog : public QInputDialog
 {
     Q_OBJECT
 public:

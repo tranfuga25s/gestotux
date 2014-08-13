@@ -84,13 +84,15 @@ bool RemitoPlugin::inicializar()
 bool RemitoPlugin::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "producto" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla producto" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla producto" ); return false; }
  else if( !tablas.contains( "categoria_producto" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla categorias_producto" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla categorias_producto" ); return false; }
  if( !tablas.contains( "remito" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla remito" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla remito" ); return false; }
  if( !tablas.contains( "item_remito" ) )
- { qWarning( "RemitoPlugin::Error al buscar la tabla item_remito" ); return false; }
+ { qDebug( "RemitoPlugin::Error al buscar la tabla item_remito" ); return false; }
+ if( !tablas.contains( "v_remito" ) )
+ { qDebug( "RemitoPlugin::Error al buscar la vista item_remito" ); return false; }
  return true;
 }
 
@@ -169,16 +171,18 @@ void RemitoPlugin::agregarRemito( int id_cliente, QDate fecha, MProductosTotales
     connect( f, SIGNAL( emitirPlanCuota( int, double ) ), this, SIGNAL( emitirPlanCuota( int, double ) ) );
     connect( this, SIGNAL( planCuotaSetearIdCuota( int ) ), f, SLOT( setearIdPlanCuota( int ) ) );
     connect( f, SIGNAL( emitirPlanCuotaSetIdFactura( int, int ) ), this, SIGNAL( emitirPlanCuotaSetIdFactura( int, int ) ) );
-        connect( f, SIGNAL( emitirGarantia( int, int, QString, int ) ), this, SIGNAL( emitirGarantia( int, int, QString, int ) ) );
+    connect( f, SIGNAL( emitirGarantia( int, int, QString, int ) ), this, SIGNAL( emitirGarantia( int, int, QString, int ) ) );
     emit agregarVentana( f );
 }
 
+#include "formremito.h"
 /*!
  * \brief RemitoPlugin::mostrarRemito
  * \param id_remito Numero de remito a buscar
  */
 void RemitoPlugin::mostrarRemito( int id_remito )
 {
-    qWarning() << "No implementado";
-    /// @TODO: Implementar vista de remito.
+    FormRemito *f = new FormRemito();
+    f->setearValor( id_remito );
+    emit agregarVentana( f );
 }

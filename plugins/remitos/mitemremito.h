@@ -10,6 +10,8 @@ public:
     MItemRemito( QObject *parent = 0 );
     bool agregarItemRemito( const int id_venta, const double cantidad, const QString texto, const double precio_unitario, const int id_producto );
 
+    void cargarItems( const int id_remito );
+
 private:
     void inicializar();
     void relacionar();

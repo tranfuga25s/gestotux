@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS item_presupuesto ( id_item_presupuesto INTEGER PRIMARY KEY AUTOINCREMENT, id_presupuesto INTEGER NOT NULL, cantidad DOUBLE NOT NULL, texto TEXT NOT NULL, precio_unitario DOUBLE NOT NULL, id_producto NUMERIC );

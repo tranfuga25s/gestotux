@@ -5,7 +5,9 @@
 #include "mservicios.h"
 #include "mperiodoservicio.h"
 #include "math.h"
+
 #include <QMessageBox>
+#include <QDebug>
 
 MPeriodoServicio::MPeriodoServicio( QObject *parent ) :
 QSqlRelationalTableModel( parent ) {
@@ -128,8 +130,8 @@ int MPeriodoServicio::agregarPeriodoServicio( const int id_servicio, const int p
  if( cola.exec() ) {
      return cola.lastInsertId().toInt();
  } else {
-     qDebug( "Servicios::MPeriodoServicio::agregarPeriodoServicio - Error al intentar agregar el periodo de un servicio ( exec )" );
-     qDebug( QString( cola.lastError().text() ).toLocal8Bit() );
+     qDebug() << "Servicios::MPeriodoServicio::agregarPeriodoServicio - Error al intentar agregar el periodo de un servicio ( exec )";
+     qDebug() << cola.lastError().text();
      return -1;
  }
 }
@@ -146,15 +148,15 @@ QDate MPeriodoServicio::ultimaFechaDeServicio( const int id_servicio ) {
       if( cola.next() ) {
           return cola.record().value(0).toDate();
       } else {
-          qDebug( "Servicios::MPeriodoServicio::ultimaFechaDeServicio : Error al hacer next en la cola -  Se tomará la fecha de hoy" );
-          qDebug( cola.lastError().text().toLocal8Bit() );
-          qDebug( cola.lastQuery().toLocal8Bit() );
+          qDebug() << "Servicios::MPeriodoServicio::ultimaFechaDeServicio : Error al hacer next en la cola -  Se tomará la fecha de hoy";
+          qDebug() << cola.lastError().text();
+          qDebug() << cola.lastQuery();
           return QDate::currentDate().addDays( -1 );
       }
   } else {
-      qDebug( "Servicios::MPeriodoServicio::ultimaFechaDeServicio : Error al hacer next en la cola -  Se tomará la fecha de hoy" );
-      qDebug( cola.lastError().text().toLocal8Bit() );
-      qDebug( cola.lastQuery().toLocal8Bit() );
+      qDebug() << "Servicios::MPeriodoServicio::ultimaFechaDeServicio : Error al hacer next en la cola -  Se tomará la fecha de hoy";
+      qDebug() << cola.lastError().text();
+      qDebug() << cola.lastQuery();
       return QDate();
   }
 }
@@ -286,9 +288,9 @@ bool MPeriodoServicio::existeFacturacion(const int id_servicio)
             return false;
         }
     } else {
-        qDebug( "Servicios::MPeriodoServicio::existeFacturacion: Error en el exec de la cola actual" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Servicios::MPeriodoServicio::existeFacturacion: Error en el exec de la cola actual";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return false;
     }
 }
@@ -347,8 +349,8 @@ int MPeriodoServicio::getPeriodoActual( const int id_servicio, bool facturar ) {
         }
     } else {
         qDebug( "Servicios::MPeriodoServicio::getPeriodoActual: Error en el exec de la cola actual" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return -1;
     }
 }
@@ -379,9 +381,9 @@ int MPeriodoServicio::getAnoActual( const int id_servicio, bool facturar ) {
             return QDate::currentDate().year();
         }
     } else {
-        qDebug( "Servicios::MPeriodoServicio::getPeriodoActual: Error en el exec de la cola actual" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Servicios::MPeriodoServicio::getPeriodoActual: Error en el exec de la cola actual";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return -1;
     }
 }
@@ -408,9 +410,9 @@ QDate MPeriodoServicio::getFechaInicioPeriodoActual( const int id_servicio, bool
             return MPeriodoServicio::generarFechaInicioPeriodo( id_servicio, MPeriodoServicio::getPeriodoActual( id_servicio, facturar ), QDate::currentDate().year() );
         }
     } else {
-        qDebug( "Servicios::MPeriodoServicio::getFechaInicioPeriodoActual: Error en el exec de la cola actual" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Servicios::MPeriodoServicio::getFechaInicioPeriodoActual: Error en el exec de la cola actual";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return QDate();
     }
 }
@@ -467,9 +469,9 @@ QDate MPeriodoServicio::getFechaInicioPeriodo( const int id_servicio, const int 
             return generarFechaInicioPeriodo( id_servicio, periodo, ano );
         }
     } else {
-        qDebug( "Error al ejecutar la cola de obtención de fecha de inicio de un periodo para un servicio" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola de obtención de fecha de inicio de un periodo para un servicio";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return QDate();
     }
     return QDate();
@@ -492,9 +494,9 @@ QDate MPeriodoServicio::getUltimaFecha( const int id_servicio ) {
             return QDate();
         }
     } else {
-        qDebug( "Error al ejecutar la cola de obtención de fecha de inicio de un periodo para un servicio" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola de obtención de fecha de inicio de un periodo para un servicio";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return QDate();
     }
     return QDate();
@@ -567,9 +569,9 @@ QDate MPeriodoServicio::generarFechaInicioPeriodo( const int id_servicio, const 
     // Chequeo que la fecha de inicio del servicio sea menor que la buscada
 
     if( fecha_inicio_servicio >= fecha ) {
-        qDebug( "Atencion - la fecha de inicio buscada es menor a la del alta del servicio." );
-        qDebug( fecha_inicio_servicio.toString().toLocal8Bit() );
-        qDebug( fecha.toString().toLocal8Bit() );
+        qDebug() << "Atencion - la fecha de inicio buscada es menor a la del alta del servicio.";
+        qDebug() << fecha_inicio_servicio.toString();
+        qDebug() << fecha.toString();
         fecha = fecha_inicio_servicio;
     }
 
@@ -613,9 +615,9 @@ int MPeriodoServicio::getUltimoPeriodo(const int id_servicio) {
             return -1;
         }
     } else {
-        qDebug( "Error al ejecutar la cola de obtención de ultimo periodo para un servicio" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola de obtención de ultimo periodo para un servicio";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return -1;
     }
     return -1;

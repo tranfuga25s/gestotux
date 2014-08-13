@@ -1,6 +1,7 @@
 #include "mfacturacionemitida.h"
 
 #include "eregistroplugins.h"
+#include <QDebug>
 
 MFacturacionEmitida::MFacturacionEmitida(bool deudor, QObject *parent) :
     QSqlQueryModel(parent)
@@ -80,7 +81,7 @@ void MFacturacionEmitida::generarDatos()
     }
     cola.append( "  ORDER BY razon_social" );
     setQuery( cola );
-    qDebug( cola.toLocal8Bit() );
+    qDebug() << cola;
     this->setHeaderData( 0, Qt::Horizontal, "Razon Social" );
     this->setHeaderData( 1, Qt::Horizontal, "#Comprobante" );
     this->setHeaderData( 2, Qt::Horizontal, "Total" );

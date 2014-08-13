@@ -10,13 +10,19 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += tst_proveedortest.cpp
+SOURCES += tst_proveedortest.cpp \
+           ../../plugins/proveedor/mproveedor.cpp
+
+HEADERS += ../../plugins/proveedor/mproveedor.h
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles
 
 LIBS += ../../bin/plugins/libproveedor.so
+
+FORMS += ../../plugins/proveedor/FormProveedorBase.ui
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

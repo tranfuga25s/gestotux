@@ -45,7 +45,7 @@ bool PagosPlugin::inicializar()
 bool PagosPlugin::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "recibos" ) )
- { qWarning( "Recibos::Error al buscar la tabla recibos" ); return false; }
+ { qDebug( "Recibos::Error al buscar la tabla recibos" ); return false; }
  return true;
 }
 

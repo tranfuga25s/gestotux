@@ -14,6 +14,7 @@ SOURCES +=  remitosplugins.cpp \
            formagregarremito.cpp \
            MRemito.cpp \
            mitemremito.cpp \
+           formremito.cpp \
            ../CtaCte/mcuentacorriente.cpp \
            ../CtaCte/mitemcuentacorriente.cpp
 
@@ -25,6 +26,7 @@ HEADERS += remitosplugins.h \
            formagregarremito.h \
            MRemito.h \
            mitemremito.h \
+           formremito.h \
            ../CtaCte/mcuentacorriente.h \
            ../CtaCte/mitemcuentacorriente.h
 

@@ -218,7 +218,7 @@ void FormPantallaInicial::changeEvent(QEvent *e)
 }
 
 void FormPantallaInicial::backup()
-{ emit agregarVentana( new Ebackup( this ) ); }
+{ emit agregarVentana( new EBackup( this ) ); }
 
 void FormPantallaInicial::preferencias()
 { emit agregarVentana( new FormPreferencias( ) ); }

@@ -26,6 +26,7 @@
 
 class QSqlQueryModel;
 class MProductosTotales;
+class ECBProductosModel;
 
 /*!
  * \brief Formulario para agregar un presupuesto
@@ -33,7 +34,7 @@ class MProductosTotales;
  * Clase que permite agregar un nuevo presupuesto al sistema.
  * \author Esteban Zeller
  */
-class FormAgregarPresupuesto : public EVentana, private Ui::FormPresupuestoBase
+class FormAgregarPresupuesto : public EVentana, public Ui::FormPresupuestoBase
 {
   Q_OBJECT
 
@@ -56,6 +57,8 @@ private:
     * Modelo para mostrar la lista de productos e items
     */
     MProductosTotales *m;
+    ECBProductosModel *ecbmprod;
+    ECBProductosFilter *ecbfiltro;
 };
 
 #endif

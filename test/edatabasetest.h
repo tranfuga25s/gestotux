@@ -35,7 +35,7 @@ public:
     void iniciarTablas();
     void vaciarTablas();
 
-private  Q_SLOTS:
+public Q_SLOTS:
     /*
      * initTestCase() will be called before the first testfunction is executed.
      * cleanupTestCase() will be called after the last testfunction was executed.
@@ -266,7 +266,9 @@ void EDatabaseTest::vaciarTabla( QString nombre )
 {
     if( _lista_tablas.contains( nombre ) ) {
         QSqlQuery cola;
-        cola.exec( "TRUNCATE TABLE " + nombre + ";" );
+        cola.exec( "DELETE FROM " + nombre + ";" );
+        cola.exec( "VACCUM;" );
+        //qDebug() << "DELETE FROM " << nombre << "; VACCUM;";
     } else {
         qDebug() << "La tabla " << nombre << " no está inicializada! - No se truncara.";
     }
@@ -281,7 +283,7 @@ void EDatabaseTest::vaciarTabla( QString nombre )
 void EDatabaseTest::iniciarTabla( QString nombre ) {
     // Busco si no está ya inicializada
     if( !_lista_tablas.contains( nombre ) ) {
-        qDebug() << "Inicializando tabla " << nombre;
+        //qDebug() << "Inicializando tabla " << nombre;
         QDir *path = new QDir( QCoreApplication::applicationDirPath() );
         path->cdUp();
         path->cd( "sql" );
@@ -305,11 +307,13 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
                                                qWarning() << cadena;
                                                qWarning() << " Fallo...." << cola.lastError().text();
                                                return;
+                                       } else {
+                                           //qDebug() << cadena;
                                        }
                                }
                        }
                        archivo.close();
-                       qDebug() << "Tabla " << nombre << " inicializada.";
+                       //qDebug() << "Tabla " << nombre << " inicializada.";
                        _lista_tablas.append( nombre );
                }
                else
@@ -328,12 +332,12 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
 }
 
 
-void EDatabaseTest::init() { EDatabaseTest::iniciarTablas(); }
+void EDatabaseTest::init() { QSqlDatabase::database().transaction(); }
 
-void EDatabaseTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void EDatabaseTest::initTestCase() { EDatabaseTest::generarTablas(); EDatabaseTest::iniciarTablas(); }
 
-void EDatabaseTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void EDatabaseTest::cleanupTestCase() { EDatabaseTest::vaciarTablas(); EDatabaseTest::borrarTablas(); }
 
-void EDatabaseTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void EDatabaseTest::cleanup() { QSqlDatabase::database().rollback(); }
 
 #endif // EDATABASETEST_H

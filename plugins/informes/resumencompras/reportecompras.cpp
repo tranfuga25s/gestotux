@@ -69,25 +69,13 @@ void ReporteCompras::resumenComprasTotales()
     emit agregarVentana( new FormResumenComprasTotales() );
 }
 
+#include "formresumencomprasporproductos.h"
 /*!
  * \brief ReporteCompras::resumenComprasPorProducto
  */
 void ReporteCompras::resumenComprasPorProducto()
 {
-    QMessageBox::information( 0, "Error", "No implementado" );
-    return;
-    bool ok = false;
-    QStringList meses;
-    meses << "Enero" << "Febrero" << "Marzo" << "Abril" << "Mayo" << "Junio" << "Julio" << "Agosto" << "Septiembre" << "Octubre" << "Noviembre" << "Diciembre";
-    QString mes = QInputDialog::getItem( 0, "Elija el mes", "Elija el mes:", meses, QDate::currentDate().month(), false, &ok );
-    if( ok ) {
-        EReporte *rep = new EReporte( 0 );
-        ParameterList lista;
-        lista.append( Parameter( "mes", meses.indexOf( mes ) ) );
-        rep->especial( "DeudaCuotasMes", lista );
-        rep->hacerPDF( ParameterList(), QString( "Deudas Cuotas del mes %1-%2" ).arg( mes ).arg( QDate::currentDate().toString( "yyyy" ) ) );
-        delete rep;
-    }
+    emit agregarVentana( new FormResumenComprasPorProductos() );
 }
 
 /**

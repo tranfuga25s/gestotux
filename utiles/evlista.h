@@ -21,14 +21,17 @@
 #define EVLISTA_H
 
 #include "eventana.h"
-class QSqlRelationalTableModel;
-class QSqlTableModel;
-class QSqlRecord;
+
+#include <QModelIndex>
 #include <QAction>
+
 class QTableView;
 class QMenu;
 class EBusqueda;
-#include <QModelIndex>
+class QSqlRelationalTableModel;
+class QSqlTableModel;
+class QSqlRecord;
+
 
 /**
  * 	\brief Clase base para todas las ventanas de tipo lista
@@ -44,13 +47,12 @@ public:
     EVLista(QWidget *parent = 0, Qt::WFlags fl = 0 );
     ~EVLista();
     void closeEvent( QCloseEvent * c);
+    void restaurarEstado();
 
    /*!
     * Visor utilizado para ver los datos
     */
     QTableView *vista;
-
-    // Acciones
    /*!
     * Accion generica de agregar
     */

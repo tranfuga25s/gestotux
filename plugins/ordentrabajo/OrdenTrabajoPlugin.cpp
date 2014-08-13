@@ -75,17 +75,17 @@ bool OrdenTrabajoPlugin::inicializar()
 bool OrdenTrabajoPlugin::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "orden_trabajo" ) )
- { qWarning( "OrdenTrabajoPlugin::Error al buscar la tabla orden_trabajo" ); return false; }
+ { qDebug( "OrdenTrabajoPlugin::Error al buscar la tabla orden_trabajo" ); return false; }
  if( !tablas.contains( "tecnico" ) )
- { qWarning( "OrdenTrabajoPlugin::Error al buscar la tabla tecnico" ); return false; }
+ { qDebug( "OrdenTrabajoPlugin::Error al buscar la tabla tecnico" ); return false; }
  if( !tablas.contains( "equipamiento" ) )
- { qWarning( "OrdenTrabajoPlugin::Error al buscar la tabla equipamiento" ); return false; }
+ { qDebug( "OrdenTrabajoPlugin::Error al buscar la tabla equipamiento" ); return false; }
  if( !tablas.contains( "tipo_operacion_orden_trabajo" ) )
- { qWarning( "OrdenTrabajoPlugin::Error al buscar la tabla tipo_operacion_orden_trabajo" ); return false; }
+ { qDebug( "OrdenTrabajoPlugin::Error al buscar la tabla tipo_operacion_orden_trabajo" ); return false; }
  if( !tablas.contains( "operacion_orden_trabajo" ) )
- { qWarning( "OrdenTrabajoPlugin::Error al buscar la tabla operacion_orden_trabajo" ); return false; }
+ { qDebug( "OrdenTrabajoPlugin::Error al buscar la tabla operacion_orden_trabajo" ); return false; }
  if( !tablas.contains( "v_equipamiento" ) )
- { qWarning( "OrdenTrabajoPlugin::Error al buscar al vista de equipamientos" ); return false; }
+ { qDebug( "OrdenTrabajoPlugin::Error al buscar al vista de equipamientos" ); return false; }
  return true;
 }
 

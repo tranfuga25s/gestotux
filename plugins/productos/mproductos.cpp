@@ -50,6 +50,15 @@ MProductos::MProductos(QObject *parent)
  setHeaderData( 8, Qt::Horizontal, "Stock" );
  setHeaderData( 9, Qt::Horizontal, "Habilitado" );
  setSort( 0, Qt::AscendingOrder );
+ // Cantidad de decimales
+ p->beginGroup("Stock");
+ if( p->value("mostrar-decimales", false ).toBool() ) {
+     this->_cantidad_decimales = p->value( "cantidad-decimales", 4 ).toInt();
+ } else {
+     this->_cantidad_decimales = 0;
+ }
+ qDebug() << "Cantidad de decimales " << this->_cantidad_decimales;
+ p->endGroup();
  p->endGroup();
  p->endGroup();
  p=0;
@@ -82,8 +91,8 @@ QVariant MProductos::data( const QModelIndex& item, int role ) const
                         }
                         case 8:
                         {
-                            return QString::number( QSqlRelationalTableModel::data( item, role ).toDouble(), 'f', 2 );
-                            break;
+                                return QString( "%L1" ).arg( QSqlRelationalTableModel::data( item, role ).toDouble(), 0, 'f', this->_cantidad_decimales );
+                                break;
                         }
                         default:
                         {
@@ -270,7 +279,7 @@ bool MProductos::modificarStock( const int id_producto, const double cantidad )
  * \param modelo Modelo del producto
  * \returns Verdadero si se pudo ingresar correctamente el producto a la base de datos, falso en caso contrario.
  */
-int MProductos::agregarProducto(const QString codigo, const QString nombre, const double costo, const double venta, int stock, int categoria, QString descripcion, QString marca, QString modelo) {
+int MProductos::agregarProducto(const QString codigo, const QString nombre, const double costo, const double venta, double stock, int categoria, QString descripcion, QString marca, QString modelo) {
     QSqlQuery cola;
     if( !cola.prepare( "INSERT INTO producto ( codigo, nombre, precio_costo, precio_venta, stock, id_categoria, descripcion, marca, modelo, habilitado ) VALUES( :codigo, :nombre, :precio_costo, :precio_venta, :stock, :categoria, :descripcion, :marca, :modelo, :habilitado )" ) ) {
         qDebug() <<  cola.lastError().text();
@@ -280,7 +289,6 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
-    bool pdescripcion = p->value( "descripcion", false ).toBool();
     bool pmarcas = p->value( "marcas", false ).toBool();
     bool pmodelo = p->value( "modelo", false ).toBool();
     bool pcategorias = p->value( "categorias", false ).toBool();
@@ -308,17 +316,17 @@ int MProductos::agregarProducto(const QString codigo, const QString nombre, cons
         cola.bindValue( ":codigo", codigo );
     }
     cola.bindValue( ":nombre", nombre );
-    if( descripcion == "" || pdescripcion  )
-    { cola.bindValue( ":descripcion", QVariant() ); }
+    if( descripcion == "" )
+    { cola.bindValue( ":descripcion", QVariant() );  }
     else
     { cola.bindValue( ":descripcion", descripcion ); }
 
-    if( marca == "" || pmarcas  )
+    if( marca == "" || !pmarcas )
     { cola.bindValue( ":marca", QVariant() ); }
     else
     { cola.bindValue( ":marca", marca ); }
 
-    if( modelo == "" || pmodelo )
+    if( modelo == "" || !pmodelo )
     { cola.bindValue( ":modelo", QVariant() ); }
     else
     { cola.bindValue( ":modelo", modelo); }
@@ -365,7 +373,7 @@ bool MProductos::actualizarPrecioCompra( const int id_producto, const double pre
  QSqlQuery cola;
  if( cola.exec( QString( "UPDATE producto SET precio_costo = %1 WHERE id = %2" ).arg( precio ).arg( id_producto ) ) )
  {
-        qDebug( "Precio de compra actualizado correctamente" );
+        //qDebug( "Precio de compra actualizado correctamente" );
         return true;
  }
  else
@@ -389,7 +397,7 @@ bool MProductos::actualizarPrecioVenta( const int id_producto, const double prec
  QSqlQuery cola;
  if( cola.exec( QString( "UPDATE producto SET precio_venta = %1 WHERE id = %2" ).arg( precio ).arg( id_producto ) ) )
  {
-        qDebug( "Precio de venta actualizado correctamente" );
+        //qDebug( "Precio de venta actualizado correctamente" );
         return true;
  }
  else
@@ -409,18 +417,19 @@ bool MProductos::actualizarPrecioVenta( const int id_producto, const double prec
  */
 double MProductos::buscarPrecioCompra( const int id_producto )
 {
+ if( id_producto <= 0 ) { return -2.0; }
  QSqlQuery cola;
  if( cola.exec( QString( "SELECT precio_costo FROM producto WHERE id = %1" ).arg( id_producto ) ) )
  {
      if( cola.next() ) {
          return cola.record().value(0).toDouble();
      } else {
-         qWarning( "Error al hacer next la cola de busqueda del precio de compra del producto solicitado" );
+         qWarning() << "MProductos::buscarPrecioCompra()::Error al hacer next la cola de busqueda del precio de compra del producto solicitado";
      }
  }
  else
  {
-  qWarning( "Error al ejecutar la cola de busqueda del precio de compra del producto solicitado" );
+  qWarning() << "MProductos::buscarPrecioCompra()::Error al ejecutar la cola de busqueda del precio de compra del producto solicitado";
  }
  qDebug() << cola.lastError().text();
  qDebug() << cola.lastQuery();
@@ -470,7 +479,7 @@ double MProductos::buscarPrecioCompra( const QString codigo )
         if( cola.next() ) {
             return cola.record().value(0).toDouble();
         } else {
-            qWarning( "Error al hacer next la cola de busqueda del precio de compra del producto solicitado - codigo" );
+            qWarning( "MProductos::buscarPrecioCompra()::Error al hacer next la cola de busqueda del precio de compra del producto solicitado - codigo" );
         }
     }
     else

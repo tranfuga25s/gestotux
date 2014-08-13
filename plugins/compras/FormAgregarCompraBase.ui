@@ -121,15 +121,19 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="SBCant">
+      <widget class="QDoubleSpinBox" name="DSBCant">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
        <property name="maximum">
-        <number>999999999</number>
+        <double>999999999.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="EDSBPrecio" name="DSBPrecioUnitario">
+       <property name="value">
+        <double>1.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -185,6 +189,11 @@
    <class>ECBProveedor</class>
    <extends>QComboBox</extends>
    <header>ecbproveedor.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EDSBPrecio</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>edsbprecio.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

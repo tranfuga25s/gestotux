@@ -113,17 +113,17 @@ void GarantiasPlugin::crearMenu( QMenuBar *m )
 bool GarantiasPlugin::verificarTablas( QStringList tablas )
 {
     if( !tablas.contains( "factura" ) )
-    { qWarning() << "Error al buscar la tabla factura"; return false; }
+    { qDebug() << "Error al buscar la tabla factura"; return false; }
     if( !tablas.contains( "clientes" ) )
-    { qWarning() << "Error al buscar la tabla clientes"; return false; }
+    { qDebug() << "Error al buscar la tabla clientes"; return false; }
     if( !tablas.contains( "equipamientos" ) )
-    { qWarning() << "Error al buscar la tabla de equipamientos"; return false; }
+    { qDebug() << "Error al buscar la tabla de equipamientos"; return false; }
     if( !tablas.contains( "garantias" ) )
-    { qWarning() << "Error al buscar la tabla garantias"; return false; }
+    { qDebug() << "Error al buscar la tabla garantias"; return false; }
     if( !tablas.contains( "v_garantias" ) )
-    { qWarning() << "Error al buscar la tabla v_garantias"; return false; }
+    { qDebug() << "Error al buscar la tabla v_garantias"; return false; }
     if( !tablas.contains( "v_garantias_svg" ) )
-    { qWarning() << "Error al buscar la tabla v_garantias_svg"; return false; }
+    { qDebug() << "Error al buscar la tabla v_garantias_svg"; return false; }
     return true;
 }
 

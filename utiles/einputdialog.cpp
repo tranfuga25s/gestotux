@@ -14,7 +14,8 @@ double EInputDialog::getImporte(QWidget *parent, const QString &title, const QSt
                                Qt::WindowFlags flags)
 {
     QDialog dialogo( parent, flags );
-    dialogo.setWindowTitle(title);
+    dialogo.setWindowTitle( title );
+    dialogo.setModal( false );
 
     QLabel *_label = new QLabel( parent );
     _label->setText( label );

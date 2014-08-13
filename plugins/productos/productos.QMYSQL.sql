@@ -1,3 +1,3 @@
 CREATE TABLE IF NOT EXISTS `categoria_producto` ( `id` bigint(20) NULL DEFAULT NULL auto_increment,`nombre` text NOT NULL, `descripcion` text default NULL, PRIMARY KEY  (`id`) ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 CREATE TABLE IF NOT EXISTS `producto` ( `id` bigint(20) NOT NULL AUTO_INCREMENT, `id_categoria` bigint(20) NULL,  `codigo` text NOT NULL UNIQUE, `nombre` tinytext NOT NULL, `precio_costo` decimal(20,3) NULL, `precio_venta` decimal(20,3) NOT NULL, `descripcion` tinytext, `marca` tinytext, `stock` decimal(20,3) DEFAULT NULL, `habilitado` boolean NOT NULL DEFAULT 1, `modelo` tinytext NULL, PRIMARY KEY (`id`), CONSTRAINT `codigo_unico` UNIQUE (`codigo`) ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-INSERT INTO `categoria_producto` ( `id` ) VALUES ( NULL );
+INSERT OR IGNORE INTO `categoria_producto` ( `id` ) VALUES ( NULL );

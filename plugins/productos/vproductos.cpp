@@ -25,6 +25,7 @@
 #include <QAction>
 #include <QMessageBox>
 #include <QSqlRelationalDelegate>
+#include <QDebug>
 
 #include "productos.h"
 #include "mcategorias.h"
@@ -75,6 +76,7 @@ VProductos::VProductos(QWidget *parent)
  vista->horizontalHeader()->setResizeMode( rmodelo->fieldIndex( "codigo" ), QHeaderView::ResizeToContents );
  vista->setAlternatingRowColors( true );
  vista->setSortingEnabled( true );
+ vista->horizontalHeader()->setMovable( true );
 
  addAction( ActAgregar );
  addAction( ActModificar );
@@ -146,8 +148,6 @@ VProductos::VProductos(QWidget *parent)
 
  if( p->value( "mostrar-costo", true ).toBool() ) {
     addAction( ActVerCosto );
- } else {
-     ActVerCosto->setVisible( false );
  }
  addAction( ActVerTodos );
  addAction( ActCerrar );
@@ -165,6 +165,8 @@ VProductos::VProductos(QWidget *parent)
  habilitarBusqueda();
 
  p->endGroup();p->endGroup(); p=0;
+
+ this->restaurarEstado();
 }
 
 /*!
@@ -373,7 +375,8 @@ void VProductos::eliminar()
     }
     int ret = QMessageBox::question( this,
                                      QString::fromUtf8( "¿Está seguro?"),
-                                     QString::fromUtf8("¿Está seguro que desea eliminar %1 producto(s)?").arg( indices.size() ) );
+                                     QString::fromUtf8("¿Está seguro que desea eliminar %1 producto(s)?").arg( indices.size() ),
+                                     QMessageBox::Yes, QMessageBox::No );
     if( ret == QMessageBox::Yes ) {
         int neliminados = 0; int eliminados = 0;
         foreach( QModelIndex idx, indices ) {

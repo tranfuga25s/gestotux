@@ -23,6 +23,8 @@
 
 #include <QAbstractTableModel>
 
+#include "ecbproductosmodel.h"
+
 /**
  * \brief Modelo que calcula totales segun modelo de venta, compra y presupuesto
  *
@@ -33,7 +35,7 @@ class MProductosTotales : public QAbstractTableModel
 {
 Q_OBJECT
 public:
-    MProductosTotales( QObject *parent = 0, QMap<int, QString> *_mapa = 0 );
+    MProductosTotales(QObject *parent = 0, ECBProductosModel *_m = 0 );
     ~MProductosTotales();
 
     bool insertRow(int row, const QModelIndex& parent = QModelIndex() );
@@ -45,8 +47,8 @@ public:
     QVariant data(const QModelIndex& idx, int role) const;
     QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
-    void agregarItem( const int cant, const QString texto, double pu );
-    void agregarItem( const int cant, const int id_producto, double pu );
+    void agregarItem( const double cant, const QString texto, double pu );
+    void agregarItem( const double cant, const int id_producto, double pu );
 
     double totalitems();
     double total();
@@ -55,7 +57,7 @@ public:
     bool buscaPrecios();
     void buscarPrecios( bool activado = true );
 
-    void agregarNuevoProducto( const int cantidad, const int Id );
+    void agregarNuevoProducto( const double cantidad, const int Id, double precio_unitario = -1.1 );
    /*!
     * \enum TipoPrecio
     * Indica que tipo de precio se buscara cuando se realize una busqueda
@@ -77,8 +79,12 @@ public:
     int conteoDescuentos() { return descuentos->size(); }
     int conteoItems() { return cantidades->size(); }
 
-    void setearListaProductos(  QMap<int, QString> *_mapa_id_prod );
-    QMap<int, QString> *listaProductos() { return prods; }
+    void setearListaProductos( ECBProductosModel *_m );
+    ECBProductosModel *listaProductos() { return prods; }
+
+    void vaciarProductos();
+
+    void arreglarIdProductoAgregado( const int anterior, const int nuevo );
 
 public slots:
     void agregarDescuento( QString texto, double porcentaje );
@@ -101,9 +107,9 @@ private:
          */
         QHash<int, int> *productos;
         /*!
-         * Contiene el listado de ids relacionados con los nombres de los productos
+         * Contiene el listado de los productos en un modelo
          */
-        QMap<int, QString> *prods;
+        ECBProductosModel *prods;
         /*!
          * Contiene el listado de subtotales por definicion de fila
          */
@@ -140,6 +146,10 @@ private:
          * Define que tipo de precio Costo o Venta se buscará
          */
         TipoPrecio _tipoPrecio;
+        /*!
+         * Cantidad de decimales que se utiliza en la cantidad
+         */
+        int _cantidad_decimales;
 
         double buscarPrecioVenta( int id_producto );
         double buscarPrecioCompra( int id_producto );

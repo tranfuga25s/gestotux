@@ -274,12 +274,12 @@ void FormActualizacion::terminado( int comando, bool  error )
                 }
                 else
                 {
-                        qDebug( "Error al copiar el archivo" );
+                        qDebug() << "Error al copiar el archivo";
                 }
         }
         else
         {
-                qDebug( QString("Comando desconocido: %1").arg( comando ).toLocal8Bit() );
+                qDebug() << "Comando desconocido: " << comando;
         }
     break;
    }
@@ -300,7 +300,7 @@ void FormActualizacion::analizarGeneral()
   if( !docxml->setContent( ftp->readAll(), false, &mensaje, &linea, &columna ) )
   {
    TELog->append( "Error al cargar el contenido del archivo de actualizaciones" );
-   qDebug( QString( "Error: f:%1,c:%2; m=%3 " ).arg( linea ).arg(columna ).arg(mensaje ).toLocal8Bit() );
+   qDebug() << "Error: f:" << linea <<",c:" << columna <<"; m=" << mensaje;
    _continuar_actualizando = false;
    return;
   }
@@ -312,10 +312,10 @@ void FormActualizacion::analizarGeneral()
 
   TELog->append( "Analizando actualizaciones disponibles" );
   QDomElement docElem = docxml->documentElement();
-  qDebug( QString( "Primer hijo: %1" ).arg( docElem.tagName() ).toLocal8Bit() );
+  qDebug() << "Primer hijo: " << docElem.tagName();
   if( docElem.tagName() == "actualizacion" )
   {
-        qDebug( "Encontrado nodo de actualizacion" );
+        qDebug() << "Encontrado nodo de actualizacion";
   }
   if( docElem.attribute( "version", 0 ).toDouble() > VERSION_PROGRAMA )
   {
@@ -330,7 +330,7 @@ void FormActualizacion::analizarGeneral()
         TELog->append( "No se necesita actualizar el programa general." );
         //Ingreso al directorio de la version del programa
         ftp->cd( QString::number( docElem.attribute( "version", 0 ).toDouble() ) );
-        qDebug( QString( "entrando en: %1" ).arg( docElem.attribute( "version", 0 ).toDouble() ).toLocal8Bit() );
+        qDebug() << "Entrando en: " << docElem.attribute( "version", 0 ).toDouble();
 
         // Busco si hay algo dentro de archivos
         /*QDomNode nodo_archivos = docxml->elementsByTagName( "archivos" ).item(0);

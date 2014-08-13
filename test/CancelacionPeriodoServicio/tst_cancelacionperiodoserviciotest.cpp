@@ -36,25 +36,13 @@ CancelacionPeriodoServicioTest::CancelacionPeriodoServicioTest()
                  << "factura";
 }
 
-void CancelacionPeriodoServicioTest::initTestCase()
-{
-    EDatabaseTest::generarTablas();
-}
+void CancelacionPeriodoServicioTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void CancelacionPeriodoServicioTest::init()
-{
-    EDatabaseTest::iniciarTablas();
-}
+void CancelacionPeriodoServicioTest::init() { EDatabaseTest::init(); }
 
-void CancelacionPeriodoServicioTest::cleanup()
-{
-    EDatabaseTest::borrarTablas();
-}
+void CancelacionPeriodoServicioTest::cleanup() { EDatabaseTest::cleanup(); }
 
-void CancelacionPeriodoServicioTest::cleanupTestCase()
-{
-    EDatabaseTest::vaciarTablas();
-}
+void CancelacionPeriodoServicioTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
 /*!
  * \brief CancelacionPeriodoServicioTest::testCancelarPeriodoServicio

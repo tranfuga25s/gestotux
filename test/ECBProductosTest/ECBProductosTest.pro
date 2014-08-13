@@ -1,7 +1,5 @@
 #-------------------------------------------------
-#
-# Project created by QtCreator 2014-04-28T08:49:13
-#
+# Test par aprobar las funcionales varias
 #-------------------------------------------------
 
 QT       += sql testlib
@@ -12,8 +10,17 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-SOURCES += tst_ecbproductostest.cpp
-HEADERS += ../edatabasetest.h
+SOURCES += tst_ecbproductostest.cpp \
+           ../../utiles/ecbproductosmodel.cpp \
+           ../../utiles/ecbproductosfilter.cpp \
+           ../../utiles/ecbproductos.cpp \
+           ../../utiles/mproductostotales.cpp
+
+HEADERS += ../edatabasetest.h \
+           ../../utiles/ecbproductosmodel.h \
+           ../../utiles/ecbproductosfilter.h \
+           ../../utiles/ecbproductos.h \
+           ../../utiles/mproductostotales.h
 
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles

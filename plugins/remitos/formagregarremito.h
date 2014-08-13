@@ -32,7 +32,7 @@ class MProductosTotales;
  * Clase que permite agregar una nueva venta al sistema
  * \author Esteban Zeller
  */
-class FormAgregarRemito : public EVentana, private Ui::FormAgregarRemitoBase
+class FormAgregarRemito : public EVentana, public Ui::FormAgregarRemitoBase
 {
 Q_OBJECT
 public:
@@ -56,6 +56,7 @@ protected slots:
 signals:
     void emitirPlanCuota( int, double, MPlanCuota::TipoComprobante );
     void emitirPlanCuotaSetIdFactura( int, int );
+    void emitirGarantia( int, int, QString, int );
     void actualizarListado();
 
 private:

@@ -19,7 +19,9 @@
  ***************************************************************************/
 
 #include "MClientesServicios.h"
+
 #include <QDate>
+#include <QDebug>
 
 MClientesServicios::MClientesServicios ( QObject *parent, bool relacion ) :
     QSqlRelationalTableModel( parent )
@@ -154,20 +156,20 @@ bool MClientesServicios::darDeBaja( int id_cliente, int id_servicio, QString raz
     // Verificar existencia de la asociacion
     QSqlQuery cola;
     if( !cola.exec( QString( "SELECT COUNT(id_cliente) FROM servicios_clientes WHERE id_cliente = %1 AND id_servicio = %2" ).arg( id_cliente ).arg( id_servicio ) ) ) {
-        qDebug( "Error al ejecutar la cola de obtencion de lciente servicio." );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola de obtencion del cliente servicio.";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     } else {
         if( !cola.next() ) {
-            qDebug( "Error al hacer next en la cola de obtencion del cliente servicio" );
-            qDebug( cola.lastError().text().toLocal8Bit() );
-            qDebug( cola.lastQuery().toLocal8Bit() );
+            qDebug() << "Error al hacer next en la cola de obtencion del cliente servicio";
+            qDebug() << cola.lastError().text();
+            qDebug() << cola.lastQuery();
             return false;
         } else {
             if( cola.record().value(0).toInt() <= 0 ) {
-                qWarning( "El cliente seleccionado no esta adherido al servicio especificado" );
-                qDebug( cola.lastError().text().toLocal8Bit() );
-                qDebug( cola.lastQuery().toLocal8Bit() );
+                qWarning() << "El cliente seleccionado no esta adherido al servicio especificado";
+                qDebug() << cola.lastError().text();
+                qDebug() << cola.lastQuery();
                 return false;
             }
         }
@@ -188,9 +190,9 @@ bool MClientesServicios::darDeBaja( int id_cliente, int id_servicio, QString raz
     if( !cola2.prepare(
          QString( "UPDATE servicios_clientes SET fecha_baja = :fecha, razon = :razon WHERE id_cliente = %1 AND id_servicio = %2" )
                 .arg( id_cliente ).arg( id_servicio ) ) ) {
-        qDebug( "Error al preparar la cola" );
-        qDebug( cola2.lastError().text().toLocal8Bit() );
-        qDebug( cola2.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al preparar la cola";
+        qDebug() << cola2.lastError().text();
+        qDebug() << cola2.lastQuery();
         return false;
     }
     cola2.bindValue( ":fecha" , QDate::currentDate() );
@@ -198,13 +200,13 @@ bool MClientesServicios::darDeBaja( int id_cliente, int id_servicio, QString raz
     /*cola2.bindValue( ":id_cliente",  id_cliente );
     cola2.bindValue( ":id_servicio", id_servicio );*/
     if( !cola2.exec() ) {
-        qDebug( "Error al ejecutar la cola de insercion de fecha de baja y razon en la tabla de servicios_clientes" );
-        qDebug( cola2.lastError().text().toLocal8Bit() );
-        qDebug( cola2.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola de insercion de fecha de baja y razon en la tabla de servicios_clientes";
+        qDebug() << cola2.lastError().text();
+        qDebug() << cola2.lastQuery();
         return false;
     } else {
-        qDebug( cola2.lastError().text().toLocal8Bit() );
-        qDebug( cola2.lastQuery().toLocal8Bit() );
+        qDebug() << cola2.lastError().text();
+        qDebug() << cola2.lastQuery();
     }
     // Imprimir comprobante de baja
     EReporte *rep = new EReporte( 0 );
@@ -245,14 +247,14 @@ bool MClientesServicios::eliminarRelacion( const int id_cliente, const int id_se
      * Por lo tanto se guardarán los datos historicos.
      */
     if( id_cliente <= 0 ) {
-        qDebug( "Identificador de cliente <= 0" );
+        qDebug() << "Identificador de cliente <= 0";
         return false;
     }
     QSqlQuery cola;
     if( !cola.exec( QString( "DELETE FROM servicios_clientes WHERE id_cliente = %1 AND id_servicio = %2 AND fecha_baja IS NOT NULL" ).arg( id_cliente ).arg( id_servicio ) ) ) {
-        qDebug( "Error al intentar eliminar la relacion cliente-servicio." );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al intentar eliminar la relacion cliente-servicio.";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     } else {
         return true;
     }

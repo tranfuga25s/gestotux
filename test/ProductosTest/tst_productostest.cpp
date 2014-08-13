@@ -7,7 +7,7 @@
 #include "mproductos.h"
 #include "../edatabasetest.h"
 
-class ProductosTest : public QObject, private EDatabaseTest
+class ProductosTest : public QObject, public EDatabaseTest
 {
     Q_OBJECT
     
@@ -37,10 +37,19 @@ private Q_SLOTS:
     void testOcultarCodigo();
     void testCategoriaEnAltaProducto();
     void testModeloEnAltaProducto();
+    void testMarcaEnAltaProducto();
+    void testDescripcionEnAltaProducto();
     void testOcultarCosto();
+    void testPreferenciasStockLista();
+    void testBuscarCodigoExistente();
+    void testBuscarCodigoExistente_data();
+    void testBuscarPrecioCompra();
+    void testBuscarPrecioCompra_data();
+    void testCantidadDecimales();
 
 private:
     MProductos *mp;
+    bool doClean;
 
 };
 
@@ -49,16 +58,19 @@ private:
  */
 ProductosTest::ProductosTest()
 {
-    this->tablas << "categorias_productos" << "productos" << "compras" << "compras_productos";
+    this->tablas << "categorias_productos"
+                 << "productos"
+                 << "compras"
+                 << "compras_productos";
 }
 
-void ProductosTest::init() { EDatabaseTest::iniciarTablas(); }
+void ProductosTest::init() { EDatabaseTest::init(); doClean = true; }
 
-void ProductosTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void ProductosTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void ProductosTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void ProductosTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void ProductosTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void ProductosTest::cleanup() { if( this->doClean ) { EDatabaseTest::cleanup(); } }
 
 /*!
  * \brief ProductosTest::testCodigoRepetido
@@ -77,6 +89,7 @@ void ProductosTest::testCodigoRepetido()
     QFETCH( bool, resultado );
     if( resultado ) {
         QVERIFY( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ) > 0 );
+        doClean = false;
     } else {
         QCOMPARE( mp->agregarProducto( codigo, nombre, costo, venta, stock, categoria, descripcion, marca, modelo ), -1 );
     }
@@ -231,6 +244,9 @@ void ProductosTest::testAutocompletadoMarcaProveedor_data()
     QTest::newRow("Proveedor1") << "mc2" << "Proveedor 2" << 10.4 << 2.0;
 }
 
+/*!
+ * \brief ProductosTest::testMarcaProveedor
+ */
 void ProductosTest::testMarcaProveedor()
 {
     preferencias *p = preferencias::getInstancia();
@@ -353,11 +369,11 @@ void ProductosTest::testCategoriaEnAltaProducto()
 #include <QSqlRecord>
 #include <QVector>
 /*!
- * \brief ProductosTest::testModeloEnAltaProducto
+ * \brief ProductosTest::testMarcaEnAltaProducto
  * Test para verificar que se de correctamente de alta el modelo al agregar un producto
  * Ver issue #77.
  */
-void ProductosTest::testModeloEnAltaProducto()
+void ProductosTest::testMarcaEnAltaProducto()
 {
     // Habilito el uso de las categorías en el sistema
     preferencias *p = preferencias::getInstancia();
@@ -370,23 +386,73 @@ void ProductosTest::testModeloEnAltaProducto()
 
     MProductos *mp = new MProductos();
 
-    int id_producto = mp->agregarProducto( QString(), "Test", 10.0, 12.0, 1, 1, QString(), "Marca 1" );
+    int id_producto = mp->agregarProducto( QString(), "testMarcaEnAltaProducto", 10.0, 12.0, 1, 1, QString(), "Marcass1" );
 
     QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
 
     QSqlQuery cola;
-    QVector<QString> marcas;
-    QVERIFY( cola.exec( "SELECT marca FROM producto" ) );
-    while( cola.next() ) {
-        QString marca = cola.record().value(0).toString();
-        if( !marca.isEmpty() && !marca.isNull() ) {
-            marcas.append( cola.record().value(0).toString() );
-        }
-    }
-    QVERIFY2( marcas.size() > 0 , "No hay ninguna marca!" );
-    QVERIFY2( marcas.contains( "Marca 1" ), "No se encontró la marca" );
+    QVERIFY( cola.exec( "SELECT COUNT( marca ) FROM producto WHERE marca = 'Marcass1'" ) );
+    QVERIFY( cola.next() );
+    QVERIFY( cola.record().value(0).toInt() == 1 );
 }
 
+/*!
+ * \brief ProductosTest::testModeloEnAltaProducto
+ * Test para verificar que se de correctamente de alta el modelo al agregar un producto
+ * Ver issue #77.
+ */
+void ProductosTest::testModeloEnAltaProducto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "modelo", true );
+    p->inicio();
+    p=0;
+
+    MProductos *mp = new MProductos();
+
+    int id_producto = mp->agregarProducto( QString(), "testModeloEnAltaProducto", 10.0, 12.0, 1, 1, QString(), "Marca1", "Modelos1" );
+
+    QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
+
+    QSqlQuery cola;
+    QVERIFY( cola.exec( "SELECT COUNT( modelo ) FROM producto WHERE modelo = 'Modelos1'" ) );
+    QVERIFY( cola.next() );
+    QVERIFY( cola.record().value(0).toInt() == 1 );
+}
+
+/*!
+ * \brief ProductosTest::testDescripcionEnAltaProducto
+ */
+void ProductosTest::testDescripcionEnAltaProducto()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->setValue( "marcas", true );
+    p->inicio();
+    p=0;
+
+    MProductos *mp = new MProductos();
+
+    int id_producto = mp->agregarProducto( QString(), "testDescripcionEnAltaProducto", 10.0, 12.0, 1, 1, "testDescripcionEnAltaProducto" );
+
+    QVERIFY2( id_producto > 0, "No se pudo insertar el producto" );
+
+    QSqlQuery cola;
+    QVERIFY( cola.exec( "SELECT COUNT( descripcion ) FROM producto WHERE descripcion = 'testDescripcionEnAltaProducto'" ) );
+    QVERIFY( cola.next() );
+    QVERIFY( cola.record().value(0).toInt() == 1 );
+}
+
+/*!
+ * \brief ProductosTest::testOcultarCosto
+ */
 void ProductosTest::testOcultarCosto()
 {
     // Habilito el uso de las categorías en el sistema
@@ -394,12 +460,13 @@ void ProductosTest::testOcultarCosto()
     p->inicio();
     p->beginGroup( "Preferencias" );
     p->beginGroup( "Productos" );
-    p->setValue( "costo", false );
+    p->setValue( "mostrar-costo", false );
     p->inicio();
     p=0;
 
     VProductos *vp = new VProductos();
-    QVERIFY2( vp->ActVerCosto->isVisible() == false, "No se deberia de mostrar el boton del costo del producto" );
+    vp->show();
+    QVERIFY2( vp->actions().contains( vp->ActVerCosto ) == false, "No se deberia de mostrar el boton del costo del producto" );
     delete vp;
 
     FormAgregarProducto *fap = new FormAgregarProducto();
@@ -409,6 +476,125 @@ void ProductosTest::testOcultarCosto()
     FormModificarProducto *fmp = new FormModificarProducto( new MProductos() );
     QVERIFY2( fmp->DSBCosto->isVisible() == false, "No se debería de ver el precio de costo en modificar producto" );
     delete fmp;
+}
+
+/*!
+ * \brief ProductosTest::testPreferenciasStockLista
+ */
+void ProductosTest::testPreferenciasStockLista()
+{
+    // Habilito el uso de las categorías en el sistema
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "mostrar-stock-lista", true );
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+
+    FormPrefProductos *fpp = new FormPrefProductos();
+    fpp->cargar();
+    QVERIFY( fpp->CkBMostrarStockLista->isChecked() );
+
+    fpp->CkBMostrarStockLista->setChecked( false );
+    fpp->guardar();
+
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    QVERIFY( p->value( "mostrar-stock-lista", true ) == false );
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    p=0;
+}
+
+/*!
+ * Test para verificar si funciona correctamente la busqueda por código.
+ **/
+void ProductosTest::testBuscarCodigoExistente()
+{
+    QFETCH( QString, codigo );
+    QFETCH( bool, existe );
+    QCOMPARE( MProductos::existeCodigo( codigo ), existe );
+}
+
+void ProductosTest::testBuscarCodigoExistente_data()
+{
+    QTest::addColumn<QString>("codigo");
+    QTest::addColumn<bool>("existe");
+    QTest::newRow("Producto1") << "1" << true;
+    QTest::newRow("Productos2") << "19" << false;
+    QTest::newRow("Producto 3") << "6" << true;
+}
+
+/*!
+ * Permite saber si se genera correctamente la consulta del precio de compra
+ */
+void ProductosTest::testBuscarPrecioCompra()
+{
+    QFETCH( int, id_producto );
+    QFETCH( double, precio_compra );
+    QCOMPARE( MProductos::buscarPrecioCompra( id_producto ), precio_compra );
+}
+
+void ProductosTest::testBuscarPrecioCompra_data()
+{
+    QTest::addColumn<int>("id_producto");
+    QTest::addColumn<double>("precio_compra");
+    QTest::newRow("Producto1") << 1 << 10.0;
+    QTest::newRow("Producto2") << 2 << 10.0;
+    QTest::newRow("Producto3") << 3 << 10.0;
+    QTest::newRow("Producto4") << 4 << 10.0;
+}
+
+/**
+ * @brief ProductosTest::testCantidadDecimales
+ * Permite verificar que tenga la cantidad de digitos de decimal especificados.
+ */
+void ProductosTest::testCantidadDecimales()
+{
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "cantidad-decimales", 4 );
+    p->setValue( "mostrar-decimales", true );
+    p->sync();
+
+    QLocale locale;
+
+    MProductos *mp = new MProductos();
+    mp->select();
+    QString salida = mp->data( mp->index( 0, mp->fieldIndex( "stock" ) ), Qt::DisplayRole ).toString();
+    QVERIFY( !salida.isEmpty() );
+    QVERIFY( salida.contains( locale.decimalPoint() ) );
+    QStringList lista = salida.split( locale.decimalPoint() );
+    QVERIFY( lista.size() > 1 );
+    QCOMPARE( lista.at(1).size(), 4 );
+    delete mp;
+    mp=0;
+
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    p->setValue( "cantidad-decimales", 4 );
+    p->setValue( "mostrar-decimales", false );
+    p->sync();
+
+    mp = new MProductos();
+    mp->select();
+    // Busco un stock de producto
+    salida = mp->data( mp->index( 0, mp->fieldIndex( "stock" ) ), Qt::DisplayRole ).toString();
+    QVERIFY( !salida.isEmpty() );
+    QVERIFY( !salida.contains( locale.decimalPoint() ) );
+    delete mp;
+    mp=0;
 }
 
 QTEST_MAIN(ProductosTest)

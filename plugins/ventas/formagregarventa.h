@@ -25,6 +25,8 @@
 #include "ui_FormAgregarVentaBase.h"
 #include "../cuotas/mplancuota.h"
 class MProductosTotales;
+class ECBProductosModel;
+class ECBProductosFilter;
 
 /*!
  * \brief Formulario para agregar una venta
@@ -40,6 +42,9 @@ public:
         void setearCliente( int id_cliente );
         void setearFecha( QDate fecha );
         void setearItems( MProductosTotales *m );
+
+public slots:
+        int guardar( bool imprimir = true );
 
 signals:
         /*!
@@ -74,7 +79,6 @@ public slots:
 protected slots:
         void agregarProducto();
         void eliminarProducto();
-        void guardar();
         void cambioCliente( int id_combo );
         void eliminarTodo();
         void agregarDescuento();
@@ -82,6 +86,8 @@ protected slots:
         void cambioProveedor( int id_proveedor );
 
 private:
+        ECBProductosModel *ecbmprod;
+        ECBProductosFilter *ecbfiltro;
         MProductosTotales *mcp;
         int id_plan_cuota;
 

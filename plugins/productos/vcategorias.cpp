@@ -28,6 +28,7 @@
 #include <QSqlQuery>
 #include <QAction>
 #include <QSqlError>
+#include <QDebug>
 
 VCategorias::VCategorias( QWidget *parent )
 : EVLista( parent )
@@ -85,7 +86,6 @@ void VCategorias::eliminar()
   lista.remove( lista.size() - 1, 1 );
  }
  // Veo si existen productos con esta categoria
- qDebug( QString("SELECT COUNT(id) FROM producto WHERE id_categoria IN ( %1 )" ).arg( lista ).toLocal8Bit() );
  QSqlQuery cola( QString("SELECT COUNT(id) FROM producto WHERE id_categoria IN ( %1 )" ).arg( lista ) );
  if( cola.next() )
  {
@@ -117,8 +117,8 @@ void VCategorias::eliminar()
  }
  else
  {
-  qDebug( "Error de ejecucion en la cola" );
-  qDebug( QString( "Detalle: %1" ).arg( cola.lastError().text() ).toLocal8Bit() );
+  qDebug() << "Error de ejecucion en la cola";
+  qDebug() << "Detalle: " << cola.lastError().text();
   return;
  }
 
@@ -150,7 +150,7 @@ void VCategorias::agregar( bool /*autoeliminarid*/ )
                 return;
             } else {
                 QMessageBox::warning( this, "error", "No se pudo agregar la categoria" );
-                qDebug( modelo->lastError().text().toLocal8Bit() );
+                qDebug() << modelo->lastError().text();
                 return;
             }
         }

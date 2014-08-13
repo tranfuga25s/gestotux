@@ -350,5 +350,8 @@ bool MEquipamiento::enGarantia()
         estado = mgarantia->estaActiva( mgarantia->obtenerIdSegunEquipamiento( id_equipamiento ) );
         delete mgarantia;
         return estado;
+    } else {
+        qWarning() << "No hay datos seleccionados para obtener conclusión";
+        return false;
     }
 }

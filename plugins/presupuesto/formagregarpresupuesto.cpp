@@ -19,13 +19,13 @@
  ***************************************************************************/
 #include "formagregarpresupuesto.h"
 
-
 #include <QDate>
 #include <QSqlError>
 #include <QHeaderView>
 #include <QCompleter>
 #include <QSqlQuery>
 #include <QInputDialog>
+#include <QDebug>
 
 #include "mproductostotales.h"
 #include "dproductostotales.h"
@@ -40,6 +40,7 @@
 #include "mdescuentos.h"
 #include "preferencias.h"
 #include "eregistroplugins.h"
+#include "ecbproductosmodel.h"
 
 FormAgregarPresupuesto::FormAgregarPresupuesto(QWidget* parent, Qt::WFlags fl)
 : EVentana( parent, fl ), Ui::FormPresupuestoBase()
@@ -78,8 +79,15 @@ FormAgregarPresupuesto::FormAgregarPresupuesto(QWidget* parent, Qt::WFlags fl)
         dEFecha->setDate( QDate::currentDate() );
         dEFecha->setMaximumDate( QDate::currentDate().addDays( 1 ) );
 
+        ecbmprod = new ECBProductosModel( this );
+        ecbmprod->inicializar();
+
+        ecbfiltro = new ECBProductosFilter( this );
+        ecbfiltro->setSourceModel( ecbmprod );
+        ecbfiltro->setearNoMostrarProductosSinStock( true );
+
         // Pongo el sistema de relleno
-        m = new MProductosTotales( this, CBProductos->listadoProductos() );
+        m = new MProductosTotales( this, ecbmprod );
         m->calcularTotales( true );
         m->buscarPrecios( true );
         TVContenido->setModel( m );
@@ -109,17 +117,27 @@ FormAgregarPresupuesto::FormAgregarPresupuesto(QWidget* parent, Qt::WFlags fl)
         // Busco el siguiente numero de comprobante valido para un presupuesto
         LNumeroComprobante->setText( LNumeroComprobante->text() + "   <b>" + MPresupuesto::proximoComprobante().aCadena() + "</b>" );
 
-        DSBCant->setValue( 1.0 );
-        DSBCant->setPrefix( "" );
-
         preferencias *p = preferencias::getInstancia();
         p->inicio();
         p->beginGroup( "Preferencias" );
         p->beginGroup( "Descuentos" );
         bool usar = p->value( "usar", false ).toBool();
         p->endGroup();
+        p->beginGroup( "Productos" );
+        p->beginGroup( "Stock" );
+        int cantidad_decimales = 0;
+        if( p->value("mostrar-decimales", false ).toBool() ) {
+            cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
+        }
+        p->endGroup();
+        p->endGroup();
         p->endGroup();
         p=0;
+
+        DSBCant->setDecimals( cantidad_decimales );
+        DSBCant->setValue( 1.0 );
+        DSBCant->setPrefix( "" );
+
         if( ! ERegistroPlugins::getInstancia()->existePluginExterno( "descuentos" ) ) {
             PBAgregarDescuento->setVisible( false );
             PBEliminarDescuento->setVisible( false );
@@ -196,7 +214,7 @@ void FormAgregarPresupuesto::guardar( bool cerrar )
                                          m->data( m->index( fila, 1 ), Qt::DisplayRole ).toString(), // Texto
                                          m->data( m->index( fila, 2 ), Qt::EditRole ).toDouble()  // Precio unitario
                                        ) ) {
-         qDebug( QString( "No se pudo agregar el item %1 del presupuesto a la base de datos" ).arg( fila ).toLocal8Bit() );
+         qDebug() << "No se pudo agregar el item " << fila << " del presupuesto a la base de datos";
          QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
          return;
      }

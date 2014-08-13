@@ -37,13 +37,13 @@ PeriodoServicioTest::PeriodoServicioTest()
     this->tablas << "periodo_servicio";
 }
 
-void PeriodoServicioTest::init() { EDatabaseTest::iniciarTablas(); }
+void PeriodoServicioTest::init() { EDatabaseTest::init(); }
 
-void PeriodoServicioTest::initTestCase() { EDatabaseTest::generarTablas(); }
+void PeriodoServicioTest::initTestCase() { EDatabaseTest::initTestCase(); }
 
-void PeriodoServicioTest::cleanupTestCase() { EDatabaseTest::borrarTablas(); }
+void PeriodoServicioTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
-void PeriodoServicioTest::cleanup() { EDatabaseTest::vaciarTablas(); }
+void PeriodoServicioTest::cleanup() { EDatabaseTest::cleanup(); }
 /*
 void PeriodoServicioTest::testCalcularPeriodo()
 {

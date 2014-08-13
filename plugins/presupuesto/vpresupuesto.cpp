@@ -44,6 +44,7 @@ VPresupuesto::VPresupuesto(QWidget *parent)
  vista->hideColumn( 0 );
  vista->hideColumn( 5 );
  vista->setSortingEnabled( true );
+ connect( vista, SIGNAL( doubleClicked( QModelIndex ) ), this, SLOT( modificar( QModelIndex ) ) );
  modelo->select();
 
  agregarFiltroBusqueda( "Destinatario", " `destinatario` LIKE '%%%1%' " );
@@ -191,20 +192,25 @@ void VPresupuesto::verContenido()
  * \fn VPresupuesto::modificar()
  * Modifica un presupuesto
  */
-void VPresupuesto::modificar()
+void VPresupuesto::modificar( QModelIndex indice )
 {
     // Veo que ID quiere reimprimir.
-    QModelIndexList lista = vista->selectionModel()->selectedRows();
-    if( lista.isEmpty() ) {
-        QMessageBox::information( this, "Error", "Por favor, seleccione un presupuesto para modificar", QMessageBox::Ok );
-        return;
+    if( !indice.isValid() ) {
+        QModelIndexList lista = vista->selectionModel()->selectedRows();
+        if( lista.isEmpty() ) {
+            QMessageBox::information( this, "Error", "Por favor, seleccione un presupuesto para modificar", QMessageBox::Ok );
+            return;
+        }
+        indice = lista.first();
     }
-    QModelIndex indice = lista.first();
     FormModificarPresupuesto *f = new FormModificarPresupuesto();
     agregarVentana( f );
     f->setearIdPresupuesto( indice.model()->index( indice.row(), 0 ) );
 }
-
+/*!
+ * \fn VPresupuesto::eliminar()
+ * Elimina el/los presupuestos seleccionados
+ */
 void VPresupuesto::eliminar()
 {
     QModelIndexList lista = vista->selectionModel()->selectedRows();

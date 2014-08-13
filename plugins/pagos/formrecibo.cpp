@@ -2,8 +2,6 @@
 
 #include "mpagos.h"
 #include "eactcerrar.h"
-#include "eactimprimir.h"
-#include "eactpdf.h"
 #include "EReporte.h"
 
 FormRecibo::FormRecibo(QWidget *parent) :
@@ -13,11 +11,8 @@ EVentana(parent)
     setWindowTitle( "Mostrar Recibo" );
     setObjectName("visor_recibo");
 
-    EActImprimir *ActImprimir = new EActImprimir( this );
-    connect( ActImprimir, SIGNAL( triggered() ), this, SLOT( imprimir() ) );
-
-    EActPdf *ActPdf = new EActPdf( this );
-    connect( ActPdf, SIGNAL( triggered() ), this, SLOT( aPdf() ) );
+    ActImprimir = new EActImprimir( this );
+    ActPdf = new EActPdf( this );
 
     addAction( ActImprimir );
     addAction( ActPdf );
@@ -105,7 +100,7 @@ void FormRecibo::aPdf() {
         rep->recibo();
         ParameterList lista;
         lista.append( "id_recibo", _id_actual );
-        rep->hacer( lista );
+        rep->hacerPDF( lista, QString( "Recibo #%1" ).arg( MPagos::buscarNumeroComprobantePorId( _id_actual ).aCadena() ) );
         delete rep;
     }
 }
@@ -120,7 +115,7 @@ void FormRecibo::imprimir() {
         rep->recibo();
         ParameterList lista;
         lista.append( "id_recibo", _id_actual );
-        rep->hacerPDF( lista, QString( "Recibo #%1" ).arg( MPagos::buscarNumeroComprobantePorId( _id_actual ).aCadena() ) );
+        rep->hacer( lista );
         delete rep;
     }
 }

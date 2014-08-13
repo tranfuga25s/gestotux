@@ -41,6 +41,8 @@ public:
     int agregarVenta( QDateTime fecha, int id_cliente, MRemito::FormaPago id_forma_pago, MProductosTotales *mcp, QString observaciones = QString() );
     int agregarRemito( const int id_cliente, const QDateTime fecha, MRemito::FormaPago id_forma_pago, const double total, bool registrar_operacion = true );
 
+    QSqlRecord obtenerDatos( const int id_remito );
+
     static NumeroComprobante &proximoComprobante();
     NumeroComprobante &obtenerComprobante();
     static NumeroComprobante &obtenerComprobante( const int id_remito );

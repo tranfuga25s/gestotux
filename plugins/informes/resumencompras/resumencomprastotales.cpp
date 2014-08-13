@@ -12,15 +12,15 @@ ResumenComprasTotales::ResumenComprasTotales(QObject *parent) :
 QSqlQueryModel( parent )
 {
     _metodo_temporal = PorMes;
-    consultas.insert( "QSQLITE", "SELECT COUNT( id ) as cantidad, MAX( fecha ) as fecha, strftime( \"%m\" , fecha ) as mes, strftime( \"%Y\", fecha ) as ano, SUM( total ) as total, id_proveedor FROM compras " );
+    consultas.insert( "QSQLITE", "SELECT p.nombre, COUNT( c.id ) as cantidad, MAX( c.fecha ) as fecha, strftime( \"%m\" , c.fecha ) as mes, strftime( \"%Y\", c.fecha ) as ano, SUM( c.total ) as total FROM compras as c, proveedor as p WHERE c.id_proveedor = p.id" );
     //consultas.insert( "QMYSQL", "SELECT COUNT( id ) as cantidad, MAX( fecha ) as fecha, strftime( \"%m\" , fecha ) as mes, strftime( \"%Y\", fecha ) as ano, SUM( total ) as total, id_proveedor FROM compras " );
     setQuery( consultas.value( QSqlDatabase::database().driverName() ) );
-    setHeaderData( 0, Qt::Horizontal, "Cantidad Total" );
-    setHeaderData( 1, Qt::Horizontal, QString::fromUtf8( "Fecha última" ) );
-    setHeaderData( 2, Qt::Horizontal, "Mes" );
-    setHeaderData( 3, Qt::Horizontal, QString::fromUtf8( "Año" ) );
-    setHeaderData( 4, Qt::Horizontal, "Total" );
-    setHeaderData( 5, Qt::Horizontal, "Proveedor" );
+    setHeaderData( 0, Qt::Horizontal, "Proveedor" );
+    setHeaderData( 1, Qt::Horizontal, "Cantidad Total" );
+    setHeaderData( 2, Qt::Horizontal, QString::fromUtf8( "Fecha última" ) );
+    setHeaderData( 3, Qt::Horizontal, "Mes" );
+    setHeaderData( 4, Qt::Horizontal, QString::fromUtf8( "Año" ) );
+    setHeaderData( 5, Qt::Horizontal, "Total" );
     setHeaderData( 6, Qt::Horizontal, "Contado" );
 }
 
@@ -45,20 +45,20 @@ QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
     switch( role ) {
         case Qt::DisplayRole: {
             switch( idx.column() ) {
-                case 0: {
+                case 1: {
                     return QSqlQueryModel::data( idx, role ).toInt();
                     break;
                 }
-                case 1: {
+                case 2: {
                     return QSqlQueryModel::data( idx, role ).toDate().toString( Qt::SystemLocaleShortDate );
                     break;
                 }
-                case 2: {
+                case 3: {
                     // Lo convierto al mes que corresponde
                     return QDate::longMonthName( QSqlQueryModel::data( idx, role ).toInt() );
                     break;
                 }
-                case 4: {
+                case 5: {
                     return QString( "$ %L1" ).arg( QSqlQueryModel::data( idx, role ).toDouble(), 10, 'f', 2 );
                     break;
                 }
@@ -71,14 +71,14 @@ QVariant ResumenComprasTotales::data(const QModelIndex &idx, int role) const
         }
         case Qt::TextAlignmentRole: {
             switch( idx.column() ) {
-                case 0:
                 case 1:
                 case 2:
-                case 3: {
+                case 3:
+                case 4: {
                     return int( Qt::AlignCenter | Qt::AlignVCenter );
                     break;
                 }
-                case 4: {
+                case 5: {
                     return int( Qt::AlignRight | Qt::AlignVCenter );
                     break;
                 }

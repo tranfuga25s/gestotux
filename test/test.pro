@@ -6,10 +6,13 @@ SUBDIRS +=  ProductosTest \
             PreferenciasTest \
             EquipamientosTest \
             CancelacionPeriodoServicio \
-    ECBProductosTest \
-    ComprasTest \
-    ProveedorTest \
-    VentasTest
+            ECBProductosTest \
+            ComprasTest \
+            ProveedorTest \
+            VentasTest \
+            BackupTest \
+            RemitosTest \
+            PresupuestosTest
 
 OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/productos.sql \
@@ -26,4 +29,8 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/proveedor.sql \
                sql/QSQLITE/factura.sql \
                sql/QSQLITE/item_factura.sql \
-               sql/QSQLITE/clientes.sql
+               sql/QSQLITE/clientes.sql \
+               sql/QSQLITE/remito.sql \
+               sql/QSQLITE/item_remito.sql \
+               sql/QSQLITE/presupuestos.sql \
+               sql/QSQLITE/item_presupuesto.sql

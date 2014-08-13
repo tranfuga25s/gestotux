@@ -26,6 +26,7 @@
 
 #include <QMessageBox>
 #include <QSqlQuery>
+#include <QDebug>
 
 FormAsociarServicioCliente::FormAsociarServicioCliente(QWidget* parent, tipoForm tipo, Qt::WFlags fl)
 : QDialog( parent, fl ), Ui::Dialog()
@@ -118,9 +119,9 @@ void FormAsociarServicioCliente::accept()
  }
  if( _id_cliente <= 0 || _id_servicio <= 0 || !_fecha.isValid() )
  {
-  qDebug( QString( "Error de comprobación: id_cliente=%1, id_servicio=%2, fecha=%3").arg( _id_cliente ).arg( _id_servicio ).arg( _fecha.toString() ).toLocal8Bit() );
-  qWarning( "Existio un error de comprobancion de datos - no se adherirà el cliente" );
-  return;
+     qDebug() << "Error de comprobación: id_cliente=" << _id_cliente << ", id_servicio=" << _id_servicio <<", fecha=" << _fecha.toString();
+     qWarning() << "Existio un error de comprobancion de datos - no se adherirà el cliente";
+     return;
  }
  if( _fecha < MServicios::getFechaAlta( _id_servicio ) ) {
      QMessageBox::information( this, "Error", "No se puede adherir un cliente en una fecha menor a la fecha de inicio del servicio." );

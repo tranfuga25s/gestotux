@@ -4,8 +4,13 @@
 #include <QTimer>
 #include <QLineEdit>
 #include <QDebug>
+#include <QApplication>
 
-ECBProductos::ECBProductos( QWidget *parent ) :
+#include "preferencias.h"
+#include "ecbproductosmodel.h"
+#include "ecbproductosfilter.h"
+
+ECBProductos::ECBProductos( QWidget *parent, ECBProductosFilter *m  ) :
  QComboBox( parent )
 {
     this->setObjectName( "SelectorProductos" );
@@ -18,98 +23,36 @@ ECBProductos::ECBProductos( QWidget *parent ) :
     this->setInsertPolicy( QComboBox::NoInsert );
     this->connect( this->lineEdit(), SIGNAL( returnPressed() ), this, SLOT( enterApretado() ) );
 
-    this->lineEdit()->setText( "Cargando datos..." );
-    this->setEnabled( false );
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    this->_mostrar_stock_lista = p->value( "mostrar-stock-lista", false ).toBool();
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    p=0;
 
-    _mapa_pos_codigo = new QMap<QString, int>();
-    _mapa_id_nombre = new QMap<int, QString>();
-    _mapa_pos_ids = new QMap<int, int>();
+    if( m != 0 ) {
+        modelo = m;
+    } else {
+        modelo = new ECBProductosFilter( this );
+        ECBProductosModel *m = new ECBProductosModel( modelo );
+        m->inicializar();
+        modelo->setSourceModel( m );
+    }
 
-    this->_min = -1;
-    this->_mostrar_deshabilitados = false;
-    this->_mostrar_sin_stock = false;
-    this->_id_proveedor = -1;
-
-    QTimer timer;
-    timer.singleShot( 900, this, SLOT( inicializar() ) );
+    this->setModel( modelo );
+    if( _mostrar_stock_lista ) {
+        this->setModelColumn( ECBProductosModel::NombresStock );
+    } else {
+        this->setModelColumn( ECBProductosModel::Nombres );
+    }
 }
 
 ECBProductos::~ECBProductos()
-{
-    delete _mapa_pos_codigo;
-    _mapa_pos_codigo = 0;
-    delete _mapa_id_nombre;
-    _mapa_id_nombre = 0;
-    delete _mapa_pos_ids;
-    _mapa_pos_ids = 0;
-}
-
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-/*!
- * \fn ECBProductos::inicializar()
- * Función que carga los datos y setea todo como para su uso
- */
-void ECBProductos::inicializar()
-{
-    // Cargo los datos del modelo
-    QSqlQuery cola;
-    QString tcola;
-    tcola.append( "SELECT id, codigo, nombre FROM producto WHERE " );
-    if( !_mostrar_deshabilitados ) {
-        tcola.append( " habilitado IN ( 1, 'true' ) " );
-    }
-    if( !_mostrar_sin_stock && !_mostrar_deshabilitados ) {
-        tcola.append( " AND " );
-    }
-    if( !_mostrar_sin_stock ) {
-        tcola.append( " stock > 0 " );
-    }
-    if( _id_proveedor > 0 ) {
-        if( !_mostrar_sin_stock || !_mostrar_deshabilitados
-                || ( !_mostrar_sin_stock && !_mostrar_deshabilitados ) ) {
-            tcola.append( " AND " );
-        }
-        tcola.append( QString( " id IN ( "
-                               "  SELECT DISTINCT( id_producto ) "
-                               "  FROM compras_productos  "
-                               "  WHERE id_compra IN (    "
-                               "      SELECT id           "
-                               "      FROM compras        "
-                               "      WHERE id_proveedor = %1"
-                               "  )"
-                               " )" ).arg( _id_proveedor ) );
-    }
-    tcola.append( " ORDER BY nombre ASC" );
-    if( cola.exec( tcola ) ) {
-        int pos = 0;
-        this->clear();
-        this->_mapa_pos_codigo->clear();
-        this->_mapa_id_nombre->clear();
-        this->_mapa_pos_ids->clear();
-        while( cola.next() ) {
-            // Pos = currentIndex();
-            // id_producto = _mapa_pos_ids
-            // codigo = _mapa_pos_codigo
-            this->insertItem( pos, cola.record().value(2).toString(), cola.record().value(0).toInt() );
-            this->_mapa_pos_codigo->insert( cola.record().value(1).toString(), pos );
-            this->_mapa_id_nombre->insert ( cola.record().value(0).toInt()   , cola.record().value(2).toString() );
-            this->_mapa_pos_ids->insert   ( pos, cola.record().value(0).toInt() );
-            pos++;
-        }
-        if( pos == 0 ) {
-            qWarning( "No hay ningun producto para cargar!" );
-            this->lineEdit()->setText( "No hay productos cargados..." );
-        }
-        this->setEnabled( true );
-        this->setCurrentIndex( -1 );
-    } else {
-        qWarning( "Error al intentar ejecutar la cola para cargar los productos" );
-        qDebug() << cola.lastError().text();
-        qDebug() << cola.lastQuery();
-    }
-}
+{}
 
 /*!
  * \brief ECBProductos::enterApretado
@@ -126,31 +69,17 @@ void ECBProductos::enterApretado()
  * Devuelve el listado de productos mapeado
  * \return
  */
-QMap<int, QString> *ECBProductos::listadoProductos()
-{ return this->_mapa_id_nombre; }
+ECBProductosModel *ECBProductos::listadoProductos()
+{ return qobject_cast<ECBProductosModel *>(this->modelo->sourceModel()); }
 
 /*!
  * \brief ECBProductos::setearListado
- * Coloca el listado puesto como parametro como lista de productos
+ * Coloca el modelo puesto como parametro como lista de productos para el combobox
  * \param lista Lista de productos
  */
-void ECBProductos::setearListado( QMap<int, QString> *lista )
+void ECBProductos::setearListado( ECBProductosModel *lista )
 {
-    // Verifica que los demás items estén de acuerdo con esta lista
-    // El mappeo debe sacar solo los elementos menores que cero
-    QList<int> l2 = lista->keys();
-    for( int i = 0; i < l2.size(); i++ ) {
-        if( l2.value(i) < 0 ) {
-            // Ingreso este valor al cb
-            QString texto = lista->value( l2.value( i ) );
-            int indice = l2.value( i );
-            int pos = this->count();
-            this->insertItem( pos, texto, indice );
-            this->_mapa_id_nombre->insert( indice, texto );
-            this->_mapa_pos_ids->insert( pos, indice );
-            this->_mapa_pos_codigo->insert( QString::number( indice ), pos );
-        }
-    }
+    this->modelo->setSourceModel( lista );
 }
 
 /*!
@@ -160,12 +89,13 @@ void ECBProductos::setearListado( QMap<int, QString> *lista )
  */
 int ECBProductos::idActual() const
 {
-    return this->_mapa_pos_ids->value( this->currentIndex() );
+    return this->modelo->data( this->modelo->index( this->currentIndex(), ECBProductosModel::Ids ), Qt::EditRole ).toInt();
 }
 
 /*!
  * \brief ECBProductos::verificarExiste
- * Verifica que el elementos que está actualmente exista
+ * Verifica que el elementos que está actualmente exista y si no existe lo inserta en el modelo base como elemento
+ *
  */
 void ECBProductos::verificarExiste()
 {
@@ -175,19 +105,16 @@ void ECBProductos::verificarExiste()
     if( b != -1 ) {
         this->setCurrentIndex( b );
     } else {
-        QMap<QString, int>::const_iterator i =  this->_mapa_pos_codigo->find( buscar );
-        if( i != this->_mapa_pos_codigo->end() ) {
-            this->setCurrentIndex( i.value() );
+        // Busco por codigo
+        int pos = this->modelo->buscarPorCodigo( buscar );
+        if( pos != -1 ) {
+            this->setCurrentIndex( pos );
         } else {
-            // Tengo que agregarlo como item exclusivo
-            // Agregado al final pero con ID <= -1
-            int pos_nueva = this->count();
-            this->_mapa_pos_codigo->insert( QString::number( _min ), pos_nueva );
-            this->_mapa_pos_ids->insert( pos_nueva, _min );
-            this->_mapa_id_nombre->insert( _min, this->lineEdit()->text() );
-            this->insertItem( pos_nueva, this->lineEdit()->text(), _min );
+            // Inserto el elemento nuevo en el modelo base
+            int pos_nueva = modelo->agregarItem( buscar );
+            qDebug() << "Pos nueva: " << pos_nueva;
+            // El ID nuevo está mappeado a la posición actual
             this->setCurrentIndex( pos_nueva );
-            this->_min--;
         }
     }
 }
@@ -199,7 +126,7 @@ void ECBProductos::verificarExiste()
  */
 QList<int> *ECBProductos::getListaIDs()
 {
-    return new QList<int>( _mapa_pos_ids->values() );
+    return modelo->getListaIDs();
 }
 
 /*!
@@ -208,10 +135,7 @@ QList<int> *ECBProductos::getListaIDs()
  */
 void ECBProductos::setearMostrarDeshabilitados( bool estado )
 {
-    if( _mostrar_deshabilitados != estado ) {
-        _mostrar_deshabilitados = estado;
-        inicializar();
-    }
+    this->modelo->setearNoMostrarProductosDeshabilitados( !estado );
 }
 
 /*!
@@ -220,19 +144,28 @@ void ECBProductos::setearMostrarDeshabilitados( bool estado )
  */
 void ECBProductos::setearMostrarSinStock( bool estado )
 {
-    if( _mostrar_sin_stock != estado ) {
-        _mostrar_sin_stock = estado;
-        inicializar();
-    }
+   this->modelo->setearNoMostrarProductosSinStock( !estado );
 }
 
 /*!
- *
+ * Permite filtrar los productos por proveedor
  */
 void ECBProductos::filtrarPorProveedor( const int id_proveedor )
 {
-    if( id_proveedor > 0 ) {
-       this->_id_proveedor = id_proveedor;
-        inicializar();
+    modelo->setearIdProveedor( id_proveedor );
+}
+
+/**
+ * @brief ECBProductos::setearModelo
+ * @param modelo
+ */
+void ECBProductos::setearModelo( ECBProductosFilter *modelo )
+{
+    this->modelo = modelo;
+    this->setModel( this->modelo );
+    if( _mostrar_stock_lista ) {
+        this->setModelColumn( ECBProductosModel::NombresStock );
+    } else {
+        this->setModelColumn( ECBProductosModel::Nombres );
     }
 }

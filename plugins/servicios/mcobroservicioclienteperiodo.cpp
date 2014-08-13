@@ -3,6 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariant>
+#include <QDebug>
 
 MCobroServicioClientePeriodo::MCobroServicioClientePeriodo(QObject *parent) :
     QObject(parent) {
@@ -30,8 +31,8 @@ bool MCobroServicioClientePeriodo::agregarCobro( const int id_periodo_servicio, 
     if( cola.exec() ) {
         return true;
     } else {
-        qDebug( "Servicios::MCobroServicioClientePeriodo::agregarCobro - Error al intentar agregar el cobro de un servicio para un cliente( exec )" );
-        qDebug( QString( cola.lastError().text() ).toLocal8Bit() );
+        qDebug() << "Servicios::MCobroServicioClientePeriodo::agregarCobro - Error al intentar agregar el cobro de un servicio para un cliente( exec )";
+        qDebug() << cola.lastError().text();
         return false;
     }
 }
@@ -53,9 +54,9 @@ bool MCobroServicioClientePeriodo::setearIDCtaCte( const int id_periodo_servicio
         ) ) {
         return true;
     } else {
-        qDebug( "Servicios::MCobroServicioClientePeriodo::agregarCobro - Error al intentar asetear el id de operacion de cuenta corriente en el cobro de un servicio para un cliente( exec )" );
-        qDebug( QString( cola.lastError().text() ).toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Servicios::MCobroServicioClientePeriodo::agregarCobro - Error al intentar asetear el id de operacion de cuenta corriente en el cobro de un servicio para un cliente( exec )";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return false;
     }
 }
@@ -85,8 +86,8 @@ double MCobroServicioClientePeriodo::buscarNoPagados( const int id_cliente, cons
         }
         return ret;
     } else {
-        qDebug( "Servicios::MCobroServicioClienteServicio::buscarNoPagados - Error al intentar buscar los ids de operaciones en ctacte de los items no pagados" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
+        qDebug() << "Servicios::MCobroServicioClienteServicio::buscarNoPagados - Error al intentar buscar los ids de operaciones en ctacte de los items no pagados";
+        qDebug() << cola.lastError().text();
         return -1;
     }
 
@@ -106,12 +107,12 @@ bool MCobroServicioClientePeriodo::verificarIdFactura( const int id_factura ) {
                 return true;
             }
         } else {
-            qDebug( "MCobroServicioClientePeriodo::verificarIdFactura::Error de next en la cola" );
-            qDebug( cola.lastError().text().toLocal8Bit() );
+            qDebug() << "MCobroServicioClientePeriodo::verificarIdFactura::Error de next en la cola";
+            qDebug() << cola.lastError().text();
         }
     } else {
-        qDebug( "MCobroServicioClientePeriodo::verificarIdFactura::Error de exec en la cola" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
+        qDebug() << "MCobroServicioClientePeriodo::verificarIdFactura::Error de exec en la cola";
+        qDebug() << cola.lastError().text();
     }
     return false;
 }
@@ -128,9 +129,9 @@ bool MCobroServicioClientePeriodo::colocarComoPagado( const int id_factura, cons
     if( cola.exec( QString( "UPDATE cobro_servicio_cliente_periodo SET id_recibo = %1 WHERE id_factura = %2" ).arg( id_recibo ).arg( id_factura ) ) ) {
         return true;
     } else {
-        qDebug( "MCobroServicioClientePeriodo::colocarComoPagado::Error al intentar colocar como pagado un cobro de servicio. Error de exec." );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "MCobroServicioClientePeriodo::colocarComoPagado::Error al intentar colocar como pagado un cobro de servicio. Error de exec.";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return false;
     }
 }
@@ -150,13 +151,13 @@ bool MCobroServicioClientePeriodo::esDeudor(const int id_cliente, const int id_s
             if( cola.record().value(0).toInt() == 0 )
                 return false;
         } else {
-            qDebug( "Error al hacer next al averiguar la cantidad de entradas de cobro de servicio que no han sido pagadas." );
-            qDebug( cola.lastQuery().toLocal8Bit() );
+            qDebug() << "Error al hacer next al averiguar la cantidad de entradas de cobro de servicio que no han sido pagadas.";
+            qDebug() << cola.lastQuery();
         }
     } else {
-        qDebug( "Error al ejecutar la cola para averiguar la cnatidad de entradas de cobro servicio que no han sido pagadas" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola para averiguar la cnatidad de entradas de cobro servicio que no han sido pagadas";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     }
     return false;
 }
@@ -178,9 +179,9 @@ int MCobroServicioClientePeriodo::buscarIdPeriodoServicio( const int id_recibo )
             return -1;
         }
     } else {
-        qDebug( "Error al ejecutar la cola para averiguar la id del periodo de servicio respecto a un recibo." );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola para averiguar la id del periodo de servicio respecto a un recibo.";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return -2;
     }
 
@@ -203,9 +204,9 @@ bool MCobroServicioClientePeriodo::tieneDatosRelacionados( const int id_servicio
             return false;
         }
     } else {
-        qDebug( "Error al ejecutar la cola para averiguar las relaciones de datos entre un cliente y un servicio." );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << "Error al ejecutar la cola para averiguar las relaciones de datos entre un cliente y un servicio.";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
         return false;
     }
     return false;

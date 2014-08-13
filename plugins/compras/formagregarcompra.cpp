@@ -65,7 +65,14 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     // Rellenar los items de productos
     connect( CBProducto, SIGNAL( agregarProducto() ), PBAgregarProducto, SIGNAL( clicked() ) );
 
-    mcp = new MProductosTotales( this, CBProducto->listadoProductos() );
+    ecbmproducto = new ECBProductosModel( this );
+    ecbmproducto->inicializar();
+
+    CBProducto->setearListado( ecbmproducto );
+    CBProducto->setearMostrarSinStock( true );
+    CBProducto->setearMostrarDeshabilitados( true );
+
+    mcp = new MProductosTotales( this, ecbmproducto );
     mcp->calcularTotales( true );
     mcp->buscarPrecios( true );
     mcp->setearTipoPrecioBuscar( MProductosTotales::Costo );
@@ -92,12 +99,28 @@ FormAgregarCompra::FormAgregarCompra( MCompra *m, QWidget* parent )
     p->beginGroup( "Ventas" );
     if( p->value("filtrarProveedor").toBool() ) {
         connect( CBProveedor, SIGNAL( cambioIdProveedor( int ) ), this, SLOT( cambioProveedor( int ) ) );
-    } else {
-        CBProveedor->setVisible( false );
+    }
+    p->endGroup();
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    int cantidad_decimales = 0;
+    if( p->value("mostrar-decimales", false ).toBool() ) {
+        cantidad_decimales = p->value("cantidad-decimales", 4 ).toInt();
     }
     p->endGroup();
     p->endGroup();
+    p->endGroup();
     p=0;
+
+    DSBCant->setDecimals( cantidad_decimales );
+    DSBCant->setValue( 1.0 );
+
+    DSBPrecioUnitario->setVisible( false );
+    DSBPrecioUnitario->setValue( 0.0 );
+
+    CBProducto->setearMostrarSinStock( true );
+
+    _id_proveedor_anterior = -1;
 }
 
 
@@ -127,7 +150,6 @@ void FormAgregarCompra::guardar()
   mcp->calcularTotales( true );
   return;
  }
- //return;
  //Inicio una transaccion
  QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).transaction();
  //seteo el modelo para que no calcule totales y subtotales
@@ -142,13 +164,16 @@ void FormAgregarCompra::guardar()
  }
  // Busco el ultimo id de compra
  int id_compra = compra->ultimoId();
- //qDebug( qPrintable( QString( "idCompra: %1" ).arg( id_compra ) ) );
 
  preferencias *p = preferencias::getInstancia();
  p->inicio();
  p->beginGroup( "Preferencias" );
  p->beginGroup( "Compras" );
  bool auto_agregar_productos = p->value( "auto-agregar-productos", false ).toBool();
+ p->endGroup();
+ p->beginGroup( "Productos" );
+ bool marca_proveedor = p->value( "marca_proveedor", false ).toBool();
+ double ganancia = p->value( "ganancia", 10.0 ).toDouble();
  p->endGroup();
  p->endGroup();
  p=0;
@@ -186,7 +211,11 @@ void FormAgregarCompra::guardar()
             case 0:
             {
                 // Agrego el producto
-                 if( auto_agregar_productos ) {
+                 QString marca = QString();
+                 if( marca_proveedor ) { // Veo si decidió utilizar marca como proveedor
+                     marca = CBProveedor->currentText();
+                 }
+                 if( !auto_agregar_productos ) {
                     FormAgregarProducto *f = new FormAgregarProducto();
                     f->setearNombre( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() );
                     //f->setearStockInicial( mcp->data( mcp->index( i, 0 ), Qt::EditRole ).toInt() );
@@ -194,23 +223,30 @@ void FormAgregarCompra::guardar()
                     f->setearPrecioCosto( mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() );
                     f->setearNumeroAnterior( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
                     f->setearDesdeCompra( true );
-                    f->setearProveedor( CBProveedor->currentText() );
+                    f->setearProveedor( marca );
                     connect( f, SIGNAL( agregarProducto( int, int ) ), this, SLOT( arreglarProductoAgregado( int, int ) ) );
                     emit agregarVentana( f );
                     parar = true;
+
                  } else {
                      MProductos *mp = new MProductos();
+                     double precio_compra = mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble();
+                     double precio_venta = precio_compra * ( 1.0 + ( ganancia / 100.0 ) );
                      int id_producto_nuevo = mp->agregarProducto(
                                  QString(),
                                  mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString(), // Nombre
-                                 mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Costo
-                                 mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble(), // Venta
-                                 0 // Stock inicial cero
-                                 );
+                                 precio_compra, // Costo
+                                 precio_venta, // Venta
+                                 0, // Stock inicial cero
+                                 -1, // Categoria indefinida
+                                 QString(), // Descripcion vacía
+                                 marca ); // Marca designada
                      if( id_producto_nuevo > 0 ) {
-                        arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(), id_producto_nuevo );
+                         arreglarProductoAgregado( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(),
+                                                   id_producto_nuevo );
+                        qDebug() << "Producto agregado automaticamente" << id_producto_nuevo;
                      } else {
-                         qWarning() << "Error al insertar el nuevo producto. Hagalo manualmente";
+                         qWarning() << "Error al insertar el nuevo producto. Hagalo manualmente"; abort();
                      }
                      delete mp;
                 }
@@ -219,6 +255,7 @@ void FormAgregarCompra::guardar()
             case QMessageBox::NoToAll:
             {
                 noATodo = true;
+                break;
             }
             case QMessageBox::No:
             default:
@@ -230,30 +267,29 @@ void FormAgregarCompra::guardar()
 
          }
      } else {
-         // El sistema ajusta automaticamente el precio de compra pero no el de venta.
+         // El MCompraItem ajusta automaticamente el precio de compra pero no el de venta.
          double precio_anterior = MProductos::buscarPrecioCompra( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() );
-         if( precio_anterior <= 0.0 ) {
-             qDebug( "Error de precio de compra en formagregarcompra" );
-             continue;
-         }
-         if( ( precio_anterior - mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() ) != 0.0 ) {
-             // Actualizo el precio de venta
-             preferencias *p = preferencias::getInstancia();
-             p->beginGroup( "Preferencias" );
-             p->beginGroup( "Productos" );
-             double ganancia = ( p->value( "ganancia", 10 ).toDouble() )/100;
-             p->endGroup();p->endGroup(); p = 0;
-             double precio_calculado = precio_anterior * ( 1 + ganancia );
-             bool ok = false;
-             double precio_venta = EInputDialog::getImporte( this,
-                                                            "Nuevo precio de venta",
-                                                            QString( "Ingrese el nuevo precio de venta para %1:" ).arg( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() ),
-                                                            precio_calculado,
-                                                            0.01, 2147483647, 2, &ok );
-             if( ok ) {
-                if( !MProductos::actualizarPrecioVenta( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(), precio_venta ) ) {
-                     qWarning() << "No se pudo actualizar el precio de venta del producto " << mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString();
-                }
+         if( precio_anterior > 0.0 ) {
+             if( ( precio_anterior - mcp->data( mcp->index( i, 2 ), Qt::EditRole ).toDouble() ) != 0.0 ) {
+                 // Actualizo el precio de venta
+                 preferencias *p = preferencias::getInstancia();
+                 p->beginGroup( "Preferencias" );
+                 p->beginGroup( "Productos" );
+                 double ganancia = ( p->value( "ganancia", 10 ).toDouble() ) / 100.0;
+                 p->endGroup();p->endGroup(); p = 0;
+                 double precio_calculado = precio_anterior * ( 1 + ganancia );
+                 bool ok = false;
+                 double precio_venta = EInputDialog::getImporte( this,
+                                                                "Nuevo precio de venta",
+                                                                QString( "Ingrese el nuevo precio de venta para %1:" ).arg( mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString() ),
+                                                                precio_calculado,
+                                                                0.01, 2147483647, 2, &ok );
+                 if( ok ) {
+                    if( !MProductos::actualizarPrecioVenta( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt(), precio_venta ) ) {
+                         qWarning() << "No se pudo actualizar el precio de venta del producto "
+                                    << mcp->data( mcp->index( i, 1 ), Qt::DisplayRole ).toString();
+                    }
+                 }
              }
          }
      }
@@ -274,18 +310,18 @@ void FormAgregarCompra::guardar()
                                    mcp->data( mcp->index( i, 0 ), Qt::EditRole ).toInt(), // cantidad
                                    stock ) ) {
 
-         qWarning( "No se pudo agregar el producto a la compra" );
+         qWarning() << "FormAgregarCompra::guardar()::No se pudo agregar el producto a la compra";
          QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
          mcp->calcularTotales( true );
          return;
      }
-
   } // fin del for
   // Si llegue hasta aca sin problema, hago el submit
   // listo
   if( QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).commit() )
   {
-   QMessageBox::information( this, "Correcto" , "La compra se ha registrado correctamente" );
+   if( this->isVisible() )
+   { QMessageBox::information( this, "Correcto" , "La compra se ha registrado correctamente" ); }
    emit actualizarVista();
    this->close();
    return;
@@ -303,21 +339,23 @@ void FormAgregarCompra::guardar()
  */
 void FormAgregarCompra::agregarProducto()
 {
-
- if( SBCant->value() == 0 )
+ if( DSBCant->value() <= 0.0 )
  { QMessageBox::information( this, "Error de datos", "La cantidad a agregar debe ser mayor que cero", QMessageBox::Ok ); return; }
 
  if( CBProducto->currentText().isEmpty() )
  { QMessageBox::information( this, "Error de datos", "Ingrese un producto a agregar", QMessageBox::Ok ); return; }
 
- CBProducto->verificarExiste();
+ /*if( DSBPrecioUnitario->value() <= 0.0 )
+ { QMessageBox::Information( this, "Error de datos", "Ingrese un precio unitario", QMessageBox::Ok ); return; } */
 
- mcp->agregarNuevoProducto( SBCant->value(), CBProducto->idActual() );
+ CBProducto->verificarExiste(); // Esto agrega el elemento el ecbproductosmodel
 
- SBCant->setValue( 1.0 );
+ mcp->agregarNuevoProducto( DSBCant->value(), CBProducto->idActual(), DSBPrecioUnitario->value() );
+
+ DSBCant->setValue( 1.0 );
  CBProducto->setCurrentIndex( -1 );
- SBCant->setFocus();
-
+ DSBPrecioUnitario->setValue( 0.0 );
+ CBProducto->setFocus();
 }
 
 
@@ -352,29 +390,44 @@ void FormAgregarCompra::eliminarProducto()
  return;
 }
 
+/*!
+ * \brief FormAgregarCompra::arreglarProductoAgregado
+ * \param anterior
+ * \param nuevo
+ */
 void FormAgregarCompra::arreglarProductoAgregado( int anterior, int nuevo )
 {
-    // Actualizo la lista del cb que esta siendo usada por el mcp
-    this->CBProducto->listadoProductos()->insert( nuevo, this->CBProducto->listadoProductos()->value( anterior ) );
-    this->CBProducto->listadoProductos()->remove( anterior );
+
+    ecbmproducto->arreglarItemTemporal( anterior, nuevo );
+
+    mcp->arreglarIdProductoAgregado( anterior, nuevo );
 
     // Como mcp esta trabajando con un puntero a la lista anterior no tengo que actualizar nada mas
 
-    // Actualizo el dato del mcp
-    for( int i = 0; i < mcp->rowCount(); i++ ) {
-        if( mcp->data( mcp->index( i, 1 ), Qt::EditRole ).toInt() == anterior ) {
-            mcp->setData( mcp->index( i, 1 ), nuevo, Qt::EditRole );
-        }
-    }
+
 }
 
 /*!
  * \brief FormAgregarCompra::cambioProveedor
  * \param id_proveedor
  */
-void FormAgregarCompra::cambioProveedor(int id_proveedor)
+void FormAgregarCompra::cambioProveedor( int id_proveedor )
 {
-    if( id_proveedor > 0 ) {
+    if( id_proveedor != _id_proveedor_anterior ) {
+        if( mcp->rowCount() > 1 ) {
+            int ret = QMessageBox::question( this,
+                                             QString::fromUtf8( "¿Esta seguro?" ),
+                                             QString::fromUtf8( "Esta seguro que desea cambiar de proveedor? Se borraran todos los productos ingresados" ),
+                                             QMessageBox::Yes,
+                                             QMessageBox::No );
+            if( ret == QMessageBox::Yes ) {
+                mcp->vaciarProductos();
+            } else {
+                CBProveedor->setearId( _id_proveedor_anterior );
+            }
+        }
         CBProducto->filtrarPorProveedor( id_proveedor );
+        _id_proveedor_anterior = id_proveedor;
     }
+
 }

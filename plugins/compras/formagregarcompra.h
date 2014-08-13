@@ -26,16 +26,20 @@
 class MProveedor;
 class MCompra;
 class MProductosTotales;
+class ECBProductosModel;
 
 /*!
  * @brief Formulario que permite agregar una compra
  */
-class FormAgregarCompra : public EVentana, private Ui::FormAgregarCompraBase
+class FormAgregarCompra : public EVentana, public Ui::FormAgregarCompraBase
 {
   Q_OBJECT
 
 public:
   FormAgregarCompra( MCompra *m = 0, QWidget* parent = 0  );
+
+public slots:
+  void guardar();
 
 signals:
   void actualizarVista();
@@ -43,9 +47,10 @@ signals:
 private:
   MCompra *modelo;
   MProductosTotales *mcp;
+  ECBProductosModel *ecbmproducto;
+  int _id_proveedor_anterior;
 
 protected slots:
-    void guardar();
     void agregarProducto();
     void eliminarProducto();
     void arreglarProductoAgregado( int anterior, int nuevo );

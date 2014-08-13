@@ -21,6 +21,10 @@
 
 #include <QSqlDatabase>
 
+/**
+ * @brief Compras::inicializar
+ * @return
+ */
 bool Compras::inicializar()
 {
  Q_INIT_RESOURCE(compras);
@@ -37,23 +41,40 @@ bool Compras::inicializar()
  return true;
 }
 
+/**
+ * @brief Compras::verificarTablas
+ * @param tablas
+ * @return
+ */
 bool Compras::verificarTablas( QStringList tablas )
 {
  if( !tablas.contains( "compras" ) )
- { qWarning( "Error al buscar la tabla compras" ); return false; }
+ { qDebug( "Error al buscar la tabla compras" ); return false; }
  if( !tablas.contains( "compras_productos" ) )
- { qWarning( "Error al buscar la tabla compras_productos" ); return false; }
+ { qDebug( "Error al buscar la tabla compras_productos" ); return false; }
  if( !tablas.contains( "resumen_compra" ) )
- { qWarning( "Error al buscar la tabla resumen_compra" ); return false; }
+ { qDebug( "Error al buscar la tabla resumen_compra" ); return false; }
  return true;
 }
 
+/**
+ * @brief Compras::version
+ * @return
+ */
 double Compras::version() const
 { return 0.11; }
 
+/**
+ * @brief Compras::tipo
+ * @return
+ */
 int Compras::tipo() const
 { return EPlugin::comun; }
 
+/**
+ * @brief Compras::accionesBarra
+ * @return
+ */
 QList< QActionGroup * > Compras::accionesBarra()
 {
  QList<QActionGroup *> lista;
@@ -66,6 +87,10 @@ QList< QActionGroup * > Compras::accionesBarra()
  return lista;
 }
 
+/**
+ * @brief Compras::nombre
+ * @return
+ */
 QString Compras::nombre() const
 { return "compras"; }
 
@@ -94,29 +119,29 @@ void Compras::crearMenu(QMenuBar* m)
  mCompras->addAction( ActCompras );
 }
 
-/*!
- * \brief Compras::crearToolBar
+/**
+ * @brief Compras::crearToolBar
  */
 void Compras::crearToolBar(QToolBar*/* t */)
 {}
 
 #include "formagregarcompra.h"
-/*!
-    \fn Compras::agregarCompra()
+/**
+ * @brief Compras::agregarCompra
  */
 void Compras::agregarCompra()
 { emit agregarVentana( new FormAgregarCompra() ); }
 
 
 #include "vcompras.h"
-/*!
-    \fn Compras::ver_compras()
+/**
+ * @brief Compras::ver_compras
  */
 void Compras::ver_compras()
 { emit agregarVentana( new VCompras() ); }
 
-/*!
-    \fn Compras::seCierraGestotux()
+/**
+ * @brief Compras::seCierraGestotux
  */
 void Compras::seCierraGestotux()
 {

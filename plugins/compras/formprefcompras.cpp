@@ -43,7 +43,7 @@ void FormPrefCompras::guardar()
     preferencias *p = preferencias::getInstancia();
     p->inicio();
     p->beginGroup( "Preferencias" );
-    p->beginGroup( "Cuotas" );
+    p->beginGroup( "Compras" );
 
     p->setValue( "auto-agregar-productos", CkBAutoAgregarProductos->isChecked() );
 

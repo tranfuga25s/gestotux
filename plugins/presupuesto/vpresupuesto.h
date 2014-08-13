@@ -42,7 +42,7 @@ protected slots:
     void aPdf();
     void verContenido();
     void menuContextual( const QModelIndex &indice, QMenu *menu );
-    void modificar();
+    void modificar( QModelIndex item = QModelIndex() );
     void eliminar();
     void aFactura();
 

@@ -88,9 +88,9 @@ int MRemito::agregarVenta( QDateTime fecha, int id_cliente, MRemito::FormaPago i
  }
  if( !cola.exec() )
  {
-  qDebug( "Error de insercion de registro de remito" );
-  qDebug( QString( "Detalles: tipo: %1, errno: %2, descripcion: %3" ).arg( cola.lastError().type() ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).toLocal8Bit() );
-  qDebug( cola.lastQuery().toLocal8Bit() );
+  qDebug() << "Error de insercion de registro de remito";
+  qDebug() << "Detalles: tipo: " << cola.lastError().type() << " errno: " << cola.lastError().number() << ", descripcion: " << cola.lastError().text();
+  qDebug() << cola.lastQuery();
   return -1;
  }
  else
@@ -245,7 +245,7 @@ int MRemito::agregarRemito( const int id_cliente, const QDateTime fecha, MRemito
     if( !cola.exec() )
     {
      qDebug( "Error de insercion de registro de remito" );
-     qDebug( QString( "Detalles: tipo: %1, errno: %2, descripcion: %3" ).arg( cola.lastError().type() ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).toLocal8Bit() );
+     qDebug() << "Detalles: tipo: " << cola.lastError().type() << " errno: " << cola.lastError().number() << ", descripcion: " << cola.lastError().text();
      return -1;
     }
     else
@@ -318,6 +318,34 @@ int MRemito::agregarRemito( const int id_cliente, const QDateTime fecha, MRemito
 }
 
 /*!
+ * \fn MRemito::obtenerDatos()
+ * Obtiene el registro con los datos del remito pasado como parametro, sino un registro invaĺido.
+ * \param id_remito Identificador del remito
+ * \return QSqlRecord con los datos
+ */
+QSqlRecord MRemito::obtenerDatos( const int id_remito )
+{
+    // Verifico que exista el valor
+    QSqlQuery cola;
+    if( !cola.exec( QString( "SELECT COUNT(id_remito) FROM remito WHERE id_remito = %1" ).arg( id_remito ) ) ) {
+        qDebug() << "Error al ejecutar la cola de conteo de elementos";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+        return QSqlRecord();
+    }
+    cola.next();
+    if( cola.record().value(0).toInt() <= 0 ) {
+        qDebug() << "No se encontró el registro buscado!";
+        return QSqlRecord();
+    }
+
+    // El registro existe
+    this->setFilter( QString( " id_remito = %1 " ).arg( id_remito ) );
+    this->select();
+    return this->record(0);
+}
+
+/*!
  * \fn MRemito::proximoComprobante()
  * Devuelve un objeto NumeroComprobante conteniendo el proximo numero de serie y comprobante que corresponde.
  */
@@ -335,8 +363,8 @@ NumeroComprobante &MRemito::proximoComprobante() {
                   int numero = cola.record().value(0).toInt();
                   NumeroComprobante *num = new NumeroComprobante( 0, serie, numero );
                   num->siguienteNumero();
-                  qDebug( "Devolviendo proximo numero de remito:" );
-                  qDebug( num->aCadena().toLocal8Bit() );
+                  //qDebug( "Devolviendo proximo numero de remito:" );
+                  //qDebug() << num->aCadena();
                   return *num;
               } else {
                   qDebug( "Error de cola al hacer next al obtener el numero de remito maximo");
@@ -486,18 +514,18 @@ bool MRemito::anularRemito( const int id_remito, QString razon, QDateTime fechah
                 return true;
             } else {
                 qDebug( "MRemito::anularFactura::Error al ejecutar la cola de anulación del remito seleccionado." );
-                qDebug( cola.lastError().text().toLocal8Bit() );
-                qDebug( cola.lastQuery().toLocal8Bit() );
+                qDebug() << cola.lastError().text();
+                qDebug() << cola.lastQuery();
             }
         } else {
             qDebug( "MRemito::anularFactura::Error al hacer next al buscar informacion del remito" );
-            qDebug( cola.lastError().text().toLocal8Bit() );
-            qDebug( cola.lastQuery().toLocal8Bit() );
+            qDebug() << cola.lastError().text();
+            qDebug() << cola.lastQuery();
         }
     } else {
         qDebug( "MRemito::anularFactura::Error al hacer next al buscar informacion del remito" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     }
     QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
     return false;
@@ -534,8 +562,8 @@ int MRemito::idRemitoPorComprobante( const QString numero )
      }
  } else {
      qDebug( "Error al hacer exec en el id de remito según comprobante" );
-     qDebug( cola.lastError().text().toLocal8Bit() );
-     qDebug( cola.lastQuery().toLocal8Bit() );
+     qDebug() << cola.lastError().text();
+     qDebug() << cola.lastQuery();
  }
  delete n;
  return -1;
@@ -554,8 +582,8 @@ QDate MRemito::fechaUltimoRemito()
         return cola.record().value(0).toDate();
     } else {
         qWarning( "Error al buscar la fecha de la ultima remito" );
-        qDebug( cola.lastError().text().toLocal8Bit() );
-        qDebug( cola.lastQuery().toLocal8Bit() );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
     }
     return QDate();
 }

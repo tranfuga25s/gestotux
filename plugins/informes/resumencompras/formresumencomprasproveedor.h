@@ -11,7 +11,7 @@ class FormResumenComprasProveedor : public EVentana, private Ui::FormResumenComp
     
 public:
     FormResumenComprasProveedor(QWidget *parent = 0);
-    
+
 protected:
     void changeEvent(QEvent *e);
 

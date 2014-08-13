@@ -18,9 +18,7 @@ VItemRemito::VItemRemito(QWidget *parent) :
     vista->setModel( modelo );
     vista->horizontalHeader()->setAlternatingRowColors( true );
 
-
     addAction( ActCerrar );
-
 }
 
 void VItemRemito::setearIdRemito( const int id_remito )

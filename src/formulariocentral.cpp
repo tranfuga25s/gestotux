@@ -108,7 +108,6 @@ bool FormularioCentral::existeVentana( QString nombre )
  return false;
 }
 
-
 /*
   \fn FormularioCentral::agregarDock( Qt::DockWidgetArea pos, QDockWidget *obj )
   Pasarela para que la ventana principal agrege una ventana tipo dockwidget.
@@ -123,11 +122,16 @@ void FormularioCentral::agregarDock( Qt::DockWidgetArea pos, QDockWidget *obj )
         qDebug( "Intentando insertar un dockwidget que no tiene padre, no se ocultará cuando se cambie de pestaña" );
     }
     connect( obj->parentWidget(), SIGNAL( destroyed( QObject * ) ), this, SLOT( cerraronDockPadre( QObject * ) ) );
+    connect( obj, SIGNAL( destroyed( QObject * ) ), this, SLOT( cerraronDock( QObject * ) ) );
     qobject_cast<QWidget *>(obj)->setAttribute( Qt::WA_DeleteOnClose );
     mapaDocks.insertMulti( this->indexOf( obj->parentWidget() ), QPair<Qt::DockWidgetArea, QDockWidget *>( pos, obj ) );
     qobject_cast<gestotux *>(this->parent())->agregarDock( pos, obj );
 }
 
+/**
+ * @brief FormularioCentral::cerraronDockPadre
+ * @param obj
+ */
 void FormularioCentral::cerraronDockPadre( QObject *obj )
 {
     // obj es el padre de algun dockwidget
@@ -139,8 +143,26 @@ void FormularioCentral::cerraronDockPadre( QObject *obj )
     }
     if( mapaDocks.contains( indice ) ) {
         // tengo que cerrar ese elemento
-        qobject_cast<QDockWidget *>(mapaDocks.value( indice ).second)->close();
+        QDockWidget *hijo = qobject_cast<QDockWidget *>(mapaDocks.value( indice ).second);
+        if( hijo->isVisible() )
+        { hijo->close(); }
         mapaDocks.remove( indice );
     }
 
+}
+
+/**
+ * @brief FormularioCentral::cerraronDock
+ * @param obj
+ */
+void FormularioCentral::cerraronDock( QObject *obj )
+{
+    foreach( int i, mapaDocks.keys() ) {
+        QDockWidget *doc = mapaDocks.value( i ).second;
+        if( doc == obj ) {
+            mapaDocks.remove( i );
+            return;
+        }
+    }
+    //qWarning() << "No se encontro como eliminar el dock";
 }

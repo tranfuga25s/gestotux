@@ -19,9 +19,11 @@
  ***************************************************************************/
 
 #include "MItemPresupuesto.h"
+
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QDebug>
 
 MItemPresupuesto::MItemPresupuesto(QObject *parent) :
     QSqlRelationalTableModel(parent) {
@@ -58,23 +60,23 @@ bool MItemPresupuesto::agregarItemPresupuesto( const int id_presupuesto, const d
      if( cola.exec( QString( "SELECT COUNT(id_presupuesto) FROM presupuestos WHERE id_presupuesto = %1" ).arg( id_presupuesto ) ) ) {
          if( cola.next() ) {
              if( cola.record().value(0).toInt() <= 0 ) {
-                 qDebug( "Conteo de cantidad de presupuestos con el identificador pasado fue menor o igual que uno" );
+                 qDebug() << "Conteo de cantidad de presupuestos con el identificador pasado fue menor o igual que uno";
                  return false;
              }
          } else {
-             qDebug( "Error al intentar hacer next de la cola de verificacion de si existe el presupuesto" );
+             qDebug() << "Error al intentar hacer next de la cola de verificacion de si existe el presupuesto";
              return false;
          }
      } else {
-          qDebug( "Error de exec al intentar ejecutar la cola de verificacion de si existe el presupeusto" );
-          qDebug( cola.lastQuery().toLocal8Bit() );
-          qDebug( cola.lastError().text().toLocal8Bit() );
+          qDebug() << "Error de exec al intentar ejecutar la cola de verificacion de si existe el presupeusto";
+          qDebug() << cola.lastQuery();
+          qDebug() << cola.lastError().text();
           return false;
      }
  }
  if( !cola.prepare( "INSERT INTO item_presupuesto( id_presupuesto, cantidad, texto, precio_unitario ) VALUES ( :id_presupuesto, :cantidad, :texto, :precio_unitario );" ) ) {
-     qDebug( "Error al intentar preparar la cola de inserción" );
-     qDebug( QString( "Error: %1 - %2" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).toLocal8Bit() );
+     qDebug() << "Error al intentar preparar la cola de inserción";
+     qDebug() << "Error: " << cola.lastError().number() << " - " << cola.lastError().text();
  }
  cola.bindValue( ":id_presupuesto", id_presupuesto );
  cola.bindValue( ":cantidad", cantidad );
@@ -83,8 +85,8 @@ bool MItemPresupuesto::agregarItemPresupuesto( const int id_presupuesto, const d
  if( cola.exec() ) {
      return true;
  } else {
-     qDebug( "Error al intentar insertar valor de item de presupuesto" );
-     qDebug( QString( "Error: %1 - %2 - %3" ).arg( cola.lastError().number() ).arg( cola.lastError().text() ).arg( cola.lastQuery() ).toLocal8Bit() );
+     qDebug() << "Error al intentar insertar valor de item de presupuesto";
+     qDebug() << "Error: " << cola.lastError().number() << " - " << cola.lastError().text() << " - " << cola.lastQuery();
      return false;
  }
 
@@ -107,9 +109,9 @@ bool MItemPresupuesto::eliminarItemsDePresupuesto(const int id_presupuesto)
     if( cola.exec( QString( "DELETE FROM item_presupuesto WHERE id_presupuesto = %1" ).arg( id_presupuesto ) ) ) {
         return true;
     } else {
-        qDebug( "Error de exec al intentar ejecutar la cola de eliminacion de items del presupeusto" );
-        qDebug( cola.lastQuery().toLocal8Bit() );
-        qDebug( cola.lastError().text().toLocal8Bit() );
+        qDebug() << "Error de exec al intentar ejecutar la cola de eliminacion de items del presupeusto";
+        qDebug() << cola.lastQuery();
+        qDebug() << cola.lastError().text();
         return false;
     }
 }
