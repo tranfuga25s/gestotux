@@ -8,6 +8,12 @@ FormPrefHijo(), Ui::FormPrefUnidadesProductos()
     this->setWindowTitle( "Unidades" );
     this->setWindowIcon( QIcon( ":/imagenes/.png" ) );
     this->setAttribute( Qt::WA_DeleteOnClose );
+
+    PBAgregarUnidad->setIcon( QIcon( ":/imagenes/add.png" ) );
+    PBAgregarUnidad->setText( "Agregar unidad" );
+
+    PBEliminarUnidad->setIcon( QIcon( ":/imagenes/eliminar.png" ) );
+    PBEliminarUnidad->setText( "Eliminar unidad" );
 }
 
 void FormPrefUnidadesProductos::changeEvent(QEvent *e)
