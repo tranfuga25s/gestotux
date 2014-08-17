@@ -12,7 +12,7 @@ public:
     QVector<int> getUnidadesSegunProducto( const int id_producto );
     
 private:
-    static const int predeterminada = 1;
+    const int predeterminada = 1;
 };
 
 #endif // MPRODUCTOSUNIDADES_H

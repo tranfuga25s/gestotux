@@ -126,8 +126,6 @@ void UnidadesProductosTest::tstUnidadesSegunProducto_data()
     QTest::newRow("Caso 1") << 1 << 1;
 
     QTest::newRow("Sin relaciones") << 2 << 1;
-
-    /*QTest::newRow("Caso 2") << 2 << 1000.0 << 1.0; */
 }
 
 
