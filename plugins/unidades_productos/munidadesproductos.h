@@ -18,8 +18,12 @@ public:
     QVariant data(const QModelIndex &idx, int role) const;
 
     double getValorNominal( const int id_unidad, const double cantidad );
-    bool tienePadre( const int id_unidad );
     double getMultiplo( const int id_unidad );
+
+    bool tienePadre( const int id_unidad );
+    QVector<int> getHijos( const int id_unidad );
+
+    bool eliminar( const int id_unidad, const bool eliminar_hijos = false, const bool tiene_transaccion = false );
 
 };
 

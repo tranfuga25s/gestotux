@@ -5,6 +5,8 @@
 #include <QSqlRecord>
 #include <QDebug>
 
+#include "mproductosunidades.h"
+
 MUnidadesProductos::MUnidadesProductos(QObject *parent) :
     QSqlTableModel(parent)
 {
@@ -84,6 +86,27 @@ bool MUnidadesProductos::tienePadre( const int id_unidad )
 }
 
 /**
+ * @brief MUnidadesProductos::getHijos
+ * Devuelve el listado de hijos que poseea la unidad definida
+ * @param id_unidad Identificador de la unidad
+ * @return
+ */
+QVector<int> MUnidadesProductos::getHijos( const int id_unidad )
+{
+    QSqlQuery cola;
+    if( !cola.exec( QString( "SELECT id FROM unidades_productos WHERE id_padre = %1" ).arg( id_unidad ) ) ) {
+        qDebug() << "Error al ejecutar la cola de averiguacion de hijos";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    }
+    QVector<int> ret;
+    while( cola.next() ) {
+        ret << cola.record().value(0).toInt();
+    }
+    return ret;
+}
+
+/**
  * @brief MUnidadesProductos::getMultiplo
  * Obtiene el multiplo que corresponde para llevarlo a la unidad padre
  * @param id_unidad Identificador de la unidad
@@ -104,4 +127,58 @@ double MUnidadesProductos::getMultiplo( const int id_unidad )
         }
     }
     return 0.0;
+}
+
+/**
+ * @brief MUnidadesProductos::eliminar
+ * Elimina una unidad de productos
+ * @param id_unidad Identificador de unidad
+ * @param eliminar_hijos Elimina los hijos si posee
+ * @param tiene_transaccion La llamada anterior ya inicio una transaccion
+ * @return resultado de la operacion
+ */
+bool MUnidadesProductos::eliminar( const int id_unidad, const bool eliminar_hijos, const bool tiene_transaccion )
+{
+    return false;
+    bool es_padre = !this->tienePadre( id_unidad );
+    if( es_padre && !eliminar_hijos ) {
+        // No elimino padres si no puedo eliminar hijos
+        return false;
+    }
+    if( !tiene_transaccion ) { QSqlDatabase::database().transaction(); }
+    QSqlQuery cola;
+
+    // Veo si tiene hijos
+    if( es_padre && eliminar_hijos ) {
+
+        QVector<int> hijos = this->getHijos( id_unidad );
+
+        foreach( int id_hijo, hijos ) {
+            if( !this->eliminar( id_hijo, false, true ) ) {
+                 if( !tiene_transaccion ) { QSqlDatabase::database().rollback(); }
+                 return false;
+            }
+        }
+
+    }
+
+    if( cola.exec( QString( "DELETE FROM %1 WHERE id_unidad = %2" ).arg( this->tableName() ).arg( id_unidad ) ) ) {
+        // Elimino los datos relacionados
+        MProductosUnidades *mpu = new MProductosUnidades();
+        if( mpu->eliminarSegunUnidad( id_unidad, true ) ) {
+            if( !tiene_transaccion ) { QSqlDatabase::database().commit(); }
+            delete mpu;
+            return true;
+        } else {
+
+        }
+        delete mpu;
+    } else {
+        qDebug() << "Error al intentar eliminar una unidad";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    }
+
+    if( !tiene_transaccion ) { QSqlDatabase::database().rollback(); }
+    return false;
 }

@@ -27,6 +27,8 @@ private Q_SLOTS:
     void tstConversion_data();
     void tstUnidadesSegunProducto();
     void tstUnidadesSegunProducto_data();
+    void tstEliminacion();
+    void tstEliminacion_data();
 
 private:
     MProductos *mp;
@@ -126,6 +128,38 @@ void UnidadesProductosTest::tstUnidadesSegunProducto_data()
     QTest::newRow("Caso 1") << 1 << 1;
 
     QTest::newRow("Sin relaciones") << 2 << 1;
+}
+
+/**
+ * @brief UnidadesProductosTest::tstEliminacion
+ * Verifica que la eliminacion de datos se haga correctamente.
+ *
+ */
+void UnidadesProductosTest::tstEliminacion()
+{
+    QFETCH( int, id_unidad );
+    QFETCH( bool, eliminar_hijos );
+    QFETCH( bool, resultado );
+
+    MUnidadesProductos *mup = new MUnidadesProductos();
+    QCOMPARE( mup->eliminar( id_unidad, eliminar_hijos ), resultado );
+    if( resultado ) {
+        // Verifico que se eliminaron las asociacones
+        MProductosUnidades *mpu = new MProductosUnidades();
+        QCOMPARE( mpu->getProductosSegunUnidad( id_unidad ).count(), 0 );
+        delete mpu;
+    }
+    delete mup;
+}
+
+void UnidadesProductosTest::tstEliminacion_data()
+{
+    QTest::addColumn<int>("id_unidad");
+    QTest::addColumn<bool>("eliminar_hijos");
+    QTest::addColumn<bool>("resultado");
+    QTest::newRow("HijoNormal") << 1 << true << true;
+    //QTest::newRow("PadreSinHijos") << ? << false << false;
+    //Qtest::newRow("PadreConHijos") << ? << true << true;
 }
 
 

@@ -2,6 +2,9 @@
 
 #include "munidadesproductos.h"
 
+#include <QMessageBox>
+
+
 FormPrefUnidadesProductos::FormPrefUnidadesProductos(QWidget *parent) :
 FormPrefHijo(), Ui::FormPrefUnidadesProductos()
 {
@@ -75,5 +78,18 @@ void FormPrefUnidadesProductos::agregarUnidad()
  */
 void FormPrefUnidadesProductos::eliminarUnidad()
 {
-    qWarning( "No implementado" );
+    QModelIndexList lista = this->TVUnidades->selectionModel()->selectedRows();
+    if( lista.size() == 0 ) {
+        QMessageBox::information( this,
+                                  "Sin elementos",
+                                  "Por favor, seleccione alguna unidad para eliminar" );
+        return;
+    }
+    foreach( QModelIndex indice, lista ) {
+        if( !this->modelo->eliminar( indice.row() ) ) {
+            QMessageBox::warning( this,
+                                  "No se pudo eliminar",
+                                  "No se pudo eliminar el indice elegido" );
+        }
+    }
 }
