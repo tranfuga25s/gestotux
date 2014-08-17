@@ -157,9 +157,9 @@ void UnidadesProductosTest::tstEliminacion_data()
     QTest::addColumn<int>("id_unidad");
     QTest::addColumn<bool>("eliminar_hijos");
     QTest::addColumn<bool>("resultado");
-    QTest::newRow("HijoNormal") << 1 << true << true;
+    QTest::newRow("HijoNormal") << 2 << true << true;
     //QTest::newRow("PadreSinHijos") << ? << false << false;
-    //Qtest::newRow("PadreConHijos") << ? << true << true;
+    QTest::newRow("PadreConHijos") << 1 << true << true;
 }
 
 
