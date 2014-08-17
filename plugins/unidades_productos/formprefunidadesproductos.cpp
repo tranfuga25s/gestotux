@@ -14,6 +14,16 @@ FormPrefHijo(), Ui::FormPrefUnidadesProductos()
     this->modelo = new MUnidadesProductos( this->TVUnidades );
     this->modelo->setEditStrategy( QSqlTableModel::OnManualSubmit );
     this->TVUnidades->setModel( modelo );
+    this->TVUnidades->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    this->TVUnidades->hideColumn( 0 );
+
+    PBAgregarUnidad->setText( "Agregar unidad" );
+    PBAgregarUnidad->setIcon( QIcon( ":/imagenes/add.png" ) );
+    connect( PBAgregarUnidad, SIGNAL( clicked() ), this, SLOT( agregarUnidad() ) );
+
+    PBEliminarUnidad->setText( "Eliminar unidad" );
+    PBEliminarUnidad->setIcon( QIcon( ":/imagenes/eliminar.png" ) );
+    connect( PBEliminarUnidad, SIGNAL( clicked() ), this, SLOT( eliminarUnidad() ) );
 }
 
 void FormPrefUnidadesProductos::changeEvent(QEvent *e)
@@ -49,4 +59,21 @@ void FormPrefUnidadesProductos::aplicar()
 void FormPrefUnidadesProductos::guardar()
 {
     this->modelo->submitAll();
+}
+
+/**
+ * @brief FormPrefUnidadesProductos::agregarUnidad
+ * Agrega una nueva unidad
+ */
+void FormPrefUnidadesProductos::agregarUnidad()
+{
+    qWarning( "No implementado" );
+}
+
+/**
+ * @brief FormPrefUnidadesProductos::eliminarUnidad
+ */
+void FormPrefUnidadesProductos::eliminarUnidad()
+{
+    qWarning( "No implementado" );
 }

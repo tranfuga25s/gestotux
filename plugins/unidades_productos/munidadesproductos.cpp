@@ -12,7 +12,33 @@ MUnidadesProductos::MUnidadesProductos(QObject *parent) :
     setHeaderData( 0, Qt::Horizontal, tr( "#ID"      ) );
     setHeaderData( 1, Qt::Horizontal, tr( "Nombre"   ) );
     setHeaderData( 2, Qt::Horizontal, tr( "Padre"    ) );
-    setHeaderData( 3, Qt::Horizontal, tr( "Multiple" ) );
+    setHeaderData( 3, Qt::Horizontal, tr( "Multiplo" ) );
+}
+
+/**
+ * @brief MUnidadesProductos::data
+ * @param idx
+ * @param role
+ * @return
+ */
+QVariant MUnidadesProductos::data(const QModelIndex &idx, int role) const
+{
+    switch( role ) {
+        case Qt::DisplayRole:
+        {
+            switch( idx.column() ) {
+                case 3:
+                {
+                    return QString( "%L1" ).arg( QSqlTableModel::data( idx, role ).toDouble() );
+                    break;
+                }
+                default: { break; }
+            }
+            break;
+        }
+        default: { break; }
+    }
+    return QSqlTableModel::data( idx, role );
 }
 
 /**

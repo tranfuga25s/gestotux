@@ -15,6 +15,8 @@ class MUnidadesProductos : public QSqlTableModel
 public:
     MUnidadesProductos( QObject *parent = 0 );
 
+    QVariant data(const QModelIndex &idx, int role) const;
+
     double getValorNominal( const int id_unidad, const double cantidad );
     bool tienePadre( const int id_unidad );
     double getMultiplo( const int id_unidad );

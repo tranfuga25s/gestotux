@@ -20,6 +20,9 @@ public slots:
     void aplicar();
     void guardar();
 
+    void agregarUnidad();
+    void eliminarUnidad();
+
 private:
     MUnidadesProductos *modelo;
 
