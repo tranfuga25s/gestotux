@@ -4,6 +4,8 @@
 #include "ui_formprefunidadesproductos.h"
 #include "formprefhijo.h"
 
+class MUnidadesProductos;
+
 class FormPrefUnidadesProductos : public QWidget,  public FormPrefHijo,  public Ui::FormPrefUnidadesProductos
 {
     Q_OBJECT
@@ -17,6 +19,10 @@ public slots:
     void cargar();
     void aplicar();
     void guardar();
+
+private:
+    MUnidadesProductos *modelo;
+
 };
 
 #endif // FORMPREFUNIDADESPRODUCTOS_H

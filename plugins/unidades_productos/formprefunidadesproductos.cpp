@@ -1,13 +1,19 @@
 #include "formprefunidadesproductos.h"
 
+#include "munidadesproductos.h"
+
 FormPrefUnidadesProductos::FormPrefUnidadesProductos(QWidget *parent) :
 FormPrefHijo(), Ui::FormPrefUnidadesProductos()
 {
     this->setParent( parent );
     setupUi(this);
     this->setWindowTitle( "Unidades" );
-    this->setWindowIcon( QIcon( ":/imagenes/.png" ) );
+    this->setWindowIcon( QIcon( ":/imagenes/unidades_productos.png" ) );
     this->setAttribute( Qt::WA_DeleteOnClose );
+
+    this->modelo = new MUnidadesProductos( this->TVUnidades );
+    this->modelo->setEditStrategy( QSqlTableModel::OnManualSubmit );
+    this->TVUnidades->setModel( modelo );
 }
 
 void FormPrefUnidadesProductos::changeEvent(QEvent *e)
@@ -27,6 +33,7 @@ void FormPrefUnidadesProductos::changeEvent(QEvent *e)
  */
 void FormPrefUnidadesProductos::cargar()
 {
+
 }
 
 /**
@@ -41,4 +48,5 @@ void FormPrefUnidadesProductos::aplicar()
  */
 void FormPrefUnidadesProductos::guardar()
 {
+    this->modelo->submitAll();
 }
