@@ -1,6 +1,7 @@
 #include "formprefunidadesproductos.h"
 
 #include "munidadesproductos.h"
+#include "dunidadproducto.h"
 
 #include <QMessageBox>
 
@@ -70,7 +71,10 @@ void FormPrefUnidadesProductos::guardar()
  */
 void FormPrefUnidadesProductos::agregarUnidad()
 {
-    qWarning( "No implementado" );
+    DUnidadProducto *d = new DUnidadProducto();
+    d->setearModelo( this->modelo );
+    d->adjustSize();
+    d->exec();
 }
 
 /**
