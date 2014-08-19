@@ -15,7 +15,9 @@ Estado actual
 -------------
 
 Actualmente se puede elegir entre una base de datos mysql y una base de dato embebida sqlite, lo cual permite mucha flexibilidad.
-Contiene 4 plugins específicos creados a medida de nuestros clientes:
+
+Contiene 5 plugins específicos creados a medida de nuestros clientes:
+
 * HiComp Computación ( versión 0.53 ) - Hace recibos de servicios de internet
 * Presupuestador ( versión 0.2 ) - Programa para hacer presupuestos para un taller mecánico.
 * Administración Corrientes S.A. ( versión 0.11 ) - Administración de caravanas.
@@ -39,7 +41,14 @@ También posee plugins generales:
 Más información
 ---------------
 
-Vease tambien la Guia_del_Desarrollador.
+Vease tambien la wiki del proyecto para tener una idea de los principales elementos que componen el programa.
 
-Creacion de plugins
-Vea como agregar plugins al programa en creacion_plugins.
+Licencia
+--------
+
+El programa se publica bajo licencia GPLv3 en todo caso exceptuando cuando alguna de sus librerías o clases indiquen lo contrario.
+
+Soporte comercial
+-----------------
+
+Ingrese en [www.gestotux.com.ar](http://www.gestotux.com.ar/) para obtener información sobre soporte comercial y el sistema de backup en la nube.

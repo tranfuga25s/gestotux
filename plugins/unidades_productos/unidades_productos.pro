@@ -12,12 +12,14 @@ QT += sql \
 HEADERS += unidadesproductosplugin.h \
     formprefunidadesproductos.h \
     munidadesproductos.h \
-    mproductosunidades.h
+    mproductosunidades.h \
+    dunidadproducto.h
 
 SOURCES += unidadesproductosplugin.cpp \
     formprefunidadesproductos.cpp \
     munidadesproductos.cpp \
-    mproductosunidades.cpp
+    mproductosunidades.cpp \
+    dunidadproducto.cpp
 
 TARGET = unidades_productos
 
@@ -48,4 +50,5 @@ OTHER_FILES += \
     unidades_productos.QMYSQL.sql
 
 FORMS += \
-    formprefunidadesproductos.ui
+    formprefunidadesproductos.ui \
+    dunidadproducto.ui

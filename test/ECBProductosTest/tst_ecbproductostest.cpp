@@ -34,6 +34,8 @@ private Q_SLOTS:
     void testECBModeloCambiarAnterior();
     void testECBProductosBuscarPorCodigo();
     void testECBProductosBuscarPorCodigo_data();
+    void testECBProductosDeshabilitados();
+    void testECBProductosDeshabilitados_data();
 };
 
 /*!
@@ -321,7 +323,46 @@ void ECBProductosTest::testECBProductosBuscarPorCodigo_data() {
     QTest::addColumn<QString>("texto");
     QTest::addColumn<QString>("nombre");
     QTest::newRow("Producto1") << "1" << "Producto 1";
-    QTest::newRow("Producto4") << "3" << "Producto 4";
+    QTest::newRow("Producto4") << "5" << "Producto 5";
+}
+
+/*!
+ * \brief ECBProductosTest::testECBProductosDeshabilitados
+ * Verifica que no se muestren productos deshabilitados al mostrar el listado
+ */
+void ECBProductosTest::testECBProductosDeshabilitados()
+{
+    QFETCH( int, id_producto );
+    QFETCH( bool, habilitado );
+    // Los productos deshabilitados no deberian aparecer en el listado
+    ECBProductosModel *modelo = new ECBProductosModel();
+    modelo->inicializar();
+    ECBProductosFilter *filtro = new ECBProductosFilter();
+    filtro->setSourceModel( modelo );
+    bool encontrado = false;
+    for( int i=0; i<filtro->rowCount(); i++ ) {
+        if( filtro->data( filtro->index( i, 0 ), Qt::EditRole ).toInt() == id_producto ) {
+            encontrado = true;
+        }
+    }
+    delete filtro;
+    filtro=0;
+    delete modelo;
+    modelo=0;
+    // Si esta habilitado se debería de encontrar en el modelo
+    // y sino, no debería de poder encontrarse
+    QCOMPARE( habilitado, encontrado );
+}
+
+/*!
+ * \brief ECBProductosTest::testECBProductosDeshabilitados_data
+ */
+void ECBProductosTest::testECBProductosDeshabilitados_data()
+{
+    QTest::addColumn<int>("id_producto");
+    QTest::addColumn<bool>("habilitado");
+    QTest::newRow("Producto1") << 1 << true;
+    QTest::newRow("Producto4") << 4 << false;
 }
 
 QTEST_MAIN(ECBProductosTest)
