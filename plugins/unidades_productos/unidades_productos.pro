@@ -11,11 +11,13 @@ QT += sql \
 
 HEADERS += unidadesproductosplugin.h \
     formprefunidadesproductos.h \
-    munidadesproductos.h
+    munidadesproductos.h \
+    mproductosunidades.h
 
 SOURCES += unidadesproductosplugin.cpp \
     formprefunidadesproductos.cpp \
-    munidadesproductos.cpp
+    munidadesproductos.cpp \
+    mproductosunidades.cpp
 
 TARGET = unidades_productos
 
