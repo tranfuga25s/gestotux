@@ -23,6 +23,8 @@ public:
     bool tienePadre( const int id_unidad );
     QVector<int> getHijos( const int id_unidad );
 
+    bool agregarUnidad( const int id_padre, const QString nombre, double multiplicador );
+
     bool eliminar( const int id_unidad, const bool eliminar_hijos = false, const bool tiene_transaccion = false );
 
 };

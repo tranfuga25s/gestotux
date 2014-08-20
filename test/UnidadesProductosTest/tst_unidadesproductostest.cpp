@@ -29,6 +29,8 @@ private Q_SLOTS:
     void tstUnidadesSegunProducto_data();
     void tstEliminacion();
     void tstEliminacion_data();
+    void tstAgregarElemento();
+    void tstAgregarElemento_data();
 
 private:
     MProductos *mp;
@@ -133,7 +135,6 @@ void UnidadesProductosTest::tstUnidadesSegunProducto_data()
 /**
  * @brief UnidadesProductosTest::tstEliminacion
  * Verifica que la eliminacion de datos se haga correctamente.
- *
  */
 void UnidadesProductosTest::tstEliminacion()
 {
@@ -160,6 +161,36 @@ void UnidadesProductosTest::tstEliminacion_data()
     QTest::newRow("HijoNormal") << 2 << true << true;
     //QTest::newRow("PadreSinHijos") << ? << false << false;
     QTest::newRow("PadreConHijos") << 1 << true << true;
+}
+
+/**
+ * @brief UnidadesProductosTest::tstAgregarElemento
+ * Verifica que las agregaciones se realizen correctamente
+ */
+void UnidadesProductosTest::tstAgregarElemento()
+{
+    QFETCH( int    , id_unidad_padre );
+    QFETCH( QString, nombre          );
+    QFETCH( double , multiplicador   );
+    QFETCH( bool   , resultado       );
+
+    MUnidadesProductos *mup = new MUnidadesProductos();
+    QCOMPARE( resultado, mup->agregarUnidad( id_unidad_padre, nombre, multiplicador ) );
+    delete mup;
+}
+
+void UnidadesProductosTest::tstAgregarElemento_data()
+{
+    QTest::addColumn<int>("id_unidad_padre");
+    QTest::addColumn<QString>("nombre");
+    QTest::addColumn<double>("multiplicador");
+    QTest::addColumn<bool>("resultado");
+    QTest::newRow("Padre") << 0 << "UnidadPadre" << 1.0 << true;
+    QTest::newRow("Hijo1") << 1 << "UnidadHija" << 1.0 << true;
+    QTest::newRow("PadreIncorrecto") << 0 << "" << 1.0 << false;
+    QTest::newRow("PadreIncorrecto2") << 0 << "UnidadPadre" << 0.0 << false;
+    QTest::newRow("HijoIncorrecto") << 1 << "" << 1.0 << false;
+    QTest::newRow("HijoIncorrecto2") << 1 << "UnidadPadre" << 0.0 << false;
 }
 
 

@@ -94,7 +94,7 @@ bool MUnidadesProductos::tienePadre( const int id_unidad )
 QVector<int> MUnidadesProductos::getHijos( const int id_unidad )
 {
     QSqlQuery cola;
-    if( !cola.exec( QString( "SELECT id FROM unidades_productos WHERE id_padre = %1" ).arg( id_unidad ) ) ) {
+    if( !cola.exec( QString( "SELECT id_unidad FROM unidades_productos WHERE id_padre = %1" ).arg( id_unidad ) ) ) {
         qDebug() << "Error al ejecutar la cola de averiguacion de hijos";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
@@ -104,6 +104,44 @@ QVector<int> MUnidadesProductos::getHijos( const int id_unidad )
         ret << cola.record().value(0).toInt();
     }
     return ret;
+}
+
+/**
+ * @brief MUnidadesProductos::agregarUnidad
+ * @param id_padre Identificador del padre. Si es 0, entonces es padre.
+ * @param nombre Nombre a utilizar
+ * @param multiplicador Multiplicador respecto al padre.
+ * @return resultado de la operación. Falso si hubo algún error.
+ */
+bool MUnidadesProductos::agregarUnidad( const int id_padre, const QString nombre, double multiplicador )
+{
+    if( nombre.isEmpty() ) { return false; }
+
+    if( multiplicador == 0.0 ) { return false; }
+
+    // Condicion predeterminada
+    if( id_padre == 0 ) { multiplicador = 1.0; }
+
+    QSqlQuery cola;
+
+    if( !cola.prepare( QString( "INSERT INTO %1 ( id_padre, nombre, multiplo ) "
+                                " VALUES ( :id_padre, :nombre, :multiplicador )" ).arg( this->tableName() ) ) ) {
+        qDebug() << "Error al intentar preparar la cola de inserción de unidades";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+        return false;
+    }
+
+    cola.bindValue( ":id_padre", id_padre );
+    cola.bindValue( ":nombre", nombre );
+    cola.bindValue( ":multiplicador", multiplicador );
+    if( cola.exec() ) {
+        return true;
+    }
+    qDebug() << "Error al intentar ejecutar la cola de inserción de unidades";
+    qDebug() << cola.lastError().text();
+    qDebug() << cola.lastQuery();
+    return false;
 }
 
 /**
@@ -139,7 +177,6 @@ double MUnidadesProductos::getMultiplo( const int id_unidad )
  */
 bool MUnidadesProductos::eliminar( const int id_unidad, const bool eliminar_hijos, const bool tiene_transaccion )
 {
-    return false;
     bool es_padre = !this->tienePadre( id_unidad );
     if( es_padre && !eliminar_hijos ) {
         // No elimino padres si no puedo eliminar hijos
@@ -156,6 +193,7 @@ bool MUnidadesProductos::eliminar( const int id_unidad, const bool eliminar_hijo
         foreach( int id_hijo, hijos ) {
             if( !this->eliminar( id_hijo, false, true ) ) {
                  if( !tiene_transaccion ) { QSqlDatabase::database().rollback(); }
+                 qDebug() << "Error al eliminar un hijo";
                  return false;
             }
         }
@@ -170,11 +208,11 @@ bool MUnidadesProductos::eliminar( const int id_unidad, const bool eliminar_hijo
             delete mpu;
             return true;
         } else {
-
+            qDebug() << "Error al eliminar según unidad";
         }
         delete mpu;
     } else {
-        qDebug() << "Error al intentar eliminar una unidad";
+        qDebug() << "Error al intentar eliminar una unidad - exec";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
     }
