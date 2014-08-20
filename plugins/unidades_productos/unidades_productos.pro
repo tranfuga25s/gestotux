@@ -13,13 +13,15 @@ HEADERS += unidadesproductosplugin.h \
     formprefunidadesproductos.h \
     munidadesproductos.h \
     mproductosunidades.h \
-    dunidadproducto.h
+    dunidadproducto.h \
+    ecbunidadesproductos.h
 
 SOURCES += unidadesproductosplugin.cpp \
     formprefunidadesproductos.cpp \
     munidadesproductos.cpp \
     mproductosunidades.cpp \
-    dunidadproducto.cpp
+    dunidadproducto.cpp \
+    ecbunidadesproductos.cpp
 
 TARGET = unidades_productos
 

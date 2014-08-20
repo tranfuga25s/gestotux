@@ -34,7 +34,7 @@ void DUnidadProducto::accept()
         return;
     }
 
-    if( this->modelo->agregarUnidad( 0 /*ui->CBPadre->idActual()*/,
+    if( this->modelo->agregarUnidad( ui->CBPadre->idActual(),
                                      ui->LENombre->text(),
                                      ui->DSBMultiplicador->value() ) ) {
         QMessageBox::information( this, "Correcto", "Unidad agregada correctamente" );
