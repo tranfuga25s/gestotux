@@ -242,10 +242,10 @@ void EBackupRemoto::enviarColas() {
  p->beginGroup( "BackupRemoto" );
  QUrl url( p->value( "url_envio", _host + "/backups/envio" ).toString() );
  url.addQueryItem( "ids", this->ids );
- //qDebug() << this->ids;
  p->endGroup(); p->endGroup(); p = 0;
  QNetworkRequest *req2 = new QNetworkRequest( url );
  req2->setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
+ req2->setHeader( "X-Gestotux-Token", "token_seguridad_123456789" ); /// @TODO: modificar esto para que sea más seguro
 
  int pos = 0;
  _continuar = true;
