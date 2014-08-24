@@ -16,6 +16,7 @@ FormPrefHijo(), Ui::FormPrefUnidadesProductos()
     this->setAttribute( Qt::WA_DeleteOnClose );
 
     this->modelo = new MUnidadesProductos( this->TVUnidades );
+    this->modelo->select();
     this->modelo->setEditStrategy( QSqlTableModel::OnManualSubmit );
     this->TVUnidades->setModel( modelo );
     this->TVUnidades->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
