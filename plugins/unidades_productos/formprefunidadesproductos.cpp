@@ -11,7 +11,7 @@ FormPrefHijo(), Ui::FormPrefUnidadesProductos()
 {
     this->setParent( parent );
     setupUi(this);
-    this->setWindowTitle( "Unidades" );
+    this->setWindowTitle( "Unidades de Productos" );
     this->setWindowIcon( QIcon( ":/imagenes/unidades_productos.png" ) );
     this->setAttribute( Qt::WA_DeleteOnClose );
 
