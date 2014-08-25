@@ -60,12 +60,6 @@ bool UnidadesProductosPlugin::verificarTablas( QStringList tablas )
  { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla unidades_productos" ); return false; }
  if( !tablas.contains( "productos_unidades" ) )
  { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla productos_unidades" ); return false; }
- /*if( !tablas.contains( "remito" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla remito" ); return false; }
- if( !tablas.contains( "item_remito" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla item_remito" ); return false; }
- if( !tablas.contains( "v_remito" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la vista item_remito" ); return false; }*/
  return true;
 }
 

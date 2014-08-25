@@ -19,9 +19,10 @@ MUnidadesProductos::MUnidadesProductos(QObject *parent) :
 
 /**
  * @brief MUnidadesProductos::data
- * @param idx
- * @param role
- * @return
+ * Devuelve los datos del elemento formateado para que se vean correctamente
+ * @param idx Indice del elemento a mostrar
+ * @param role Que se desea mostrar
+ * @return Representación deseada
  */
 QVariant MUnidadesProductos::data(const QModelIndex &idx, int role) const
 {
@@ -56,9 +57,8 @@ QModelIndex MUnidadesProductos::parent( const QModelIndex &child ) const
         if( id_padre != -1 ) {
             return this->index( id_padre, 0 );
         }
-    } else {
-        return QModelIndex();
     }
+    return QModelIndex();
 }
 
 /**
