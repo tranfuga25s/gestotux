@@ -76,7 +76,7 @@ int UnidadesProductosPlugin::tipo() const
 /*!
     \fn UnidadesProductosPlugin::crearMenu( QMenuBar *m )
  */
-void UnidadesProductosPlugin::crearMenu( QMenuBar *m )
+void UnidadesProductosPlugin::crearMenu( QMenuBar * )
 {
  /*QMenu *mVentas = m->addMenu( "Remitos" );
  mVentas->addAction( ActAgregarRemito );
