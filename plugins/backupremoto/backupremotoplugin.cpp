@@ -38,7 +38,10 @@
 QList<QActionGroup *> BackupRemotoPlugin::accionesBarra()
 { return QList<QActionGroup*>(); }
 
-
+/**
+ * @brief BackupRemotoPlugin::inicializar
+ * @return
+ */
 bool BackupRemotoPlugin::inicializar()
 {
  Q_INIT_RESOURCE(backupremoto);

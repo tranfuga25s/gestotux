@@ -5,6 +5,7 @@
 #include <QNetworkReply>
 #include <QMessageBox>
 #include <QDebug>
+#include <QCryptographicHash>
 
 #include "json.h"
 
@@ -84,12 +85,12 @@ void FormPrefBackupRemoto::cargarDatos()
   manager = new QNetworkAccessManager( this );
   connect( manager, SIGNAL( finished( QNetworkReply* ) ), this, SLOT( respuesta( QNetworkReply* ) ) );
 
-  QUrl url( LEServidor->text() + "/usuarios/verificar" );
+  QUrl url( LEServidor->text() + "/usuarios/verificar.json" );
   url.addQueryItem( "num_cliente", LENumeroCliente->text() );
-  url.addQueryItem( "codigo", LEContra->text() );
+  url.addQueryItem( "codigo", QString( QCryptographicHash::hash( LEContra->text().toAscii(), QCryptographicHash::Md5 ).toHex() ) );
   QNetworkRequest req( url );
   req.setHeader( QNetworkRequest::ContentTypeHeader, "application/octet-stream" );
-  manager->post( req, url.encodedQuery() );
+  manager->get( req );
 }
 
 /*!
