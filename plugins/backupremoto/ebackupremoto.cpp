@@ -245,7 +245,7 @@ void EBackupRemoto::enviarColas() {
  p->endGroup(); p->endGroup(); p = 0;
  QNetworkRequest *req2 = new QNetworkRequest( url );
  req2->setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
- req2->setHeader( "X-Gestotux-Token", "token_seguridad_123456789" ); /// @TODO: modificar esto para que sea más seguro
+ req2->setRawHeader( "X-Gestotux-Token", "token_seguridad_123456789" ); /// @TODO: modificar esto para que sea más seguro
 
  int pos = 0;
  _continuar = true;
