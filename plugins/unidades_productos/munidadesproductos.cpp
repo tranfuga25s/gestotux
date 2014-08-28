@@ -15,6 +15,8 @@ MUnidadesProductos::MUnidadesProductos(QObject *parent) :
     setHeaderData( 1, Qt::Horizontal, tr( "Nombre"   ) );
     setHeaderData( 2, Qt::Horizontal, tr( "Padre"    ) );
     setHeaderData( 3, Qt::Horizontal, tr( "Multiplo" ) );
+    _parent_index = new QHash<int,QModelIndex>();
+    _parent_index->clear();
 }
 
 /**
@@ -44,6 +46,8 @@ QVariant MUnidadesProductos::data(const QModelIndex &idx, int role) const
     return QSqlTableModel::data( idx, role );
 }
 
+
+
 /**
  * @brief MUnidadesProductos::parent
  * @param child
@@ -54,9 +58,7 @@ QModelIndex MUnidadesProductos::parent( const QModelIndex &child ) const
     int id_hijo = this->data( this->index( child.row(), 0 ), Qt::DisplayRole ).toInt();
     if( this->tienePadre( id_hijo ) ) {
         int id_padre = this->obtenerPadre( id_hijo );
-        if( id_padre != -1 ) {
-            return this->index( id_padre, 0 );
-        }
+        return _parent_index->value( id_padre );
     }
     return QModelIndex();
 }
@@ -66,9 +68,27 @@ QModelIndex MUnidadesProductos::parent( const QModelIndex &child ) const
  * @param index
  * @return
  */
-Qt::ItemFlags MUnidadesProductos::flags( const QModelIndex &index ) const
+Qt::ItemFlags MUnidadesProductos::flags( const QModelIndex & ) const
+{ return QFlag( Qt::ItemIsEnabled | !Qt::ItemIsEditable ); }
+
+/**
+ * @brief MUnidadesProductos::index
+ *
+ *
+ * @param row rowID
+ * @param column
+ * @param parent
+ * @return
+ */
+QModelIndex MUnidadesProductos::index( int row, int column, const QModelIndex &par ) const
 {
-    return QFlag( Qt::ItemIsEnabled | !Qt::ItemIsEditable );
+    // Check if is a parent or not
+    QModelIndex original = QSqlTableModel::index( row, column, par );
+    int id_actual = data( QSqlTableModel::index( row, 0 ), Qt::EditRole ).toInt();
+    if( !tienePadre( id_actual ) ) {
+        _parent_index->insert( id_actual, original );
+    }
+    return original;
 }
 
 /**

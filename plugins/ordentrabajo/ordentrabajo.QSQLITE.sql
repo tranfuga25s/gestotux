@@ -16,4 +16,4 @@ INSERT OR IGNORE INTO "tipo_operacion_orden_trabajo" VALUES ( 5, "Devolución al
 INSERT OR IGNORE INTO "tipo_operacion_orden_trabajo" VALUES ( 6, "Cancelación de la orden" );
 INSERT OR IGNORE INTO "tipo_operacion_orden_trabajo" VALUES ( 7, "Facturacion de item de orden" );
 INSERT OR IGNORE INTO "tipo_operacion_orden_trabajo" VALUES ( 8, "Ingreso al taller" );
-CREATE VIEW IF NOT EXISTS "v_equipamiento" AS SELECT e.id_equipamiento AS id_equipamiento, e.numero_serie as numero_serie, e.descripcion as descripcion, c.id as id_cliente, c.razon_social as razon_social, e.cantidad_elementos as cantidad_elementos, e.fecha_compra as fecha_compra, e.fecha_baja as fecha_baja FROM equipamiento AS e INNER JOIN clientes AS c ON e.id_cliente = c.id;
+CREATE VIEW IF NOT EXISTS "v_equipamiento" AS SELECT e.id_equipamiento AS id_equipamiento, e.numero_serie as numero_serie, e.descripcion as descripcion, c.id as id_cliente, c.razon_social as razon_social, e.fecha_compra as fecha_compra, e.fecha_baja as fecha_baja FROM equipamiento AS e INNER JOIN clientes AS c ON e.id_cliente = c.id;
