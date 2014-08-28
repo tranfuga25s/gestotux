@@ -56,16 +56,10 @@ bool UnidadesProductosPlugin::inicializar()
  */
 bool UnidadesProductosPlugin::verificarTablas( QStringList tablas )
 {
- if( !tablas.contains( "unidades" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla unidades" ); return false; }
- /*else if( !tablas.contains( "categoria_producto" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla categorias_producto" ); return false; }
- if( !tablas.contains( "remito" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla remito" ); return false; }
- if( !tablas.contains( "item_remito" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla item_remito" ); return false; }
- if( !tablas.contains( "v_remito" ) )
- { qDebug( "UnidadesProductosPlugin::Error al buscar la vista item_remito" ); return false; }*/
+ if( !tablas.contains( "unidades_productos" ) )
+ { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla unidades_productos" ); return false; }
+ if( !tablas.contains( "productos_unidades" ) )
+ { qDebug( "UnidadesProductosPlugin::Error al buscar la tabla productos_unidades" ); return false; }
  return true;
 }
 
@@ -82,7 +76,7 @@ int UnidadesProductosPlugin::tipo() const
 /*!
     \fn UnidadesProductosPlugin::crearMenu( QMenuBar *m )
  */
-void UnidadesProductosPlugin::crearMenu( QMenuBar *m )
+void UnidadesProductosPlugin::crearMenu( QMenuBar * )
 {
  /*QMenu *mVentas = m->addMenu( "Remitos" );
  mVentas->addAction( ActAgregarRemito );

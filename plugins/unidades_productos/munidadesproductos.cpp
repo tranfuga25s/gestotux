@@ -19,9 +19,10 @@ MUnidadesProductos::MUnidadesProductos(QObject *parent) :
 
 /**
  * @brief MUnidadesProductos::data
- * @param idx
- * @param role
- * @return
+ * Devuelve los datos del elemento formateado para que se vean correctamente
+ * @param idx Indice del elemento a mostrar
+ * @param role Que se desea mostrar
+ * @return Representación deseada
  */
 QVariant MUnidadesProductos::data(const QModelIndex &idx, int role) const
 {
@@ -31,7 +32,7 @@ QVariant MUnidadesProductos::data(const QModelIndex &idx, int role) const
             switch( idx.column() ) {
                 case 3:
                 {
-                    return QString( "%L1" ).arg( QSqlTableModel::data( idx, role ).toDouble() );
+                    return QString( "%L1" ).arg( QSqlTableModel::data( idx, role ).toDouble(), 20, 'f', 10 );
                     break;
                 }
                 default: { break; }
@@ -41,6 +42,33 @@ QVariant MUnidadesProductos::data(const QModelIndex &idx, int role) const
         default: { break; }
     }
     return QSqlTableModel::data( idx, role );
+}
+
+/**
+ * @brief MUnidadesProductos::parent
+ * @param child
+ * @return
+ */
+QModelIndex MUnidadesProductos::parent( const QModelIndex &child ) const
+{
+    int id_hijo = this->data( this->index( child.row(), 0 ), Qt::DisplayRole ).toInt();
+    if( this->tienePadre( id_hijo ) ) {
+        int id_padre = this->obtenerPadre( id_hijo );
+        if( id_padre != -1 ) {
+            return this->index( id_padre, 0 );
+        }
+    }
+    return QModelIndex();
+}
+
+/**
+ * @brief MUnidadesProductos::flags
+ * @param index
+ * @return
+ */
+Qt::ItemFlags MUnidadesProductos::flags( const QModelIndex &index ) const
+{
+    return QFlag( Qt::ItemIsEnabled | !Qt::ItemIsEditable );
 }
 
 /**
@@ -68,7 +96,7 @@ double MUnidadesProductos::getValorNominal( const int id_unidad, const double ca
  * @param id_unidad Identificador de la unidad
  * @return booleano
  */
-bool MUnidadesProductos::tienePadre( const int id_unidad )
+bool MUnidadesProductos::tienePadre( const int id_unidad ) const
 {
     QSqlQuery cola;
     if( !cola.exec( QString( "SELECT id_padre FROM unidades_productos WHERE id_unidad = %1" ).arg( id_unidad ) ) ) {
@@ -104,6 +132,27 @@ QVector<int> MUnidadesProductos::getHijos( const int id_unidad )
         ret << cola.record().value(0).toInt();
     }
     return ret;
+}
+
+/**
+ * @brief MUnidadesProductos::obtenerPadre
+ * @param id_unidad
+ * @return
+ */
+int MUnidadesProductos::obtenerPadre( const int id_unidad ) const
+{
+    QSqlQuery cola;
+    if( !cola.exec( QString( "SELECT id_padre FROM unidades_productos WHERE id_unidad = %1" ).arg( id_unidad ) ) ) {
+        qDebug() << "Error al ejecutar la cola de averiguacion de padre";
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+
+    } else {
+        if( cola.next() ) {
+            return cola.record().value(0).toInt();
+        }
+    }
+    return 0;
 }
 
 /**

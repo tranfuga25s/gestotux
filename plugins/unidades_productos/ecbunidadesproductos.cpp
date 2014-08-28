@@ -7,5 +7,5 @@ ECBUnidadesProductos::ECBUnidadesProductos(QWidget *parent) :
     setearCampoId( "id_unidad" );
     setearCampoTexto( "nombre" );
     setearCampoOrden( "nombre" );
-    setearFiltro( " id_padre = 0 " );
+    setearFiltro( " WHERE id_padre = 0 " );
 }

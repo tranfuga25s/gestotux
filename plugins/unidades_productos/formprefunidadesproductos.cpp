@@ -11,15 +11,20 @@ FormPrefHijo(), Ui::FormPrefUnidadesProductos()
 {
     this->setParent( parent );
     setupUi(this);
-    this->setWindowTitle( "Unidades" );
+    this->setWindowTitle( "Unidades de Productos" );
     this->setWindowIcon( QIcon( ":/imagenes/unidades_productos.png" ) );
     this->setAttribute( Qt::WA_DeleteOnClose );
 
     this->modelo = new MUnidadesProductos( this->TVUnidades );
-    this->modelo->setEditStrategy( QSqlTableModel::OnManualSubmit );
+    this->modelo->select();
+    //this->modelo->setEditStrategy( QSqlTableModel::OnManualSubmit );
     this->TVUnidades->setModel( modelo );
-    this->TVUnidades->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    this->TVUnidades->setItemsExpandable( true );
+    this->TVUnidades->setSortingEnabled( true );
+    this->TVUnidades->setExpandsOnDoubleClick( true );
+    this->TVUnidades->setRootIsDecorated( true );
     this->TVUnidades->hideColumn( 0 );
+    this->TVUnidades->hideColumn( 2 );
 
     PBAgregarUnidad->setText( "Agregar unidad" );
     PBAgregarUnidad->setIcon( QIcon( ":/imagenes/add.png" ) );
@@ -46,16 +51,13 @@ void FormPrefUnidadesProductos::changeEvent(QEvent *e)
  * @brief FormPrefUnidadesProductos::cargar
  */
 void FormPrefUnidadesProductos::cargar()
-{
-
-}
+{}
 
 /**
  * @brief FormPrefUnidadesProductos::aplicar
  */
 void FormPrefUnidadesProductos::aplicar()
-{
-}
+{}
 
 /**
  * @brief FormPrefUnidadesProductos::guardar
