@@ -58,7 +58,9 @@ QModelIndex MUnidadesProductos::parent( const QModelIndex &child ) const
     int id_hijo = this->data( this->index( child.row(), 0 ), Qt::DisplayRole ).toInt();
     if( this->tienePadre( id_hijo ) ) {
         int id_padre = this->obtenerPadre( id_hijo );
-        return _parent_index->value( id_padre );
+        if( _parent_index->contains( id_padre ) ) {
+            return _parent_index->value( id_padre );
+        }
     }
     return QModelIndex();
 }
