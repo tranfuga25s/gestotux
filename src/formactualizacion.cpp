@@ -339,7 +339,7 @@ void FormActualizacion::analizarGeneral()
                 qDebug( "Encontrada etiqueta de archivos generales" );
                 ///\todo Esto todavia no defini como lo voy a hacer
         }*/
-        qDebug( QString( "Encontrada version :%1" ).arg( docElem.attribute( "version", 0 ) ).toLocal8Bit() );
+        qDebug() << "Encontrada version: " << docElem.attribute( "version", 0 );
         // Busco los plugins
         while( docElem.hasChildNodes() )
         {
@@ -349,17 +349,17 @@ void FormActualizacion::analizarGeneral()
                 if( nodoA.toElement().tagName() == "plugin" )
                 {
                         // Tengo instalado el plugin??
-                        qDebug( QString( "Encontrado plugin %1" ).arg( nodoA.toElement().attribute( "nombre" ) ).toLocal8Bit() );
+                        qDebug() << "Encontrado plugin " << nodoA.toElement().attribute( "nombre" );
                         QString nombre = nodoA.toElement().attribute( "nombre" );
                         if( ERegistroPlugins::getInstancia()->pluginsHash()->find( nombre ) == ERegistroPlugins::getInstancia()->pluginsHash()->end() )
                         {
-                                qDebug( QString( "El plugin %1 no se encuentra en este sistema, no se descargara ni actualizar?" ).arg( nombre ).toLocal8Bit() );
+                                qDebug() << "El plugin " << nombre << " no se encuentra en este sistema, no se descargara ni actualizar?";
                                 docElem.removeChild( nodoA );
                                 continue;
                         }
                         // ingreso a la carpeta del plugin
                         ftp->cd( nombre );
-                        qDebug( QString( "Entrando en la carpeta: %1" ).arg( nombre ).toLocal8Bit() );
+                        qDebug() << "Entrando en la carpeta: " << nombre;
                         QMap<double,QDomNode> versiones;
                         // Este nodo debe tener tantos nodos como versiones disponibles
                         while( nodoA.hasChildNodes() )
@@ -369,11 +369,11 @@ void FormActualizacion::analizarGeneral()
                                 {
                                         //veo que numero de version es
                                         double version  = nodoVersion.toElement().attribute( "numero" ).toDouble();
-                                        qDebug( QString( "Encontrada version %1" ).arg( version ).toLocal8Bit() );
+                                        qDebug() << "Encontrada version " << version;
                                         if( version >= ERegistroPlugins::getInstancia()->pluginsHash()->value( nombre )->version() )
                                         {
                                                 // Lo ingreso a la lista de actualizaciones de forma ordenanda
-                                                qDebug( "Version agregada" );
+                                                qDebug() << "Version agregada";
                                                 versiones.insert( version, nodoVersion );
                                                 nodoA.removeChild( nodoVersion );
                                         }
@@ -387,17 +387,17 @@ void FormActualizacion::analizarGeneral()
                                 else
                                 {
                                         // No puede haber de otro tipo, lo elimino
-                                        qDebug( "Encontrado nodo que no es version" );
+                                        qDebug() << "Encontrado nodo que no es version";
                                         nodoA.removeChild( nodoVersion );
                                 }
                         }
                         // Ejecuto las actualizaciones de forma ordenada
-                        qDebug( "Ordenando versiones" );
+                        qDebug() << "Ordenando versiones";
                         QList<double> lista = versiones.keys();
                         qStableSort( lista.begin(), lista.end() );
                         if( lista.size() == 0 )
                         {
-                                qDebug( "La lista de actualizaciones esta vacia" );
+                                qDebug() << "La lista de actualizaciones esta vacia";
                         }
                         while( lista.size() > 0 )
                         {
@@ -414,17 +414,17 @@ void FormActualizacion::analizarGeneral()
                                 QString nombre_os = "linux";
                                 #endif
                                 QDomNode nodo_os = nodoB.toElement().elementsByTagName( nombre_os ).item(0);
-                                qDebug( QString( "Nodo OS: %1" ).arg( nodo_os.nodeName() ).toLocal8Bit() );
+                                qDebug() << "Nodo OS: " <<  nodo_os.nodeName();
                                 QDomNodeList nodos_archivos = nodo_os.toElement().elementsByTagName( "archivo" );
                                 unsigned int posNodo = 0;
-                                qDebug( QString( "Encontrado %1 nodos").arg( nodos_archivos.length() ).toLocal8Bit() );
+                                qDebug() << "Encontrado " << nodos_archivos.length() << " nodos";
                                 while( posNodo < nodos_archivos.length() && _continuar_actualizando )
                                 {
                                         QDomNode nodo_archivo = nodos_archivos.item(posNodo);
                                         QPair<QString,QString> tmp;
                                         tmp.first = nodo_archivo.toElement().attribute( "nombre" );
                                         tmp.second = nodo_archivo.toElement().attribute( "directorio_destino" );
-                                        qDebug( QString( "Encontrado archivo %1, dir %2" ).arg( tmp.first ).arg( tmp.second ).toLocal8Bit() );
+                                        qDebug() << "Encontrado archivo " << tmp.first << ", dir " << tmp.second;
                                         TELog->append( QString( "Descargando archivo %1..." ).arg( tmp.first ) );
                                         int pos = ftp->get( tmp.first );
                                         _arch_dest.insert( pos, tmp );
@@ -454,17 +454,17 @@ void FormActualizacion::analizarGeneral()
                                                                         QSqlQuery cola;
                                                                         if( cola.exec( nCola.firstChild().toText().data() ) )
                                                                         {
-                                                                                qDebug( QString( "Cola ejecutada correctamente: %1" ).arg( cola.executedQuery() ).toLocal8Bit() );
+                                                                                qDebug() << "Cola ejecutada correctamente: " << cola.executedQuery();
                                                                         }
                                                                         else
                                                                         {
-                                                                                qWarning( QString( "La ejecucion de la actualizacion no fue correcta. Cola: %1" ).arg( cola.executedQuery() ).toLocal8Bit() );
-                                                                                qDebug( QString( "Error: %1.\n Cola: %2" ).arg( cola.lastError().text() ).arg( cola.executedQuery() ).toLocal8Bit() );
+                                                                                qWarning() << "La ejecucion de la actualizacion no fue correcta. Cola: " << cola.executedQuery();
+                                                                                qDebug() << "Error: " << cola.lastError().text() << "\n Cola: " << cola.executedQuery();
                                                                         }
                                                                 }
                                                                 else
                                                                 {
-                                                                        qDebug( QString("Nodo encontrado: %1").arg(nodo.nodeName() ).toLocal8Bit() );
+                                                                        qDebug() << "Nodo encontrado: " << nodo.nodeName();
                                                                 }
                                                         } // Fin for colas
                                                 }// Fin if nodos_colas
@@ -501,17 +501,17 @@ void FormActualizacion::analizarGeneral()
                                 QString nombre_os = "linux";
                                 #endif
                                 QDomNode nodo_os = nodoA.toElement().elementsByTagName( nombre_os ).item(0);
-                                qDebug( QString( "Nodo OS: %1" ).arg( nodo_os.nodeName() ).toLocal8Bit() );
+                                qDebug() << "Nodo OS: " << nodo_os.nodeName();
                                 QDomNodeList nodos_archivos = nodo_os.toElement().elementsByTagName( "archivo" );
                                 unsigned int posNodo = 0;
-                                qDebug( QString( "Encontrado %1 nodos").arg( nodos_archivos.length() ).toLocal8Bit() );
+                                qDebug() << "Encontrado " << nodos_archivos.length()  << " nodos";
                                 while( posNodo < nodos_archivos.length() && _continuar_actualizando )
                                 {
                                         QDomNode nodo_archivo = nodos_archivos.item(posNodo);
                                         QPair<QString,QString> tmp;
                                         tmp.first = nodo_archivo.toElement().attribute( "nombre" );
                                         tmp.second = nodo_archivo.toElement().attribute( "directorio_destino" );
-                                        qDebug( QString( "Encontrado archivo %1, dir %2" ).arg( tmp.first ).arg( tmp.second ).toLocal8Bit() );
+                                        qDebug() << "Encontrado archivo " << tmp.first << ", dir " << tmp.second;
                                         TELog->append( QString( "Descargando archivo %1..." ).arg( tmp.first ) );
                                         int pos = ftp->get( tmp.first );
                                         _arch_dest.insert( pos, tmp );
@@ -529,7 +529,7 @@ void FormActualizacion::analizarGeneral()
                 {
                         // El nodo no es plugin
                         /// \todo ver que hacer aca
-                        qDebug( QString( "Tipo de nodo desconocido: %1" ).arg( nodoA.toElement().tagName() ).toLocal8Bit() );
+                        qDebug() << "Tipo de nodo desconocido: " << nodoA.toElement().tagName();
                         docElem.removeChild( nodoA );
                 }
         } // fin de si actualizacion tiene nodos
