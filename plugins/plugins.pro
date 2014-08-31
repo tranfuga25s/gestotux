@@ -27,5 +27,5 @@ SUBDIRS +=  CtaCte/CtaCteLib.pro \
             garantias \
             backupremoto \
             email \
-            diezmos
+            diezmos \
             unidades_productos
