@@ -313,7 +313,7 @@ void EDatabaseTest::iniciarTabla( QString nombre ) {
                                }
                        }
                        archivo.close();
-                       //qDebug() << "Tabla " << nombre << " inicializada.";
+                       qDebug() << "Tabla " << nombre << " inicializada.";
                        _lista_tablas.append( nombre );
                }
                else

@@ -16,9 +16,7 @@ public:
     MUnidadesProductos( QObject *parent = 0 );
 
     QVariant data(const QModelIndex &idx, int role) const;
-    QModelIndex parent(const QModelIndex &child) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex() ) const;
+    Qt::ItemFlags flags( const QModelIndex &index ) const;
 
     double getValorNominal( const int id_unidad, const double cantidad );
     double getMultiplo( const int id_unidad );
@@ -30,9 +28,6 @@ public:
     bool agregarUnidad( const int id_padre, const QString nombre, double multiplicador );
 
     bool eliminar( const int id_unidad, const bool eliminar_hijos = false, const bool tiene_transaccion = false );
-
-private:
-    QHash<int,QModelIndex> *_parent_index;
 
 };
 

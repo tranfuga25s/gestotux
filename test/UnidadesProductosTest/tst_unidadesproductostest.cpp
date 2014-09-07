@@ -8,6 +8,7 @@
 #include "mcategorias.h"
 #include "mproductos.h"
 #include "../edatabasetest.h"
+#include "munidadesproductosarbol.h"
 
 class UnidadesProductosTest : public QObject, public EDatabaseTest
 {
@@ -31,6 +32,7 @@ private Q_SLOTS:
     void tstEliminacion_data();
     void tstAgregarElemento();
     void tstAgregarElemento_data();
+    void tstArbolUnidadesProductos();
 
 private:
     MProductos *mp;
@@ -191,6 +193,15 @@ void UnidadesProductosTest::tstAgregarElemento_data()
     QTest::newRow("PadreIncorrecto2") << 0 << "UnidadPadre" << 0.0 << false;
     QTest::newRow("HijoIncorrecto") << 1 << "" << 1.0 << false;
     QTest::newRow("HijoIncorrecto2") << 1 << "UnidadPadre" << 0.0 << false;
+}
+
+/**
+ * @brief UnidadesProductosTest::tstArbolUnidadesProductos
+ */
+void UnidadesProductosTest::tstArbolUnidadesProductos()
+{
+    MUnidadesProductosArbol *mupa = new MUnidadesProductosArbol();
+    delete mupa;
 }
 
 
