@@ -264,7 +264,7 @@ void EBackupRemoto::enviarColas() {
             temp.addEncodedQueryItem( "cola", QUrl::toPercentEncoding( db->sqlStatement( QSqlDriver::InsertStatement, tabla, cola.record(), false ) ) );
             QByteArray data = temp.encodedQuery();
 
-            lista.append( manager->post( *req2, data ) );
+            lista.append( manager->put( *req2, data ) );
 
             QApplication::processEvents();
 
@@ -275,7 +275,7 @@ void EBackupRemoto::enviarColas() {
             url.addQueryItem( "cancelar", "0" );
             QApplication::processEvents();
             req->setUrl( url );
-            manager->post( *req, url.encodedQuery() );
+            manager->put( *req, url.encodedQuery() );
             disconnect( manager, SIGNAL( finished( QNetworkReply* ) ), this, SLOT( respuestaColas(QNetworkReply*) ) );
         }
   }
@@ -285,6 +285,10 @@ void EBackupRemoto::enviarColas() {
  terminar = true;
 }
 
+/**
+ * @brief EBackupRemoto::respuestaColas
+ * @param resp
+ */
 void EBackupRemoto::respuestaColas( QNetworkReply *resp ) {
     if( resp->error() != QNetworkReply::NoError ) {
         QMessageBox::warning( this, "Error", resp->errorString().toLocal8Bit() );
@@ -335,6 +339,10 @@ void EBackupRemoto::respuestaColas( QNetworkReply *resp ) {
     }
 }
 
+/**
+ * @brief EBackupRemoto::respuestaInicio
+ * @param resp
+ */
 void EBackupRemoto::respuestaInicio( QNetworkReply *resp ) {
     if( resp->error() != QNetworkReply::NoError ) {
         QMessageBox::warning( this, "Error", resp->errorString().toLocal8Bit() );
