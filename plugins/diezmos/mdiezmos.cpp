@@ -106,14 +106,14 @@ QVariant MDiezmos::data(const QModelIndex &idx, int role) const
 bool MDiezmos::agregarReciboDiezmo( const QDate fecha, const double monto )
 {
     QSqlQuery cola;
-    if( !cola.prepare( "INSERT INTO diezmos( fecha, descripcion, haber ) "
-                       " VALURES ( :fecha, :descripcion, :monto )" ) ) {
+    if( !cola.prepare( "INSERT INTO diezmos( fecha, tipo_referencia, haber, id_referencia ) "
+                       " VALUES ( :fecha, :tipo_referencia, :monto, 0 )" ) ) {
         qWarning() << "Error al preparar la cola de ejecucion para dado de diezmo";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
     }
     cola.bindValue( ":fecha", fecha );
-    cola.bindValue( ":descripcion", "Diezmo dado" );
+    cola.bindValue( ":tipo_referencia", DiezmoDado );
     cola.bindValue( ":monto", monto );
     if( !cola.exec() ) {
         qWarning() << "Error al ejecutar la cola de ejecucion para dado de diezmo";
@@ -130,7 +130,7 @@ bool MDiezmos::agregarReciboDiezmo( const QDate fecha, const double monto )
  * \param id_entrada_diezmo
  * \return
  */
-bool MDiezmos::eliminarEntrada(const int id_entrada_diezmo)
+bool MDiezmos::eliminarEntrada( const int id_entrada_diezmo )
 {
     QSqlQuery cola;
     if( !cola.exec( QString( "DELETE FROM diezmos WHERE id_item_diezmo = %1" ).arg( id_entrada_diezmo ) ) ) {

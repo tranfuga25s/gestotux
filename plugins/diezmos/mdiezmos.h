@@ -12,6 +12,14 @@ class MDiezmos : public QSqlTableModel
 {
     Q_OBJECT
 public:
+
+    enum TipoReferencia {
+        DiezmoDado = 1,
+        FacturaContado = 2,
+        ReciboContado = 3
+    };
+
+
     MDiezmos( QObject *parent = 0 );
     ~MDiezmos();
 

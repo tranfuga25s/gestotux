@@ -28,8 +28,8 @@ private Q_SLOTS:
     void tstConversion_data();
     void tstUnidadesSegunProducto();
     void tstUnidadesSegunProducto_data();
-    void tstEliminacion();
-    void tstEliminacion_data();
+    /*void tstEliminacion();
+    void tstEliminacion_data();*/
     void tstAgregarElemento();
     void tstAgregarElemento_data();
     void tstArbolUnidadesProductos();
@@ -138,7 +138,7 @@ void UnidadesProductosTest::tstUnidadesSegunProducto_data()
  * @brief UnidadesProductosTest::tstEliminacion
  * Verifica que la eliminacion de datos se haga correctamente.
  */
-void UnidadesProductosTest::tstEliminacion()
+/*void UnidadesProductosTest::tstEliminacion()
 {
     QFETCH( int, id_unidad );
     QFETCH( bool, eliminar_hijos );
@@ -163,7 +163,7 @@ void UnidadesProductosTest::tstEliminacion_data()
     QTest::newRow("HijoNormal") << 2 << true << true;
     //QTest::newRow("PadreSinHijos") << ? << false << false;
     QTest::newRow("PadreConHijos") << 1 << true << true;
-}
+}*/
 
 /**
  * @brief UnidadesProductosTest::tstAgregarElemento

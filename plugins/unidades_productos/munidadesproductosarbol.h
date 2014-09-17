@@ -10,6 +10,17 @@ class MUnidadesProductosArbol : public QProxyModel
 public:
     MUnidadesProductosArbol( QObject *parent = 0 );
 
+    int columnCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex &parent) const;
+
+    bool hasChildren(const QModelIndex &parent) const;
+
+    QVariant data(const QModelIndex &index, int role) const;
+
+    void fetchMore(const QModelIndex &) {}
+
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+
 private:
     /**
      * @brief _adb
