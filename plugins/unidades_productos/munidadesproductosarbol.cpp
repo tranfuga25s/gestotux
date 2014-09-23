@@ -97,8 +97,8 @@ QVariant MUnidadesProductosArbol::data( const QModelIndex &index, int role ) con
  */
 Qt::ItemFlags MUnidadesProductosArbol::flags( const QModelIndex &index ) const
 {
-    QFlags f;
+    /*QFlags f;
     f << Qt::ItemIsEnabled << Qt::ItemIsSelectable << !Qt::ItemIsEditable;
-    return f;
+    return f;*/
 }
 
