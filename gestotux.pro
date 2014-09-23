@@ -1,5 +1,6 @@
 SUBDIRS += utiles \
            reporte/reporte.pro \
+           comprobantes \
            plugins/default/default.pro \
            plugins/plugins.pro \
            utiles/estilos/estilos.pro \
