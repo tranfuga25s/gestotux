@@ -74,6 +74,11 @@ bool ComprobanteEstatico::cargarArchivo( const QString archivo )
     } else {
         int copias = egestotux.attribute( "cantidad-copias" ).toInt();
         switch( copias ) {
+            case Original: {
+                this->_cantidad_copias_soportadas = Original;
+                qDebug() << "Seteado como original";
+                break;
+            }
             case Duplicado: {
                 this->_cantidad_copias_soportadas = Duplicado;
                 qDebug() << "Seteado como duplicado";
@@ -104,7 +109,40 @@ bool ComprobanteEstatico::cargarArchivo( const QString archivo )
         this->_version = 1;
     }
     qDebug() << "Seteada version " << this->_version;
-    return true;
+    this->_valido = true;
+
+    // Tipo de comprobante
+    // Version del comprobante
+    if( !egestotux.attributes().contains( "tipo_comprobante" ) ) {
+        qWarning() << "El reporte no contiene la definicion del tipo de comprobante";
+        this->_tipo_comprobante = Invalido;
+        this->_valido = false;
+    } else {
+        switch( egestotux.attribute("tipo_comprobante").toInt() ) {
+            case Factura: {
+                this->_tipo_comprobante = Factura;
+                qDebug() << "Seteado tipo a Factura";
+                break;
+            }
+            case Recibo: {
+                this->_tipo_comprobante = Recibo;
+                qDebug() << "Seteado tipo a Recibo";
+                break;
+            }
+            case Presupuesto: {
+                this->_tipo_comprobante = Presupuesto;
+                qDebug() << "Seteado tipo a presupuesto";
+                break;
+            }
+            default: {
+                this->_tipo_comprobante = Invalido;
+                this->_valido = false;
+                break;
+            }
+        }
+    }
+
+    return this->_valido;
 }
 
 /**

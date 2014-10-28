@@ -10,11 +10,13 @@ TEMPLATE = lib
 DEFINES += COMPROBANTES_LIBRARY
 
 SOURCES += comprobantes.cpp \
-    comprobanteestatico.cpp
+    comprobanteestatico.cpp \
+    factura.cpp
 
 HEADERS += comprobantes.h\
            comprobantes_global.h \
-    comprobanteestatico.h
+    comprobanteestatico.h \
+    factura.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
