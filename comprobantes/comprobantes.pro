@@ -37,5 +37,5 @@ unix:!symbian {
     INSTALLS += target
 }
 
-OTHER_FILES += \
-    test.svg
+OTHER_FILES += test.svg \
+    README.md

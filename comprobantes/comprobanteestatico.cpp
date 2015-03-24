@@ -117,6 +117,7 @@ bool ComprobanteEstatico::cargarArchivo( const QString archivo )
         qWarning() << "El reporte no contiene la definicion del tipo de comprobante";
         this->_tipo_comprobante = Invalido;
         this->_valido = false;
+        return false;
     } else {
         switch( egestotux.attribute("tipo_comprobante").toInt() ) {
             case Factura: {

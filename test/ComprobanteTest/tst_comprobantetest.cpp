@@ -34,7 +34,7 @@ void ComprobanteTest::testCaseCargaInicial()
     ComprobanteEstatico *c = new ComprobanteEstatico();
     c->cargarArchivo( "../../../gestotux/comprobantes/test.svg" );
     QVERIFY( c->version() == "1" );
-    QCOMPARE( c->getCantidadCopias(), 2 );
+    QCOMPARE( c->getCantidadCopias(), (int)ComprobanteEstatico::Duplicado );
 }
 
 QTEST_MAIN(ComprobanteTest)
