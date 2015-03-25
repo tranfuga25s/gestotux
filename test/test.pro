@@ -4,7 +4,7 @@ SUBDIRS +=  ProductosTest \
             PeriodoServicioTest \
             #BajaClienteServicioTest \
             PreferenciasTest \
-            EquipamientosTest \
+            #EquipamientosTest \
             CancelacionPeriodoServicio \
             ECBProductosTest \
             ComprasTest \
