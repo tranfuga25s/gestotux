@@ -223,7 +223,11 @@ int MPeriodoServicio::diasEnPeriodo( const int tipo_periodo, QDate fecha_calculo
         {
             // Mensual
             // Verificar el mes del periodo y devolver la cantidad de días
-            return QDate( fecha_calculo.year(), fecha_calculo.month(), 1 ).daysInMonth();
+            int dias_en_mes = QDate( fecha_calculo.year(), fecha_calculo.month(), 1 ).daysInMonth();
+            if (fecha_calculo.day() > 1 ) {
+                dias_en_mes -= fecha_calculo.day();
+            }
+            return dias_en_mes;
             // Eso se encarga automaticamnete de los años bisiestos
         }
         case MServicios::BiMensual:
@@ -568,7 +572,7 @@ QDate MPeriodoServicio::generarFechaInicioPeriodo( const int id_servicio, const 
     }
     // Chequeo que la fecha de inicio del servicio sea menor que la buscada
 
-    if( fecha_inicio_servicio >= fecha ) {
+    if( fecha_inicio_servicio > fecha ) {
         qDebug() << "Atencion - la fecha de inicio buscada es menor a la del alta del servicio.";
         qDebug() << fecha_inicio_servicio.toString();
         qDebug() << fecha.toString();
