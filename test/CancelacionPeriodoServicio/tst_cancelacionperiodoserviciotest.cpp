@@ -4,6 +4,8 @@
 
 #include "edatabasetest.h"
 
+#include "mperiodoservicio.h"
+
 /*!
  * \brief The CancelacionPeriodoServicioTest class
  *
@@ -31,6 +33,7 @@ CancelacionPeriodoServicioTest::CancelacionPeriodoServicioTest()
     // Pongo la lista de tablas necesarias
     this->tablas << "servicios"
                  << "periodo_servicio"
+                 << "clientes"
                  << "cobro_servicio_cliente_periodo"
                  << "recibos"
                  << "factura";
@@ -53,6 +56,9 @@ void CancelacionPeriodoServicioTest::testCancelarPeriodoServicio()
     QFETCH( int, id_servicio);
     QFETCH( int, id_periodo_servicio );
     QFETCH( bool, resultado );
+    MPeriodoServicio *mps = new MPeriodoServicio();
+    //mps->
+    delete mps;
     QVERIFY( resultado );
 }
 

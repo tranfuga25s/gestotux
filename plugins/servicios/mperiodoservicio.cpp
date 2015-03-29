@@ -191,7 +191,6 @@ int MPeriodoServicio::diasEnPeriodoServicio( const int id_servicio, QDate fecha_
     return diasEnPeriodo( tipo, fecha_calculo );
 }
 
-
 /*!
  * \fn MPeriodoServicio::diasEnPeriodo( const int tipo_periodo, QDate fecha_inicio )
  * Considerando que todos los periodos se ajustan dentro de un año, devolverá el numero de días que tiene el periodo seleccionado en la fecha elegida ( sin parametro fecha actual ) segun la fecha de alta del servicio.
@@ -324,26 +323,7 @@ int MPeriodoServicio::getPeriodoActual( const int id_servicio, bool facturar ) {
         } else {
             // No hay ningun registro todavía - Es el primer periodo a registrar
             // Por lo tanto facturo el periodo en el que estamos no anteriores.
-            QDate fecha_alta_servicio = MServicios::getFechaAlta( id_servicio );
-            int cant_dias_periodo = diasEnPeriodoServicio( id_servicio, QDate::currentDate() );
-            QDate inicio_ano = QDate( QDate::currentDate().year(), 1, 1 );
-            int t = 0; double u = 0.0;
-
-            if( fecha_alta_servicio < inicio_ano ) {
-                // Calculo
-                t = inicio_ano.daysTo( QDate::currentDate() );
-            } else {
-                t = fecha_alta_servicio.daysTo( QDate::currentDate() );
-            }
-            //qDebug( QString::number( t ).toLocal8Bit() );
-            if( t >= cant_dias_periodo ) {
-                u = t/cant_dias_periodo;
-            } else {
-                u = 1;
-            }
-            //qDebug( QString::number( cant_dias_periodo ).toLocal8Bit() );
-            //qDebug( QString::number( floor( u ) ).toLocal8Bit() );
-            int n = floor( u );
+            int n = this->getPeriodoSegunFecha( id_servicio, QDate::currentDate() );
             if( facturar ) {
                 if( (n+1) > cantidadPeriodos( id_servicio ) ) {
                     n=1;
@@ -679,3 +659,35 @@ int MPeriodoServicio::cantidadPeriodos(const int id_servicio)
         }
     }
 }
+
+/**
+ * @brief MPeriodoServicio::getPeriodoSegunFecha
+ * @param id_servicio Identificador del servicio
+ * @param fecha_calculo Fecha donde se desea calcular el periodo
+ * @return El numero de período que corresponde segun una fecha
+ */
+int MPeriodoServicio::getPeriodoSegunFecha(const int id_servicio, QDate fecha_calculo)
+{
+    QDate fecha_alta_servicio = MServicios::getFechaAlta( id_servicio );
+    int cant_dias_periodo = diasEnPeriodoServicio( id_servicio, fecha_calculo );
+    QDate inicio_ano = QDate( QDate::currentDate().year(), 1, 1 );
+    int t = 0; double u = 0.0;
+
+    if( fecha_alta_servicio < inicio_ano ) {
+        // Calculo
+        t = inicio_ano.daysTo( fecha_calculo );
+    } else {
+        t = fecha_alta_servicio.daysTo( fecha_calculo );
+    }
+    if( t >= cant_dias_periodo ) {
+        u = ((double) t)/cant_dias_periodo;
+        u++;
+    } else {
+        u = 1.0;
+    }
+    int n = round( u );
+    return n;
+
+}
+
+

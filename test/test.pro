@@ -33,4 +33,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/remito.sql \
                sql/QSQLITE/item_remito.sql \
                sql/QSQLITE/presupuestos.sql \
-               sql/QSQLITE/item_presupuesto.sql
+               sql/QSQLITE/item_presupuesto.sql \
+               sql/QSQLITE/servicios_clientes.sql \
+               sql/QSQLITE/recibos.sql
