@@ -23,10 +23,12 @@ private Q_SLOTS:
     void cleanupTestCase();
     void init();
     void cleanup();
-   /* void testCalcularPeriodo();
+    void testCalcularPeriodo();
     void testCalcularPeriodo_data();
     void testRevisarPeriodo();
-    void testRevisarPeriodo_data();*/
+    void testRevisarPeriodo_data();
+    void testRevisarPeriodoInicioIntermedio();
+    void testRevisarPeriodoInicioIntermedio_data();
 
 private:
     MPeriodoServicio *mp;
@@ -44,7 +46,7 @@ void PeriodoServicioTest::initTestCase() { EDatabaseTest::initTestCase(); }
 void PeriodoServicioTest::cleanupTestCase() { EDatabaseTest::cleanupTestCase(); }
 
 void PeriodoServicioTest::cleanup() { EDatabaseTest::cleanup(); }
-/*
+
 void PeriodoServicioTest::testCalcularPeriodo()
 {
     //QFETCH( int, id_servicio );
@@ -66,27 +68,23 @@ void PeriodoServicioTest::testCalcularPeriodo_data()
     QTest::addColumn<QDate>( "fi" );
     QTest::addColumn<QDate>( "ff" );
 
-    QTest::newRow("Básico") << 0 << 1 << QDate( 2014, 01, 01 ) << QDate( 2014, 01, 31 );
-
-    int ano = QDate::currentDate().year();
-    MPeriodoServicio *mp = new MPeriodoServicio();
-    QSqlQuery cola;
-    if( cola.exec( "SELECT id_servicio FROM servicios" ) ) {
-        while( cola.next() ) {
-            int id_servicio = cola.record().value(0).toInt();
-            for( int i=1; i<=12; i++ ) {
-                QDate fi = mp->generarFechaInicioPeriodo( id_servicio, i, ano+1 );
-                QTest::newRow( QString::number( i ).toLatin1() ) << id_servicio <<  i << fi << mp->obtenerFechaFinPeriodo( id_servicio, fi );
-            }
-        }
-    } else {
-        qDebug() << "No se pudo buscar los servicios";
-        qDebug() << cola.lastError().text();
-        qDebug() << cola.lastQuery();
-    }
-    delete mp;
+    QTest::newRow("Enero")      << 0 << 1  << QDate( 2015, 1,  1 ) << QDate( 2015, 1, 31 );
+    QTest::newRow("Febrero")    << 0 << 2  << QDate( 2015, 2,  1 ) << QDate( 2015, 2, 28 );
+    QTest::newRow("Marzo")      << 0 << 3  << QDate( 2015, 3,  1 ) << QDate( 2015, 3, 31 );
+    QTest::newRow("Abril")      << 0 << 4  << QDate( 2015, 4,  1 ) << QDate( 2015, 4, 30 );
+    QTest::newRow("Mayo")       << 0 << 5  << QDate( 2015, 5,  1 ) << QDate( 2015, 5, 31 );
+    QTest::newRow("Junio")      << 0 << 6  << QDate( 2015, 6,  1 ) << QDate( 2015, 6, 30 );
+    QTest::newRow("Julio")      << 0 << 7  << QDate( 2015, 7,  1 ) << QDate( 2015, 7, 31 );
+    QTest::newRow("Agosto")     << 0 << 8  << QDate( 2015, 8,  1 ) << QDate( 2015, 8, 31 );
+    QTest::newRow("Septiembre") << 0 << 9  << QDate( 2015, 9,  1 ) << QDate( 2015, 9, 30 );
+    QTest::newRow("Octubre")    << 0 << 10 << QDate( 2015, 10, 1 ) << QDate( 2015, 10, 31 );
+    QTest::newRow("Noviembre")  << 0 << 11 << QDate( 2015, 11, 1 ) << QDate( 2015, 11, 30 );
+    QTest::newRow("Diciembre")  << 0 << 12 << QDate( 2015, 12, 1 ) << QDate( 2015, 12, 31 );
 }
 
+/**
+ * @brief PeriodoServicioTest::testRevisarPeriodo
+ */
 void PeriodoServicioTest::testRevisarPeriodo()
 {
     QFETCH( int, id_servicio );
@@ -97,40 +95,78 @@ void PeriodoServicioTest::testRevisarPeriodo()
     QCOMPARE( ff, mp->obtenerFechaFinPeriodo( id_servicio, fi ) );
 }
 
+/**
+ * @brief PeriodoServicioTest::testRevisarPeriodo_data
+ */
 void PeriodoServicioTest::testRevisarPeriodo_data()
 {
-    QSqlQuery cola;
-    QSqlQuery cola2;
-    int contador = 0;
-    mp = new MPeriodoServicio();
     QTest::addColumn<int>( "id_servicio");
     QTest::addColumn<int>( "periodo" );
     QTest::addColumn<QDate>( "fi" );
     QTest::addColumn<QDate>( "ff" );
-    if( cola.exec( "SELECT id_servicio FROM servicios" ) ) {
-        while( cola.next() ) {
-            int id_servicio = cola.record().value(0).toInt();
-            if( cola2.exec( QString( "SELECT periodo, fecha_inicio, fecha_fin FROM periodo_servicio WHERE id_servicio = %1").arg( id_servicio ) ) ) {
-                cola2.next();
-                while( cola2.next() ) {
-                    QTest::newRow( QString::number( contador ).toAscii() ) << id_servicio
-                                                                           << cola2.record().value(0).toInt()
-                                                                           << cola2.record().value(1).toDate()
-                                                                           << cola2.record().value(2).toDate();
-                    contador++;
-                }
-            } else {
-                qDebug() << "Error en la cola2";
-                qDebug() << cola.lastError().text();
-                qDebug() << cola.lastQuery();
-            }
-        }
-    } else {
-        qDebug() << "No se pudo buscar los servicios";
-        qDebug() << cola.lastError().text();
-        qDebug() << cola.lastQuery();
-    }
-} */
+    QTest::newRow("Enero")      << 0 << 1  << QDate( 2015, 1,  1 ) << QDate( 2015, 1, 31 );
+    QTest::newRow("Febrero")    << 0 << 2  << QDate( 2015, 2,  1 ) << QDate( 2015, 2, 28 );
+    QTest::newRow("Marzo")      << 0 << 3  << QDate( 2015, 3,  1 ) << QDate( 2015, 3, 31 );
+    QTest::newRow("Abril")      << 0 << 4  << QDate( 2015, 4,  1 ) << QDate( 2015, 4, 30 );
+    QTest::newRow("Mayo")       << 0 << 5  << QDate( 2015, 5,  1 ) << QDate( 2015, 5, 31 );
+    QTest::newRow("Junio")      << 0 << 6  << QDate( 2015, 6,  1 ) << QDate( 2015, 6, 30 );
+    QTest::newRow("Julio")      << 0 << 7  << QDate( 2015, 7,  1 ) << QDate( 2015, 7, 31 );
+    QTest::newRow("Agosto")     << 0 << 8  << QDate( 2015, 8,  1 ) << QDate( 2015, 8, 31 );
+    QTest::newRow("Septiembre") << 0 << 9  << QDate( 2015, 9,  1 ) << QDate( 2015, 9, 30 );
+    QTest::newRow("Octubre")    << 0 << 10 << QDate( 2015, 10, 1 ) << QDate( 2015, 10, 31 );
+    QTest::newRow("Noviembre")  << 0 << 11 << QDate( 2015, 11, 1 ) << QDate( 2015, 11, 30 );
+    QTest::newRow("Diciembre")  << 0 << 12 << QDate( 2015, 12, 1 ) << QDate( 2015, 12, 31 );
+}
+
+
+/**
+ * @brief PeriodoServicioTest::testRevisarPeriodoInicioIntermedio
+ */
+void PeriodoServicioTest::testRevisarPeriodoInicioIntermedio()
+{
+    QFETCH( int, id_servicio );
+    QFETCH( int, periodo );
+    QFETCH( QDate, fi );
+    QFETCH( QDate, ff );
+    QCOMPARE( fi, mp->getFechaInicioPeriodo( id_servicio, periodo, fi.year() ) );
+    QCOMPARE( ff, mp->obtenerFechaFinPeriodo( id_servicio, fi ) );
+    QCOMPARE( periodo, mp->getPeriodoSegunFecha( id_servicio, fi ) );
+}
+
+/**
+ * @brief PeriodoServicioTest::testRevisarPeriodoInicioIntermedio_data
+ */
+void PeriodoServicioTest::testRevisarPeriodoInicioIntermedio_data()
+{
+    QTest::addColumn<int>( "id_servicio");
+    QTest::addColumn<int>( "periodo" );
+    QTest::addColumn<QDate>( "fi" );
+    QTest::addColumn<QDate>( "ff" );
+    QTest::newRow("Enero")      << 1 << 1  << QDate( 2015, 1,  6 ) << QDate( 2015, 1, 30 );
+    QTest::newRow("Febrero")    << 1 << 2  << QDate( 2015, 2,  1 ) << QDate( 2015, 2, 28 );
+    QTest::newRow("Marzo")      << 1 << 3  << QDate( 2015, 3,  1 ) << QDate( 2015, 3, 31 );
+    QTest::newRow("Abril")      << 1 << 4  << QDate( 2015, 4,  1 ) << QDate( 2015, 4, 30 );
+    QTest::newRow("Mayo")       << 1 << 5  << QDate( 2015, 5,  1 ) << QDate( 2015, 5, 31 );
+    QTest::newRow("Junio")      << 1 << 6  << QDate( 2015, 6,  1 ) << QDate( 2015, 6, 30 );
+    QTest::newRow("Julio")      << 1 << 7  << QDate( 2015, 7,  1 ) << QDate( 2015, 7, 31 );
+    QTest::newRow("Agosto")     << 1 << 8  << QDate( 2015, 8,  1 ) << QDate( 2015, 8, 31 );
+    QTest::newRow("Septiembre") << 1 << 9  << QDate( 2015, 9,  1 ) << QDate( 2015, 9, 30 );
+    QTest::newRow("Octubre")    << 1 << 10 << QDate( 2015, 10, 1 ) << QDate( 2015, 10, 31 );
+    QTest::newRow("Noviembre")  << 1 << 11 << QDate( 2015, 11, 1 ) << QDate( 2015, 11, 30 );
+    QTest::newRow("Diciembre")  << 1 << 12 << QDate( 2015, 12, 1 ) << QDate( 2015, 12, 31 );
+
+    QTest::newRow("Marzo")      << 1 << 3  << QDate( 2015, 3,  25 ) << QDate( 2015, 3, 31 );
+    QTest::newRow("Abril")      << 1 << 4  << QDate( 2015, 4,  1 ) << QDate( 2015, 4, 30 );
+    QTest::newRow("Mayo")       << 1 << 5  << QDate( 2015, 5,  1 ) << QDate( 2015, 5, 31 );
+    QTest::newRow("Junio")      << 1 << 6  << QDate( 2015, 6,  1 ) << QDate( 2015, 6, 30 );
+    QTest::newRow("Julio")      << 1 << 7  << QDate( 2015, 7,  1 ) << QDate( 2015, 7, 31 );
+    QTest::newRow("Agosto")     << 1 << 8  << QDate( 2015, 8,  1 ) << QDate( 2015, 8, 31 );
+    QTest::newRow("Septiembre") << 1 << 9  << QDate( 2015, 9,  1 ) << QDate( 2015, 9, 30 );
+    QTest::newRow("Octubre")    << 1 << 10 << QDate( 2015, 10, 1 ) << QDate( 2015, 10, 31 );
+    QTest::newRow("Noviembre")  << 1 << 11 << QDate( 2015, 11, 1 ) << QDate( 2015, 11, 30 );
+    QTest::newRow("Diciembre")  << 1 << 12 << QDate( 2015, 12, 1 ) << QDate( 2015, 12, 31 );
+}
+
 
 QTEST_MAIN(PeriodoServicioTest)
 

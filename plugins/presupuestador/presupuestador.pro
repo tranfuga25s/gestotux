@@ -54,27 +54,15 @@ linux-g++ {
     OBJECTS_DIR = obj
 }
 
-
-
 TRANSLATIONS += presupuestador.ts
-
-
-
-
 
 QMAKE_CXXFLAGS_DEBUG += -ggdb \
   -o0 \
   -g3
 
-
-
-
-
 CONFIG -= release
 
-
-
-TARGETDEPS += ../../bin/libncreport.a \
+POST_TARGETDEPS += ../../bin/libncreport.a \
   ../../bin/libutiles.a
 
 INCLUDEPATH += ../../reporte \
@@ -83,4 +71,3 @@ INCLUDEPATH += ../../reporte \
 
 LIBS += ../../bin/libutiles.a \
   ../../bin/libncreport.a
-

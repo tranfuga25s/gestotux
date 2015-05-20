@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS "servicios_clientes" ("id_servicio" INTEGER NOT NULL , "id_cliente" INTEGER NOT NULL , "fecha_alta" DATETIME NOT NULL , "fecha_baja" DATETIME, "razon" TEXT NULL, PRIMARY KEY ( "id_servicio", "id_cliente" ) );
