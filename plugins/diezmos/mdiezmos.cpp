@@ -111,6 +111,7 @@ bool MDiezmos::agregarReciboDiezmo( const QDate fecha, const double monto )
         qWarning() << "Error al preparar la cola de ejecucion para dado de diezmo";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
+        return false;
     }
     cola.bindValue( ":fecha", fecha );
     cola.bindValue( ":descripcion", "Diezmo dado" );
@@ -119,10 +120,10 @@ bool MDiezmos::agregarReciboDiezmo( const QDate fecha, const double monto )
         qWarning() << "Error al ejecutar la cola de ejecucion para dado de diezmo";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
+        return false;
     } else {
         return true;
     }
-    return false;
 }
 
 /*!
@@ -149,7 +150,7 @@ bool MDiezmos::eliminarEntrada(const int id_entrada_diezmo)
  * \param descripcion
  * \param id_referencia
  */
-void MDiezmos::agregarRegistro(const QDate fecha, const double monto, const QString descripcion, const int id_referencia)
+bool MDiezmos::agregarRegistro(const QDate fecha, const double monto, const QString descripcion, const int id_referencia)
 {
     QSqlQuery cola;
     if( !cola.prepare( "INSERT INTO diezmos( fecha, descripcion, debe, id_referencia ) "
@@ -157,6 +158,7 @@ void MDiezmos::agregarRegistro(const QDate fecha, const double monto, const QStr
         qWarning() << "Error al preparar la cola de ejecucion de deuda de diezmo";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
+        return false;
     }
     cola.bindValue( ":fecha"        , fecha         );
     cola.bindValue( ":descripcion"  , descripcion   );
@@ -166,5 +168,8 @@ void MDiezmos::agregarRegistro(const QDate fecha, const double monto, const QStr
         qWarning() << "Error al ejecutar la cola de ejecucion de deuda de diezmo";
         qDebug() << cola.lastError().text();
         qDebug() << cola.lastQuery();
+        return false;
+    } else {
+        return true;
     }
 }

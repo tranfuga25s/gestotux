@@ -32,11 +32,11 @@ OTHER_FILES += diezmos.QMYSQL.sql \
 HEADERS += mdiezmos.h \
            vdiezmos.h \
            diezmosplugin.h \
-    ddardiezmo.h
+           ddardiezmo.h
 SOURCES += mdiezmos.cpp \
            vdiezmos.cpp \
            diezmosplugin.cpp \
-    ddardiezmo.cpp
+           ddardiezmo.cpp
 
 FORMS += ddardiezmo.ui
 

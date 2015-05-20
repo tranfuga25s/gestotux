@@ -42,7 +42,7 @@ void DDarDiezmo::accept()
     if( !modelo->agregarReciboDiezmo( DEFecha->date(), DSBMonto->value() ) ) {
         QMessageBox::warning( this,
                               "Incorrecto",
-                              "no se pudo ingresar el diezmo" );
+                              "No se pudo ingresar el diezmo" );
         return;
 
     }

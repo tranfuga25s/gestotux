@@ -36,6 +36,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/presupuestos.sql \
                sql/QSQLITE/item_presupuesto.sql \
                sql/QSQLITE/unidades_productos.sql \
-               sql/QSQLITE/productos_unidades.sql
+               sql/QSQLITE/productos_unidades.sql \
                sql/QSQLITE/servicios_clientes.sql \
                sql/QSQLITE/recibos.sql

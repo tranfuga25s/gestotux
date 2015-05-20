@@ -22,7 +22,7 @@ public:
 
     bool eliminarEntrada( const int id_entrada_diezmo );
 
-    static void agregarRegistro( const QDate fecha, const double monto, const QString descripcion, const int id_referencia );
+    static bool agregarRegistro( const QDate fecha, const double monto, const QString descripcion, const int id_referencia );
 
 private:
     QVector<double> *saldos;
