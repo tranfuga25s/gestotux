@@ -225,13 +225,24 @@ void VProductos::agregar( bool /*autoeliminarid*/ )
 void VProductos::listaVenta()
 {
     if( this->rmodelo->rowCount() <= 0 ) {
-        QMessageBox::information( this, "Error", "No hay ningun producto declarado como para  dar un listado." );
+        QMessageBox::information( this, "Error", "No hay ningun producto declarado como para obtener un listado." );
         return;
     }
+
+    // Veo la cantidad de decimales a utilizar
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos" );
+    p->beginGroup( "Stock" );
+    int cant_decimales = p->value("cantidad-decimales").toInt();
+    p->inicio();
+
     EReporte *rep = new EReporte( 0 );
     ParameterList lista;
-    lista.append( "filtro", this->rmodelo->filter() );
-    rep->especial( "ListadoProductosPrecio", lista );
+    lista.append("filtro", this->rmodelo->filter() );
+    lista.append("cant_decimales", cant_decimales);
+    rep->especial("ListadoProductosPrecio", lista);
     rep->hacer();
     delete rep;
 }

@@ -3,7 +3,15 @@
  <title>Listado de Productos con precio de venta</title>
  <name>ListadoProductosVenta</name>
  <description>Listado de los productos con precios de venta.</description>
+ <parameter default="2" active="true" listtype="static" type="integer" name="cant_decimales">
+  <description></description>
+ </parameter>
+ <parameter default="" active="true" listtype="static" type="string" name="filtro">
+  <description></description>
+ </parameter>
  <grid>
+  <snap/>
+  <show/>
   <x>0.05</x>
   <y>0.05</y>
  </grid>
@@ -15,7 +23,7 @@
  <leftmargin>50</leftmargin>
  <querysource>
   <name>productos</name>
-  <sql>SELECT codigo, nombre, precio_venta  FROM producto WHERE habilitado = 1 AND stock > 0 ORDER BY nombre</sql>
+  <sql>SELECT codigo, nombre, ROUND(precio_venta, cant_decimales)  FROM producto WHERE habilitado = 1 AND stock > 0 ORDER BY nombre</sql>
  </querysource>
  <rpthead>
   <height>81.262</height>
