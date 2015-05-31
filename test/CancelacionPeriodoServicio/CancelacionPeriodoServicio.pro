@@ -6,7 +6,14 @@
 QT       += sql testlib
 QT       -= gui
 
-INCLUDEPATH += ../.
+INCLUDEPATH += ../. \
+               ../../plugins/servicios
+
+LIBS += ../../bin/plugins/libservicios.so \
+        ../../bin/plugins/libpagos.so \
+        ../../bin/plugins/libcaja.so \
+        ../../bin/plugins/libdescuentos.so \
+        ../../bin/libutiles.a
 
 TARGET = tst_cancelacionperiodoserviciotest
 CONFIG   += console

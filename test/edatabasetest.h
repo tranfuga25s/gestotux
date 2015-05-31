@@ -243,8 +243,13 @@ void EDatabaseTest::iniciarTablas()
         it.next();
         this->_inverso_depenencias.insertMulti( it.value(), it.key() ); // Intercambio clave y valor y quedan ordenados porque QMap ordena automaticamente
     }
-    foreach( QString t, this->_inverso_depenencias ) {
-        this->iniciarTabla( t );
+    //qDebug() << this->_inverso_depenencias;
+    // Se deben ejecutar las tablas con valor menor primero - Iterador inverso
+    QMapIterator<int, QString> itInverso(this->_inverso_depenencias);
+    itInverso.toBack();
+    while (itInverso.hasPrevious()) {
+        itInverso.previous();
+        this->iniciarTabla( itInverso.value() );
     }
 }
 
