@@ -441,7 +441,7 @@ void EBackupRemoto::generarBackup()
  if( ChBBaseDatos->isChecked() )
  {
   LDebug->setText( "Generando backup de Base de datos" );
-  generar_db( false );
+  this->generar_db( false );
   return;
  }
  /*if( ChBConfirugacion->isChecked() )
