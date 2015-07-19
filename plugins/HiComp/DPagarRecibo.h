@@ -29,7 +29,7 @@
  *
  * Clase para el dialogo que permite ingresar un recibo emitido pero no pagado para marcarlo como pagado
  */
-class DPagarRecibo : public QDialog, private Ui::DPagarRecibo
+class DPagarRecibo : public QDialog, public Ui::DPagarRecibo
 {
     Q_OBJECT
 
@@ -37,7 +37,7 @@ public:
     explicit DPagarRecibo( QWidget *parent = 0 );
     bool setearIdRecibo( const int id_recibo );
 
-protected slots:
+public slots:
     void accept();
     void cambioNumeroRecibo();
     void cambioAPagar( double cantidad );

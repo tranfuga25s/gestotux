@@ -224,11 +224,12 @@ int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double
     this->inicializar();
     QSqlRecord rec = this->record();
     // Cliente
-    rec.setValue( "id_cliente", id_cliente );
+    rec.setGenerated("id_cliente", false);
+    rec.setValue( "id_cliente", QString::number( id_cliente ).append(" ") );
     rec.setValue( "fecha_pago", fecha );
     rec.setValue( "texto", contenido );
     rec.setValue( "precio", total );
-     /// @TODO: Ver si esto andaría bien con el formulario de pago retrasado
+
     if( efectivo && pagado )  {
         rec.setValue( "forma_pago", MPagos::Efectivo );
         rec.setValue( "pagado", true );
@@ -250,6 +251,7 @@ int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double
     rec.setValue( "serie", proximo.serie() );
     rec.setValue( "numero",proximo.numero() );
     rec.setValue( "cancelado", false );
+
     if( this->insertRecord( -1, rec ) ) {
         this->submitAll();
         int id_recibo = query().lastInsertId().toInt();

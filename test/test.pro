@@ -12,7 +12,9 @@ SUBDIRS +=  ProductosTest \
             VentasTest \
             BackupTest \
             RemitosTest \
-            PresupuestosTest
+            PresupuestosTest \
+            #PagosTest \
+            HiCompTest
 
 OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/productos.sql \
@@ -35,4 +37,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/presupuestos.sql \
                sql/QSQLITE/item_presupuesto.sql \
                sql/QSQLITE/servicios_clientes.sql \
-               sql/QSQLITE/recibos.sql
+               sql/QSQLITE/recibos.sql \
+               sql/QSQLITE/caja.sql \
+               sql/QSQLITE/movimiento_caja.sql
