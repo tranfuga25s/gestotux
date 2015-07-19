@@ -58,7 +58,7 @@ void HiCompTest::testCajaPagoReciboDiferido()
 
     // Genero un recibo por una cantidad X < saldo de la caja
     double total_recibo = fmod((double) rand(), saldo_original_caja);
-    int id_cliente = 0; // Consumidor final
+    int id_cliente = 1; // Consumidor final
     MPagos *mp = new MPagos();
     int id_recibo = mp->agregarRecibo( id_cliente, QDate::currentDate(), "sarasa", total_recibo, true, false, "sarasa");
     QVERIFY(id_recibo > 0);

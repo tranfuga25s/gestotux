@@ -14,7 +14,8 @@ SUBDIRS +=  ProductosTest \
             RemitosTest \
             PresupuestosTest \
             #PagosTest \
-            HiCompTest
+            HiCompTest \
+            CajaTest
 
 OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/productos.sql \

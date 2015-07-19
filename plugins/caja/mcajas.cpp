@@ -273,7 +273,7 @@ bool MCajas::existen2omas()
 bool MCajas::existeCaja( QString nombre )
 {
     QSqlQuery cola;
-    if( cola.exec( QString( "SELECT COUNT(nombre) FROM %1 WHERE nombre = %2" ).arg( "caja" ).arg( nombre )  ) ) {
+    if( cola.exec( QString( "SELECT COUNT(nombre) FROM %1 WHERE nombre = \"%2\"" ).arg( "caja" ).arg( nombre )  ) ) {
         if( cola.next() ) {
             if( cola.record().value(0).toInt() > 0 ) {
                 return true;
