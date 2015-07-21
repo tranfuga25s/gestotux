@@ -10,7 +10,7 @@ addons:
     - xvfb
 
 install:
-    - pip install cpp-coveralls
+    - pip install --user cpp-coveralls
     - cp bin/travis.pri travis.pri
     - "export DISPLAY=:99.0"
     - "sh -e /etc/init.d/xvfb start"
