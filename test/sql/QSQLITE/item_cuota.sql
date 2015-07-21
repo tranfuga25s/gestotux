@@ -1,0 +1,1 @@
+ CREATE TABLE IF NOT EXISTS `item_cuota` ( "id_item_cuota" INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL, "id_plan_cuota" INTEGER NOT NULL, "num_cuota" INTEGER NOT NULL, "monto" DOUBLE NOT NULL, "fecha_vencimiento" DATE NOT NULL, "fecha_pago" DATE NULL DEFAULT NULL,  "id_recibo" INTEGER NULL DEFAULT NULL );

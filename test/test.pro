@@ -40,4 +40,6 @@ OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/servicios_clientes.sql \
                sql/QSQLITE/recibos.sql \
                sql/QSQLITE/caja.sql \
-               sql/QSQLITE/movimiento_caja.sql
+               sql/QSQLITE/movimiento_caja.sql \
+               sql/QSQLITE/item_cuota.sql \
+               sql/QSQLITE/plan_cuota.sql

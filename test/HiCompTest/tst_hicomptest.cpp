@@ -25,7 +25,10 @@ private Q_SLOTS:
 HiCompTest::HiCompTest()
 {
     this->tablas << "recibos"
-                 << "caja";
+                 << "caja"
+                 << "cobro_servicio_cliente_periodo"
+                 << "item_cuota"
+                 << "movimiento_caja";
 }
 
 void HiCompTest::initTestCase() { EDatabaseTest::initTestCase(); }
@@ -53,12 +56,15 @@ void HiCompTest::testCajaPagoReciboDiferido()
 
     /* Busco la caja predeterminada y su saldo */
     MCajas *caja = new MCajas();
-    double saldo_actual_caja = caja->saldo( caja->cajaPredeterminada() );
+    double saldo_actual_caja = caja->saldo(caja->cajaPredeterminada());
     double saldo_original_caja = saldo_actual_caja;
 
     // Genero un recibo por una cantidad X < saldo de la caja
-    double total_recibo = fmod((double) rand(), saldo_original_caja);
-    int id_cliente = 1; // Consumidor final
+    double random = static_cast<double>(rand());
+    double total_recibo = fmod(random, saldo_original_caja);
+    QVERIFY( total_recibo < saldo_actual_caja );
+
+    int id_cliente = 0; // Consumidor final
     MPagos *mp = new MPagos();
     int id_recibo = mp->agregarRecibo( id_cliente, QDate::currentDate(), "sarasa", total_recibo, true, false, "sarasa");
     QVERIFY(id_recibo > 0);
@@ -75,6 +81,13 @@ void HiCompTest::testCajaPagoReciboDiferido()
     double nuevo_saldo = saldo_original_caja + total_recibo;
 
     QCOMPARE(saldo_actual_caja, nuevo_saldo);
+
+    QString query;
+    query.append( QString("SELECT COUNT(*) FROM movimiento_caja WHERE id_caja = %1 AND ingreso = %2").arg(caja->cajaPredeterminada()).arg( total_recibo));
+    QSqlQuery cola;
+    QVERIFY2(cola.exec(query) == true, cola.lastError().text().toLocal8Bit());
+    QVERIFY(cola.next() == true);
+    QCOMPARE(1, cola.record().value(0).toInt());
     delete caja;
     delete mp;
     delete d;

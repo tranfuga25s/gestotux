@@ -191,9 +191,10 @@ QString MCuentaCorriente::obtenerNumeroCuentaCorriente( const int id_cliente )
         qDebug() << "MCuentaCorriente::obtenerNumeroCuentaCorriente::Error, el numero de cliente es invalido";
         return QString::number( MCuentaCorriente::ErrorClienteInvalido );
  } else if ( id_cliente == 0 ) {
-     qDebug() << "Cliente .:Consumidor final:. no posee cuenta corriente.";
+     //qDebug() << "Cliente .:Consumidor final:. no posee cuenta corriente.";
      return QString::number( MCuentaCorriente::ErrorNumeroCuenta );
  }
+
  QSqlQuery cola( QString( "SELECT numero_cuenta FROM ctacte WHERE id_cliente = %1" ).arg( id_cliente ) );
  if( cola.next() )
  { return cola.record().value(0).toString(); }
@@ -221,7 +222,7 @@ int MCuentaCorriente::verificarSaldo( const QString numero_cuenta, double aplica
      if( cola.next() )
      {
       if( cola.record().value(2).toBool() ) {
-         qWarning( "Esta cuenta corriente se encuentra suspendida" );
+         qWarning( "Esta cuenta corriente se encuentra suspendida!" );
          return MCuentaCorriente::Suspendida;
       }
       if( cola.record().value(0).toDouble() + aplicar > cola.record().value(1).toDouble() )

@@ -122,10 +122,10 @@ void DPagarRecibo::accept()
             QString nombre_cliente = MClientes::getRazonSocial( id_cliente );
             if( cuenta == QString::number( MCuentaCorriente::ErrorNumeroCuenta ) ) {
                 // no posee cuenta corriente
-                qDebug( "El cliente no posee cuenta corriente, se salteara la actualizacion de cuentas corrientes" );
+                //qDebug( "DPagarRecibo::accept: El cliente no posee cuenta corriente, se salteara la actualizacion de cuentas corrientes" );
             } else if( cuenta == QString::number( MCuentaCorriente::ErrorClienteInvalido ) ) {
                 // Error de numero de cliente
-                qDebug( "Id de cliente erroneo" );
+                qDebug() << "Id de cliente erroneo";
             } else {
                 // Actualizo la cuenta corriente - El total queda en negativo para que vaya al haber
 
@@ -136,9 +136,9 @@ void DPagarRecibo::accept()
                                                             QDate::currentDate(),
                                                             QString( "Pago de recibo %1 de %2" ).arg( proximo.aCadena() ).arg( nombre_cliente ),
                                                             DSBPagar->value() * ( -1 ) ) ) {
-                    qDebug( "Item de cuenta corriente agregado correctamente." );
+                    //qDebug() << "Item de cuenta corriente agregado correctamente.";
                 } else {
-                    qWarning( "No se pudo agregar el item de la cuenta corriente" );
+                    qWarning() << "No se pudo agregar el item de la cuenta corriente";
                 }
             }
         }
@@ -193,12 +193,12 @@ void DPagarRecibo::cambioNumeroRecibo()
   // Buscar los recargos
   int id_recibo = m->buscarIdPorSerieNumero( this->_num_recibo );
   if( id_recibo == -1 ) {
-      qWarning( "No se pudo encontrar el id para el recibo buscado" );
+      qWarning() << "No se pudo encontrar el id para el recibo buscado";
       return;
   }
   int id_periodo_servicio = MCobroServicioClientePeriodo::buscarIdPeriodoServicio( id_recibo );
   if( id_periodo_servicio == -2 ) {
-      qWarning( "Error al recibo en cobros echos." );
+      qWarning() << "Error al recibo en cobros echos.";
       return;
   }
 

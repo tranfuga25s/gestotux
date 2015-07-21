@@ -387,11 +387,11 @@ bool MMovimientosCaja::verificarCierreCaja( const int id_caja )
                 return false;
             }
         } else {
-            qWarning( "Error al hacer next en la cola de averiguacion de si se puede hacer el cierre de caja" );
+            qWarning() << "Error al hacer next en la cola de averiguacion de si se puede hacer el cierre de caja";
             return false;
         }
     } else {
-        qWarning( "No se pudo ejecutar la cola de averiguacion de si se puede hacer el cierre de caja" );
+        qWarning() << "No se pudo ejecutar la cola de averiguacion de si se puede hacer el cierre de caja";
         return false;
     }
 }

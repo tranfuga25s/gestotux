@@ -229,7 +229,7 @@ int MCajas::cajaPredeterminada()
                     cola.next();
                     return cola.record().value(0).toInt();
                 } else {
-                    QMessageBox::information( 0, "Caja predeterminada", QString::fromUtf8( "No existe una caja predeterminada seleccionada. Se eligirá la primera disponible.\n <b>Por favor, seleccióne una caja predeterminada desde las preferencias del programa" ) );
+                    QMessageBox::information( 0, "Caja predeterminada", QString::fromUtf8( "No existe una caja predeterminada seleccionada. Se eligirá la primera disponible.\n Por favor, seleccióne una caja predeterminada desde las preferencias del programa" ) );
                     cola.exec( "SELECT id_caja FROM caja LIMIT 1 " );
                     cola.next();
                     return cola.record().value(0).toInt();

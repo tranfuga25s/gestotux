@@ -225,7 +225,7 @@ int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double
     QSqlRecord rec = this->record();
     // Cliente
     rec.setGenerated("id_cliente", false);
-    rec.setValue( "id_cliente", QString::number( id_cliente ).append(" ") );
+    rec.setValue( "id_cliente", id_cliente );
     rec.setValue( "fecha_pago", fecha );
     rec.setValue( "texto", contenido );
     rec.setValue( "precio", total );
@@ -263,10 +263,10 @@ int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double
                 QString cuenta = MCuentaCorriente::obtenerNumeroCuentaCorriente( id_cliente );
                 if( cuenta == QString::number( MCuentaCorriente::ErrorNumeroCuenta ) ) {
                     // no posee cuenta corriente
-                    qDebug( "El cliente no posee cuenta corriente, se salteara la actualizaciòn de cuentas corrientes" );
+                    //qDebug() << "El cliente no posee cuenta corriente, se salteara la actualizaciòn de cuentas corrientes";
                 } else if( cuenta == QString::number( MCuentaCorriente::ErrorClienteInvalido ) ) {
                     // Error de numero de cliente
-                    qDebug( "Id de cliente erroneo" );
+                    qDebug() << "Id de cliente erroneo";
                 } else {
                     // Actualizo la cuenta corriente - El total es negativo para que vaya al haber
                     if( MItemCuentaCorriente::agregarOperacion( cuenta,
@@ -286,10 +286,10 @@ int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double
                     QString cuenta = MCuentaCorriente::obtenerNumeroCuentaCorriente( id_cliente );
                     if( cuenta == QString::number( MCuentaCorriente::ErrorNumeroCuenta ) ) {
                         // no posee cuenta corriente
-                        qDebug( "El cliente no posee cuenta corriente, se salteara la actualizaciòn de cuentas corrientes" );
+                        qDebug() << "El cliente no posee cuenta corriente, se salteara la actualizacion de cuentas corrientes";
                     } else if( cuenta == QString::number( MCuentaCorriente::ErrorClienteInvalido ) ) {
                         // Error de numero de cliente
-                        qDebug( "Id de cliente erroneo" );
+                        qDebug() << "Id de cliente erroneo";
                     } else {
                         // Actualizo la cuenta corriente - El total es positivo para que vaya al debe
                         if( MItemCuentaCorriente::agregarOperacion( cuenta,
@@ -463,22 +463,18 @@ bool MPagos::setearComoPagado( const int id_recibo, const bool efectivo, const b
         {
             QString nombre_cliente = MClientes::getRazonSocial( id_cliente );
             MMovimientosCaja *m = new MMovimientosCaja();
-            if( m->agregarMovimiento( MCajas::cajaPredeterminada(),
+            if( !m->agregarMovimiento( MCajas::cajaPredeterminada(),
                                       QString( "Pago del recibo %1 - %2" ).arg( num->aCadena() ).arg( nombre_cliente ),
                                       QString(),
                                       precio ) )
             {
-                qDebug( "Operación de movimiento de caja agregado correctamente" );
-            } else {
-                qDebug( "Error al intentar registrar el movimiento de caja al pagar un recibo ya emitido." );
+                qDebug() << "Error al intentar registrar el movimiento de caja al pagar un recibo ya emitido.";
                 QSqlDatabase::database( QSqlDatabase::defaultConnection, false ).rollback();
                 return false;
             }
             delete m;
             // El metodo de pago es efectivo
-            if( cola.exec( QString( "UPDATE recibos SET forma_pago = %1 WHERE id_recibo = %2" ).arg( MPagos::Efectivo ).arg( id_recibo ) ) ) {
-                // Todos los pasos guardados correctamente
-            } else {
+            if( !cola.exec( QString( "UPDATE recibos SET forma_pago = %1 WHERE id_recibo = %2" ).arg( MPagos::Efectivo ).arg( id_recibo ) ) ) {
                 qDebug() << "Error al intentar poner la forma de pago en efectivo al poner como pagado un recibo ya emitido";
                 qDebug() << cola.lastError().text();
                 qDebug() << cola.lastQuery();
@@ -487,9 +483,7 @@ bool MPagos::setearComoPagado( const int id_recibo, const bool efectivo, const b
             }
         } else {
             // El metodo de pago es otro ( desconocido )
-            if( cola.exec( QString( "UPDATE recibos SET forma_pago = %1 WHERE id_recibo = %2" ).arg( MPagos::Otro ).arg( id_recibo ) ) ) {
-                // Todos los pasos guardados correctamente
-            } else {
+            if( !cola.exec( QString( "UPDATE recibos SET forma_pago = %1 WHERE id_recibo = %2" ).arg( MPagos::Otro ).arg( id_recibo ) ) ) {
                 qDebug() << "Error al intentar poner la forma de pago en otro al poner como pagado un recibo ya emitido";
                 qDebug() << cola.lastError().text();
                 qDebug() << cola.lastQuery();

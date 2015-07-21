@@ -124,17 +124,17 @@ int MItemCuentaCorriente::agregarOperacion( const QString &numero_cuenta, const 
       if( id.isValid() ) {
         return id.toInt();
       } else {
-          qDebug( "ID de operación retornado invalido" );
+          qDebug() << "ID de operación retornado invalido";
           return -1;
       }
   } else {
-      qDebug( "Error al actualizar el saldo en la cuenta corriente" );
+      qDebug() << "Error al actualizar el saldo en la cuenta corriente";
       return -1;
   }
  }
  else
  {
-  qWarning( "Error al intentar guardar la operacion de item de cuenta corriente" );
+  qWarning() << "Error al intentar guardar la operacion de item de cuenta corriente";
   qDebug() << cola.lastError().text();
   qDebug() << cola.lastQuery();
   return -1;
