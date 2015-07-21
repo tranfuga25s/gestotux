@@ -2,10 +2,15 @@ language: cpp
 
 compiler: gcc
 
+addons:
+  apt:
+    packages:
+    - pip
+    - libqt4-sql-sqlite
+    - xvfb
+
 install:
-    - sudo pip install cpp-coveralls
-    - sudo apt-get update
-    - sudo apt-get install libqt4-sql-sqlite
+    - pip install cpp-coveralls
     - cp bin/travis.pri travis.pri
     - "export DISPLAY=:99.0"
     - "sh -e /etc/init.d/xvfb start"
@@ -40,4 +45,4 @@ after_success:
     - coveralls --exclude-pattern ".*automoc\.cpp" --exclude-pattern ".*\.moc" --exclude-pattern "/opt/.*" --exclude-pattern "/usr/.*" --exclude-pattern ".*moc_.*" --exclude-pattern ".*ui_.*" --exclude-pattern ".*qrc_.*" --exclude-pattern "tst_*" --exclude lib --exclude tests
 
 notifications:
-  email: false
+    email: false
