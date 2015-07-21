@@ -13,8 +13,8 @@ SUBDIRS +=  ProductosTest \
             BackupTest \
             RemitosTest \
             PresupuestosTest \
-            #PagosTest \
-            HiCompTest \
+            PagosTest \
+            #HiCompTest \
             CajaTest
 
 OTHER_FILES += sql/dependences.ini \

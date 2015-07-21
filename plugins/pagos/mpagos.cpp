@@ -203,6 +203,10 @@ QDate MPagos::buscarFechaUltimoRecibo() const
 */
 int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double total, bool efectivo, bool pagado , QString texto_ctacte )
 {
+    if (total <= 0.0) {
+        qDebug() << "No se puede agregar un recibo con valor menor o igual a cero";
+        return -1;
+    }
     int id_caja = -1;
     if( efectivo && pagado ) {
         // Genero la entrada en la caja
@@ -286,7 +290,7 @@ int MPagos::agregarRecibo(int id_cliente, QDate fecha, QString contenido, double
                     QString cuenta = MCuentaCorriente::obtenerNumeroCuentaCorriente( id_cliente );
                     if( cuenta == QString::number( MCuentaCorriente::ErrorNumeroCuenta ) ) {
                         // no posee cuenta corriente
-                        qDebug() << "El cliente no posee cuenta corriente, se salteara la actualizacion de cuentas corrientes";
+                        //qDebug() << "El cliente no posee cuenta corriente, se salteara la actualizacion de cuentas corrientes";
                     } else if( cuenta == QString::number( MCuentaCorriente::ErrorClienteInvalido ) ) {
                         // Error de numero de cliente
                         qDebug() << "Id de cliente erroneo";
