@@ -225,14 +225,10 @@ int MCajas::cajaPredeterminada()
                 int cantidad = cola.record().value(0).toInt();
                 if( cantidad == 1 ) {
                     // Existe una sola caja declarada... la devuelvo
-                    cola.exec( "SELECT id_caja FROM caja LIMIT 1 " );
-                    cola.next();
-                    return cola.record().value(0).toInt();
+                    return MCajas::buscarPrimerCaja();
                 } else {
                     QMessageBox::information( 0, "Caja predeterminada", QString::fromUtf8( "No existe una caja predeterminada seleccionada. Se eligirá la primera disponible.\n Por favor, seleccióne una caja predeterminada desde las preferencias del programa" ) );
-                    cola.exec( "SELECT id_caja FROM caja LIMIT 1 " );
-                    cola.next();
-                    return cola.record().value(0).toInt();
+                    return MCajas::buscarPrimerCaja();
                 }
             }
         } else {
@@ -240,8 +236,44 @@ int MCajas::cajaPredeterminada()
             qDebug() << cola.lastQuery();
             return false;
         }
+    } else {
+        // Verifico si existe la caja
+        QSqlQuery cola;
+        if( cola.exec( QString("SELECT COUNT(id_caja) FROM caja WHERE id_caja = %1" ).arg(id) ) ) {
+            if( cola.next() ) {
+                int cantidad = cola.record().value(0).toInt();
+                if( cantidad == 1 ) {
+                    // La caja existe
+                    return id;
+                }
+            }
+            return MCajas::buscarPrimerCaja();
+        } else {
+            qDebug() << cola.lastError().text();
+            qDebug() << cola.lastQuery();
+            return false;
+        }
     }
-    return id;
+    return false;
+}
+
+/**
+ * @brief MCajas::buscarPrimerCaja
+ * @return Primera caja encontrada
+ */
+int MCajas::buscarPrimerCaja() {
+    QSqlQuery cola;
+    if (cola.exec( "SELECT id_caja FROM caja LIMIT 1 " )) {
+        if (cola.next()){
+            return cola.record().value(0).toInt();
+        } else {
+            qWarning("No existe ninguna caja declarada! - Por favor agrege una.");
+        }
+    } else {
+        qDebug() << "No se pudo ejecutar la cola para obtener la primer caja";
+        qDebug() << cola.lastError().text();
+    }
+    return -2;
 }
 
 /*!

@@ -50,6 +50,7 @@ class MCajas : public QSqlTableModel
         static QString nombreCaja( const int id_caja );
 
         static int cajaPredeterminada();
+        static int buscarPrimerCaja();
         static bool existen2omas();
 };
 
