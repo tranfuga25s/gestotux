@@ -24,8 +24,8 @@ script:
     - ./tst_preferenciastest
     - cd ../ProductosTest
     - ./tst_productostest
-    - cd ../EquipamientosTest
-    - ./tst_equipamientos
+    #- cd ../EquipamientosTest
+    #- ./tst_equipamientos
     - cd ../ECBProductosTest
     - ./tst_ecbproductostest
     #- cd ../PeriodoServicioTest
