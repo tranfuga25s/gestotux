@@ -26,8 +26,8 @@ script:
     - ./tst_equipamientos
     - cd ../ECBProductosTest
     - ./tst_ecbproductostest
-    - cd ../PeriodoServicioTest
-    - ./tst_periodoserviciotest
+    #- cd ../PeriodoServicioTest
+    #- ./tst_periodoserviciotest
     - cd ../ComprasTest
     - ./tst_comprastest
     - cd ../ProveedorTest
@@ -40,8 +40,8 @@ script:
     - ./tst_remitostest
     - cd ../PresupuestosTest
     - ./tst_presupuestostest
-    - cd ../HiCompTest
-    - ./tst_hicomptest
+    #- cd ../HiCompTest
+    #- ./tst_hicomptest
 
 after_success:
     - coveralls --exclude-pattern ".*automoc\.cpp" --exclude-pattern ".*\.moc" --exclude-pattern "/opt/.*" --exclude-pattern "/usr/.*" --exclude-pattern ".*moc_.*" --exclude-pattern ".*ui_.*" --exclude-pattern ".*qrc_.*" --exclude-pattern "tst_*" --exclude lib --exclude tests
