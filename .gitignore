@@ -26,3 +26,6 @@ Makefile*
 # QtCreator
 
 *.autosave
+
+# Wiki on local copy
+wiki

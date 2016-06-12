@@ -128,9 +128,9 @@ void PeriodoServicioTest::testRevisarPeriodoInicioIntermedio()
     QFETCH( int, periodo );
     QFETCH( QDate, fi );
     QFETCH( QDate, ff );
-    QCOMPARE( fi, mp->getFechaInicioPeriodo( id_servicio, periodo, fi.year() ) );
-    QCOMPARE( ff, mp->obtenerFechaFinPeriodo( id_servicio, fi ) );
-    QCOMPARE( periodo, mp->getPeriodoSegunFecha( id_servicio, fi ) );
+    QCOMPARE( mp->getFechaInicioPeriodo( id_servicio, periodo, fi.year() ), fi );
+    QCOMPARE( mp->obtenerFechaFinPeriodo( id_servicio, fi ), ff );
+    QCOMPARE( mp->getPeriodoSegunFecha( id_servicio, fi ), periodo );
 }
 
 /**

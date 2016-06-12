@@ -679,8 +679,12 @@ int MPeriodoServicio::getPeriodoSegunFecha(const int id_servicio, QDate fecha_ca
     } else {
         t = fecha_alta_servicio.daysTo( fecha_calculo );
     }
+    if (t <= cant_dias_periodo) {
+        t += cant_dias_periodo;
+        u -= 1;
+    }
     if( t >= cant_dias_periodo ) {
-        u = ((double) t)/cant_dias_periodo;
+        u += ((double) t)/cant_dias_periodo;
         u++;
     } else {
         u = 1.0;
