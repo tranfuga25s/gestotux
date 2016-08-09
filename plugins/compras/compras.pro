@@ -15,7 +15,8 @@ DESTDIR = ../../bin/plugins/
 INCLUDEPATH += ../../src \
                ../../utiles \
                ../productos \
-               ../caja
+               ../caja \
+               ../proveedor
 
 LIBS += ../../bin/libutiles.a
 

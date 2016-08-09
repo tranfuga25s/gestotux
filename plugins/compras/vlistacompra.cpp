@@ -18,6 +18,10 @@ VListaCompra::VListaCompra(QWidget *parent) :
     vista->horizontalHeader()->setAlternatingRowColors( true );
 }
 
+/**
+ * @brief VListaCompra::setearIdCompra
+ * @param id_compra
+ */
 void VListaCompra::setearIdCompra( const int id_compra )
 {
     QSqlQueryModel cola;

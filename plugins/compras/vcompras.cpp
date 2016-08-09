@@ -20,6 +20,7 @@
 #include "vcompras.h"
 
 #include "mcompra.h"
+#include "mproveedor.h"
 #include "formagregarcompra.h"
 
 #include "dsino.h"
@@ -72,6 +73,11 @@ VCompras::VCompras(QWidget *parent)
  */
 void VCompras::agregar( bool /*autoeliminarid*/ )
 {
+    // Validar que exista al menos un proveedor para ingresar una compra
+    if (!MProveedor::existenProveedores()) {
+        QMessageBox::warning(this, tr("No hay proveedores"), "No existen proveedores para agregar una nueva compra");
+        return;
+    }
     FormAgregarCompra *f = new FormAgregarCompra( qobject_cast<MCompra *>( this->rmodelo ) );
     connect( f, SIGNAL( actualizarVista() ), this, SLOT( mostrarTodos() ) );
     emit agregarVentana( f );

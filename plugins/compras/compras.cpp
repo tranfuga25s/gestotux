@@ -18,8 +18,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "compras.h"
+#include "mproveedor.h"
 
 #include <QSqlDatabase>
+#include <QMessageBox>
 
 /**
  * @brief Compras::inicializar
@@ -130,7 +132,14 @@ void Compras::crearToolBar(QToolBar*/* t */)
  * @brief Compras::agregarCompra
  */
 void Compras::agregarCompra()
-{ emit agregarVentana( new FormAgregarCompra() ); }
+{
+    // Validar que exista al menos un proveedor para ingresar una compra
+    if (!MProveedor::existenProveedores()) {
+        QMessageBox::warning(0, tr("No hay proveedores"), "No existen proveedores para agregar una nueva compra");
+        return;
+    }
+    emit agregarVentana( new FormAgregarCompra() );
+}
 
 
 #include "vcompras.h"
