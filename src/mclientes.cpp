@@ -140,6 +140,10 @@ bool MClientes::tieneDatosRelacionados( const int id_cliente )
    - Recibos.
    - Servicios Asociados.
   */
+  // Veo si es consumidor final, no se puede eliminar
+  if (id_cliente == 0) {
+      return true;
+  }
   QSqlQuery cola;
   /////////////////////////////////////////////////////
   // Cuenta corriente
