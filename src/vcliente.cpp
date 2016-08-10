@@ -110,6 +110,11 @@ void VCliente::agregar( bool /*autoeliminarid*/ )
  */
 void VCliente::modificar()
 {
+    // Validar si existe algun cliente seleccionado
+    if ( this->vista->selectionModel()->selectedRows().length() == 0) {
+        QMessageBox::warning(0, "Sin seleccion", "Por favor, seleccione un cliente para modificar");
+        return;
+    }
     FormCliente *f = new FormCliente( this, mc );
     f->setearCliente( this->vista->selectionModel()->selectedRows().first() );
     f->setObjectName( QString( "visor-clientes-%1" ).arg( this->vista->selectionModel()->selectedRows().first().data( Qt::EditRole ).toInt() ) );
@@ -155,14 +160,20 @@ void VCliente::listadoClientes() {
  */
 void VCliente::eliminar()
 {
+    if ( this->vista->selectionModel()->selectedRows().length() == 0) {
+        QMessageBox::warning(0, "Sin seleccion", "Por favor, seleccione un cliente para eliminar");
+        return;
+    }
     QModelIndex idx = this->vista->selectionModel()->selectedRows().first();
     int id_cliente = this->mc->data( this->mc->index( idx.row(), 0 ), Qt::EditRole ).toInt();
+    if (id_cliente == 0) {
+        QMessageBox::warning( this, "Error", QString::fromUtf8("No se pudo eliminar el Consumidor Final porque tiene datos relacionados en otras partes del programa y generará perdida de datos." ) );
+        return;
+    }
     if( MClientes::tieneDatosRelacionados( id_cliente ) ) {
         QMessageBox::warning( this, "Error", QString::fromUtf8("No se pudo eliminar este cliente porque tiene datos relacionados en otras partes del programa y generará perdida de datos." ) );
         return;
-    }
-    else
-    {
+    } else {
         if( this->mc->removeRow( idx.row() ) ) {
             QMessageBox::information( this, "Correcto", QString::fromUtf8( "El cliente ha sido eliminado correctamente" ) );
             return;
