@@ -20,6 +20,7 @@
 #include "vcliente.h"
 
 #include "mclientes.h"
+#include "../plugins/CtaCte/mcuentacorriente.h"
 #include "eregistroplugins.h"
 
 #include <QApplication>
@@ -166,6 +167,7 @@ void VCliente::eliminar()
     }
     QModelIndex idx = this->vista->selectionModel()->selectedRows().first();
     int id_cliente = this->mc->data( this->mc->index( idx.row(), 0 ), Qt::EditRole ).toInt();
+    // El cliente "Consumidor final" no se debería de poder eliminar
     if (id_cliente == 0) {
         QMessageBox::warning( this, "Error", QString::fromUtf8("No se pudo eliminar el Consumidor Final porque tiene datos relacionados en otras partes del programa y generará perdida de datos." ) );
         return;
@@ -200,13 +202,21 @@ void VCliente::mostrarTodos()
  */
 void VCliente::menuContextual( const QModelIndex &indice, QMenu *menu )
 {
-    //int id_cliente = indice.model()->data( indice.model()->index( indice.row(), 0 ), Qt::EditRole ).toInt();
+    int id_cliente = indice.model()->data( indice.model()->index( indice.row(), 0 ), Qt::EditRole ).toInt();
+
+    // Acciones predeterminadas
     menu->addAction( ActAgregar );
     menu->addAction( ActModificar );
     menu->addAction( ActEliminar );
     menu->addSeparator();
     // Veo si tiene cuenta corriente
-
+    if (MCuentaCorriente::existeCuentaCliente(id_cliente)) {
+        QAction *ActCuentaCorriente = new QAction(this);
+        ActCuentaCorriente->setText(tr("Cuenta corriente"));
+        ActCuentaCorriente->setIcon(QIcon(":/imagenes/cuenta_corriente.png"));
+        connect(ActCuentaCorriente, SIGNAL(triggered()), this, SLOT(mostrarCuentaCorriente()));
+        menu->addAction(ActCuentaCorriente);
+    }
     // Veo si está aderido a algún servicio
 
 
