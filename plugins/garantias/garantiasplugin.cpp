@@ -116,14 +116,14 @@ bool GarantiasPlugin::verificarTablas( QStringList tablas )
     { qDebug() << "Error al buscar la tabla factura"; return false; }
     if( !tablas.contains( "clientes" ) )
     { qDebug() << "Error al buscar la tabla clientes"; return false; }
-    if( !tablas.contains( "equipamientos" ) )
-    { qDebug() << "Error al buscar la tabla de equipamientos"; return false; }
+    if( !tablas.contains( "equipamiento" ) )
+    { qDebug() << "Error al buscar la tabla de equipamiento"; return false; }
     if( !tablas.contains( "garantias" ) )
     { qDebug() << "Error al buscar la tabla garantias"; return false; }
-    if( !tablas.contains( "v_garantias" ) )
-    { qDebug() << "Error al buscar la tabla v_garantias"; return false; }
-    if( !tablas.contains( "v_garantias_svg" ) )
-    { qDebug() << "Error al buscar la tabla v_garantias_svg"; return false; }
+    if( !tablas.contains( "v_garantia" ) )
+    { qDebug() << "Error al buscar la tabla v_garantia"; return false; }
+    if( !tablas.contains( "v_garantia_svg" ) )
+    { qDebug() << "Error al buscar la tabla v_garantia_svg"; return false; }
     return true;
 }
 
