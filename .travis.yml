@@ -7,7 +7,6 @@ sudo: false
 addons:
   apt:
     packages:
-    - pip
     - libqt4-sql-sqlite
     - xvfb
 
