@@ -242,7 +242,7 @@ void VProductos::listaVenta()
     p->endGroup();
     p->endGroup();
     p->endGroup();
-    delete preferencias;
+    delete p;
 
     lista.append("cant_decimales", cant_decimales);
 
@@ -274,7 +274,7 @@ void VProductos::listaStock()
     p->endGroup();
     p->endGroup();
     p->endGroup();
-    delete preferencias;
+    delete p;
 
     lista.append("cant_decimales", cant_decimales);
 
