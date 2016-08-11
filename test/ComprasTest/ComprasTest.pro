@@ -25,6 +25,7 @@ INCLUDEPATH += ../../plugins/compras \
                ../../utiles
 
 LIBS += ../../bin/plugins/libcompras.so \
+        ../../bin/plugins/libproveedor.so \
         ../../bin/libutiles.a
 
 FORMS += ../../plugins/compras/FormPrefComprasBase.ui \
