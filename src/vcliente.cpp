@@ -210,11 +210,14 @@ void VCliente::menuContextual( const QModelIndex &indice, QMenu *menu )
     menu->addAction( ActEliminar );
     menu->addSeparator();
     // Veo si tiene cuenta corriente
-    if (MCuentaCorriente::existeCuentaCliente(id_cliente)) {
+    if (ERegistroPlugins::getInstancia()->existePluginExterno("ctacte") ) {
         QAction *ActCuentaCorriente = new QAction(this);
         ActCuentaCorriente->setText(tr("Cuenta corriente"));
-        ActCuentaCorriente->setIcon(QIcon(":/imagenes/cuenta_corriente.png"));
+        ActCuentaCorriente->setIcon(QIcon(":/imagenes/ctacte.png"));
         connect(ActCuentaCorriente, SIGNAL(triggered()), this, SLOT(mostrarCuentaCorriente()));
+        if (MCuentaCorriente::existeCuentaCliente(id_cliente)) {
+            ActCuentaCorriente->setDisabled(true);
+        }
         menu->addAction(ActCuentaCorriente);
     }
     // Veo si está aderido a algún servicio

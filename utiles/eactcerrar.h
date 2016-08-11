@@ -26,7 +26,7 @@
  * \brief Clase de accion cerrar encapsulada
  *
  * Clase que sirve como contendedor de las condiciones repetitivas de esta accion. Setea el icono, texto y demas cosas de la accion cerrar.
- *	@author Esteban Zeller <juiraze@yahoo.com.ar>
+ * @author Esteban Zeller <juiraze@yahoo.com.ar>
  */
 class EActCerrar : public QAction
 {
