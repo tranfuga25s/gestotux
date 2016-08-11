@@ -40,6 +40,7 @@ protected slots:
     void eliminar();
     void listadoClientes();
     void mostrarTodos();
+    void mostrarCuentaCorriente();
     void menuContextual(const QModelIndex &indice, QMenu *menu);
 
 private slots:

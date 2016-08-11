@@ -224,3 +224,28 @@ void VCliente::menuContextual( const QModelIndex &indice, QMenu *menu )
 
 
 }
+
+/**
+ * @brief VCliente::mostrarCuentaCorriente
+ */
+void VCliente::mostrarCuentaCorriente() {
+    if ( this->vista->selectionModel()->selectedRows().length() == 0) {
+        QMessageBox::warning(0, "Sin seleccion", "Por favor, seleccione un cliente para ver su cuenta corriente");
+        return;
+    }
+    QModelIndex idx = this->vista->selectionModel()->selectedRows().first();
+    int id_cliente = this->mc->data( this->mc->index( idx.row(), 0 ), Qt::EditRole ).toInt();
+
+    if (ERegistroPlugins::getInstancia()->existePluginExterno("ctacte")) {
+        if (MCuentaCorriente::existeCuentaCliente(id_cliente)) {
+            QMessageBox::information(this, "No implementado", "Esta funcionalidad todavía no está implementada");
+        } else {
+            QMessageBox::warning(this, "Error","El cliente seleccionado no posee una cuenta corriente activa");
+            return;
+        }
+    } else {
+        QMessageBox::critical(0, "Error", "El plugin de cuenta corriente no está cargado");
+        return;
+    }
+
+}
