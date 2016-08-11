@@ -218,6 +218,7 @@ void VProductos::agregar( bool /*autoeliminarid*/ )
 
 #include <QMessageBox>
 #include "EReporte.h"
+#include "preferencias.h"
 /*!
  * \fn VProductos::listaVenta()
  * Muestra el listado de productos con sus codigos y precio de venta segun el filtro actual
@@ -230,8 +231,22 @@ void VProductos::listaVenta()
     }
     EReporte *rep = new EReporte( 0 );
     ParameterList lista;
-    lista.append( "filtro", this->rmodelo->filter() );
-    rep->especial( "ListadoProductosPrecio", lista );
+    lista.append("filtro", this->rmodelo->filter());
+
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos");
+    p->beginGroup("Stock");
+    int cant_decimales = p->value("cantidad-decimales", 4).toInt();
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    delete preferencias;
+
+    lista.append("cant_decimales", cant_decimales);
+
+    rep->especial("ListadoProductosPrecio", lista);
     rep->hacer();
     delete rep;
 }
@@ -249,6 +264,20 @@ void VProductos::listaStock()
     EReporte *rep = new EReporte( 0 );
     ParameterList lista;
     lista.append( "filtro", this->rmodelo->filter() );
+
+    preferencias *p = preferencias::getInstancia();
+    p->inicio();
+    p->beginGroup( "Preferencias" );
+    p->beginGroup( "Productos");
+    p->beginGroup("Stock");
+    int cant_decimales = p->value("cantidad-decimales", 4).toInt();
+    p->endGroup();
+    p->endGroup();
+    p->endGroup();
+    delete preferencias;
+
+    lista.append("cant_decimales", cant_decimales);
+
     rep->especial( "ListadoProductosStock", lista );
     rep->hacer();
     delete rep;

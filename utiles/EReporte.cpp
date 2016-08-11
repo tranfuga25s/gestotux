@@ -191,6 +191,10 @@ bool EReporte::hacerPDF( ParameterList parametros, QString ruta ) {
 
 }
 
+/*!
+ * \brief EReporte::setearImpresora
+ * \param imp
+ */
 void EReporte::setearImpresora( QPrinter *imp )
 {
     if( imp != 0 )
