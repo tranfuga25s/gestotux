@@ -231,25 +231,24 @@ int FormAsociarServicioCliente::exec()
 {
  switch( this->_tipo )
  {
-        case Cliente:
-        {
-                // Tengo que eliminar todos los clientes que ya estan adheridos a este servicio
-                CBCliente->setearFiltro( QString( "WHERE id NOT IN ( SELECT id_cliente FROM servicios_clientes WHERE id_servicio = %1 ) AND id != 0 " ).arg( _id_servicio ) );
-                break;
-        }
-        case Servicio:
-        {
-            //qWarning( "TodavÃ­a no esta implementado el filtrado de servicios a los que esta adherido el cliente" );
-            // Tengo que eliminar todos los servicios a los que el cliente ya esta adherido
-            QSqlQueryModel *modelo = new QSqlQueryModel( CBServicio );
-            modelo->setQuery( QString( "SELECT id_servicio, nombre FROM servicios WHERE id_servicio NOT IN ( SELECT id_servicio FROM servicios_clientes WHERE id_cliente = %1 AND fecha_baja NOT NULL ) ORDER BY razon_social" ).arg( _id_cliente ) );
-            CBServicio->setModel( modelo );
-            CBServicio->setModelColumn( 1 );
-        }
-        default:
-        {
-                break;
-        }
+    case Cliente:
+    {
+        // Tengo que eliminar todos los clientes que ya estan adheridos a este servicio
+        CBCliente->setearFiltro( QString( "WHERE id NOT IN ( SELECT id_cliente FROM servicios_clientes WHERE id_servicio = %1 AND fecha_baja IS NULL ) AND id != 0 " ).arg( _id_servicio ) );
+        break;
+    }
+    case Servicio:
+    {
+        // Tengo que eliminar todos los servicios a los que el cliente ya esta adherido
+        QSqlQueryModel *modelo = new QSqlQueryModel( CBServicio );
+        modelo->setQuery( QString( "SELECT id_servicio, nombre FROM servicios WHERE id_servicio NOT IN ( SELECT id_servicio FROM servicios_clientes WHERE id_cliente = %1 AND fecha_baja NOT NULL ) ORDER BY razon_social" ).arg( _id_cliente ) );
+        CBServicio->setModel( modelo );
+        CBServicio->setModelColumn( 1 );
+    }
+    default:
+    {
+            break;
+    }
  }
  return QDialog::exec();
 }

@@ -144,12 +144,12 @@ Qt::ItemFlags MServicios::flags( const QModelIndex &/*index*/ ) const
 }
 
 /*!
-    \fn MServicios::asociarCliente( int id_cliente, int id_servicio, QDateTime fecha )
-        Asocia el cliente con el servicio correspondiente en la base de datos en la fecha de alta indicada.
-        @param id_cliente Identificador de cliente
-        @param id_servicio Identificador del servicio
-        @param fecha Fecha en que el cliente se da de alta en el servicio
-        @return Verdadero si la asociacion se pudo realizar correctamente
+ * \fn MServicios::asociarCliente( int id_cliente, int id_servicio, QDateTime fecha )
+ * Asocia el cliente con el servicio correspondiente en la base de datos en la fecha de alta indicada.
+ * @param id_cliente Identificador de cliente
+ * @param id_servicio Identificador del servicio
+ * @param fecha Fecha en que el cliente se da de alta en el servicio
+ * @return Verdadero si la asociacion se pudo realizar correctamente
  */
 bool MServicios::asociarCliente( int id_cliente, int id_servicio, QDateTime fecha )
 {
