@@ -8,6 +8,7 @@ SUBDIRS +=  CtaCte/CtaCteLib.pro \
             pagos/PagosLib.pro \
             servicios/ServiciosLib.pro \
             productos/ProductosLib.pro \
+            proveedor/ProveedorLib.pro \
             caja \
             gastos \
             productos \

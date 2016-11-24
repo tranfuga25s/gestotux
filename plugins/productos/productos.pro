@@ -57,7 +57,8 @@ LIBS += -L../../bin \
         -L../../bin/plugins \
         -lutiles \
         -lreporte \
-        -llibproductos
+        -llibproductos \
+        -llibproveedor
 
 win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
