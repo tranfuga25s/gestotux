@@ -288,7 +288,7 @@ void FormFacturarServicio::facturar()
             LIndicador->setText( QString( "( %1 de %2 ) Generando recibo ..." ).arg( i +1 ).arg( cantidad_total ) );
             id_factura = qobject_cast<MPagos *>(mr)->agregarRecibo( id_cliente,
                                                                     this->_fecha_emision,
-                                                                    QString( "%1 periodo %2/%3" ).arg( MServicios::getNombreServicio( this->_id_servicio ) ).arg( this->_periodo ).arg( this->_ano ),
+                                                                    QString( "%1 periodo %2/%3" ).arg( MServicios::getTextoFacturacion( this->_id_servicio ) ).arg( this->_periodo ).arg( this->_ano ),
                                                                     this->_precio_base,
                                                                     false, // No efectivo y no pagado para que quede para despues
                                                                     false,
@@ -320,7 +320,7 @@ void FormFacturarServicio::facturar()
             MItemFactura *fact = new MItemFactura();
             if( !fact->agregarItemFactura( id_factura,
                                            1,
-                                           QString( "%1 periodo %2/%3" ).arg( MServicios::getNombreServicio( this->_id_servicio ) ).arg( this->_periodo ).arg( this->_ano ),
+                                           QString( "%1 periodo %2/%3" ).arg( MServicios::getTextoFacturacion( this->_id_servicio ) ).arg( this->_periodo ).arg( this->_ano ),
                                            this->_precio_base,
                                            -1 ) ) { // Coloco el ultimo parametro en -1 para que no registre ningun producto
                 qDebug( "Error al intentar agregar el item de factura para el servicio del mes facturado" );

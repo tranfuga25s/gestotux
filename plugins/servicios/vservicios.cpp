@@ -51,6 +51,7 @@ VServicios::VServicios(QWidget *parent)
  vista->hideColumn( 0 );
  vista->hideColumn( 2 );
  vista->hideColumn( modelo->fieldIndex( "fecha_baja" ) );
+ vista->hideColumn( modelo->fieldIndex( "texto_facturacion" ) );
  vista->setSortingEnabled( true );
  vista->horizontalHeader()->setResizeMode( modelo->fieldIndex( "nombre" ), QHeaderView::ResizeToContents );
 

@@ -191,8 +191,9 @@ bool MServicios::asociarCliente( int id_cliente, int id_servicio, QDateTime fech
     \param periodo Periodo de cobro del servicio #MServicios::Periodo
     \param dia_cobro Dia del periodo en que se inicia el cobro del servicio
     \param forma_incompleto Forma de cobro cuando se da de alta un cliente fuera del inicio del periodo #MServicios::FormaIncompleto
+    \param texto_facturacion Texto que se mostrarà en la facturacion
  */
-bool MServicios::agregarServicio( QString nombre, QString detalle, QDate fecha_alta, double precio_base, int periodo, int dia_cobro, int forma_incompleto )
+bool MServicios::agregarServicio( QString nombre, QString detalle, QDate fecha_alta, double precio_base, int periodo, int dia_cobro, int forma_incompleto, QString texto_facturacion )
 {
   // Teoricamente los datos se controlaron de ser correctos
   QSqlRecord registro = this->record();
@@ -203,6 +204,7 @@ bool MServicios::agregarServicio( QString nombre, QString detalle, QDate fecha_a
   registro.setValue( "periodo", periodo ); // Agregar verificacion de enumeracion
   registro.setValue( "dia_cobro", dia_cobro );// Agregar verificacion de enumeracion
   registro.setValue( "forma_incompleto", forma_incompleto );// Agregar verificacion de enumeracion
+  registro.setValue( "text_facturacion", texto_facturacion);
   if( this->insertRecord( -1, registro ) ) {
       return true;
   } else {
@@ -430,6 +432,31 @@ bool MServicios::darDeBaja( const int id_servicio, QModelIndex indice, const QDa
     return true;
 }
 
+/**
+ * @brief MServicios::getTextoFacturacion
+ * Devuelve el texto de facturaciòn definido para un servicio
+ * @param id_servicio Identificador del servicio
+ * @return
+ */
+QString MServicios::getTextoFacturacion(const int id_servicio)
+{
+    QSqlQuery cola;
+    if( !cola.exec( QString( "SELECT texto_facturacion FROM servicios WHERE id_servicio = %1").arg( id_servicio ) ) ) {
+        qDebug( "Error al ejecutar la cola de obtenciÃ³n de dato de texto de facturacion" );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    } else {
+        if( cola.next() )  {
+            return cola.record().value(0).toString();
+        } else {
+            qDebug( "Error al hacer next al ejecutar la cola de obtencion de si el servicio tiene texto de facturacion" );
+            qDebug() << cola.lastError().text();
+            qDebug() << cola.lastQuery();
+        }
+    }
+    return QString();
+}
+
 QList<int> MServicios::listaDeServicios()
 {
     QList<int> lista;
@@ -442,6 +469,11 @@ QList<int> MServicios::listaDeServicios()
     return lista;
 }
 
+/**
+ * @brief MServicios::existe
+ * @param nombre
+ * @return boolean
+ */
 bool MServicios::existe(const QString nombre)
 {
     QSqlQuery cola;
@@ -518,7 +550,7 @@ bool MServicios::calcularCobroAlta( const int id_cliente, const int id_servicio,
         texto.append( QString::fromUtf8( "Cobro de días faltantes desde %1 hasta %2 por el servicio %3 para el período %4" )
                 .arg( fechaAlta.date().toString( Qt::SystemLocaleShortDate ) )
                 .arg( proximo.toString( Qt::SystemLocaleShortDate ) )
-                .arg( getNombreServicio( id_servicio ) )
+                .arg( getTextoFacturacion( id_servicio ) )
                 .arg( periodoActual ) );
         break;
     }

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -172,6 +172,20 @@
           </item>
           <item>
            <widget class="QComboBox" name="CBMetodoIncompleto"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLabel" name="LTextoFacturacion">
+            <property name="text">
+             <string>Texto en facturación:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="TETextoFacturacion"/>
           </item>
          </layout>
         </item>

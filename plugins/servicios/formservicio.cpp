@@ -127,7 +127,8 @@ void FormServicio::guardar()
                                       dSBPrecioBase->value(),
                                       CBPeriodo->itemData( CBPeriodo->currentIndex() ).toInt(),
                                       CBInicioCobro->itemData( CBInicioCobro->currentIndex() ).toInt(),
-                                      CBMetodoIncompleto->itemData( CBMetodoIncompleto->currentIndex() ).toInt()
+                                      CBMetodoIncompleto->itemData( CBMetodoIncompleto->currentIndex() ).toInt(),
+                                      TETextoFacturacion->toPlainText()
            ) )
          {
              QMessageBox::information( this, "Correcto", "El servicio fue dado de alta correctamente" );
@@ -198,6 +199,7 @@ void FormServicio::setearId( const int id_servicio, const QModelIndex indice )
     _mapa->addMapping( CBPeriodo         , modelo->fieldIndex( "periodo" )          );
     _mapa->addMapping( CBMetodoIncompleto, modelo->fieldIndex( "forma_incompleto" ) );
     _mapa->addMapping( CBInicioCobro     , modelo->fieldIndex( "dia_cobro" )        );
+    _mapa->addMapping( TETextoFacturacion, modelo->fieldIndex( "texto_facturacion"), "plainText" );
 
     if( this->modelo->data( this->modelo->index( indice.row(), this->modelo->fieldIndex( "fecha_baja" ) ), Qt::EditRole ).toDate().isValid() ) {
         _mapa->addMapping( DEFechaBaja, modelo->fieldIndex( "fecha_baja" ) );
