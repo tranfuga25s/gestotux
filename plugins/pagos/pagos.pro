@@ -68,7 +68,7 @@ LIBS += -L../../bin \
         -lutiles \
         -lreporte \
         -llibctacte \
-        -lcaja \
+        -llibcaja \
         -llibventas
 
 DISTFILES += ../../bin/reportes/Recibo.xml

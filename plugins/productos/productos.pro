@@ -11,9 +11,7 @@ TARGET = productos
 
 DESTDIR = ../../bin/plugins
 
-SOURCES += mcategorias.cpp \
-           mproductos.cpp \
-           vcategorias.cpp \
+SOURCES += vcategorias.cpp \
            vproductos.cpp \
            productos.cpp \
            dproductos.cpp \
@@ -21,11 +19,8 @@ SOURCES += mcategorias.cpp \
            formagregarproducto.cpp \
            formmodificarproducto.cpp \
            dremarcadormasivo.cpp \
-           mtempproductoremarcar.cpp \
-           ../proveedor/mproveedor.cpp
-HEADERS += mcategorias.h \
-           mproductos.h \
-           vcategorias.h \
+           mtempproductoremarcar.cpp
+HEADERS += vcategorias.h \
            vproductos.h \
            productos.h \
            dproductos.h \
@@ -34,8 +29,7 @@ HEADERS += mcategorias.h \
            formmodificarproducto.h \
            ecbcategoriasproductos.h \
            dremarcadormasivo.h \
-           mtempproductoremarcar.h \
-           ../proveedor/mproveedor.h
+           mtempproductoremarcar.h
 
 LIBS += ../../bin/libutiles.a \
         ../../bin/libreporte.a
@@ -45,7 +39,7 @@ PRE_TARGETDEPS += ../../bin/libutiles.a \
 
 INCLUDEPATH += ../../src \
                ../../utiles \
-               ../../reporte
+               ../../reporte \
 
 DISTFILES += productos.SQLITE.sql \
              productos.QMYSQL.sql
@@ -55,10 +49,15 @@ RESOURCES += productos.qrc
 
 FORMS += FormPrefProductosBase.ui \
          formproductobase.ui \
-    dremarcadormasivobase.ui
+         dremarcadormasivobase.ui
 
-OTHER_FILES += productos.QMYSQL.sql \
-               productos.QSQLITE.sql
+QMAKE_LFLAGS += -Wl,-rpath,./plugins
+
+LIBS += -L../../bin \
+        -L../../bin/plugins \
+        -lutiles \
+        -lreporte \
+        -llibproductos
 
 win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"

@@ -90,7 +90,7 @@ LIBS += -L../../bin \
         -llibremitos \
         -llibpagos \
         -llibventas \
-        -lcaja \
+        -llibcaja \
         -llibdescuentos \
         -lutiles
 

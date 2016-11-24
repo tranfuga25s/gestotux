@@ -7,6 +7,7 @@ SUBDIRS +=  CtaCte/CtaCteLib.pro \
             descuentos/DescuentosLib.pro \
             pagos/PagosLib.pro \
             servicios/ServiciosLib.pro \
+            productos/ProductosLib.pro \
             caja \
             gastos \
             productos \
