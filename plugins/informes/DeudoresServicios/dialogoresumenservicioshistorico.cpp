@@ -41,9 +41,10 @@ void DialogoResumenServiciosHistorico::accept()
 {
     EReporte *rep = new EReporte( 0 );
     ParameterList parametros;
-    parametros.append("fecha_inicio", DEInicio->date().toString());
-    parametros.append("fecha_fin"   , DEFin->date().toString()   );
+    parametros.append("fecha_inicio", DEInicio->date().toString(Qt::ISODate));
+    parametros.append("fecha_fin"   , DEFin->date().toString(Qt::ISODate)   );
     rep->especial( "ServiciosHistoricos", parametros );
     rep->hacerPDF( parametros, QString( "Deudas Cuotas al %1" ).arg( QDate::currentDate().toString( "dd-MM-yyyy" ) ) );
     delete rep;
+    this->close();
 }
