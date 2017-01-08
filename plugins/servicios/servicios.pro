@@ -42,6 +42,7 @@ HEADERS =  servicios.h \
            eserviciosdelegate.h \
            vlistaperiodos.h \
            formfacturacionemitida.h \
+           mclientesservicios.h \
            ../../src/mclientes.h
 
 SOURCES =  servicios.cpp \
@@ -58,6 +59,7 @@ SOURCES =  servicios.cpp \
            eserviciosdelegate.cpp \
            vlistaperiodos.cpp \
            formfacturacionemitida.cpp \
+           mclientesservicios.cpp \
            ../../src/mclientes.cpp
 
 RESOURCES += servicios.qrc
@@ -81,6 +83,7 @@ QMAKE_LFLAGS += -Wl,-rpath,./plugins
 
 LIBS += -L../../bin \
         -L../../bin/plugins \
+        -llibservicios \
         -lutiles \
         -lreporte \
         -llibctacte \
@@ -89,6 +92,7 @@ LIBS += -L../../bin \
         -llibdescuentos \
         -llibcaja \
         -llibproductos \
+        -llibservicios \
         -lutiles
 
 win32 {

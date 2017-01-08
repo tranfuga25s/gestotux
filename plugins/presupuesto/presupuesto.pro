@@ -66,7 +66,7 @@ LIBS += -L../../bin \
         -lreporte \
         -llibctacte \
         -lcaja \
-        -ldescuentos
+        -llibdescuentos
 
 DISTFILES += ../../bin/reportes/Presupuesto.xml
 

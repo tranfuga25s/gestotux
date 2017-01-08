@@ -17,7 +17,7 @@ TEMPLATE = app
 LIBS += ../../bin/plugins/libservicios.so \
         ../../bin/plugins/libpagos.so \
         ../../bin/plugins/libcaja.so \
-        ../../bin/plugins/libdescuentos.so \
+        #../../bin/plugins/libdescuentos.so \
         -L../../bin \
         -L../../bin/plugins
 
