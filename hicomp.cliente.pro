@@ -16,6 +16,9 @@ SUBDIRS = utiles/utiles.pro \
           plugins/cuotas/CuotasLib.pro \
           plugins/descuentos/DescuentosLib.pro \
           plugins/pagos/PagosLib.pro \
+          plugins/productos/ProductosLib.pro \
+          plugins/proveedor/ProveedorLib.pro \
+          plugins/descuentos/DescuentosLib.pro \
           plugins/productos/productos.pro \
           plugins/pagos/pagos.pro \
           plugins/servicios/servicios.pro \

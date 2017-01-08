@@ -7,21 +7,19 @@ QT       += sql testlib
 QT       -= gui
 
 INCLUDEPATH += ../. \
-               ../../plugins/servicios
-
-LIBS += ../../bin/plugins/libservicios.so \
-        ../../bin/plugins/libpagos.so \
-        ../../bin/plugins/libcaja.so \
-        ../../bin/plugins/libdescuentos.so \
-        ../../bin/libutiles.a
+               ../../utiles
 
 TARGET = tst_cancelacionperiodoserviciotest
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-HEADERS += ../edatabasetest.h
-SOURCES += tst_cancelacionperiodoserviciotest.cpp
+HEADERS += ../edatabasetest.h \
+           ../../plugins/servicios/mservicios.h \
+           ../../utiles/EReporte.h
+SOURCES += tst_adherirclienteserviciotest.cpp \
+           ../../plugins/servicios/mservicios.cpp \
+           ../../utiles/EReporte.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 OTHER_FILES += ../sql/QSQLITE/servicios.sql \

@@ -29,51 +29,36 @@ PRE_TARGETDEPS += ../../bin/libreporte.a \
                    ../../bin/libutiles.a
 
 HEADERS =  servicios.h \
-           mservicios.h \
            vservicios.h \
-           mrecargos.h \
-           mrecargoshechos.h \
            formasociarserviciocliente.h \
            formservicio.h \
            edrecargos.h \
            formrecargos.h \
            FormClientesAdheridos.h \
-           MClientesServicios.h \
            FormFacturarServicio.h \
            MTempClientesFacturarServicio.h \
-           mperiodoservicio.h \
            mcobroservicioclienteperiodo.h \
            FormVerificarRecargos.h \
            eserviciosdelegate.h \
            vlistaperiodos.h \
            formfacturacionemitida.h \
-           mfacturacionemitida.h \
-           ../../src/mclientes.h \
-           ../productos/mproductos.h
-
+           ../../src/mclientes.h
 
 SOURCES =  servicios.cpp \
-           mservicios.cpp \
            vservicios.cpp \
-           mrecargos.cpp \
-           mrecargoshechos.cpp \
            formasociarserviciocliente.cpp \
            formservicio.cpp \
            edrecargos.cpp \
            formrecargos.cpp \
            FormClientesAdheridos.cpp \
-           MClientesServicios.cpp \
            FormFacturarServicio.cpp \
            MTempClientesFacturarServicio.cpp \
-           mperiodoservicio.cpp \
            mcobroservicioclienteperiodo.cpp \
            FormVerificarRecargos.cpp \
            eserviciosdelegate.cpp \
            vlistaperiodos.cpp \
            formfacturacionemitida.cpp \
-           mfacturacionemitida.cpp \
-           ../../src/mclientes.cpp \
-           ../productos/mproductos.cpp
+           ../../src/mclientes.cpp
 
 RESOURCES += servicios.qrc
 
@@ -101,8 +86,9 @@ LIBS += -L../../bin \
         -llibctacte \
         -lpagos \
         -llibventas \
-        -ldescuentos \
-        -lcaja \
+        -llibdescuentos \
+        -llibcaja \
+        -llibproductos \
         -lutiles
 
 win32 {

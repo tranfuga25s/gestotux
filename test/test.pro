@@ -1,11 +1,10 @@
 TEMPLATE = subdirs
 
 SUBDIRS +=  ProductosTest \
-            PeriodoServicioTest \
+            ServiciosTest \
             #BajaClienteServicioTest \
             PreferenciasTest \
             #EquipamientosTest \
-            CancelacionPeriodoServicio \
             ECBProductosTest \
             ComprasTest \
             ProveedorTest \

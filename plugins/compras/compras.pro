@@ -65,7 +65,8 @@ LIBS += -L../../bin \
         -L../../bin/plugins \
         -lutiles \
         -lreporte \
-        -llibcaja
+        -llibcaja \
+        -llibproveedor
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )
