@@ -24,11 +24,11 @@ LIBS += ../../bin/plugins/libventas.so \
         ../../bin/plugins/libproductos.so \
         ../../bin/libutiles.a \
         -lutiles \
-        -lproductos \
+        -llibproductos \
         -L../../bin \
         -L../../bin/plugins
 
-QMAKE_LFLAGS += -Wl,-rpath,./plugins
+QMAKE_LFLAGS += -Wl,-rpath,../../bin/plugins
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )
