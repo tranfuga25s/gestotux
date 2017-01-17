@@ -33,6 +33,7 @@ SOURCES += descuentosplugin.cpp \
            mdescuentos.cpp
 
 FORMS += FormPrefDescuentosBase.ui
+
 win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }

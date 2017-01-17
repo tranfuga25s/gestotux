@@ -16,6 +16,7 @@ QT += sql
 
 HEADERS += mcategorias.h \
            mproductos.h
+
 SOURCES += mcategorias.cpp \
            mproductos.cpp
 

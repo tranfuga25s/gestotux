@@ -63,50 +63,53 @@ void DeudoresServicios::hacerMenu( QMenu *m )
  */
 void DeudoresServicios::resumenServiciosDeudaHistorica()
 {
+    if (!this->existenServicios() ) {
+        return;
+    }
     DialogoResumenServiciosHistorico *dialogo = new DialogoResumenServiciosHistorico();
     dialogo->exec();
 }
 
+#include "dialogoresumenporservicio.h"
 /*!
  * \brief DeudoresServicios::resumenServiciosPorServicio
  */
 void DeudoresServicios::resumenServiciosPorServicio()
 {
-    QMessageBox::information( 0, "Error", "No implementado" );
-    return;
-    bool ok = false;
-    QStringList meses;
-    meses << "Enero" << "Febrero" << "Marzo" << "Abril" << "Mayo" << "Junio" << "Julio" << "Agosto" << "Septiembre" << "Octubre" << "Noviembre" << "Diciembre";
-    QString mes = QInputDialog::getItem( 0, "Elija el mes", "Elija el mes:", meses, QDate::currentDate().month(), false, &ok );
-    if( ok ) {
-        EReporte *rep = new EReporte( 0 );
-        ParameterList lista;
-        lista.append( Parameter( "mes", meses.indexOf( mes ) ) );
-        rep->especial( "DeudaCuotasMes", lista );
-        rep->hacerPDF( ParameterList(), QString( "Deudas Cuotas del mes %1-%2" ).arg( mes ).arg( QDate::currentDate().toString( "yyyy" ) ) );
-        delete rep;
+    if (!this->existenServicios() ) {
+        return;
     }
+    DialogoResumenPorServicio *dialogo = new DialogoResumenPorServicio();
+    dialogo->exec();
 }
 
+#include "dialogodeudahistoricaservicioporcliente.h"
 /*!
  * \brief DeudoresServicios::resumenServicios Cliente
  * Muestra el resumen de cuotas de un cliente específico
  */
 void DeudoresServicios::resumenServiciosCliente()
 {
-    QMessageBox::information( 0, "Error", "No implementado" );
-    return;
-    /// @TODO: Implementar reporte de deuda segun cliente
-    EReporte *rep = new EReporte( 0 );
-    int id_cliente = 1;
-    ParameterList lista;
-    lista.append( "id_cliente", id_cliente );
-    rep->especial( "deudascuotascliente", lista );
-    rep->hacerPDF( ParameterList(),
-                   QString( "Deudas de Cuotas de %2 Al %1" )
-                   .arg( QDate::currentDate().toString( Qt::LocaleDate ) )
-                   .arg( MClientes::getRazonSocial( id_cliente ) ) );
-    delete rep;
+    if (!this->existenServicios() ) {
+        return;
+    }
+    DialogoDeudaHistoricaServicioPorCliente *dialogo = new DialogoDeudaHistoricaServicioPorCliente();
+    dialogo->exec();
+}
+
+#include "mservicios.h"
+#include <QMessageBox>
+
+/*!
+ * \brief DeudoresServicios::existenServicios
+ */
+bool DeudoresServicios::existenServicios() {
+    if (MServicios::listaDeServicios().length() == 0) {
+        QMessageBox::warning(0, "No hay servicios", "No hay ningun servicio disponible para generar el resumen");
+        return false;
+    } else {
+        return true;
+    }
 }
 
 Q_EXPORT_PLUGIN2( deudoresservicios, DeudoresServicios )

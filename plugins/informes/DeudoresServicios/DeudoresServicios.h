@@ -29,6 +29,7 @@ private:
     QAction *ActResumenServiciosCliente;
     QAction *ActResumenServiciosMes;
 
+    bool existenServicios();
 };
 
 #endif // REPORTESCUOTAS_H

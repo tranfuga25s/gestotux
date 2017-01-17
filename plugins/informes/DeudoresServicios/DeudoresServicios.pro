@@ -24,14 +24,20 @@ PRE_TARGETDEPS += ../../../bin/libreporte.a \
                   ../../../bin/libutiles.a
 
 HEADERS += DeudoresServicios.h \
-    dialogoresumenservicioshistorico.h
+    dialogoresumenservicioshistorico.h \
+    dialogoresumenporservicio.h \
+    dialogodeudahistoricaservicioporcliente.h
 
 SOURCES += DeudoresServicios.cpp \
-    dialogoresumenservicioshistorico.cpp
+    dialogoresumenservicioshistorico.cpp \
+    dialogoresumenporservicio.cpp \
+    dialogodeudahistoricaservicioporcliente.cpp
 
 exists( ../../../travis.pri ) {
     include( ../../../travis.pri )
 }
 
 FORMS += \
-    dialogoresumenservicioshistorico.ui
+    dialogoresumenservicioshistorico.ui \
+    dialogoresumenporservicio.ui \
+    dialogodeudahistoricaservicioporcliente.ui

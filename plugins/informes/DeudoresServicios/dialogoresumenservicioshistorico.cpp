@@ -3,6 +3,7 @@
 #include "EReporte.h"
 #include "mperiodoservicio.h"
 
+
 DialogoResumenServiciosHistorico::DialogoResumenServiciosHistorico(QWidget *parent) :
     QDialog(parent)
 {

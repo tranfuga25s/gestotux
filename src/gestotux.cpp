@@ -340,7 +340,7 @@ void gestotux::bandeja_sistema()
     menu->addAction( ActRestaurar );
     menu->addAction( exitAct );
     iconoBandeja->setIcon( ERegistroPlugins::getInstancia()->pluginInfo()->iconoPrograma() );
-    iconoBandeja->setToolTip( this->windowTitle() + " - Gestotux 0.5 RC 6" );
+    iconoBandeja->setToolTip( this->windowTitle() + " - Gestotux 0.6" );
     iconoBandeja->show();
     iconoBandeja->setContextMenu( menu );
     connect( iconoBandeja, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ), this, SLOT( ocultar_mostrar( QSystemTrayIcon::ActivationReason ) ) );

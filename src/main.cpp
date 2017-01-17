@@ -239,9 +239,7 @@ int main(int argc, char *argv[])
       QString dir2 = dir1;
       dir2.append( "debug.txt" );
       QFile::rename( dir1 + "debugOld.txt", dir1 + "debug" + QDate::currentDate().toString( "ddMyyhms" ) + ".txt" );
-      if( !QFile::copy( dir2, dir1.append( "debugOld.txt") ) ) {
-          qWarning( "Error al mover el archivo de debug anterior a su nueva posicion" );
-      }
+      QFile::copy( dir2, dir1.append( "debugOld.txt") );
       debug = fopen( QApplication::applicationDirPath().append( QDir::separator() ).append( "debug.txt" ).toLocal8Bit(), "w" );
       fseek( debug, 0, 0 );
       qInstallMsgHandler(myMessageOutput);

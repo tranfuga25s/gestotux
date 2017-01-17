@@ -25,6 +25,10 @@
 #include <QHash>
 #include <QDebug>
 
+/**
+ * @brief InformesPlugin::inicializar
+ * @return
+ */
 bool InformesPlugin::inicializar()
 {
     ActActualizar = new QAction( this );
@@ -35,57 +39,96 @@ bool InformesPlugin::inicializar()
     return cargarPluginsInformes();
 }
 
+/**
+ * @brief InformesPlugin::verificarTablas
+ * @return
+ */
 bool InformesPlugin::verificarTablas(QStringList)
 {
  return true;
 }
 
+/**
+ * @brief InformesPlugin::version
+ * @return
+ */
 double InformesPlugin::version() const
 {
  return 0.2;
 }
 
+/**
+ * @brief InformesPlugin::tipo
+ * @return
+ */
 int InformesPlugin::tipo() const
 { return EPlugin::comun; }
 
+/**
+ * @brief InformesPlugin::accionesBarra
+ * @return
+ */
 QList< QActionGroup * > InformesPlugin::accionesBarra()
 {
  return QList<QActionGroup *>();
 }
 
+/**
+ * @brief InformesPlugin::nombre
+ * @return
+ */
 QString InformesPlugin::nombre() const
 { return "informes"; }
 
+/**
+ * @brief InformesPlugin::formsPreferencias
+ * @return
+ */
 QWidgetList InformesPlugin::formsPreferencias()
 { return QWidgetList(); }
 
+/**
+ * @brief InformesPlugin::crearMenu
+ * @param m
+ */
 void InformesPlugin::crearMenu( QMenuBar* m )
 {
- // Busco el menu de informes
- QMenu *mh = m->findChild<QMenu *>( "menuHerramientas" );
- QMenu *mInformes = mh->addMenu( "Informes" );
- mInformes->setObjectName( "menuInformes" );
- // Ingreso las acciones estandares
- // Ingreso la accion y/o menu de cada plugin
- if( !_plugins->isEmpty() )
- {
-     foreach( EInformeInterface *plug, *_plugins ) {
-         plug->hacerMenu( mInformes );
-     }
+    if( !_plugins->isEmpty() )
+    {
+     // Busco el menu de informes
+     //QMenu *mh = m->findChild<QMenu *>( "menuHerramientas" );
+     //QMenu *mInformes = mh->addMenu( "Informes" );
+     QMenu *mInformes = m->addMenu( "Informes" );
+     mInformes->setObjectName( "menuInformes" );
+     // Ingreso las acciones estandares
+     // Ingreso la accion y/o menu de cada plugin
+
+         foreach( EInformeInterface *plug, *_plugins ) {
+             plug->hacerMenu( mInformes );
+         }
  }
  else
  { qDebug( "No existen plugins para colocar en el menu de informes" ); }
- mInformes->addAction( ActActualizar );
+ //mInformes->addAction( ActActualizar );
 }
 
+/**
+ * @brief InformesPlugin::crearToolBar
+ */
 void InformesPlugin::crearToolBar(QToolBar*)
 {}
 
+/**
+ * @brief InformesPlugin::seCierraGestotux
+ */
 void InformesPlugin::seCierraGestotux()
 {
     emit seCierraGestotuxSignal();
 }
 
+/**
+ * @brief InformesPlugin::actualizar
+ */
 void InformesPlugin::actualizar()
 {
     /// @TODO: Implementar actualización de informes

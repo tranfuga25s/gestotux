@@ -58,16 +58,16 @@ public slots:
     void seCierraGestotux();
 
 private:
-	QPluginLoader *loader;
-        QHash<QString, EInformeInterface *> *_plugins;
+    QPluginLoader *loader;
+    QHash<QString, EInformeInterface *> *_plugins;
 
-        QAction *ActActualizar;
+    QAction *ActActualizar;
+
+    bool cargarPluginsInformes();
 
 private slots:
         void actualizar();
 
-private:
-    bool cargarPluginsInformes();
 };
 
 #endif
