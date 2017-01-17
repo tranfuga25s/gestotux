@@ -5,4 +5,5 @@ CONFIG += ordered
 SUBDIRS = balance \
           gananciaventa \
           cuotas \
-          resumencompras
+          resumencompras \
+          DeudoresServicios

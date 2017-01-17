@@ -2,8 +2,7 @@
 TEMPLATE = subdirs
 CONFIG = warn_on \
          qt \
-         thread  \
-         ordered
+         thread
 
 SUBDIRS = utiles/utiles.pro \
           reporte/reporte.pro \
@@ -19,11 +18,13 @@ SUBDIRS = utiles/utiles.pro \
           plugins/productos/ProductosLib.pro \
           plugins/proveedor/ProveedorLib.pro \
           plugins/descuentos/DescuentosLib.pro \
+          plugins/servicios/ServiciosLib.pro \
           plugins/productos/productos.pro \
           plugins/pagos/pagos.pro \
           plugins/servicios/servicios.pro \
           plugins/CtaCte/CtaCte.pro \
           plugins/caja/caja.pro \
+          plugins/descuentos/descuentos.pro \
           plugins/ventas/ventas.pro \
           plugins/cuotas/cuotas.pro \
           plugins/presupuesto/presupuesto.pro \

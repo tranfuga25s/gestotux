@@ -10,6 +10,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
+QMAKE_LFLAGS += -Wl,-rpath,../../bin/plugins
+
 SOURCES += tst_productostest.cpp
 HEADERS += ../edatabasetest.h
 FORMS += ../../plugins/productos/formproductobase.ui \
@@ -18,7 +20,8 @@ FORMS += ../../plugins/productos/formproductobase.ui \
 INCLUDEPATH += ../../plugins/productos \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproductos.so
+LIBS += ../../bin/plugins/libproductos.so \
+        ../../bin/plugins/libproveedor.so
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

@@ -37,6 +37,8 @@ public:
     static QDate obtenerFechaFinPeriodo( const int id_servicio, const QDate fecha_inicio );
     static int diasEnPeriodo( const int id_servicio, const QDate fecha_inicio = QDate::currentDate() );
     static bool existeFacturacion( const int id_servicio );
+    static QDate periodoMinimo();
+    static QDate periodoMaximo();
 
 private:
     static int diasEnPeriodoServicio( const int tipo_periodo, QDate fecha_calculo );

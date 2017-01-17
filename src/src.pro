@@ -99,7 +99,7 @@ LIBS += -lutiles \
         -llibventas \
         -llibctacte \
         -llibcaja \
-        -lproductos \
+        -llibproductos \
         -llibdescuentos \
         -L../bin \
         -L../bin/plugins

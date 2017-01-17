@@ -73,7 +73,7 @@ public:
     static int getDiaFacturacion( const int id_servicio );
     static bool verificarSiPuedeEliminar( const int id_servicio );
     static bool dadoDeBaja( const int id_servicio );
-static QString getTextoFacturacion( const int id_servicio);
+    static QString getTextoFacturacion( const int id_servicio);
 
     static QList<int> listaDeServicios();
     static bool existe( const QString nombre );

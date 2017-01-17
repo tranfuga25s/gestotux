@@ -298,6 +298,44 @@ bool MPeriodoServicio::existeFacturacion(const int id_servicio)
     }
 }
 
+/**
+ * @brief MPeriodoServicio::periodoMinimo
+ * @return
+ */
+QDate MPeriodoServicio::periodoMinimo()
+{
+    QSqlQuery cola;
+    if( cola.exec( QString( "SELECT MIN(fecha_inicio) FROM periodo_servicio" ) ) ) {
+        if( cola.next() ) {
+            return cola.record().value(0).toDate();
+        }
+    } else {
+        qDebug( "Servicios::MPeriodoServicio::periodoMinimo: Error en el exec de la cola actual" );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    }
+    return QDate();
+}
+
+/**
+ * @brief MPeriodoServicio::periodoMinimo
+ * @return
+ */
+QDate MPeriodoServicio::periodoMaximo()
+{
+    QSqlQuery cola;
+    if( cola.exec( QString( "SELECT MAX(fecha_inicio) FROM periodo_servicio" ) ) ) {
+        if( cola.next() ) {
+            return cola.record().value(0).toDate();
+        }
+    } else {
+        qDebug( "Servicios::MPeriodoServicio::periodoMaximo: Error en el exec de la cola actual" );
+        qDebug() << cola.lastError().text();
+        qDebug() << cola.lastQuery();
+    }
+    return QDate();
+}
+
 /*!
  * \fn MPeriodoServicio::getPeriodoActual( const int id_servicio, bool facturar )
  * Devuelve el numero de periodo correspondiente al servicio a facturar de acuerdo con los ultimos datos dados

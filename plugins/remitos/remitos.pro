@@ -68,7 +68,7 @@ LIBS += -L../../bin \
         -llibctacte \
         -lcaja \
         -lcuotas \
-        -ldescuentos
+        -llibdescuentos
 
 win32 {
     QMAKE_LFLAGS += "-Wl,-export-all-symbols"

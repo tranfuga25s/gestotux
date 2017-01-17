@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS +=  PeriodoServicioTest.pro \
+SUBDIRS +=  #PeriodoServicioTest.pro \
             #AdherirClienteServicioTest.pro \
             #BajaClienteServicioTest.pro \
             #CancelacionPeriodoServicio.pro

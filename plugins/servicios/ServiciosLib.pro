@@ -10,15 +10,19 @@ DESTDIR = ../../bin/plugins/
 
 INCLUDEPATH += ../../src \
                ../../utiles \
-               ../../reporte
+               ../../reporte \
+               ../CtaCte
 
-QT += sql
+QT += sql \
+      xml
 
 HEADERS =  mservicios.h \
            mrecargos.h \
            mrecargoshechos.h \
            mperiodoservicio.h \
-           mcobroservicioclienteperiodo.h
+           mcobroservicioclienteperiodo.h \
+           mfacturacionemitida.h \
+           MClientesServicios.cpp \
 
 SOURCES =  mservicios.cpp \
            mrecargos.cpp \
