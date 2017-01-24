@@ -10,17 +10,15 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += tst_proveedortest.cpp \
-           ../../plugins/proveedor/mproveedor.cpp
-
-HEADERS += ../../plugins/proveedor/mproveedor.h
+SOURCES += tst_proveedortest.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproveedor.so
+LIBS += -L../../bin/plugins \
+        -lproveedor
 
 FORMS += ../../plugins/proveedor/FormProveedorBase.ui
 

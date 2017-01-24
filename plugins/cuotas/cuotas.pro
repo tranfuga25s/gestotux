@@ -36,12 +36,10 @@ OTHER_FILES += cuotas.QMYSQL.sql \
                ./../bin/reportes/ResumenCuotas.xml
 
 HEADERS += cuotasplugin.h \
-           mplancuota.h \
            formsimularcuotas.h \
            msimularcuotas.h \
            formprefcuotas.h \
            vplancuotas.h \
-           mitemplancuota.h \
            mvplancuota.h \
            formdetallecuotas.h \
            DPagoCuota.h \
@@ -49,16 +47,13 @@ HEADERS += cuotasplugin.h \
            mgenerarcuotas.h \
            ../../src/mclientes.h \
            formadelantocuotas.h \
-           madelantosimularcuotas.h \
-           ../productos/mproductos.cpp
+           madelantosimularcuotas.h
 
 SOURCES += cuotasplugin.cpp \
-           mplancuota.cpp \
            formsimularcuotas.cpp \
            msimularcuotas.cpp \
            formprefcuotas.cpp \
            vplancuotas.cpp \
-           mitemplancuota.cpp \
            mvplancuota.cpp \
            formdetallecuotas.cpp \
            DPagoCuota.cpp \
@@ -66,8 +61,7 @@ SOURCES += cuotasplugin.cpp \
            mgenerarcuotas.cpp \
            ../../src/mclientes.cpp \
            formadelantocuotas.cpp \
-           madelantosimularcuotas.cpp \
-           ../productos/mproductos.cpp
+           madelantosimularcuotas.cpp
 
 FORMS += formsimularcuotasbase.ui \
          formprefcuotasbase.ui \
@@ -83,16 +77,18 @@ QMAKE_LFLAGS += -Wl,-rpath,./plugins
 
 LIBS += -L../../bin \
         -L../../bin/plugins \
-        -lutiles \
-        -lreporte \
-        -llibctacte \
         -llibcaja \
         -llibremitos \
         -llibpagos \
         -llibventas \
         -llibcaja \
         -llibdescuentos \
-        -lutiles
+        -llibproductos \
+        -llibcuotas \
+        -lctacte \
+        -llibctacte \
+        -lutiles \
+        -lreporte \
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

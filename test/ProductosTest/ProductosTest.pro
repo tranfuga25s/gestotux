@@ -20,8 +20,9 @@ FORMS += ../../plugins/productos/formproductobase.ui \
 INCLUDEPATH += ../../plugins/productos \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproductos.so \
-        ../../bin/plugins/libproveedor.so
+LIBS += -L../../bin/plugins/ \
+        -lproductos \
+        -lproveedor
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

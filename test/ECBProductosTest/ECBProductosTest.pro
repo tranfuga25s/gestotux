@@ -25,8 +25,10 @@ HEADERS += ../edatabasetest.h \
 INCLUDEPATH += ../../plugins/proveedor \
                ../../utiles
 
-LIBS += ../../bin/plugins/libproveedor.so \
-        ../../bin/libutiles.a
+LIBS += -L../../bin/plugins/ \
+        -L../../bin \
+        -lproveedor \
+        -lutiles
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )
