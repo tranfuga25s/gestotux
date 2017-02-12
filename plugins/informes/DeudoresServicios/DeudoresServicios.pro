@@ -17,8 +17,8 @@ INCLUDEPATH += ../../../reporte \
                ../. \
                ../../../plugins/servicios
 
-LIBS += -L../../bin/ \
-        -L../../bin/plugins \
+LIBS += -L../../../bin/ \
+        -L../../../bin/plugins \
         -llibservicios \
         -lutiles \
         -lreporte
