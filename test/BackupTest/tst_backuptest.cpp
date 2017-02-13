@@ -21,6 +21,9 @@ private Q_SLOTS:
     void testCaseColasCorrectas_data();
 };
 
+/**
+ * @brief BackupTest::BackupTest
+ */
 BackupTest::BackupTest()
 {
     this->tablas << "compras"
@@ -81,6 +84,9 @@ void BackupTest::testCaseColasCorrectas()
     QVERIFY2( ccola.exec( cola ), QString( "Error: %1 - %2" ).arg( ccola.lastError().text() ).arg( ccola.lastQuery() ).toLocal8Bit() );
 }
 
+/**
+ * @brief BackupTest::testCaseColasCorrectas_data
+ */
 void BackupTest::testCaseColasCorrectas_data()
 {
     QTest::addColumn<QString>("cola");

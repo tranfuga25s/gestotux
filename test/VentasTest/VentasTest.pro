@@ -19,8 +19,9 @@ INCLUDEPATH += ../../plugins/ventas \
 
 LIBS += -L../../bin \
         -L../../bin/plugins \
+        -lutiles \
+        -llibventas \
         -lventas \
-        -llibutiles \
         -llibproductos \
         -llibdescuentos \
         -llibcaja

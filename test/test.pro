@@ -8,13 +8,13 @@ SUBDIRS +=  ProductosTest \
             ECBProductosTest \
             ComprasTest \
             ProveedorTest \
-            #VentasTest \
+            VentasTest \
             BackupTest \
-            #RemitosTest \
-            #PresupuestosTest \
+            RemitosTest \
+            PresupuestosTest \
             #PagosTest \
             #HiCompTest \
-            #CajaTest
+            CajaTest
 
 OTHER_FILES += sql/dependences.ini \
                sql/QSQLITE/productos.sql \
