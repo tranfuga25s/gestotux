@@ -3,10 +3,10 @@
  <title>Historico deuda Servicio</title>
  <name>ServiciosHistoricos</name>
  <description></description>
- <parameter default="" active="true" listtype="static" type="string" name="fecha_fin">
+ <parameter default="2016-01-02" active="true" listtype="static" type="string" name="fecha_fin">
   <description></description>
  </parameter>
- <parameter default="" active="true" listtype="static" type="string" name="fecha_inicio">
+ <parameter default="1980-01-01" active="true" listtype="static" type="string" name="fecha_inicio">
   <description></description>
  </parameter>
  <grid>
@@ -32,13 +32,14 @@
        strftime('%d/%m/%Y', s.fecha_alta) AS alta_servicio, 
        strftime('%d/%m/%Y', s.fecha_baja) AS baja_servicio, 
        COUNT(cscp.id_periodo_servicio) AS deudas, 
-       COUNT(cscp.id_periodo_servicio) * s.precio_base AS deuda_monetaria 
+       COUNT(cscp.id_periodo_servicio) * s.precio_base AS deuda_monetaria
 FROM cobro_servicio_cliente_periodo AS cscp 
      INNER JOIN servicios AS s ON cscp.id_servicio = s.id_servicio
      INNER JOIN clientes AS cl ON cscp.id_cliente = cl.id
+     INNER JOIN periodo_servicio AS PS ON cscp.id_periodo_servicio = ps.id_periodo_servicio  
 WHERE cscp.id_recibo IS NULL
-  AND ps.fecha_inicio >= '%fecha_inicio' 
-  AND ps.fecha_fin &lt;= '%fecha_fin%'
+  AND ps.fecha_inicio >= date(&lt;? value("fecha_inicio") ?>)  
+  AND ps.fecha_fin &lt;= date(&lt;? value("fecha_fin") ?>) 
 GROUP BY cscp.id_servicio,
          cscp.id_cliente
 HAVING deudas > 2

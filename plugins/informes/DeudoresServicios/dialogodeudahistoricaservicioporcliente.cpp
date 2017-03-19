@@ -58,7 +58,7 @@ void DialogoDeudaHistoricaServicioPorCliente::accept()
         this->close();
 
     } else {
-        QMessageBox::warning(this, "error",  "No se seleccionó ning{un servicio");
+        QMessageBox::warning(this, "error",  "No se seleccionó ningún cliente");
         QDialog::accept();
     }
 }

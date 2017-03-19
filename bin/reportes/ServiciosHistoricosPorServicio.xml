@@ -40,9 +40,9 @@ FROM cobro_servicio_cliente_periodo AS cscp
      INNER JOIN servicios AS s ON cscp.id_servicio = s.id_servicio
      INNER JOIN clientes AS cl ON cscp.id_cliente = cl.id
 WHERE cscp.id_recibo IS NULL
-  AND cscp.id_servicio = %id_servicio% 
-  AND ps.fecha_inicio >= '%fecha_inicio' 
-  AND ps.fecha_fin &lt;= '%fecha_fin%'
+  AND cscp.id_servicio = &lt;? value("id_servicio")?>
+  AND ps.fecha_inicio >= date(&lt;? value("fecha_inicio")?>)
+  AND ps.fecha_fin &lt;= date(&lt;? value("fecha_fin")?>)
 GROUP BY cscp.id_servicio,
          cscp.id_cliente
 HAVING deudas > 2

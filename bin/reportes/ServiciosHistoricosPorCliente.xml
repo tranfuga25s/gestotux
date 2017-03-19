@@ -39,9 +39,9 @@ FROM cobro_servicio_cliente_periodo AS cscp
      INNER JOIN servicios AS s ON cscp.id_servicio = s.id_servicio
      INNER JOIN periodo_servicio AS ps ON cscp.id_periodo_servicio = ps.id_periodo_servicio
 WHERE cscp.id_recibo IS NULL
-  AND cscp.id_cliente = %id_cliente% 
-  AND ps.fecha_inicio >= '%fecha_inicio' 
-  AND ps.fecha_fin &lt;= '%fecha_fin%'
+  AND cscp.id_cliente = &lt;? value("id_cliente") ?> 
+  AND ps.fecha_inicio >= date(&lt;? value("fecha_inicio") ?>) 
+  AND ps.fecha_fin &lt;= date(&lt;? value("fecha_fin")?>)
 ORDER BY cscp.id_servicio ASC, 
          deudas DESC</sql>
  </querysource>
@@ -49,7 +49,7 @@ ORDER BY cscp.id_servicio ASC,
   <name>DatosCliente</name>
   <sql>SELECT razon_social, tel_fijo, tel_celular, id
 FROM clientes
-WHERE id = %id_cliente%</sql>
+WHERE id = &lt;?value("id_cliente")?></sql>
  </querysource>
  <rpthead>
   <height>80</height>
