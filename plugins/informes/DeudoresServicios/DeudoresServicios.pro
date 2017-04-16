@@ -17,8 +17,12 @@ INCLUDEPATH += ../../../reporte \
                ../. \
                ../../../plugins/servicios
 
-LIBS += ../../../bin/libutiles.a \
-        ../../../bin/libreporte.a
+LIBS += -L../../../bin/ \
+        -L../../../bin/plugins \
+        -llibservicios \
+        -lutiles \
+        -lreporte
+
 
 PRE_TARGETDEPS += ../../../bin/libreporte.a \
                   ../../../bin/libutiles.a
@@ -37,7 +41,11 @@ exists( ../../../travis.pri ) {
     include( ../../../travis.pri )
 }
 
-FORMS += \
-    dialogoresumenservicioshistorico.ui \
-    dialogoresumenporservicio.ui \
-    dialogodeudahistoricaservicioporcliente.ui
+FORMS += dialogoresumenservicioshistorico.ui \
+         dialogoresumenporservicio.ui \
+         dialogodeudahistoricaservicioporcliente.ui
+
+win32 {
+    QMAKE_LFLAGS += "-Wl,-export-all-symbols"
+}
+QMAKE_LFLAGS += -Wl,-rpath,./plugins

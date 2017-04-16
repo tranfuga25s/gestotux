@@ -235,7 +235,7 @@
          <item>
           <widget class="QProgressBar" name="PgBAvance">
            <property name="value">
-            <number>24</number>
+            <number>1</number>
            </property>
           </widget>
          </item>

@@ -95,9 +95,10 @@ void EBusqueda::changeEvent( QEvent *e )
  * \brief EBusqueda::closeEvent
  * \param event
  */
-void EBusqueda::closeEvent( QCloseEvent *event )
+void EBusqueda::closeEvent( QCloseEvent * )
 {
-    borrar();
+    //delete this->_modelo;
+    //borrar();
     emit cerrando();
 }
 

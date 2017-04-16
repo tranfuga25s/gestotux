@@ -30,6 +30,10 @@ DialogoResumenPorServicio::DialogoResumenPorServicio(QWidget *parent) :
     mservicios->select();
 }
 
+/**
+ * @brief DialogoResumenPorServicio::changeEvent
+ * @param e
+ */
 void DialogoResumenPorServicio::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);

@@ -46,7 +46,7 @@ LIBS += -L../../bin \
         -llibctacte \
         -llibcaja \
         -llibcuotas \
-        -lproductos \
+        -llibproductos \
         -llibdescuentos
 
 PRE_TARGETDEPS += ../../bin/libutiles.a \

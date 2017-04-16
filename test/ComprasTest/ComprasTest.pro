@@ -24,9 +24,11 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 INCLUDEPATH += ../../plugins/compras \
                ../../utiles
 
-LIBS += ../../bin/plugins/libcompras.so \
-        ../../bin/plugins/libproveedor.so \
-        ../../bin/libutiles.a
+LIBS += -L../../bin/plugins \
+        -lcompras \
+        -lproveedor \
+        -L../../bin \
+        -lutiles
 
 FORMS += ../../plugins/compras/FormPrefComprasBase.ui \
          ../../plugins/compras/FormAgregarCompraBase.ui

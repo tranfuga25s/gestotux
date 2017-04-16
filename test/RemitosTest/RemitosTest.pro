@@ -17,10 +17,12 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 INCLUDEPATH += ../../plugins/remitos \
                ../../utiles
 
-LIBS += ../../bin/plugins/libremitos.so \
-        ../../bin/plugins/libcaja.so \
-        ../../bin/plugins/libcuotas.so \
-        ../../bin/libutiles.a
+LIBS += -L../../bin/plugins \
+        -lremitos \
+        -L../../bin \
+        -llibcaja \
+        -llibcuotas \
+        -lutiles
 
 FORMS += ../../plugins/remitos/FormAgregarRemitoBase.ui
 

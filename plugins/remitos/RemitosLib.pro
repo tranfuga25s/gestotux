@@ -16,12 +16,18 @@ TARGET = libremitos
 
 DESTDIR = ../../bin/plugins/
 
+QMAKE_LFLAGS += -Wl,-rpath,./plugins
+
 INCLUDEPATH += ../../utiles \
                ../productos \
                ../../src \
                ../CtaCte \
                ../caja \
                ../descuentos
+
+LIBS += -L../../bin \
+        -lutiles
+
 exists( ../../travis.pri ) {
     include( ../../travis.pri )
 }

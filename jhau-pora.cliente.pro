@@ -20,7 +20,7 @@ SUBDIRS = reporte/reporte.pro \
           plugins/ventas/ventas.pro \
           plugins/informes/informa.pro \
           plugins/informes/balance/balance.pro \
-          plugins/informes/compras/compras.pro \
+          plugins/informes/resumencompras/resumencompras.pro \
           src/src.pro \
           plugins/jhau-pora/jhau-pora.pro
 

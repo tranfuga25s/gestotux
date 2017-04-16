@@ -12,7 +12,7 @@ SUBDIRS +=  ProductosTest \
             BackupTest \
             RemitosTest \
             PresupuestosTest \
-            PagosTest \
+            #PagosTest \
             #HiCompTest \
             CajaTest
 
