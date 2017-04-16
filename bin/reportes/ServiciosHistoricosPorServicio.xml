@@ -39,10 +39,11 @@
 FROM cobro_servicio_cliente_periodo AS cscp 
      INNER JOIN servicios AS s ON cscp.id_servicio = s.id_servicio
      INNER JOIN clientes AS cl ON cscp.id_cliente = cl.id
+     INNER JOIN periodo_servicio AS ps ON cscp.id_periodo_servicio = ps.id_periodo_servicio 
 WHERE cscp.id_recibo IS NULL
-  AND cscp.id_servicio = %id_servicio% 
-  AND ps.fecha_inicio >= '%fecha_inicio' 
-  AND ps.fecha_fin &lt;= '%fecha_fin%'
+  AND cscp.id_servicio = &lt;? value("id_servicio") ?>
+  AND ps.fecha_inicio >= date(&lt;? value("fecha_inicio") ?>)
+  AND ps.fecha_fin &lt;= date(&lt;? value("fecha_fin") ?>)
 GROUP BY cscp.id_servicio,
          cscp.id_cliente
 HAVING deudas > 2
@@ -50,7 +51,7 @@ ORDER BY cscp.id_servicio ASC,
          deudas DESC</sql>
  </querysource>
  <rpthead>
-  <height>45</height>
+  <height>55</height>
   <label>
    <rect>
     <x>0</x>
@@ -65,8 +66,27 @@ ORDER BY cscp.id_servicio ASC,
    </font>
    <hcenter/>
    <vcenter/>
-   <string>Resumen de deuda historico de un servicio</string>
+   <string>Resumen de deuda</string>
   </label>
+  <field>
+   <rect>
+    <x>15</x>
+    <y>25</y>
+    <width>755</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Times New Roman</face>
+    <size>14</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <data>
+    <query>General</query>
+    <column>nombre_servicio</column>
+   </data>
+  </field>
  </rpthead>
  <section>
   <name>Servicios</name>
@@ -82,8 +102,8 @@ ORDER BY cscp.id_servicio ASC,
     <label>
      <rect>
       <x>10</x>
-      <y>25</y>
-      <width>60</width>
+      <y>20</y>
+      <width>65</width>
       <height>15</height>
      </rect>
      <font>
@@ -98,7 +118,7 @@ ORDER BY cscp.id_servicio ASC,
     <field>
      <rect>
       <x>75</x>
-      <y>25</y>
+      <y>20</y>
       <width>40</width>
       <height>15</height>
      </rect>
@@ -117,9 +137,9 @@ ORDER BY cscp.id_servicio ASC,
     </field>
     <field>
      <rect>
-      <x>110</x>
-      <y>25</y>
-      <width>270</width>
+      <x>100</x>
+      <y>20</y>
+      <width>345</width>
       <height>15</height>
      </rect>
      <font>
@@ -135,11 +155,11 @@ ORDER BY cscp.id_servicio ASC,
      </data>
     </field>
     <line>
-     <xstart>4.19223</xstart>
+     <xstart>-0.80777</xstart>
      <ystart>42.5048</ystart>
      <xend>784.192</xend>
      <yend>42.5048</yend>
-     <weight>0</weight>
+     <weight>1</weight>
     </line>
     <label>
      <rect>
@@ -158,11 +178,11 @@ ORDER BY cscp.id_servicio ASC,
      <string>Razon Social</string>
     </label>
     <line>
-     <xstart>5.80777</xstart>
+     <xstart>0.80777</xstart>
      <ystart>63.466</ystart>
      <xend>785.808</xend>
      <yend>63.466</yend>
-     <weight>0</weight>
+     <weight>1</weight>
     </line>
     <label>
      <rect>
@@ -198,9 +218,9 @@ ORDER BY cscp.id_servicio ASC,
     </label>
     <label>
      <rect>
-      <x>350</x>
-      <y>25</y>
-      <width>50</width>
+      <x>445</x>
+      <y>20</y>
+      <width>55</width>
       <height>15</height>
      </rect>
      <font>
@@ -208,14 +228,14 @@ ORDER BY cscp.id_servicio ASC,
       <size>12</size>
       <weight>bold</weight>
      </font>
-     <left/>
+     <right/>
      <vcenter/>
      <string>Precio: </string>
     </label>
     <field>
      <rect>
-      <x>400</x>
-      <y>25</y>
+      <x>505</x>
+      <y>20</y>
       <width>85</width>
       <height>15</height>
      </rect>
@@ -246,15 +266,8 @@ ORDER BY cscp.id_servicio ASC,
      </font>
      <hcenter/>
      <vcenter/>
-     <string>Cantidad</string>
+     <string>Cant</string>
     </label>
-    <line>
-     <xstart>310</xstart>
-     <ystart>10</ystart>
-     <xend>495</xend>
-     <yend>10</yend>
-     <weight>1</weight>
-    </line>
     <label>
      <rect>
       <x>715</x>
@@ -273,9 +286,9 @@ ORDER BY cscp.id_servicio ASC,
     </label>
     <label>
      <rect>
-      <x>490</x>
-      <y>25</y>
-      <width>80</width>
+      <x>600</x>
+      <y>20</y>
+      <width>85</width>
       <height>15</height>
      </rect>
      <font>
@@ -283,14 +296,14 @@ ORDER BY cscp.id_servicio ASC,
       <size>12</size>
       <weight>bold</weight>
      </font>
-     <left/>
+     <right/>
      <vcenter/>
      <string>Fecha Alta: </string>
     </label>
     <field>
      <rect>
-      <x>575</x>
-      <y>25</y>
+      <x>690</x>
+      <y>20</y>
       <width>80</width>
       <height>15</height>
      </rect>
@@ -307,42 +320,6 @@ ORDER BY cscp.id_servicio ASC,
       <column>alta_servicio</column>
      </data>
     </field>
-    <label>
-     <rect>
-      <x>645</x>
-      <y>25</y>
-      <width>80</width>
-      <height>15</height>
-     </rect>
-     <font>
-      <face>Times New Roman</face>
-      <size>12</size>
-      <weight>bold</weight>
-     </font>
-     <left/>
-     <vcenter/>
-     <string>Fecha Baja: </string>
-    </label>
-    <field>
-     <rect>
-      <x>735</x>
-      <y>25</y>
-      <width>65</width>
-      <height>15</height>
-     </rect>
-     <font>
-      <face>Times New Roman</face>
-      <size>10</size>
-      <weight>normal</weight>
-     </font>
-     <wordwrap/>
-     <left/>
-     <vcenter/>
-     <data>
-      <query>General</query>
-      <column>baja_servicio</column>
-     </data>
-    </field>
     <line>
      <xstart>5</xstart>
      <ystart>10</ystart>
@@ -360,14 +337,7 @@ ORDER BY cscp.id_servicio ASC,
     <line>
      <xstart>5</xstart>
      <ystart>10</ystart>
-     <xend>210</xend>
-     <yend>10</yend>
-     <weight>2</weight>
-    </line>
-    <line>
-     <xstart>575</xstart>
-     <ystart>10</ystart>
-     <xend>780</xend>
+     <xend>785</xend>
      <yend>10</yend>
      <weight>2</weight>
     </line>
@@ -377,13 +347,78 @@ ORDER BY cscp.id_servicio ASC,
    <key>
     <query>General</query>
    </key>
-   <height>30</height>
+   <height>25</height>
+   <line>
+    <xstart>0</xstart>
+    <ystart>25</ystart>
+    <xend>785</xend>
+    <yend>25</yend>
+    <weight>0</weight>
+   </line>
+   <field>
+    <rect>
+     <x>680</x>
+     <y>5</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>General</query>
+     <column>deuda_monetaria</column>
+    </data>
+    <format>$%0.2f</format>
+   </field>
+   <field>
+    <rect>
+     <x>655</x>
+     <y>5</y>
+     <width>40</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <vcenter/>
+    <data>
+     <query>General</query>
+     <column>deudas</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>400</x>
+     <y>5</y>
+     <width>160</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Times New Roman</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>General</query>
+     <column>telefono_celular</column>
+    </data>
+   </field>
    <field>
     <rect>
      <x>205</x>
      <y>5</y>
      <width>190</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
     <font>
      <face>Times New Roman</face>
@@ -402,7 +437,7 @@ ORDER BY cscp.id_servicio ASC,
      <x>15</x>
      <y>5</y>
      <width>190</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
     <font>
      <face>Times New Roman</face>
@@ -415,71 +450,6 @@ ORDER BY cscp.id_servicio ASC,
      <query>General</query>
      <column>razon_social</column>
     </data>
-   </field>
-   <field>
-    <rect>
-     <x>400</x>
-     <y>5</y>
-     <width>160</width>
-     <height>25</height>
-    </rect>
-    <font>
-     <face>Times New Roman</face>
-     <size>10</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <vcenter/>
-    <data>
-     <query>General</query>
-     <column>telefono_celular</column>
-    </data>
-   </field>
-   <field>
-    <rect>
-     <x>655</x>
-     <y>5</y>
-     <width>40</width>
-     <height>25</height>
-    </rect>
-    <font>
-     <face>Times New Roman</face>
-     <size>10</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <vcenter/>
-    <data>
-     <query>General</query>
-     <column>deudas</column>
-    </data>
-   </field>
-   <line>
-    <xstart>5</xstart>
-    <ystart>25</ystart>
-    <xend>775</xend>
-    <yend>25</yend>
-    <weight>0</weight>
-   </line>
-   <field>
-    <rect>
-     <x>680</x>
-     <y>5</y>
-     <width>100</width>
-     <height>25</height>
-    </rect>
-    <font>
-     <face>Times New Roman</face>
-     <size>10</size>
-     <weight>normal</weight>
-    </font>
-    <right/>
-    <vcenter/>
-    <data>
-     <query>General</query>
-     <column>deuda_monetaria</column>
-    </data>
-    <format>$%0.2f</format>
    </field>
   </detail>
  </section>
