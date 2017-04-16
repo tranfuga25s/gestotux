@@ -40,8 +40,8 @@ void DialogoDeudaHistoricaServicioPorCliente::changeEvent(QEvent *e)
  */
 void DialogoDeudaHistoricaServicioPorCliente::accept()
 {
-   // valido que haya alg{un servicio elegido.
-    if (CBClientes->idClienteActual() > 0 ) {
+   // valido que haya algun servicio elegido.
+    if (CBClientes->idClienteActual() >= 0 ) {
         // valido que el servicio tenga al menos periodos facturados
         int id_cliente = CBClientes->idClienteActual();
 
@@ -58,7 +58,11 @@ void DialogoDeudaHistoricaServicioPorCliente::accept()
         this->close();
 
     } else {
-        QMessageBox::warning(this, "error",  "No se seleccionó ningún cliente");
+        QMessageBox::warning(
+            this,
+            "Error",
+            QString::fromUtf8("No se seleccionó ningún servicio")
+        );
         QDialog::accept();
     }
 }

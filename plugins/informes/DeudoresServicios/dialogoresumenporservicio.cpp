@@ -11,8 +11,8 @@ DialogoResumenPorServicio::DialogoResumenPorServicio(QWidget *parent) :
 {
     setupUi(this);
 
+    this->setWindowTitle("Resumen Historio de deudores por servicio");
 
-    this->setWindowTitle("Resumen Historio de deudores de Servicios");
     // Buscar rango de datos necesario
     QDate minimo = MPeriodoServicio::periodoMinimo();
     QDate maximo = MPeriodoServicio::periodoMaximo();
@@ -26,6 +26,7 @@ DialogoResumenPorServicio::DialogoResumenPorServicio(QWidget *parent) :
 
     CBServicios->setModel(mservicios);
     CBServicios->setModelColumn(mservicios->fieldIndex("nombre"));
+
     mservicios->select();
 }
 
@@ -50,13 +51,16 @@ void DialogoResumenPorServicio::changeEvent(QEvent *e)
  */
 void DialogoResumenPorServicio::accept()
 {
-   // valido que haya alg{un servicio elegido.
+   // valido que haya algun servicio elegido.
     if (CBServicios->currentIndex() >= 0 ) {
         // valido que el servicio tenga al menos periodos facturados
         int id_servicio = mservicios->data(mservicios->index(CBServicios->currentIndex(), 0), Qt::DisplayRole).toInt();
-         //CBServicios->currentIndex();
-        if (!MPeriodoServicio::existeFacturacion(id_servicio)) {
-            QMessageBox::warning(this, "faltan datos", "No hay ninguna facturación realizada sobre este servicio");
+        if (!MPeriodoServicio::existeFacturacion( id_servicio )) {
+            QMessageBox::warning(
+                this,
+                "Faltan datos",
+                QString::fromUtf8("No hay ninguna facturación realizada sobre este servicio")
+            );
             return;
         }
 
@@ -70,10 +74,11 @@ void DialogoResumenPorServicio::accept()
                        .arg( MServicios::getNombreServicio(id_servicio))
                        .arg( QDate::currentDate().toString( "dd-MM-yyyy" ) ) );
         delete rep;
+        delete mservicios;
         this->close();
 
     } else {
-        QMessageBox::warning(this, "error",  "No se seleccionó ningn servicio");
+        QMessageBox::warning(this, "error", QString::fromUtf8("No se seleccionó ningún servicio"));
         QDialog::accept();
     }
 }
