@@ -19,10 +19,13 @@ HEADERS += ../../utiles/ecbproductos.h \
            ../../utiles/ecbproductosmodel.h \
            ../../utiles/ecbproductosfilter.h \
            ../../utiles/mproductostotales.h
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../../plugins/compras \
                ../../utiles
+
+QMAKE_LFLAGS += -Wl,-rpath,../../bin/plugins
 
 LIBS += -L../../bin/plugins \
         -lcompras \
