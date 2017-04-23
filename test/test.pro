@@ -8,9 +8,9 @@ SUBDIRS +=  ProductosTest \
             ECBProductosTest \
             ComprasTest \
             ProveedorTest \
-            VentasTest \
+            #VentasTest \
             BackupTest \
-            RemitosTest \
+            #RemitosTest \
             PresupuestosTest \
             #PagosTest \
             #HiCompTest \
