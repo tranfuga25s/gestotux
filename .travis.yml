@@ -31,14 +31,14 @@ script:
     #- ./tst_periodoserviciotest
     - cd ../ComprasTest
     - ./tst_comprastest
-    - cd ../ProveedorTest
-    - ./tst_proveedortest
-    - cd ../VentasTest
-    - ./tst_ventastest
+    #- cd ../ProveedorTest
+    #- ./tst_proveedortest
+    #- cd ../VentasTest
+    #- ./tst_ventastest
     - cd ../BackupTest
     - ./tst_backuptest
-    - cd ../RemitosTest
-    - ./tst_remitostest
+    #- cd ../RemitosTest
+    #- ./tst_remitostest
     - cd ../PresupuestosTest
     - ./tst_presupuestostest
     #- cd ../HiCompTest
