@@ -18,6 +18,7 @@ INCLUDEPATH += ../../plugins/remitos \
                ../../utiles
 
 LIBS += -L../../bin/plugins \
+        -llibremitos \
         -lremitos \
         -L../../bin \
         -llibcaja \

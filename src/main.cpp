@@ -235,14 +235,14 @@ int main(int argc, char *argv[])
       QApplication app(argc, argv);
       // Maneja la salida del programa
       // Elimino el archivo anterior si existe para que el rename no falle
-      QString dir1 = QApplication::applicationDirPath().append( QDir::separator() );
+      /*QString dir1 = QApplication::applicationDirPath().append( QDir::separator() );
       QString dir2 = dir1;
       dir2.append( "debug.txt" );
       QFile::rename( dir1 + "debugOld.txt", dir1 + "debug" + QDateTime::currentDateTime().toString( "ddMyyhms" ) + ".txt" );
       QFile::copy( dir2, dir1.append( "debugOld.txt") );
       debug = fopen( QApplication::applicationDirPath().append( QDir::separator() ).append( "debug.txt" ).toLocal8Bit(), "w" );
       fseek( debug, 0, 0 );
-      qInstallMsgHandler(myMessageOutput);
+      qInstallMsgHandler(myMessageOutput);*/
       // Muestro el splash
       ESplash splash;
       splash.show();
