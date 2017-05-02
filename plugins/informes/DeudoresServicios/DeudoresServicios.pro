@@ -17,7 +17,7 @@ INCLUDEPATH += ../../../reporte \
                ../. \
                ../../../plugins/servicios
 
-QMAKE_LFLAGS += -Wl,-rpath,./../../../plugins
+QMAKE_LFLAGS += -Wl,-rpath,./../../bin/plugins
 
 LIBS += -L../../../bin/ \
         -L../../../bin/plugins \
@@ -28,21 +28,21 @@ LIBS += -L../../../bin/ \
 PRE_TARGETDEPS += ../../../bin/libreporte.a \
                   ../../../bin/libutiles.a
 
-HEADERS += DeudoresServicios.h \
-           dialogoresumenservicioshistorico.h \
-           dialogoresumenporservicio.h \
-           dialogodeudahistoricaservicioporcliente.h \
-           ../../../src/mclientes.cpp \
-           ../../servicios/mperiodoservicio.cpp \
-           ../../servicios/mservicios.cpp
+HEADERS = DeudoresServicios.h \
+          dialogoresumenservicioshistorico.h \
+          dialogoresumenporservicio.h \
+          dialogodeudahistoricaservicioporcliente.h \
+          ../../../src/mclientes.h \
+          ../../../utiles/eregistroplugins.h \
+          utilreportedeudoresservicios.h
 
-SOURCES += DeudoresServicios.cpp \
-           dialogoresumenservicioshistorico.cpp \
-           dialogoresumenporservicio.cpp \
-           dialogodeudahistoricaservicioporcliente.cpp \
-           ../../../src/mclientes.h \
-           ../../servicios/mperiodoservicio.h \
-           ../../servicios/mservicios.h
+SOURCES = DeudoresServicios.cpp \
+          dialogoresumenservicioshistorico.cpp \
+          dialogoresumenporservicio.cpp \
+          dialogodeudahistoricaservicioporcliente.cpp \
+          ../../../src/mclientes.cpp \
+          ../../../utiles/eregistroplugins.cpp \
+          utilreportedeudoresservicios.cpp
 
 exists( ../../../travis.pri ) {
     include( ../../../travis.pri )
@@ -53,5 +53,5 @@ FORMS += dialogoresumenservicioshistorico.ui \
          dialogodeudahistoricaservicioporcliente.ui
 
 win32 {
-    QMAKE_LFLAGS += "-Wl,-export-all-symbols"
+    #QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }

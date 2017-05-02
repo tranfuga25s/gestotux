@@ -1,9 +1,7 @@
 #include "dialogodeudahistoricaservicioporcliente.h"
 
-#include "mclientes.h"
-#include "MClientesServicios.h"
-#include "mperiodoservicio.h"
 #include "EReporte.h"
+#include "utilreportedeudoresservicios.h"
 
 #include <QMessageBox>
 
@@ -14,8 +12,8 @@ DialogoDeudaHistoricaServicioPorCliente::DialogoDeudaHistoricaServicioPorCliente
 
     this->setWindowTitle("Resumen Historico de Servicios Pagos");
     // Buscar rango de datos necesario
-    QDate minimo = MPeriodoServicio::periodoMinimo();
-    QDate maximo = MPeriodoServicio::periodoMaximo();
+    QDate minimo = UtilReporteDeudoresServicios::periodoMinimo();
+    QDate maximo = UtilReporteDeudoresServicios::periodoMaximo();
     if (!maximo.isValid()) {
         maximo = QDate::currentDate();
     }
@@ -52,7 +50,7 @@ void DialogoDeudaHistoricaServicioPorCliente::accept()
         parametros.append("id_cliente" , id_cliente);
         rep->especial( "ServiciosHistoricosPorCliente", parametros );
         rep->hacerPDF( parametros, QString( "Deuda de servicios de %1 al %2" )
-                       .arg( MClientes::getRazonSocial(id_cliente))
+                       .arg( UtilReporteDeudoresServicios::getRazonSocial(id_cliente))
                        .arg( QDate::currentDate().toString( "dd-MM-yyyy" ) ) );
         delete rep;
         this->close();

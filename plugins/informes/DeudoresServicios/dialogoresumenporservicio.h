@@ -2,7 +2,6 @@
 #define DIALOGORESUMENPORSERVICIO_H
 
 #include "ui_dialogoresumenporservicio.h"
-class MServicios;
 
 class DialogoResumenPorServicio : public QDialog, private Ui::DialogoResumenPorServicio
 {
@@ -16,9 +15,6 @@ protected:
 
 public slots:
     void accept();
-
-private:
-    MServicios *mservicios;
 };
 
 #endif // DIALOGORESUMENPORSERVICIO_H
