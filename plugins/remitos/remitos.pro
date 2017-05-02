@@ -6,7 +6,12 @@ CONFIG += dll \
           rtti \
           exceptions
 
-SOURCES +=  remitosplugins.cpp \
+QT += sql \
+      xml
+
+TARGET = remitos
+
+SOURCES =  remitosplugins.cpp \
            formprefremito.cpp \
            vremito.cpp \
            vitemremito.cpp \
@@ -18,7 +23,7 @@ SOURCES +=  remitosplugins.cpp \
            ../CtaCte/mcuentacorriente.cpp \
            ../CtaCte/mitemcuentacorriente.cpp
 
-HEADERS += remitosplugins.h \
+HEADERS  = remitosplugins.h \
            formprefremito.h \
            vremito.h \
            vitemremito.h \
@@ -29,11 +34,6 @@ HEADERS += remitosplugins.h \
            formremito.h \
            ../CtaCte/mcuentacorriente.h \
            ../CtaCte/mitemcuentacorriente.h
-
-QT += sql \
-      xml
-
-TARGET = remitos
 
 DESTDIR = ../../bin/plugins/
 

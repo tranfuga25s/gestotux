@@ -11,7 +11,7 @@ QT += sql \
 
 TARGET = servicios
 
-DESTDIR = ../../bin/plugins/
+DESTDIR = ../../bin/plugins
 
 INCLUDEPATH += ../../src \
               ../../reporte \
