@@ -29,6 +29,7 @@ LIBS += -L../../bin/plugins/ \
         -L../../bin \
         -lproveedor \
         -lutiles
+QMAKE_LFLAGS += -Wl,-rpath,../../bin/plugins
 
 exists( ../../travis.pri ) {
     include( ../../travis.pri )

@@ -34,8 +34,7 @@ SUBDIRS = utiles/utiles.pro \
           plugins/remitos/remitos.pro \
           plugins/informes/informa.pro \
           plugins/informes/informes.pro \
-          src/src.pro \
-          test/test.pro
+          src/src.pro
 
 NOMBRE_PROGRAMA = ../../bin/hicomp
 ARCHIVO_RC = HiComp/hicomp.rc

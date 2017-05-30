@@ -1,6 +1,6 @@
 #include "DeudoresServicios.h"
 #include "EReporte.h"
-#include "mclientes.h"
+#include "utilreportedeudoresservicios.h"
 
 #include <QDate>
 #include <QMessageBox>
@@ -97,14 +97,13 @@ void DeudoresServicios::resumenServiciosCliente()
     dialogo->exec();
 }
 
-#include "mservicios.h"
 #include <QMessageBox>
 
 /*!
  * \brief DeudoresServicios::existenServicios
  */
 bool DeudoresServicios::existenServicios() {
-    if (MServicios::listaDeServicios().length() == 0) {
+    if (UtilReporteDeudoresServicios::listaDeServicios().length() == 0) {
         QMessageBox::warning(0, "No hay servicios", "No hay ningun servicio disponible para generar el resumen");
         return false;
     } else {

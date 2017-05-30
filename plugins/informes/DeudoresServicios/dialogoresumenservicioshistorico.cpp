@@ -1,8 +1,8 @@
 #include "dialogoresumenservicioshistorico.h"
 
 #include "EReporte.h"
-#include "mperiodoservicio.h"
 
+#include "utilreportedeudoresservicios.h"
 
 DialogoResumenServiciosHistorico::DialogoResumenServiciosHistorico(QWidget *parent) :
     QDialog(parent)
@@ -10,8 +10,8 @@ DialogoResumenServiciosHistorico::DialogoResumenServiciosHistorico(QWidget *pare
     setupUi(this);
     this->setWindowTitle("Resumen Historico de Servicios Pagos");
     // Buscar rango de datos necesario
-    QDate minimo = MPeriodoServicio::periodoMinimo();
-    QDate maximo = MPeriodoServicio::periodoMaximo();
+    QDate minimo = UtilReporteDeudoresServicios::periodoMinimo();
+    QDate maximo = UtilReporteDeudoresServicios::periodoMaximo();
     if (!maximo.isValid()) {
         maximo = QDate::currentDate();
     }

@@ -5,7 +5,7 @@
 #include "eactcerrar.h"
 
 FormVencimientoGarantias::FormVencimientoGarantias(QWidget *parent) :
-QWidget(parent)
+EVentana(parent)
 {
     setupUi(this);
     this->setWindowTitle( "Vencimientos de Garantias" );

@@ -3,9 +3,10 @@
 
 #include "ui_formvencimientogarantias.h"
 #include "mvgarantias.h"
+#include "eventana.h"
 class EActCerrar;
 
-class FormVencimientoGarantias : public QWidget, private Ui::FormVencimientoGarantias
+class FormVencimientoGarantias : public EVentana, private Ui::FormVencimientoGarantias
 {
     Q_OBJECT
     

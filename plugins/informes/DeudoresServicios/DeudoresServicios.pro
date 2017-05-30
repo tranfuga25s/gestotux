@@ -7,7 +7,7 @@ CONFIG += dll \
 QT += sql \
       xml
 
-TARGET = cuotas
+TARGET = deudoresservicios
 
 DESTDIR = ../../../bin/plugins/informes
 
@@ -17,9 +17,10 @@ INCLUDEPATH += ../../../reporte \
                ../. \
                ../../../plugins/servicios
 
+QMAKE_LFLAGS += -Wl,-rpath,./../../bin/plugins
+
 LIBS += -L../../../bin/ \
         -L../../../bin/plugins \
-        -llibservicios \
         -lutiles \
         -lreporte
 
@@ -27,15 +28,21 @@ LIBS += -L../../../bin/ \
 PRE_TARGETDEPS += ../../../bin/libreporte.a \
                   ../../../bin/libutiles.a
 
-HEADERS += DeudoresServicios.h \
-    dialogoresumenservicioshistorico.h \
-    dialogoresumenporservicio.h \
-    dialogodeudahistoricaservicioporcliente.h
+HEADERS = DeudoresServicios.h \
+          dialogoresumenservicioshistorico.h \
+          dialogoresumenporservicio.h \
+          dialogodeudahistoricaservicioporcliente.h \
+          ../../../src/mclientes.h \
+          ../../../utiles/eregistroplugins.h \
+          utilreportedeudoresservicios.h
 
-SOURCES += DeudoresServicios.cpp \
-    dialogoresumenservicioshistorico.cpp \
-    dialogoresumenporservicio.cpp \
-    dialogodeudahistoricaservicioporcliente.cpp
+SOURCES = DeudoresServicios.cpp \
+          dialogoresumenservicioshistorico.cpp \
+          dialogoresumenporservicio.cpp \
+          dialogodeudahistoricaservicioporcliente.cpp \
+          ../../../src/mclientes.cpp \
+          ../../../utiles/eregistroplugins.cpp \
+          utilreportedeudoresservicios.cpp
 
 exists( ../../../travis.pri ) {
     include( ../../../travis.pri )
@@ -46,6 +53,5 @@ FORMS += dialogoresumenservicioshistorico.ui \
          dialogodeudahistoricaservicioporcliente.ui
 
 win32 {
-    QMAKE_LFLAGS += "-Wl,-export-all-symbols"
+    #QMAKE_LFLAGS += "-Wl,-export-all-symbols"
 }
-QMAKE_LFLAGS += -Wl,-rpath,./plugins
